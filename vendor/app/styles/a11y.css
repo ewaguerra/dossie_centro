@@ -1,0 +1,37 @@
+/**
+ * Acessibilidade visual global — foco e reduced motion
+ */
+
+:where(
+  button,
+  [role="button"],
+  a,
+  input,
+  select,
+  textarea,
+  summary,
+  .btn,
+  .nav-retorno-link,
+  .nav-btn,
+  .hamburger-btn,
+  .hamburger-link
+):focus-visible {
+  outline: 2px solid var(--color-brand, #f59e0b);
+  outline-offset: 2px;
+}
+
+/* Centro HUD: foco com acento forense quando dentro do mapa */
+.has-jesuit-frame :where(.nav-btn, .sidebar-close-btn, .sidebar-open-btn):focus-visible {
+  outline-color: var(--color-accent-strong, #dc2626);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
