@@ -1,0 +1,12 @@
+[
+  {
+    "officialIndex": 41,
+    "name": "Igreja Nossa Senhora do Rosário dos Homens Pretos",
+    "candidate": "Igreja Nossa Senhora da Boa Morte",
+    "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+    "matchScore": 0.7334,
+    "problem": "fallback de endereço fraco",
+    "decision": "keep_pending",
+    "reason": "Score baixo/ambíguo. Requer regra/alias mais forte ou fonte mais semântica."
+  }
+]

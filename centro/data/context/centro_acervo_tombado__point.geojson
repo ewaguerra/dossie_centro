@@ -1,0 +1,339 @@
+{
+  "type": "FeatureCollection",
+  "name": "centro_acervo_tombado__point",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.61237477,
+          -23.54992847
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5007,
+        "nm_acervo": "ACERVO ARQUIVÍSTICO ANTIGA HOSPEDARIA DOS IMIGRANTES",
+        "nm_endereco": "R DE VISC PARNAIBA, 1316",
+        "tx_resolucao_conpresp": "RES. 05/1991",
+        "tx_resolucao_condephaat": "RES. SC 26/1982",
+        "tx_resolucao_iphan": "não consta",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/RE0591TombamentoExofficioTEOPDF_1417102444.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.631069,
+          -23.55057602
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5016,
+        "nm_acervo": "ACERVO DA IGREJA DA ORDEM TERCEIRA DE NOSSA SENHORA DO CARMO",
+        "nm_endereco": "AV RANGEL PESTANA, 230",
+        "tx_resolucao_conpresp": "RES. 47/1992",
+        "tx_resolucao_iphan": "PROC. 1176-T-85",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/RE4792TIgrejadaOrdemTerceiradeNossaSenhoradoCarmoPDF_1417099001.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63124229,
+          -23.5297213
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5009,
+        "nm_acervo": "ACERVO DO MUSEU DE ARTE SACRA",
+        "nm_endereco": "AV TIRADENTES, 702",
+        "tx_resolucao_conpresp": "RES. 05/1991",
+        "tx_resolucao_condephaat": "RES. SC SN/1973",
+        "tx_resolucao_iphan": "PROC. 0818-T-69",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/RE0591TombamentoExofficioTEOPDF_1417102444.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63058974,
+          -23.53043706
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5022,
+        "nm_acervo": "IMAGEM DE NOSSA SENHORA DAS DORES",
+        "nm_endereco": "AV. TIRADENTES, 676",
+        "tx_resolucao_iphan": "PROC. 0822-T-69",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.67006386,
+          -23.55739827
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5011,
+        "nm_acervo": "ACERVO DA CAPELA DO HOSPITAL DAS CLÍNICAS",
+        "nm_endereco": "AV DR ENEAS CARVALHO DE AGUIAR, 255",
+        "tx_resolucao_conpresp": "RES. 05/1991",
+        "tx_resolucao_condephaat": "RES. SC SN/1970",
+        "tx_resolucao_iphan": "não consta",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/RE0591TombamentoExofficioTEOPDF_1417102444.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6687865,
+          -23.55917599
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5025,
+        "nm_acervo": "BALCÃO E ACERVO DE OBRAS DE ARTE DO BAR BALCÃO",
+        "nm_endereco": "R MELO ALVES, 150",
+        "tx_resolucao_conpresp": "RE. 10/2025 (APT)",
+        "tx_resolucao_condephaat": "não consta",
+        "tx_resolucao_iphan": "não consta",
+        "tx_link_resolucao": "https://prefeitura.sp.gov.br/documents/d/cultura/10-25-apt-do-mobiliario-bar-balcao-pagina-pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6339098,
+          -23.53431653
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5021,
+        "nm_acervo": "COLEÇÃO NEMIROVSKY",
+        "nm_endereco": "PRAÇA DA LUZ, 2",
+        "tx_resolucao_iphan": "PROC. 1642-T-11",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.66325558,
+          -23.53155916
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5024,
+        "nm_acervo": "SINO DA INDEPENDÊNCIA",
+        "nm_endereco": "LG PADRE PERICLES, S/N",
+        "tx_resolucao_conpresp": "RES. 05/1991",
+        "tx_resolucao_condephaat": "RES. SC SN/1972",
+        "tx_resolucao_iphan": "não consta",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/d833c_05_TEO_89_itens.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.64013207,
+          -23.57172101
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5002,
+        "nm_acervo": "DISCOTECA ONEYDA ALVARENGA",
+        "nm_endereco": "RUA VERGUEIRO, 1000",
+        "tx_resolucao_conpresp": "RES. 24/2017",
+        "tx_resolucao_condephaat": "PROC. SEI 010.00002035/2023-4 (APT)",
+        "tx_resolucao_iphan": "PROC. 1513-T-03",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/re2417retifpdf_1513708251.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.65591059,
+          -23.56147511
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5006,
+        "nm_acervo": "COLEÇÃO DE ARTE DO MASP",
+        "nm_endereco": "AV PAULISTA, 1578",
+        "tx_resolucao_conpresp": "RES. 05/1991",
+        "tx_resolucao_condephaat": "RES. SC SN/2008",
+        "tx_resolucao_iphan": "PROC. 0809-T-69",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/RE0591TombamentoExofficioTEOPDF_1417102444.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.645847,
+          -23.54909302
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5014,
+        "nm_acervo": "ACERVO DOCUMENTAL DO TEATRO CULTURA ARTÍSTICA",
+        "nm_endereco": "R NESTOR PESTANA, 196",
+        "tx_resolucao_conpresp": "RES. 14/2011",
+        "tx_resolucao_condephaat": "RES. SC 51/2009",
+        "tx_resolucao_iphan": "PROC. 1603-T-10",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/RE1411TombamentoExofficiodoTeatroCulturaArtisticaPDF_1392663485.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.65729291,
+          -23.55062375
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5018,
+        "nm_acervo": "CONJUNTO DE ESCULTURAS/TÚMULOS DO CEMITÉRIO DA CONSOLAÇÃO (ANEXO I DA RESOLUÇÃO 08/2017)",
+        "nm_endereco": "R DA CONSOLACAO, 1660",
+        "tx_resolucao_conpresp": "RES. 08/2017",
+        "tx_resolucao_condephaat": "RES. SC 81/2014",
+        "tx_resolucao_iphan": "não consta",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/Re0817TombamentoEXOFFICIOCemiteriosANEXOpdf_1496078754.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63461389,
+          -23.54885615
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5010,
+        "nm_acervo": "PAINÉIS DE DI CAVALCANTI",
+        "nm_endereco": "R JOSE BONIFACIO, 24",
+        "tx_resolucao_conpresp": "RES. 04/2004",
+        "tx_resolucao_condephaat": "não consta",
+        "tx_resolucao_iphan": "PROC. 1603-T-10",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/Re0404TPaineisDiCavalcantiEdifTrianguloPDF_1394639015.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.64581208,
+          -23.54077902
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5020,
+        "nm_acervo": "ACERVO DA ACADEMIA PAULISTA DE LETRAS",
+        "nm_endereco": "LG DO AROUCHE, 302, 312, 324",
+        "tx_resolucao_conpresp": "não consta",
+        "tx_resolucao_condephaat": "Proc. SC 60.996/10 (APT)",
+        "tx_resolucao_iphan": "não consta",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.638666,
+          -23.54530802
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5013,
+        "nm_acervo": "BENS INTEGRADOS DO TEATRO MUNICIPAL",
+        "nm_endereco": "PC RAMOS DE AZEVEDO, 1",
+        "tx_resolucao_conpresp": "RES. 05/1991",
+        "tx_resolucao_condephaat": "RES. SC 49/1981",
+        "tx_resolucao_iphan": "PROC. 1349-T-95",
+        "tx_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/upload/RE0591TombamentoExofficioTEOPDF_1417102444.pdf",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63748655,
+          -23.54977868
+        ]
+      },
+      "properties": {
+        "cd_identificador": 5019,
+        "nm_acervo": "ACERVO DA VENERÁVEL ORDEM TERCEIRA DE SÃO FRANCISCO",
+        "nm_endereco": "LG SAO FRANCISCO, 173",
+        "tx_resolucao_conpresp": "não consta",
+        "tx_resolucao_condephaat": "Proc. SC 64.677/11 (APT)",
+        "tx_resolucao_iphan": "Proc. 0593-T-1959 (tombamento provisório)",
+        "sg_fonte_original": "DPH/SMC",
+        "_tipo": "acervo_tombado"
+      }
+    }
+  ]
+}

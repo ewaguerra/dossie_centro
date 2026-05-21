@@ -1,0 +1,70 @@
+[
+  {
+    "id": "02_macroareas_e_eixos",
+    "title": "Perímetros de Exclusão e Eixos",
+    "color": "#06b6d4",
+    "layers": [
+      "02_macroarea_contencao_urbana_uso_sustentavel__polygon",
+      "02_macroarea_controle_qualificacao_urbana_ambiental__polygon",
+      "02_macroarea_estruturacao_metropolitana__polygon",
+      "02_macroarea_preservacao_ecossistemas_naturais__polygon",
+      "02_macroarea_qualificacao_urbanizacao__polygon",
+      "02_macroarea_reducao_vulnerabilidade_urbana__polygon",
+      "02_macroarea_reducao_vulnerabilidade_urbana_recuperacao_ambiental__polygon",
+      "02_macroarea_urbanizacao_consolidada__polygon",
+      "02a_subsetores_arco_jacu_pessego__polygon",
+      "02a_subsetores_arco_jurubatuba__polygon",
+      "02a_subsetores_arco_leste__polygon",
+      "02a_subsetores_arco_pinheiros__polygon",
+      "02a_subsetores_arco_tamanduatei__polygon",
+      "02a_subsetores_arco_tiete__polygon",
+      "02a_subsetores_central__polygon",
+      "02a_subsetores_eixo_cupece__polygon",
+      "02a_subsetores_eixo_fernaodias__polygon",
+      "02a_subsetores_eixo_noroeste__polygon",
+      "02a_subsetores_farialima_aguasespraiadas_chucrizaidan__polygon",
+      "03_eixo_existente__polygon",
+      "03a_eixo_previsto__polygon",
+      "perimetro_expansao__line"
+    ]
+  },
+  {
+    "id": "16_regioes_sp",
+    "title": "Setores Territoriais",
+    "color": "#3b82f6",
+    "layers": [
+      "16_regiao_centro__polygon",
+      "16_regiao_leste__polygon",
+      "16_regiao_norte__polygon",
+      "16_regiao_oeste__polygon",
+      "16_regiao_sul__polygon",
+      "distrito_municipal__polygon",
+      "subprefeitura__polygon"
+    ]
+  },
+  {
+    "id": "08_hidrografia",
+    "title": "Anomalias Fluviárias",
+    "color": "#0ea5e9",
+    "layers": [
+      "05_hidrografia_rios__line"
+    ]
+  },
+  {
+    "id": "03_zoneamento",
+    "title": "Controlo Zonal",
+    "color": "#f59e0b",
+    "layers": [
+      "04_zeis1__polygon",
+      "04a_zeis3__polygon"
+    ]
+  },
+  {
+    "id": "17_risco_hidrologico",
+    "title": "Eventos Críticos e Submersão",
+    "color": "#2563eb",
+    "layers": [
+      "17_alagamentos_contexto_hidrografico__point"
+    ]
+  }
+]

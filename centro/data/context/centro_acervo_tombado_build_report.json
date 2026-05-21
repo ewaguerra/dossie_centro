@@ -1,0 +1,32 @@
+{
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "layer": "geoportal:patrimonio_cultural_acervo_tombado",
+  "metadata_uuid": "be462cce-52c6-425b-818f-49e203bb7fde",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "total_cidade": 26,
+  "total_centro": 16,
+  "acervos": [
+    "ACERVO ARQUIVÍSTICO ANTIGA HOSPEDARIA DOS IMIGRANTES",
+    "ACERVO DA IGREJA DA ORDEM TERCEIRA DE NOSSA SENHORA DO CARMO",
+    "ACERVO DO MUSEU DE ARTE SACRA",
+    "IMAGEM DE NOSSA SENHORA DAS DORES",
+    "ACERVO DA CAPELA DO HOSPITAL DAS CLÍNICAS",
+    "BALCÃO E ACERVO DE OBRAS DE ARTE DO BAR BALCÃO",
+    "COLEÇÃO NEMIROVSKY",
+    "SINO DA INDEPENDÊNCIA",
+    "DISCOTECA ONEYDA ALVARENGA",
+    "COLEÇÃO DE ARTE DO MASP",
+    "ACERVO DOCUMENTAL DO TEATRO CULTURA ARTÍSTICA",
+    "CONJUNTO DE ESCULTURAS/TÚMULOS DO CEMITÉRIO DA CONSOLAÇÃO (ANEXO I DA RESOLUÇÃO 08/2017)",
+    "PAINÉIS DE DI CAVALCANTI",
+    "ACERVO DA ACADEMIA PAULISTA DE LETRAS",
+    "BENS INTEGRADOS DO TEATRO MUNICIPAL",
+    "ACERVO DA VENERÁVEL ORDEM TERCEIRA DE SÃO FRANCISCO"
+  ],
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_acervo_tombado__point.geojson"
+}

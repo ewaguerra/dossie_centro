@@ -1,0 +1,14 @@
+{
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "layer": "geoportal:patrimonio_cultural_monumento",
+  "metadata_uuid": "4134f568-af63-4e3a-8d69-178065fd93a0",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "total_centro": 177,
+  "file_size_bytes": 98215,
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_monumentos__point.geojson"
+}

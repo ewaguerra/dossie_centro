@@ -1,0 +1,15 @@
+{
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "layer": "geoportal:patrimonio_cultural_memoria_paulistana",
+  "metadata_uuid": "98129251-81df-4f71-91b7-9cb93df52bbc",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "total_cidade": 512,
+  "total_centro": 277,
+  "file_size_bytes": 134217,
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_memoria_paulistana__point.geojson"
+}

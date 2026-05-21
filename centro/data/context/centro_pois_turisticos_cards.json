@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "source": "metadata_local_curated",
+  "items": [
+    {
+      "officialIndex": 4,
+      "slug": "catedral-da-se",
+      "name": "Catedral Metropolitana de São Paulo",
+      "cardType": "tourism_poi",
+      "narrativeZone": "se_liberdade",
+      "archetype": "poder_religioso",
+      "tone": "sagrado_colonial",
+      "tags": ["fe", "marco_zero", "centro_simbolico", "ritual", "memoria"],
+      "shortHook": "O centro simbólico pesa como pedra: toda decisão aqui ecoa para além da praça.",
+      "decisionPrompt": "Você busca proteção no sagrado ou encara o fluxo político da cidade?",
+      "choices": [
+        { "id": "ritual", "label": "Seguir um ritual de proteção", "effectTags": ["fe", "resiliencia"] },
+        { "id": "fluxo", "label": "Entrar no fluxo do centro", "effectTags": ["mobilidade", "tempo"] }
+      ]
+    },
+    {
+      "officialIndex": 5,
+      "slug": "ccbb",
+      "name": "Centro Cultural Banco do Brasil",
+      "cardType": "tourism_poi",
+      "narrativeZone": "centro_velho",
+      "archetype": "cultura_institucional",
+      "tone": "noir_financeiro",
+      "tags": ["instituicao", "cultura", "agenda", "prestigio", "porta_de_entrada"],
+      "shortHook": "Cultura com carimbo: o prédio oferece passagem, mas cobra postura.",
+      "decisionPrompt": "Você negocia acesso institucional ou procura uma rota alternativa?",
+      "choices": [
+        { "id": "negociar", "label": "Negociar acesso", "effectTags": ["prestigio", "burocracia"] },
+        { "id": "alternativa", "label": "Encontrar rota alternativa", "effectTags": ["subcultura", "risco"] }
+      ]
+    },
+    {
+      "officialIndex": 6,
+      "slug": "edificio-martinelli",
+      "name": "Edifício Martinelli",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "verticalizacao",
+      "tone": "elegancia_modernista",
+      "tags": ["altura", "ambicao", "cidade_modernizada", "vista", "fantasma_de_progresso"],
+      "shortHook": "A ambição virou concreto. Subir é escolher o que observar — e o que ignorar.",
+      "decisionPrompt": "Você sobe para mapear rotas ou fica ao nível da multidão?",
+      "choices": [
+        { "id": "subir", "label": "Subir e mapear", "effectTags": ["visao", "planejamento"] },
+        { "id": "multidao", "label": "Ficar na rua", "effectTags": ["contato", "imprevisto"] }
+      ]
+    },
+    {
+      "officialIndex": 10,
+      "slug": "farol-santander-farol-santander",
+      "name": "Farol Santander / Edifício Altino Arantes",
+      "cardType": "tourism_poi",
+      "narrativeZone": "centro_velho",
+      "archetype": "poder_financeiro",
+      "tone": "noir_financeiro",
+      "tags": ["banco", "mirante", "elite", "controle", "verticalizacao"],
+      "shortHook": "O dinheiro enxerga longe. O mirante não é só vista — é vigilância.",
+      "decisionPrompt": "Você busca informação no alto ou se infiltra no térreo?",
+      "choices": [
+        { "id": "mirante", "label": "Ir ao mirante", "effectTags": ["visao", "poder"] },
+        { "id": "infiltrar", "label": "Infiltrar no térreo", "effectTags": ["furtividade", "risco"] }
+      ]
+    },
+    {
+      "officialIndex": 16,
+      "slug": "mosteiro-de-sao-bento",
+      "name": "Mosteiro de São Bento",
+      "cardType": "tourism_poi",
+      "narrativeZone": "centro_velho",
+      "archetype": "poder_religioso",
+      "tone": "sagrado_colonial",
+      "tags": ["silencio", "ritual", "ordem", "memoria", "refugio"],
+      "shortHook": "Aqui o tempo desacelera. O silêncio vira moeda e escudo.",
+      "decisionPrompt": "Você pede orientação silenciosa ou usa o mosteiro como refúgio estratégico?",
+      "choices": [
+        { "id": "orientacao", "label": "Pedir orientação", "effectTags": ["clareza", "memoria"] },
+        { "id": "refugio", "label": "Usar como refúgio", "effectTags": ["seguranca", "tempo"] }
+      ]
+    },
+    {
+      "officialIndex": 20,
+      "slug": "pateo-do-colegio",
+      "name": "Pateo do Collegio",
+      "cardType": "tourism_poi",
+      "narrativeZone": "centro_velho",
+      "archetype": "origem",
+      "tone": "sagrado_colonial",
+      "tags": ["fundacao", "jesuitas", "memoria", "poder_simbolico"],
+      "shortHook": "Aqui a cidade começou; toda escolha neste ponto cobra uma dívida histórica.",
+      "decisionPrompt": "Você investiga a memória fundadora ou segue para o eixo financeiro?",
+      "choices": [
+        { "id": "investigar_memoria", "label": "Investigar a memória", "effectTags": ["memoria", "risco_historico"] },
+        { "id": "seguir_fluxo", "label": "Seguir o fluxo urbano", "effectTags": ["mobilidade", "tempo"] }
+      ]
+    },
+    {
+      "officialIndex": 21,
+      "slug": "praca-da-se",
+      "name": "Praça da Sé",
+      "cardType": "tourism_poi",
+      "narrativeZone": "se_liberdade",
+      "archetype": "palco_urbano",
+      "tone": "ritual_urbano",
+      "tags": ["encontro", "conflito", "centro_simbolico", "ruido", "transeunte"],
+      "shortHook": "A praça mistura fé, política e sobrevivência. Você entra em cena.",
+      "decisionPrompt": "Você busca uma aliança no público ou tenta atravessar sem ser notado?",
+      "choices": [
+        { "id": "alianca", "label": "Buscar aliança", "effectTags": ["contato", "reputacao"] },
+        { "id": "atravessar", "label": "Atravessar discreto", "effectTags": ["furtividade", "tempo"] }
+      ]
+    },
+    {
+      "officialIndex": 31,
+      "slug": "edificio-copan",
+      "name": "Edifício Copan",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "palco_urbano",
+      "tone": "elegancia_modernista",
+      "tags": ["condominio", "mistura_social", "vizinhos", "passagens", "rotina"],
+      "shortHook": "Uma cidade dentro do prédio: cada corredor guarda um rumor.",
+      "decisionPrompt": "Você procura informação com moradores ou segue pela passagem mais rápida?",
+      "choices": [
+        { "id": "moradores", "label": "Conversar com moradores", "effectTags": ["rumor", "rede"] },
+        { "id": "passagem", "label": "Usar a passagem", "effectTags": ["mobilidade", "tempo"] }
+      ]
+    },
+    {
+      "officialIndex": 33,
+      "slug": "estacao-da-luz",
+      "name": "Estação da Luz",
+      "cardType": "tourism_poi",
+      "narrativeZone": "luz_bom_retiro",
+      "archetype": "mobilidade",
+      "tone": "ferrovia_fantasma",
+      "tags": ["ferrovia", "conexao", "multidao", "passagem", "transito"],
+      "shortHook": "A estação é portal. Quem controla a passagem controla o destino.",
+      "decisionPrompt": "Você segue de trem para ganhar tempo ou fica para observar padrões?",
+      "choices": [
+        { "id": "trem", "label": "Seguir de trem", "effectTags": ["tempo", "mobilidade"] },
+        { "id": "observar", "label": "Observar padrões", "effectTags": ["informacao", "cuidado"] }
+      ]
+    },
+    {
+      "officialIndex": 34,
+      "slug": "estacao-julio-prestes",
+      "name": "Estação Júlio Prestes",
+      "cardType": "tourism_poi",
+      "narrativeZone": "luz_bom_retiro",
+      "archetype": "mobilidade",
+      "tone": "ferrovia_fantasma",
+      "tags": ["trilho", "eco", "conexao", "memoria_industrial"],
+      "shortHook": "A arquitetura lembra que o futuro já foi prometido antes.",
+      "decisionPrompt": "Você usa a memória como pista ou busca um atalho pragmático?",
+      "choices": [
+        { "id": "memoria", "label": "Usar a memória como pista", "effectTags": ["memoria", "investigacao"] },
+        { "id": "atalho", "label": "Buscar atalho", "effectTags": ["mobilidade", "risco"] }
+      ]
+    },
+    {
+      "officialIndex": 35,
+      "slug": "estacao-pinacoteca-e-memorial-da-resistencia",
+      "name": "Estação Pinacoteca e Memorial da Resistência",
+      "cardType": "tourism_poi",
+      "narrativeZone": "luz_bom_retiro",
+      "archetype": "memoria_politica",
+      "tone": "memoria_sombria",
+      "tags": ["repressao", "resistencia", "arquivo", "sombra", "direitos"],
+      "shortHook": "O arquivo não é passado: é prova viva. O silêncio aqui tem custo.",
+      "decisionPrompt": "Você abre um dossiê ou protege sua própria identidade?",
+      "choices": [
+        { "id": "dossie", "label": "Abrir um dossiê", "effectTags": ["verdade", "risco_politico"] },
+        { "id": "proteger", "label": "Proteger a identidade", "effectTags": ["furtividade", "sobrevivencia"] }
+      ]
+    },
+    {
+      "officialIndex": 36,
+      "slug": "galeria-do-rock",
+      "name": "Galeria do Rock",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "subcultura",
+      "tone": "subcultura_eletrica",
+      "tags": ["musica", "juventude", "comercio_alternativo", "rumor", "tribo"],
+      "shortHook": "A cidade fala em riffs e gírias. Informação troca de mão sem recibo.",
+      "decisionPrompt": "Você compra uma pista ou ganha respeito primeiro?",
+      "choices": [
+        { "id": "comprar", "label": "Comprar uma pista", "effectTags": ["recurso", "informacao"] },
+        { "id": "respeito", "label": "Ganhar respeito", "effectTags": ["reputacao", "tempo"] }
+      ]
+    },
+    {
+      "officialIndex": 49,
+      "slug": "mercado-municipal-paulistano",
+      "name": "Mercado Municipal Paulistano",
+      "cardType": "tourism_poi",
+      "narrativeZone": "bras_pari_belem",
+      "archetype": "mercado",
+      "tone": "multidao_comercial",
+      "tags": ["comida", "abundancia", "troca", "barulho", "rotas"],
+      "shortHook": "Fluxo e abundância. Quem sabe negociar, atravessa melhor a cidade.",
+      "decisionPrompt": "Você busca recurso rápido ou informação escondida no comércio?",
+      "choices": [
+        { "id": "recurso", "label": "Buscar recurso", "effectTags": ["suprimento", "tempo"] },
+        { "id": "informacao", "label": "Buscar informação", "effectTags": ["rumor", "rede"] }
+      ]
+    },
+    {
+      "officialIndex": 65,
+      "slug": "pinacoteca-de-sao-paulo",
+      "name": "Pinacoteca de São Paulo",
+      "cardType": "tourism_poi",
+      "narrativeZone": "luz_bom_retiro",
+      "archetype": "cultura_institucional",
+      "tone": "elegancia_modernista",
+      "tags": ["arte", "instituicao", "curadoria", "prestigio", "silencio"],
+      "shortHook": "A curadoria escolhe o que a cidade lembra — e o que ela esquece.",
+      "decisionPrompt": "Você busca um encontro institucional ou lê sinais nas obras?",
+      "choices": [
+        { "id": "encontro", "label": "Buscar encontro", "effectTags": ["prestigio", "burocracia"] },
+        { "id": "sinais", "label": "Ler sinais", "effectTags": ["intuicao", "memoria"] }
+      ]
+    },
+    {
+      "officialIndex": 67,
+      "slug": "praca-da-republica",
+      "name": "Praça da República",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "palco_urbano",
+      "tone": "ritual_urbano",
+      "tags": ["multidao", "feira", "politica", "encontro"],
+      "shortHook": "A praça negocia verdades em voz alta e em sussurro.",
+      "decisionPrompt": "Você fala com o público ou segue pelos bastidores?",
+      "choices": [
+        { "id": "publico", "label": "Falar com o público", "effectTags": ["reputacao", "contato"] },
+        { "id": "bastidores", "label": "Seguir pelos bastidores", "effectTags": ["furtividade", "informacao"] }
+      ]
+    },
+    {
+      "officialIndex": 68,
+      "slug": "praca-das-artes",
+      "name": "Praça das Artes",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "cultura_institucional",
+      "tone": "ritual_urbano",
+      "tags": ["arte", "palco", "ensaio", "comunidade"],
+      "shortHook": "A arte vira ensaio geral da cidade. E todo ensaio tem custo.",
+      "decisionPrompt": "Você entra na cena cultural ou usa o espaço como passagem tática?",
+      "choices": [
+        { "id": "cena", "label": "Entrar na cena", "effectTags": ["rede", "prestigio"] },
+        { "id": "tatico", "label": "Usar como passagem", "effectTags": ["mobilidade", "tempo"] }
+      ]
+    },
+    {
+      "officialIndex": 70,
+      "slug": "sala-sao-paulo",
+      "name": "Sala São Paulo",
+      "cardType": "tourism_poi",
+      "narrativeZone": "luz_bom_retiro",
+      "archetype": "cultura_institucional",
+      "tone": "elegancia_modernista",
+      "tags": ["musica", "prestigio", "ritual", "eco"],
+      "shortHook": "O som organiza o caos — por um momento.",
+      "decisionPrompt": "Você busca um pacto silencioso ou transforma o rito em distração?",
+      "choices": [
+        { "id": "pacto", "label": "Buscar pacto", "effectTags": ["prestigio", "rede"] },
+        { "id": "distracao", "label": "Criar distração", "effectTags": ["furtividade", "tempo"] }
+      ]
+    },
+    {
+      "officialIndex": 72,
+      "slug": "shopping-light",
+      "name": "Shopping Light",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "comercio_popular",
+      "tone": "multidao_comercial",
+      "tags": ["vitrine", "consumo", "fluxo", "atalho"],
+      "shortHook": "O consumo cria rotas invisíveis: quem sabe entrar, sabe sair.",
+      "decisionPrompt": "Você compra um recurso ou usa o shopping como atalho?",
+      "choices": [
+        { "id": "comprar", "label": "Comprar recurso", "effectTags": ["recurso", "tempo"] },
+        { "id": "atalho", "label": "Usar atalho", "effectTags": ["mobilidade", "furtividade"] }
+      ]
+    },
+    {
+      "officialIndex": 73,
+      "slug": "sesc-24-de-maio",
+      "name": "Sesc 24 de Maio",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "cultura_institucional",
+      "tone": "ritual_urbano",
+      "tags": ["cultura", "corpo", "comunidade", "respiro"],
+      "shortHook": "Um respiro no concreto: aqui a cidade treina novas formas de existir.",
+      "decisionPrompt": "Você recupera fôlego ou busca uma aliança cultural?",
+      "choices": [
+        { "id": "recuperar", "label": "Recuperar fôlego", "effectTags": ["resiliencia", "tempo"] },
+        { "id": "alianca", "label": "Buscar aliança", "effectTags": ["rede", "prestigio"] }
+      ]
+    },
+    {
+      "officialIndex": 77,
+      "slug": "theatro-municipal",
+      "name": "Theatro Municipal",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "palco_urbano",
+      "tone": "elegancia_modernista",
+      "tags": ["palco", "poder", "cortina", "intriga"],
+      "shortHook": "Cortinas escondem pactos. Quem entra no palco vira alvo e voz.",
+      "decisionPrompt": "Você entra em cena ou investiga os bastidores?",
+      "choices": [
+        { "id": "cena", "label": "Entrar em cena", "effectTags": ["reputacao", "risco"] },
+        { "id": "bastidores", "label": "Investigar bastidores", "effectTags": ["informacao", "furtividade"] }
+      ]
+    },
+    {
+      "officialIndex": 78,
+      "slug": "viaduto-do-cha",
+      "name": "Viaduto do Chá",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "mobilidade",
+      "tone": "ritual_urbano",
+      "tags": ["ponte", "travessia", "limiar", "vista"],
+      "shortHook": "Travessias mudam destinos. Aqui a cidade troca de pele.",
+      "decisionPrompt": "Você cruza rápido ou observa o que o vale revela?",
+      "choices": [
+        { "id": "cruzar", "label": "Cruzar rápido", "effectTags": ["tempo", "mobilidade"] },
+        { "id": "observar", "label": "Observar", "effectTags": ["informacao", "cuidado"] }
+      ]
+    },
+    {
+      "officialIndex": 79,
+      "slug": "viaduto-santa-ifigenia",
+      "name": "Viaduto Santa Ifigênia",
+      "cardType": "tourism_poi",
+      "narrativeZone": "republica_anhangabau",
+      "archetype": "mobilidade",
+      "tone": "ferrovia_fantasma",
+      "tags": ["ponte", "ferro", "passagem", "vista", "rumor"],
+      "shortHook": "A ponte vibra com passos e histórias. Travessia é escolha política.",
+      "decisionPrompt": "Você atravessa para ganhar alcance ou para escapar de um rastro?",
+      "choices": [
+        { "id": "alcance", "label": "Ganhar alcance", "effectTags": ["mobilidade", "visao"] },
+        { "id": "escapar", "label": "Escapar do rastro", "effectTags": ["furtividade", "risco"] }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,17 @@
+{
+  "name": "projeto-centro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Protocolo 13 Almas — Dossiê Centro. Site estático cartográfico/narrativo sobre a Zona Centro de São Paulo.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/sanity.test.js tests/http.test.js",
+    "validate": "node --test tests/sanity.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "maplibre-gl": "^4.7.1"
+  }
+}

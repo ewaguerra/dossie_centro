@@ -1,0 +1,190 @@
+/* ── Efeitos de Monitor CRT e Scanlines ──────────────────────────────── */
+.crt::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 99999;
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+}
+
+.crt::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.05);
+  opacity: 0;
+  z-index: 99999;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.27861; }
+  5% { opacity: 0.34769; }
+  10% { opacity: 0.23604; }
+  15% { opacity: 0.90626; }
+  20% { opacity: 0.18128; }
+  25% { opacity: 0.83891; }
+  30% { opacity: 0.65583; }
+  35% { opacity: 0.57807; }
+  40% { opacity: 0.26559; }
+  45% { opacity: 0.84693; }
+  50% { opacity: 0.96019; }
+  55% { opacity: 0.08523; }
+  60% { opacity: 0.71056; }
+  65% { opacity: 0.73437; }
+  70% { opacity: 0.8523; }
+  75% { opacity: 0.5294; }
+  80% { opacity: 0.66714; }
+  85% { opacity: 0.7941; }
+  90% { opacity: 0.15876; }
+  95% { opacity: 0.4609; }
+  100% { opacity: 0.60093; }
+}
+
+/* ── Glitch Animation ────────────────────────────────────────────────── */
+@keyframes glitch {
+  0%, 100% {
+    text-shadow: none;
+    color: inherit;
+  }
+  20% {
+    text-shadow: -2px 0 #ff0000, 2px 0 #00ffff;
+    color: #ff00ff;
+  }
+  40% {
+    text-shadow: 2px 0 #ff0000, -2px 0 #00ffff;
+    color: #ffff00;
+  }
+  60% {
+    text-shadow: -2px 0 #00ffff, 2px 0 #ff0000;
+    color: #00ffff;
+  }
+  80% {
+    text-shadow: 2px 0 #00ffff, -2px 0 #ff0000;
+    color: #ff00ff;
+  }
+}
+
+.glitching {
+  animation: glitch 0.2s infinite;
+}
+
+/* ── Desaturação e Corrupção ─────────────────────────────────────────── */
+.corrupted {
+  border-color: #ff0000 !important;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5) !important;
+}
+
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REACTBITS — GLITCH TEXT
+   Efeito de scan horizontal com RGB split em pseudo-elementos.
+   Ativado via .rb-glitch e .rb-glitching (controlado por JS)
+═══════════════════════════════════════════════════════════════ */
+.rb-glitch {
+  position: relative;
+  display: inline-block;
+}
+
+/* Cópia "fantasma" do texto para o efeito de clip */
+.rb-glitch::before,
+.rb-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Camada vermelha — shift esquerda */
+.rb-glitch::before {
+  color: #ff003c;
+  text-shadow: none;
+}
+
+/* Camada ciano — shift direita */
+.rb-glitch::after {
+  color: #00f3ff;
+  text-shadow: none;
+}
+
+/* Estado ativo do glitch */
+.rb-glitching::before {
+  opacity: 0.85;
+  animation: rb-glitch-before 0.28s steps(6, end) forwards;
+}
+
+.rb-glitching::after {
+  opacity: 0.85;
+  animation: rb-glitch-after 0.28s steps(6, end) forwards;
+}
+
+@keyframes rb-glitch-before {
+  0%   { clip-path: inset(0 0 85% 0); transform: translateX(-3px); }
+  20%  { clip-path: inset(40% 0 45% 0); transform: translateX(3px); }
+  40%  { clip-path: inset(70% 0 20% 0); transform: translateX(-2px); }
+  60%  { clip-path: inset(20% 0 65% 0); transform: translateX(4px); }
+  80%  { clip-path: inset(55% 0 30% 0); transform: translateX(-1px); }
+  100% { clip-path: inset(0 0 100% 0); transform: translateX(0); opacity: 0; }
+}
+
+@keyframes rb-glitch-after {
+  0%   { clip-path: inset(80% 0 5% 0); transform: translateX(3px); }
+  20%  { clip-path: inset(30% 0 55% 0); transform: translateX(-3px); }
+  40%  { clip-path: inset(60% 0 25% 0); transform: translateX(2px); }
+  60%  { clip-path: inset(10% 0 75% 0); transform: translateX(-4px); }
+  80%  { clip-path: inset(45% 0 40% 0); transform: translateX(1px); }
+  100% { clip-path: inset(0 0 100% 0); transform: translateX(0); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REACTBITS — SCRAMBLE TEXT
+   Tooltip/cursor de "decodificação" ao fazer hover
+═══════════════════════════════════════════════════════════════ */
+[data-scramble] {
+  cursor: crosshair;
+  transition: color 0.1s;
+}
+
+[data-scramble]:hover {
+  color: #00f3ff;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REACTBITS — DECRYPTED TEXT (terminal)
+   Linha sendo revelada no terminal de operação
+═══════════════════════════════════════════════════════════════ */
+.terminal-line-decrypting {
+  color: rgba(0, 255, 65, 0.6);
+  font-style: normal;
+}
+
+.terminal-line-revealed {
+  color: inherit;
+  transition: color 0.1s;
+}

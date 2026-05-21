@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>PROTOCOLO 13 ALMAS — Dossiê Centro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <link href="/vendor/maplibre/maplibre-gl.css" rel="stylesheet" />
+  <link href="/pages/centro/centro-sidebar.css" rel="stylesheet" />
+  <style>
+    body { margin: 0; overflow: hidden; }
+    #map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  </style>
+</head>
+<body class="has-jesuit-frame">
+  <nav class="nav-retorno" aria-label="Navegação entre módulos">
+    <a href="/landing/" class="nav-retorno-link">&larr; PROTOCOLO</a>
+  </nav>
+  <aside id="sidebar" class="sidebar" aria-label="Camadas do Centro">
+    <div class="sidebar-header">
+      <h2>Dossiê: Centro</h2>
+      <p>Registo de evidências territoriais, zonas de interdição e anomalias recuperadas da região central de São Paulo.</p>
+    </div>
+    <div class="sidebar-content"><p><em>Carregando…</em></p></div>
+  </aside>
+  <div id="map"></div>
+  <aside id="feature-inspector" class="feature-inspector" hidden>
+    <div class="feature-inspector-header">
+      <div><div class="feature-inspector-kicker">Evidência Detetada</div></div>
+    </div>
+    <div class="feature-inspector-content"></div>
+  </aside>
+  <script src="/vendor/maplibre/maplibre-gl.js"></script>
+  <script src="/app/config/theme.js"></script>
+  <script src="/app/config/knowledge.js"></script>
+  <script src="/app/config/map-icons.js"></script>
+  <script src="/app/config/ui-texts.js"></script>
+  <script src="/app/utils/formatters.js"></script>
+  <script src="/app/utils/html-utils.js"></script>
+  <script src="/app/utils/value-utils.js"></script>
+  <script src="/app/utils/freshness-utils.js"></script>
+  <script src="/app/utils/card-utils.js"></script>
+  <script src="/app/renderers/popup-renderer.js"></script>
+  <script src="/pages/centro/utils.js"></script>
+  <script src="/pages/centro/features/triangulo-historico.js"></script>
+  <script src="/pages/centro/features/rio-animado.js"></script>
+  <script src="/pages/centro/features/pistas.js"></script>
+  <script src="/pages/centro/features/poi-icons.js"></script>
+  <script src="/pages/centro/centro-runtime.js"></script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+{
+  "id": "centro_urban_context",
+  "title": "Topografia de Superfície",
+  "layers": [
+    {
+      "id": "15_osm_ruas__line",
+      "title": "Malha de Circulação (Vias)",
+      "group": "urbano_contexto",
+      "stackRole": "street-line",
+      "coverage": "complete",
+      "coverageCheck": "bbox-info",
+      "coverageNote": "Mapeamento de superfície (clipped pelo perímetro Alpha).",
+      "file": "data/context/15_osm_ruas__line.geojson",
+      "file_size_bytes": 4335576,
+      "feature_count": 10108,
+      "geometry": "line",
+      "type": "line",
+      "minzoom": 12,
+      "maxzoom": 22,
+      "visible": true,
+      "style": {
+        "paint": {
+          "line-color": [
+            "match", ["get", "highway"],
+            ["primary", "primary_link", "trunk", "trunk_link", "motorway", "motorway_link"], "#ffb3ba",
+            ["secondary", "secondary_link", "tertiary", "tertiary_link"], "#bae1ff",
+            ["pedestrian", "living_street", "footway", "path", "cycleway", "steps"], "#baffc9",
+            ["residential", "unclassified"], "#f1f5f9",
+            "#f8fafc"
+          ],
+          "line-width": [
+            "match", ["get", "highway"],
+            ["primary", "primary_link", "trunk", "trunk_link", "motorway", "motorway_link"], 2.5,
+            ["secondary", "secondary_link", "tertiary", "tertiary_link"], 1.5,
+            ["pedestrian", "living_street", "footway", "path", "cycleway", "steps"], 1.0,
+            1.2
+          ],
+          "line-opacity": 0.6
+        }
+      }
+    },
+    {
+      "id": "15_osm_enderecos__point",
+      "title": "Matriz de Endereçamento",
+      "group": "urbano_contexto",
+      "stackRole": "point",
+      "coverage": "partial",
+      "coverageCheck": "bbox-info",
+      "coverageNote": "Rastreio parcial de superfície: números ativos apenas em escala 16+.",
+      "file": "data/context/15_osm_enderecos__point.geojson",
+      "file_size_bytes": 5220932,
+      "feature_count": 19893,
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 16,
+      "maxzoom": 22,
+      "visible": true,
+      "style": {
+        "paint": {
+          "circle-radius": [
+            "interpolate", ["linear"], ["zoom"],
+            16, 3,
+            20, 6
+          ],
+          "circle-color": [
+            "match", ["get", "amenity"],
+            ["restaurant", "fast_food", "cafe", "bar", "pub", "ice_cream"], "#baffc9",
+            ["bank", "pharmacy", "clinic", "dentist", "hospital", "veterinary"], "#ffb3ba",
+            ["school", "university", "college", "kindergarten"], "#ffffba",
+            ["parking", "taxi", "fuel", "parking_entrance", "bus_station"], "#e2e8f0",
+            ["place_of_worship"], "#ffdfba",
+            ["theatre", "arts_centre", "cinema", "nightclub"], "#e0bbe4",
+            ["post_office", "police", "townhall", "fire_station", "courthouse"], "#d1d5db",
+            "#bae1ff"
+          ],
+          "circle-opacity": 0.7,
+          "circle-stroke-width": 1,
+          "circle-stroke-color": "#ffffff"
+        }
+      }
+    },
+    {
+      "id": "centro_pois_turisticos__point",
+      "title": "Nódulos de Memória (POIs)",
+      "group": "turismo_patrimonio",
+      "stackRole": "point",
+      "coverage": "partial",
+      "coverageCheck": "skip-bbox",
+      "coverageNote": "Fragmentos recuperados de dossiês históricos.",
+      "file": "data/context/centro_pois_turisticos__point.geojson",
+      "feature_count": 64,
+      "expected_count": 79,
+      "missing_count": 15,
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 12,
+      "maxzoom": 22,
+      "visible": true,
+      "style": {
+        "paint": {
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            12,
+            4,
+            16,
+            7
+          ],
+          "circle-color": [
+            "match",
+            [
+              "get",
+              "category"
+            ],
+            "patrimonio_historico",
+            "#f59e0b",
+            "igreja_religiosidade",
+            "#7c2d12",
+            "museu_memoria",
+            "#2563eb",
+            "centro_cultural",
+            "#9333ea",
+            "arquitetura_mirante",
+            "#dc2626",
+            "praca_espaco_publico",
+            "#16a34a",
+            "teatro_espetaculo",
+            "#be123c",
+            "mercado_comercio",
+            "#ea580c",
+            "transporte_estacao",
+            "#0f766e",
+            "sesc_lazer",
+            "#0891b2",
+            "educacao_institucional",
+            "#4f46e5",
+            "#64748b"
+          ],
+          "circle-opacity": 0.9,
+          "circle-stroke-color": "#ffffff",
+          "circle-stroke-width": 1.25
+        }
+      }
+    },
+    {
+      "id": "centro_rios_geosampa__line",
+      "title": "Rede Hidrológica Oficial",
+      "group": "urbano_contexto",
+      "stackRole": "hydro-line",
+      "coverage": "partial",
+      "coverageCheck": "bbox-info",
+      "coverageNote": "Dados de drenagem municipal sincronizados para o perímetro Alpha.",
+      "file": "data/context/centro_rios_geosampa__line.geojson",
+      "geometry": "line",
+      "type": "line",
+      "minzoom": 12,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "line-color": "#38bdf8",
+          "line-width": 3,
+          "line-opacity": 0.85
+        }
+      },
+      "metadata": {
+        "source": "GeoSampa WFS",
+        "sourceTypeName": "geoportal:drenagem",
+        "generatedBy": "scripts/build_centro_rios_from_geosampa_wfs.py"
+      }
+    },
+    {
+      "id": "centro_area_inundavel__polygon",
+      "title": "Zonas de Vulnerabilidade Hídrica",
+      "group": "urbano_contexto",
+      "stackRole": "territory-fill",
+      "coverage": "partial",
+      "coverageCheck": "bbox-info",
+      "coverageNote": "Mapeamento de risco de inundação por período de retorno (5, 25, 100 anos).",
+      "source": "GeoSampa — geoportal:area_inundavel",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "metadata_uuid": "3a7a16b1-369f-49e5-82e9-ecdcc3341535",
+      "file": "data/context/centro_area_inundavel__polygon.geojson",
+      "feature_count": 6,
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "fill-color": [
+            "match", ["get", "qt_tempo_retorno"],
+            5,   "#dc2626",
+            25,  "#ea580c",
+            100, "#2563eb",
+            "#2563eb"
+          ],
+          "fill-opacity": 0.18,
+          "fill-outline-color": "transparent"
+        }
+      },
+      "metadata": {
+        "periodos_retorno": [5, 25, 100],
+        "periodos_no_centro": [100],
+        "generatedBy": "scripts/build_centro_area_inundavel_from_geosampa_wfs.py"
+      }
+    },
+    {
+      "id": "centro_rios_osm__line",
+      "title": "Canais de Drenagem Extraoficiais",
+      "group": "urbano_contexto",
+      "stackRole": "hydro-line",
+      "coverage": "partial",
+      "coverageCheck": "bbox-info",
+      "coverageNote": "Waterways recuperados via rede colaborativa. Identifica afluentes ignorados pelos registos oficiais.",
+      "file": "data/context/centro_rios_osm__line.geojson",
+      "feature_count": 79,
+      "geometry": "line",
+      "type": "line",
+      "minzoom": 12,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "line-color": "#7dd3fc",
+          "line-width": 2,
+          "line-opacity": 0.75,
+          "line-dasharray": [4, 2]
+        }
+      },
+      "metadata": {
+        "source": "OpenStreetMap / Overpass API",
+        "generatedBy": "scripts/build_centro_rios_osm_from_overpass.py"
+      }
+    },
+    {
+      "id": "centro_monumentos__point",
+      "title": "Selos e Monumentos Totêmicos",
+      "group": "turismo_patrimonio",
+      "stackRole": "point",
+      "coverage": "complete",
+      "coverageCheck": "skip-bbox",
+      "coverageNote": "177 marcadores de memória pública identificados no perímetro Alpha.",
+      "source": "GeoSampa — geoportal:patrimonio_cultural_monumento",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "metadata_uuid": "4134f568-af63-4e3a-8d69-178065fd93a0",
+      "file": "data/context/centro_monumentos__point.geojson",
+      "feature_count": 177,
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 12,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 4, 15, 7, 18, 10],
+          "circle-color": "#b45309",
+          "circle-opacity": 0.85,
+          "circle-stroke-color": "#92400e",
+          "circle-stroke-width": 1.5
+        }
+      }
+    },
+    {
+      "id": "centro_bem_tombado__polygon",
+      "title": "Estruturas de Preservação Rígida",
+      "group": "turismo_patrimonio",
+      "stackRole": "territory-fill",
+      "coverage": "complete",
+      "coverageCheck": "bbox-info",
+      "coverageNote": "Zonas de conservação legal sob os protocolos CONPRESP, CONDEPHAAT e IPHAN.",
+      "source": "GeoSampa — geoportal:patrimonio_cultural_bem_tombado",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "file": "data/context/centro_bem_tombado__polygon.geojson",
+      "file_size_bytes": 3253977,
+      "feature_count": 2974,
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 12,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "fill-color": [
+            "match",
+            [
+              "get",
+              "tx_nivel_tombamento"
+            ],
+            "T",
+            "#b45309",
+            "P1",
+            "#d97706",
+            "P2",
+            "#f59e0b",
+            "P3",
+            "#fbbf24",
+            "#f59e0b"
+          ],
+          "fill-opacity": 0.25,
+          "fill-outline-color": [
+            "match",
+            [
+              "get",
+              "tx_nivel_tombamento"
+            ],
+            "T",
+            "#92400e",
+            "P1",
+            "#b45309",
+            "P2",
+            "#d97706",
+            "P3",
+            "#f59e0b",
+            "#d97706"
+          ]
+        }
+      }
+    },
+    {
+      "id": "centro_bem_arqueologico__point",
+      "title": "Sítios de Exumação Histórica",
+      "group": "turismo_patrimonio",
+      "stackRole": "point",
+      "coverage": "complete",
+      "coverageCheck": "skip-bbox",
+      "coverageNote": "Pontos de interesse arqueológico crítico identificados no perímetro Alpha.",
+      "source": "GeoSampa — geoportal:patrimonio_cultural_bem_arqueologico",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "metadata_uuid": "b3f2406b-2440-4c9b-a6e3-9093fa024cd6",
+      "file": "data/context/centro_bem_arqueologico__point.geojson",
+      "file_size_bytes": 1118,
+      "feature_count": 1,
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            11,
+            5,
+            15,
+            9,
+            18,
+            13
+          ],
+          "circle-color": "#7c3aed",
+          "circle-opacity": 0.85,
+          "circle-stroke-color": "#4c1d95",
+          "circle-stroke-width": 1.5
+        }
+      }
+    },
+    {
+      "id": "centro_acervo_tombado__point",
+      "title": "Registos de Memória Preservada",
+      "group": "turismo_patrimonio",
+      "stackRole": "point",
+      "coverage": "complete",
+      "coverageCheck": "skip-bbox",
+      "coverageNote": "Acervos móveis de valor histórico recuperados para o Dossiê Centro.",
+      "source": "GeoSampa — geoportal:patrimonio_cultural_acervo_tombado",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "metadata_uuid": "be462cce-52c6-425b-818f-49e203bb7fde",
+      "file": "data/context/centro_acervo_tombado__point.geojson",
+      "file_size_bytes": 11094,
+      "feature_count": 16,
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            11,
+            4,
+            15,
+            8,
+            18,
+            12
+          ],
+          "circle-color": "#0891b2",
+          "circle-opacity": 0.85,
+          "circle-stroke-color": "#0e7490",
+          "circle-stroke-width": 1.5
+        }
+      }
+    },
+    {
+      "id": "centro_memoria_paulistana__point",
+      "title": "Dossiê Memória Paulistana",
+      "group": "turismo_patrimonio",
+      "stackRole": "point",
+      "coverage": "complete",
+      "coverageCheck": "skip-bbox",
+      "coverageNote": "Placas de registo histórico mapeadas como marcadores de consciência urbana.",
+      "source": "GeoSampa — geoportal:patrimonio_cultural_memoria_paulistana",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "metadata_uuid": "98129251-81df-4f71-91b7-9cb93df52bbc",
+      "file": "data/context/centro_memoria_paulistana__point.geojson",
+      "file_size_bytes": 134217,
+      "feature_count": 277,
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            11,
+            3,
+            15,
+            7,
+            18,
+            10
+          ],
+          "circle-color": "#2563eb",
+          "circle-opacity": 0.85,
+          "circle-stroke-color": "#1d4ed8",
+          "circle-stroke-width": 1.5
+        }
+      }
+    },
+    {
+      "id": "centro_carta_geotecnica__polygon",
+      "title": "Análise de Solo e Sedimentos",
+      "group": "geotecnica",
+      "stackRole": "territory-fill",
+      "coverage": "complete",
+      "coverageCheck": "skip-bbox",
+      "coverageNote": "Mapeamento das camadas geológicas e estabilidade do terreno no perímetro Alpha.",
+      "source": "GeoSampa — geoportal:carta_geotecnica",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "file": "data/context/centro_carta_geotecnica__polygon.geojson",
+      "feature_count": 8,
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "fill-color": [
+            "match", ["get", "tx_unidade_geotecnica"],
+            "I",   "#3b82f6",
+            "II",  "#60a5fa",
+            "III", "#86efac",
+            "IV",  "#4ade80",
+            "VI",  "#a3e635",
+            "X",   "#facc15",
+            "XI",  "#f97316",
+            "XIII","#fb923c",
+            "XIV", "#fbbf24",
+            "#94a3b8"
+          ],
+          "fill-opacity": 0.22,
+          "fill-outline-color": "transparent"
+        }
+      },
+      "metadata": {
+        "source": "IPT / SMUL / PMSP",
+        "dataset": "Carta Geotécnica de Aptidão Urbanística 2024",
+        "generatedBy": "scripts/build_centro_carta_geotecnica_from_geosampa_wfs.py"
+      }
+    },
+    {
+      "id": "centro_risco_alagamento__point",
+      "title": "Incidentes de Inundação (SIGRC)",
+      "group": "geotecnica",
+      "stackRole": "point",
+      "coverage": "partial",
+      "coverageCheck": "bbox-info",
+      "coverageNote": "Registos históricos de submersão ativados pela Defesa Civil.",
+      "source": "GeoSampa — geoportal:risco_ocorrencia_alagamento",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "file": "data/context/centro_risco_alagamento__point.geojson",
+      "feature_count": 3,
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 5, 15, 9, 18, 13],
+          "circle-color": "#2563eb",
+          "circle-opacity": 0.85,
+          "circle-stroke-color": "#1d4ed8",
+          "circle-stroke-width": 1.5
+        }
+      },
+      "metadata": {
+        "source": "PMSP / CGE-SIGRC",
+        "generatedBy": "scripts/build_centro_risco_alagamento_from_geosampa_wfs.py"
+      }
+    },
+    {
+      "id": "centro_declividade__polygon",
+      "title": "Gradiente Topográfico",
+      "group": "geotecnica",
+      "stackRole": "territory-fill",
+      "coverage": "complete",
+      "coverageCheck": "bbox-info",
+      "coverageNote": "Variação de inclinação do terreno no perímetro Alpha.",
+      "source": "GeoSampa — geoportal:declividade",
+      "source_url": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+      "file": "data/context/centro_declividade__polygon.geojson",
+      "feature_count": 306,
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "paint": {
+          "fill-color": [
+            "match", ["get", "nm_classe"],
+            "0 a 05%",   "#4ade80",
+            "05 a 25%",  "#facc15",
+            "25 a 60%",  "#f97316",
+            "> 60%",     "#ef4444",
+            "#94a3b8"
+          ],
+          "fill-opacity": 0.28,
+          "fill-outline-color": "transparent"
+        }
+      },
+      "metadata": {
+        "source": "PMSP",
+        "generatedBy": "scripts/build_centro_declividade_from_geosampa_wfs.py"
+      }
+    },
+    {
+      "id": "centro_arquivo_superficial__point",
+      "title": "Arquivos de Superfície",
+      "group": "arquivo_soterrado",
+      "stackRole": "point",
+      "coverage": "partial",
+      "coverageCheck": "skip-bbox",
+      "coverageNote": "Pontos patrocinados com fragmentos do Arquivo dos Soterrados.",
+      "file": "data/context/centro_arquivo_superficial__point.geojson",
+      "feature_count": 1,
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": true,
+      "style": {
+        "paint": {
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 7, 15, 12, 18, 18],
+          "circle-color": "#dc2626",
+          "circle-opacity": 0.9,
+          "circle-stroke-color": "#fef2f2",
+          "circle-stroke-width": 2
+        }
+      }
+    }
+  ]
+}

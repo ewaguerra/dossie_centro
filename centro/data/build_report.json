@@ -1,0 +1,43 @@
+{
+  "strategy": "centro_spatial_clip",
+  "generated_at": "2026-05-05T02:35:05.603609",
+  "layers_processed": [
+    {
+      "id": "02a_subsetores_arco_tamanduatei__polygon",
+      "features_before": 1,
+      "features_after": 1,
+      "status": "clipped"
+    },
+    {
+      "id": "02a_subsetores_central__polygon",
+      "features_before": 1,
+      "features_after": 1,
+      "status": "clipped"
+    },
+    {
+      "id": "02a_subsetores_farialima_aguasespraiadas_chucrizaidan__polygon",
+      "features_before": 1,
+      "features_after": 0,
+      "status": "empty"
+    },
+    {
+      "id": "12_existentes__point",
+      "features_before": 5,
+      "features_after": 0,
+      "status": "empty"
+    },
+    {
+      "id": "13_seguranca__point",
+      "features_before": 3,
+      "features_after": 0,
+      "status": "empty"
+    },
+    {
+      "id": "16_regiao_centro__polygon",
+      "features_before": 8,
+      "features_after": 8,
+      "status": "clipped"
+    }
+  ],
+  "errors": []
+}

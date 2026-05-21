@@ -1,0 +1,13 @@
+{
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "layer": "geoportal:risco_ocorrencia_alagamento",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "total_centro": 3,
+  "file_size_bytes": 1050,
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_risco_alagamento__point.geojson"
+}

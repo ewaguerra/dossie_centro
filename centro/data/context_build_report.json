@@ -1,0 +1,17 @@
+{
+  "strategy": "centro_urban_context",
+  "generated_at": "2026-05-05T05:35:43.946063",
+  "context_layers": [
+    {
+      "id": "15_osm_ruas__line",
+      "features": 10108,
+      "status": "clipped"
+    },
+    {
+      "id": "15_osm_enderecos__point",
+      "features": 19893,
+      "status": "clipped"
+    }
+  ],
+  "errors": []
+}

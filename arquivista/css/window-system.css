@@ -1,0 +1,167 @@
+/* ── Janela Base ──────────────────────────────────────────────────────── */
+.window {
+  position: absolute;
+  background: #1a1a1a;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 2px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  font-family: 'Courier New', Courier, monospace;
+  color: #00ff41;
+  min-width: 320px;
+  min-height: 240px;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.window.active {
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.2), 0 15px 45px rgba(0, 0, 0, 0.95);
+  border-color: #00ff41;
+}
+
+.window.dragging {
+  opacity: 0.85;
+  cursor: grabbing;
+}
+
+.window.resizing {
+  opacity: 0.85;
+  cursor: se-resize;
+}
+
+.window.minimized {
+  display: none !important;
+}
+
+.window.maximized {
+  border-radius: 0;
+  box-shadow: none;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: calc(100% - 60px) !important;
+}
+
+.window.closing {
+  animation: windowClose 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes windowClose {
+  0% { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(0.95); filter: blur(10px); }
+}
+
+/* ── Header da Janela ─────────────────────────────────────────────────── */
+.window-header {
+  background: #2a2a2a;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+  padding: 4px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+  height: 32px;
+}
+
+.window.active .window-header {
+  background: #333;
+  border-color: #00ff41;
+}
+
+.window-title {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: inherit;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Controles de Janela ──────────────────────────────────────────────── */
+.window-controls {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.window-btn {
+  width: 18px;
+  height: 18px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  padding: 0;
+  opacity: 0.7;
+}
+
+.window-btn:hover {
+  opacity: 1;
+  background: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+}
+
+.window-btn.close:hover {
+  background: #ff003c;
+  color: #fff;
+  border-color: #ff003c;
+  box-shadow: 0 0 10px rgba(255, 0, 60, 0.6);
+}
+
+/* ── Conteúdo da Janela ────────────────────────────────────────────────── */
+.window-content {
+  flex: 1;
+  overflow: hidden;
+  background: #0d0d0d;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ── Handle de Resize ─────────────────────────────────────────────────── */
+.window-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(135deg, transparent 50%, rgba(0, 255, 65, 0.4) 50%);
+  cursor: se-resize;
+  z-index: 10;
+}
+
+.window.active .window-resize-handle {
+  background: linear-gradient(135deg, transparent 50%, #00ff41 50%);
+}
+
+/* ── Scrollbar Estilo Forense ────────────────────────────────────────── */
+.window-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.window-content::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+.window-content::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+.window-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 65, 0.2);
+}

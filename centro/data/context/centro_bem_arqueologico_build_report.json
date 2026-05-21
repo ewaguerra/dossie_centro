@@ -1,0 +1,16 @@
+{
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "layer": "geoportal:patrimonio_cultural_bem_arqueologico",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "total_cidade": 5,
+  "total_centro": 1,
+  "features": [
+    "PATIO DO COLEGIO"
+  ],
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_bem_arqueologico__point.geojson"
+}
