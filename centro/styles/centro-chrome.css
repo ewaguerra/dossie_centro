@@ -1,0 +1,148 @@
+/**
+ * Chrome UI do Centro — hamburger, sidebar header, narrative nav
+ * (extraído de style= inline em index.html)
+ */
+
+.hamburger-nav {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: var(--z-modal);
+  font-family: var(--font-mono);
+}
+
+.hamburger-btn {
+  background: rgba(5, 5, 5, 0.9);
+  border: 1px solid var(--color-accent-strong);
+  color: var(--color-accent-strong);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger-dropdown {
+  display: none;
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: rgba(5, 5, 5, 0.95);
+  border: 1px solid #333333;
+  border-radius: var(--radius-sm);
+  min-width: 200px;
+  padding: 4px 0;
+}
+
+.hamburger-link {
+  display: block;
+  padding: 10px 16px;
+  color: #cccccc;
+  text-decoration: none;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.hamburger-link:last-child {
+  border-bottom: none;
+}
+
+.hamburger-link--primary {
+  color: var(--color-brand);
+}
+
+.sidebar-header--chrome {
+  border-bottom: 2px solid var(--color-accent-strong);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.sidebar-header__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.sidebar-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-header__eyebrow--chrome {
+  font-size: 10px;
+  color: var(--color-accent-strong);
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.sidebar-header__title--chrome {
+  font-size: 16px;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.sidebar-header__title-accent {
+  color: var(--color-accent-strong);
+}
+
+.sidebar-header__intro--chrome {
+  font-size: 11px;
+  color: #888888;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.sidebar-header__meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 9px;
+  color: #666666;
+  border-top: 1px solid #1a1a1a;
+  padding-top: 8px;
+}
+
+.sidebar-header__meta-label {
+  color: var(--color-accent-strong);
+}
+
+.sidebar-header__meta-status {
+  color: var(--color-success-bright);
+}
+
+.sidebar-close-btn--inline {
+  position: static;
+  background: none;
+  border: none;
+  color: #888888;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+}
+
+.narrative-nav {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid #444444;
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(4px);
+}
+
+.narrative-nav .nav-btn {
+  /* herda .btn.btn--nav via classes no HTML */
+}

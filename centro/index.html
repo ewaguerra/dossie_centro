@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>PROTOCOLO 13 ALMAS — Dossiê Centro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <link href="/app/styles/tokens.css" rel="stylesheet" />
+  <link href="/app/styles/a11y.css" rel="stylesheet" />
+  <link href="/app/styles/components.css" rel="stylesheet" />
+  <link href="/vendor/maplibre/maplibre-gl.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/centro-vars.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/centro-chrome.css" rel="stylesheet" />
+  <link href="/pages/centro/centro-sidebar.css" rel="stylesheet" />
+</head>
+<body class="has-jesuit-frame">
+  <button id="sidebar-toggle" aria-label="Abrir/fechar sidebar" title="Alternar painel">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+
+  <nav class="hamburger-nav">
+    <button id="hamburger-btn" class="hamburger-btn btn btn--ghost btn--icon" type="button" aria-label="Menu" aria-expanded="false" aria-controls="hamburger-dropdown">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div id="hamburger-dropdown" class="hamburger-dropdown">
+      <a href="/landing/" class="hamburger-link hamburger-link--primary">&larr; PROTOCOLO</a>
+      <a href="/arquivo-morto/" class="hamburger-link">ARQUIVO MORTO</a>
+      <a href="/arquivista/" class="hamburger-link">ARQUIVISTA</a>
+    </div>
+  </nav>
+
+  <div class="jesuit-screen-frame" aria-hidden="true">
+    <div class="jesuit-frame jesuit-frame--top"></div>
+    <div class="jesuit-frame jesuit-frame--right"></div>
+    <div class="jesuit-frame jesuit-frame--bottom"></div>
+    <div class="jesuit-frame jesuit-frame--left"></div>
+    <div class="jesuit-frame-corner jesuit-frame-corner--tl"></div>
+    <div class="jesuit-frame-corner jesuit-frame-corner--tr"></div>
+    <div class="jesuit-frame-corner jesuit-frame-corner--br"></div>
+    <div class="jesuit-frame-corner jesuit-frame-corner--bl"></div>
+    <div class="protocol-alpha-banner"></div>
+  </div>
+
+  <button id="sidebar-open-btn" class="sidebar-open-btn" type="button" title="Abrir painel" aria-label="Abrir painel de camadas" hidden>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+
+  <aside id="panel" class="sidebar">
+    <div class="sidebar-header sidebar-header--chrome">
+      <div class="sidebar-header__row">
+        <p class="sidebar-header__eyebrow sidebar-header__eyebrow--chrome">PROTOCOLO 13 ALMAS</p>
+        <div class="sidebar-header__actions">
+          <span class="badge">CONFIDENCIAL</span>
+          <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-close-btn--inline" type="button" title="Fechar painel" aria-label="Fechar painel">✕</button>
+        </div>
+      </div>
+      <h1 class="sidebar-header__title--chrome"><span class="sidebar-header__title-accent">#</span> Dossiê: Centro</h1>
+      <p class="sidebar-header__intro sidebar-header__intro--chrome">Registo de evidências territoriais, zonas de interdição e anomalias recuperadas da região central de São Paulo.</p>
+      <div class="sidebar-header__meta">
+        <span><span class="sidebar-header__meta-label">ID:</span> CENTRO-2026</span>
+        <span><span class="sidebar-header__meta-label">FONTES:</span> 27 GEOJSON</span>
+        <span><span class="sidebar-header__meta-label">STATUS:</span> <span class="sidebar-header__meta-status">EM ANÁLISE</span></span>
+      </div>
+    </div>
+    <div id="sidebar-status" class="sidebar-status">Carregando…</div>
+    <div class="sidebar-extras">
+      <label class="sidebar-extras__row" for="openfreemap-3d-buildings-toggle">
+        <input id="openfreemap-3d-buildings-toggle" type="checkbox" />
+        <span class="sidebar-extras__text">
+          <strong>Maquete Estrutural 3D</strong> <span class="sidebar-extras__muted">(Projeção de Contenção Urbana)</span>
+        </span>
+      </label>
+    </div>
+    <div id="layers-panel" class="layers-list"></div>
+  </aside>
+
+  <div id="map"></div>
+
+  <aside id="feature-inspector" class="feature-inspector" hidden>
+    <div class="feature-inspector-header">
+      <div>
+        <div class="feature-inspector-kicker">Evidência Detetada</div>
+      </div>
+    </div>
+    <div class="feature-inspector-content"></div>
+  </aside>
+
+  <div id="narrative-nav" class="narrative-nav">
+    <button class="nav-btn btn btn--nav" type="button" data-nav-lng="-46.635" data-nav-lat="-23.545" data-nav-zoom="16" data-nav-pitch="40" aria-label="Navegar para o Triângulo Histórico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2"></circle></svg> OP:TRIÂNGULO</button>
+    <button class="nav-btn btn btn--nav" type="button" data-nav-lng="-46.6335" data-nav-lat="-23.5505" data-nav-zoom="17" data-nav-pitch="60" aria-label="Navegar para a Praça da Sé"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 21h16"></path><path d="M6 21V8l6-5 6 5v13"></path><path d="M9 12h6"></path><path d="M9 16h6"></path></svg> OP:SÉ</button>
+    <button class="nav-btn btn btn--nav" type="button" data-nav-lng="-46.6345" data-nav-lat="-23.5485" data-nav-zoom="16" data-nav-pitch="30" aria-label="Navegar para o Vale do Anhangabaú"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 18c3 0 3-6 6-6s3 6 6 6 3-6 6-6"></path><path d="M2 12c3 0 3-6 6-6s3 6 6 6 3-6 6-6"></path></svg> OP:ANHANGABAÚ</button>
+    <button class="nav-btn btn btn--nav" type="button" data-nav-lng="-46.6365" data-nav-lat="-23.547" data-nav-zoom="15.5" data-nav-pitch="0" aria-label="Navegar para a visão geral do mapa"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v4"></path><path d="M21 12h-4"></path><path d="M12 21v-4"></path><path d="M3 12h4"></path></svg> OP:GERAL</button>
+  </div>
+
+  <script src="/vendor/maplibre/maplibre-gl.js" defer></script>
+  <script src="/app/config/theme.js" defer></script>
+  <script src="/app/config/knowledge.js" defer></script>
+  <script src="/app/config/map-icons.js" defer></script>
+  <script src="/app/config/ui-texts.js" defer></script>
+  <script src="/app/utils/formatters.js" defer></script>
+  <script src="/app/utils/html-utils.js" defer></script>
+  <script src="/app/utils/value-utils.js" defer></script>
+  <script src="/app/utils/freshness-utils.js" defer></script>
+  <script src="/app/utils/card-utils.js" defer></script>
+  <script src="/app/renderers/popup-renderer.js" defer></script>
+  <script src="/pages/centro/utils.js" defer></script>
+  <script src="/pages/centro/features/triangulo-historico.js" defer></script>
+  <script src="/pages/centro/features/pistas.js" defer></script>
+  <script src="/pages/centro/features/poi-icons.js" defer></script>
+  <script src="/pages/centro/centro-runtime.js" defer></script>
+</body>
+</html>
