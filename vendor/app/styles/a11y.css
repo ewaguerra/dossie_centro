@@ -20,7 +20,7 @@
   outline-offset: 2px;
 }
 
-/* Centro HUD: foco com acento forense quando dentro do mapa */
+/* Centro HUD: outline no chrome forense (--color-accent-strong), não na identidade âmbar */
 .has-jesuit-frame :where(.nav-btn, .sidebar-close-btn, .sidebar-open-btn):focus-visible {
   outline-color: var(--color-accent-strong, #dc2626);
 }

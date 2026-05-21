@@ -35,7 +35,7 @@
 ## Pendências registradas (sem correção nesta fase)
 
 1. **Meta footer `#666`** — legível apenas como texto grande; revisar se usado em `<span>` pequeno.
-2. **Accent `#dc2626` em texto pequeno** — identidade visual forense; falha AA normal. Considerar `#ef4444` ou peso maior apenas com redesign aprovado.
+2. **Accent `#dc2626` em texto pequeno** — chrome HUD forense; falha AA normal. Regra: usar `--color-danger` (`#ef4444`) para alertas em texto pequeno; reservar `--color-accent-strong` para bordas/indicadores. Ver `docs/design-system/brand-decision.md`.
 3. **`.as-digital-aviso` `#404040`** — contraste insuficiente; módulo arquivista/digital, fora do runtime centro ativo.
 4. **Links `.nav-retorno-link` com opacidade 0.55** — falha AA; não alterados (restrição: sem redesenho UI).
 5. **Animações CSS** (`as-shake`, `as-reveal`) — `prefers-reduced-motion` adicionado em `centro-sidebar.css` para o módulo arquivista; landing tem regra própria.

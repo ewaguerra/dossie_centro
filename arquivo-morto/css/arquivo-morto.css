@@ -5,10 +5,10 @@
 :root {
   --am-bg:          #080c16;
   --am-surface:     #0d1526;
-  --am-border:      rgba(245, 158, 11, 0.14);
+  --am-border:      rgba(245, 158, 11, 0.14); /* 0.14 ≠ brand-border (0.18); mantido local */
   --am-text:        #d4c9b0;
   --am-text-muted:  #7a6e5e;
-  --am-amber:       #f59e0b;
+  /* Marca âmbar → var(--color-brand); dim narrativo sem token global equivalente */
   --am-amber-dim:   rgba(245, 158, 11, 0.35);
   --am-red:         #ef4444;
   --am-green:       #22c55e;
@@ -53,7 +53,7 @@ body.arquivo-morto-page {
   font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--am-amber);
+  color: var(--color-brand);
   margin-bottom: 0.6rem;
 }
 
@@ -242,7 +242,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
   font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--am-amber);
+  color: var(--color-brand);
   margin-bottom: 0.3rem;
 }
 
@@ -274,7 +274,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
 }
 
 .caderno-search:focus {
-  border-color: var(--am-amber);
+  border-color: var(--color-brand);
 }
 
 .filtros-chips {
@@ -301,8 +301,8 @@ body.arquivo-rota-vertical-ativa .registro-post {
 }
 
 .filtro-chip.active {
-  background: var(--am-amber);
-  border-color: var(--am-amber);
+  background: var(--color-brand);
+  border-color: var(--color-brand);
   color: #000;
   font-weight: bold;
 }
@@ -390,7 +390,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
 }
 
 .suma-pistas__conclusao strong {
-  color: var(--am-amber);
+  color: var(--color-brand);
 }
 
 .conclusao-final-discreta {
@@ -408,7 +408,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
   padding: 0.55rem 1.1rem;
   border: 1px solid var(--am-amber-dim);
   border-radius: 3px;
-  color: var(--am-amber);
+  color: var(--color-brand);
   font-family: var(--am-font-mono);
   font-size: 0.78rem;
   text-decoration: none;
@@ -521,7 +521,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
 }
 
 .youtube-anexo__fallback-link {
-  color: var(--am-amber);
+  color: var(--color-brand);
   text-underline-offset: 3px;
   transition: color 150ms ease;
 }
@@ -617,7 +617,7 @@ body.arquivo-glitch { cursor: crosshair; }
 .glitch-text:hover {
   animation: textGlitch 0.3s steps(2) infinite;
   color: #fff;
-  text-shadow: -2px 0 var(--am-red), 2px 0 var(--am-amber);
+  text-shadow: -2px 0 var(--am-red), 2px 0 var(--color-brand);
 }
 
 @keyframes textGlitch {

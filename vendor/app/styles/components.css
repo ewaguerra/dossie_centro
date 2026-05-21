@@ -37,6 +37,7 @@
 
 .btn--ghost {
   background: rgba(5, 5, 5, 0.9);
+  /* Borda HUD forense Centro — alerta/chrome, não identidade âmbar */
   border-color: var(--color-accent-strong);
   color: var(--color-accent-strong);
 }

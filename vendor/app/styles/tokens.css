@@ -3,20 +3,22 @@
  * Carregar antes de CSS específico de cada módulo.
  */
 :root {
-  /* Marca */
+  /* Identidade do produto (âmbar) — ver docs/design-system/brand-decision.md */
   --color-brand: #f59e0b;
   --color-brand-dim: #b45309;
   --color-brand-soft: rgba(245, 158, 11, 0.15);
   --color-brand-border: rgba(245, 158, 11, 0.18);
 
-  /* HUD forense / alerta (Centro) */
+  /* Chrome HUD forense (Centro) — bordas/moldura; não usar como identidade de marca */
   --color-accent-strong: #dc2626;
   --color-accent-strong-dark: #991b1b;
   --color-accent-strong-muted: #fca5a5;
   --color-accent-strong-bg: #fef2f2;
-  --color-danger: #dc2626;
 
-  /* Semântica default */
+  /* Alerta / perigo / hostilidade — preferir em texto pequeno (melhor contraste que accent-strong) */
+  --color-danger: #ef4444;
+
+  /* Acento semântico default = identidade (âmbar) */
   --color-accent: var(--color-brand);
 
   /* Neutros */

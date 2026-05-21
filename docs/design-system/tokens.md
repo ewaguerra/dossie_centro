@@ -6,13 +6,13 @@ Fonte: `vendor/app/styles/tokens.css`
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--color-brand` | `#f59e0b` | Marca do produto, nav cross-módulo |
+| `--color-brand` | `#f59e0b` | Marca — usado em landing e arquivo-morto via CSS (substitui `--amber` / `--am-amber`) |
 | `--color-brand-dim` | `#b45309` | Selos, confidencial |
 | `--color-brand-soft` | `rgba(245,158,11,0.15)` | Fundos sutis |
 | `--color-brand-border` | `rgba(245,158,11,0.18)` | Bordas nav-retorno |
-| `--color-accent-strong` | `#dc2626` | HUD forense Centro |
-| `--color-danger` | `#dc2626` | Erros / alerta |
-| `--color-accent` | `var(--color-brand)` | Default semântico |
+| `--color-accent-strong` | `#dc2626` | Chrome HUD forense Centro (bordas/moldura — não é marca) |
+| `--color-danger` | `#ef4444` | Alerta, erro, hostilidade — preferir em texto pequeno |
+| `--color-accent` | `var(--color-brand)` | Acento semântico default (= identidade âmbar) |
 
 ## Neutros
 

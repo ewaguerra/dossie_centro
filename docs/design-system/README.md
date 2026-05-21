@@ -43,7 +43,7 @@ Centro adicionalmente:
 ## Decisões documentadas
 
 - [Baseline visual](./baseline-visual.md) — estado pré-DS
-- [Decisão âmbar vs vermelho](./brand-decision.md)
+- [Decisão âmbar vs vermelho](./brand-decision.md) — identidade vs alerta vs HUD
 - [Tokens](./tokens.md)
 - [Componentes](./components.md)
 - [Auditoria final](./auditoria-final.md)

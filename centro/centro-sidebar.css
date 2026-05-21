@@ -2,6 +2,11 @@
    Centro Zone — Sidebar & Layout
    Tokens: centro/styles/centro-vars.css + vendor/app/styles/tokens.css
    Chrome UI: centro/styles/centro-chrome.css
+
+   Semântica de cor (brand-decision.md):
+   - Identidade âmbar → --color-brand / --color-accent
+   - HUD forense vermelho → --centro-accent (= --color-accent-strong)
+   - Alerta texto pequeno → --color-danger
    ========================================================= */
 
   /* Modularização parcial:
@@ -610,7 +615,8 @@ button.poi-card__choice {
 }
 
 button.poi-card__choice:hover:not(:disabled) {
-  border-color: var(--color-accent, #f59e0b);
+  /* Seleção POI: identidade âmbar (--color-accent = --color-brand) */
+  border-color: var(--color-accent);
   background: rgba(245,158,11,0.08);
   color: var(--color-text);
 }
@@ -621,7 +627,7 @@ button.poi-card__choice:disabled {
 }
 
 .poi-card__choice--selected {
-  border-color: var(--color-accent, #f59e0b) !important;
+  border-color: var(--color-accent) !important;
   background: rgba(245,158,11,0.12) !important;
   opacity: 1 !important;
   color: var(--color-text) !important;
@@ -633,7 +639,7 @@ button.poi-card__choice:disabled {
   font-size: 11px;
   font-family: 'Courier New', monospace;
   letter-spacing: 0.08em;
-  color: var(--color-accent, #f59e0b);
+  color: var(--color-accent);
   opacity: 0.75;
 }
 
@@ -1239,7 +1245,7 @@ button.poi-card__choice:disabled {
 .as-badge--bloqueado {
   background: rgba(220, 38, 38, 0.10);
   border-color: rgba(220, 38, 38, 0.45);
-  color: #ef4444;
+  color: var(--color-danger);
 }
 
 .as-badge--aberto {
@@ -1249,9 +1255,9 @@ button.poi-card__choice:disabled {
 }
 
 .as-badge--tipo {
-  background: rgba(245, 158, 11, 0.10);
+  background: var(--color-brand-soft);
   border-color: rgba(245, 158, 11, 0.35);
-  color: #f59e0b;
+  color: var(--color-brand);
 }
 
 .as-badge--camada {
@@ -1327,7 +1333,7 @@ button.poi-card__choice:disabled {
 .as-desbloqueio__label {
   font-size: 0.62rem;
   letter-spacing: 0.12em;
-  color: #ef4444;
+  color: var(--color-danger);
   display: block;
   margin-bottom: 0.2rem;
 }
@@ -1356,7 +1362,7 @@ button.poi-card__choice:disabled {
   font-size: 0.6rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #f59e0b;
+  color: var(--color-brand);
   margin: 0 0 0.4rem;
 }
 
@@ -1395,7 +1401,7 @@ button.poi-card__choice:disabled {
 
 .as-sponsor__nome {
   font-size: 0.72rem;
-  color: #f59e0b;
+  color: var(--color-brand);
   text-decoration: none;
   letter-spacing: 0.04em;
 }
@@ -1421,13 +1427,13 @@ a.as-sponsor__nome:hover {
   gap: 0.3rem;
   transition: color 0.15s;
 }
-.as-voltar:hover { color: #ef4444; }
+.as-voltar:hover { color: var(--color-danger); }
 
 .as-rota-titulo {
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #ef4444;
+  color: var(--color-danger);
   margin: 0 0 0.85rem;
   font-weight: 700;
 }
@@ -1496,7 +1502,7 @@ a.as-sponsor__nome:hover {
 .as-escolha-btn__letra {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #ef4444;
+  color: var(--color-danger);
   line-height: 1;
 }
 .as-escolha-btn__label {
@@ -1564,7 +1570,7 @@ a.as-sponsor__nome:hover {
   font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #ef4444;
+  color: var(--color-danger);
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.15s, border-color 0.15s;
@@ -1575,7 +1581,7 @@ a.as-sponsor__nome:hover {
 }
 .as-codigo-erro {
   font-size: 0.65rem;
-  color: #ef4444;
+  color: var(--color-danger);
   margin: 0.4rem 0 0;
   min-height: 1em;
   letter-spacing: 0.04em;
@@ -1660,7 +1666,7 @@ a.as-sponsor__nome:hover {
   font-size: 0.55rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #dc2626;
+  color: var(--color-danger);
   margin-bottom: 0.35rem;
 }
 .as-tooltip__nome {

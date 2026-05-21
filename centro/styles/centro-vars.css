@@ -1,5 +1,11 @@
 /**
- * Tokens locais do módulo Centro — mapeiam tokens globais para HUD forense.
+ * Tokens locais do Centro.
+ *
+ * Identidade de marca (âmbar): --color-brand / --color-accent (tokens.css).
+ * Chrome HUD forense (vermelho): --centro-accent → --color-accent-strong.
+ *
+ * Nota: --centro-accent é nome legado — mapeia vermelho de alerta/chrome,
+ * não o acento âmbar do produto. Ver docs/design-system/brand-decision.md.
  */
 :root {
   --centro-accent: var(--color-accent-strong);
@@ -21,8 +27,9 @@
   --centro-sidebar-gap: 12px;
 
   --jesuit-frame-bg: #050505;
+  /* Nome histórico "blue" — cor real = vermelho HUD (--color-accent-strong) */
   --jesuit-frame-blue: var(--color-accent-strong);
-  --jesuit-frame-blue-soft: #ef4444;
+  --jesuit-frame-blue-soft: var(--color-danger);
   --jesuit-frame-shadow: rgba(220, 38, 38, 0.15);
   --jesuit-frame-size-top: 56px;
   --jesuit-frame-size-side: 44px;
