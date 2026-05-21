@@ -1,0 +1,444 @@
+/* Custom Utility Classes to replace Tailwind CDN */
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-grow { flex-grow: 1; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.p-10 { padding: 2.5rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-8 { padding-left: 2rem; padding-right: 2rem; }
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.pb-2 { padding-bottom: 0.5rem; }
+
+.m-0 { margin: 0; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-12 { margin-top: 3rem; }
+.ml-4 { margin-left: 1rem; }
+.mr-2 { margin-right: 0.5rem; }
+
+.w-full { width: 100%; }
+.w-12 { width: 3rem; }
+.h-12 { height: 3rem; }
+.h-full { height: 100%; }
+.min-h-full { min-height: 100%; }
+.max-w-md { max-width: 28rem; }
+
+.text-white { color: #ffffff; }
+.text-black { color: #000000; }
+.text-red-500 { color: #ef4444; }
+.text-red-600 { color: #dc2626; }
+.text-gray-500 { color: #6b7280; }
+.text-gray-700 { color: #374151; }
+.text-system-green { color: #00ff41; }
+
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-xl { font-size: 1.25rem; }
+.text-3xl { font-size: 1.875rem; }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.font-serif { font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; }
+
+.uppercase { text-transform: uppercase; }
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-tighter { letter-spacing: -0.05em; }
+.tracking-widest { letter-spacing: 0.1em; }
+.text-center { text-align: center; }
+.underline { text-decoration: underline; }
+
+.bg-black { background-color: #000000; }
+.bg-white { background-color: #ffffff; }
+.bg-transparent { background-color: transparent; }
+.bg-black-5 { background-color: rgba(0, 0, 0, 0.05); }
+.bg-white-80 { background-color: rgba(255, 255, 255, 0.8); }
+.bg-paper { background-color: #e1dfdd; }
+.bg-word-blue { background-color: #2b579a; }
+.bg-system-dark { background-color: #1a1a1a; }
+.bg-river-blue { background-color: rgba(59, 130, 246, 0.2); }
+
+.border { border: 1px solid currentColor; }
+.border-none { border: none; }
+.border-b { border-bottom-width: 1px; }
+.border-t { border-top-width: 1px; }
+.border-gray-200 { border-color: #e5e7eb; }
+.border-gray-300 { border-color: #d1d5db; }
+.border-system-green { border-color: #00ff41; }
+.border-dark { border-color: #333; }
+
+.rounded { border-radius: 0.25rem; }
+.rounded-lg { border-radius: 0.5rem; }
+
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+:root {
+  /* TEMA DIA (Windows 11 Forense) */
+  --bg-image: linear-gradient(135deg, #1a1a2e 0%, #16213e 45%, #0f3460 100%);
+  --bg-overlay: rgba(230, 235, 240, 0.2);
+  --win-bg: rgba(255, 255, 255, 0.75);
+  --win-border: rgba(255, 255, 255, 0.5);
+  --win-header-bg: rgba(240, 240, 240, 0.85);
+  --win-header-text: #1a1a1a;
+  --text-primary: #111;
+  --text-secondary: #4a5568;
+  --icon-text: #fff;
+  --taskbar-bg: rgba(243, 243, 243, 0.85);
+  --taskbar-text: #111;
+  --system-green: #00ff41;
+  --system-red: #ff003c;
+  --blur-amount: blur(20px);
+}
+
+body.night-mode {
+  /* TEMA NOITE (Cyber-Horror) */
+  --bg-image: linear-gradient(160deg, #0a0000 0%, #1a0505 40%, #050505 100%);
+  --bg-overlay: rgba(5, 0, 0, 0.9);
+  --win-bg: rgba(10, 5, 5, 0.85);
+  --win-border: rgba(255, 0, 60, 0.4);
+  --win-header-bg: rgba(20, 0, 0, 0.9);
+  --win-header-text: #ff003c;
+  --text-primary: #00ff41;
+  --text-secondary: #ff003c;
+  --icon-text: #ff003c;
+  --taskbar-bg: rgba(5, 0, 0, 0.95);
+  --taskbar-text: #ff003c;
+}
+
+body, html { 
+  height: 100%; 
+  margin: 0; 
+  overflow: hidden; 
+  font-family: 'Segoe UI', sans-serif; 
+  background-color: #000; 
+  color: var(--text-primary);
+}
+
+#desktop-environment {
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+.shadow-system { box-shadow: 0 0 10px rgba(0, 255, 65, 0.3); }
+
+.opacity-10 { opacity: 0.1; }
+.opacity-50 { opacity: 0.5; }
+.opacity-80 { opacity: 0.8; }
+.hover-opacity-100:hover { opacity: 1; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+
+.hidden { display: none; }
+.overflow-y-auto { overflow-y: auto; }
+.pointer-events-none { pointer-events: none; }
+.cursor-pointer { cursor: pointer; }
+.outline-none { outline: 2px solid transparent; outline-offset: 2px; }
+.backdrop-blur-md { backdrop-filter: blur(12px); }
+
+/* Specific fixes */
+/* ═══════════════════════════════════════════════════════════════════
+   EXPLORADOR DE FICHEIROS — File Explorer UI
+   Integrado com SVG icons inline e ScrambleText do ReactBits
+═══════════════════════════════════════════════════════════════════ */
+
+/* Layout raiz */
+.file-explorer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  background: #0a0a0a;
+  color: #00ff41;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  overflow: hidden;
+}
+
+/* ── Barra de endereço ──────────────────────────────────────────── */
+.fe-addressbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: #111;
+  border-bottom: 1px solid rgba(0,255,65,0.15);
+  flex-shrink: 0;
+}
+
+.fe-nav-btns { display: flex; gap: 2px; }
+
+.fe-nav-btn {
+  background: transparent;
+  border: 1px solid rgba(0,255,65,0.2);
+  color: #00ff41;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+
+.fe-nav-btn:hover:not(:disabled) { background: rgba(0,255,65,0.12); }
+.fe-nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+.fe-path {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(0,255,65,0.2);
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.fe-sep { opacity: 0.4; }
+.fe-path-active { color: #00f3ff; font-weight: bold; }
+
+.fe-search {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(0,255,65,0.2);
+  padding: 3px 8px;
+  border-radius: 2px;
+  width: 140px;
+}
+
+.fe-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #00ff41;
+  font-family: inherit;
+  font-size: 10px;
+  width: 100%;
+}
+
+.fe-search input::placeholder { color: rgba(0,255,65,0.3); }
+
+/* ── Toolbar ────────────────────────────────────────────────────── */
+.fe-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: #111;
+  border-bottom: 1px solid rgba(0,255,65,0.12);
+  flex-shrink: 0;
+}
+
+.fe-toolbar-group { display: flex; gap: 2px; }
+.fe-toolbar-sep {
+  width: 1px;
+  height: 16px;
+  background: rgba(0,255,65,0.15);
+  margin: 0 4px;
+}
+
+.fe-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(0,255,65,0.7);
+  padding: 2px 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 10px;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+
+.fe-tool-btn:hover {
+  background: rgba(0,255,65,0.1);
+  border-color: rgba(0,255,65,0.3);
+  color: #00ff41;
+}
+
+.fe-tool-btn.active {
+  background: rgba(0,255,65,0.15);
+  border-color: rgba(0,255,65,0.4);
+  color: #00ff41;
+}
+
+/* ── Corpo (scroll) ─────────────────────────────────────────────── */
+.fe-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,255,65,0.3) transparent;
+}
+
+/* ── Grid de pastas ─────────────────────────────────────────────── */
+.clues-grid, .fe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+  gap: 6px;
+}
+
+/* ── Pasta individual ───────────────────────────────────────────── */
+.fe-folder-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px 6px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s, border-color 0.12s;
+  min-width: 0;
+}
+
+.fe-folder-item:hover {
+  background: rgba(0,255,65,0.07);
+  border-color: rgba(0,255,65,0.2);
+}
+
+.fe-folder-item.selected {
+  background: rgba(0,255,65,0.14);
+  border-color: rgba(0,255,65,0.5);
+  box-shadow: 0 0 8px rgba(0,255,65,0.15);
+}
+
+/* Animação de "abertura" ao double-click */
+@keyframes fe-opening {
+  0%   { transform: scale(1);    filter: brightness(1); }
+  30%  { transform: scale(1.12); filter: brightness(2); }
+  60%  { transform: scale(0.95); filter: brightness(1.5); }
+  100% { transform: scale(1);    filter: brightness(1); }
+}
+
+.fe-folder-item.fe-folder-opening {
+  animation: fe-opening 0.4s ease forwards;
+}
+
+.fe-folder-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.15s;
+}
+
+.fe-folder-item:hover .fe-folder-icon {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.fe-folder-item.selected .fe-folder-icon {
+  filter: drop-shadow(0 0 10px currentColor) brightness(1.3);
+}
+
+.fe-folder-name {
+  font-size: 8px;
+  font-family: 'Courier New', monospace;
+  color: rgba(0,255,65,0.85);
+  text-align: center;
+  word-break: break-all;
+  line-height: 1.3;
+  max-width: 80px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.fe-folder-item:hover .fe-folder-name,
+.fe-folder-item.selected .fe-folder-name {
+  color: #00ff41;
+}
+
+/* ── Vista Lista ────────────────────────────────────────────────── */
+.fe-list {
+  display: flex !important;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.fe-list .fe-folder-item {
+  flex-direction: row;
+  padding: 4px 8px;
+  gap: 8px;
+  border-radius: 2px;
+}
+
+.fe-list .fe-folder-icon svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.fe-list .fe-folder-name {
+  font-size: 10px;
+  max-width: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+/* ── Barra de status ────────────────────────────────────────────── */
+.fe-statusbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 10px;
+  background: #0d0d0d;
+  border-top: 1px solid rgba(0,255,65,0.12);
+  font-size: 9px;
+  color: rgba(0,255,65,0.55);
+  flex-shrink: 0;
+}
+
+.fe-status-sep { opacity: 0.3; }
+.fe-status-info { margin-left: auto; color: #ff003c; font-weight: bold; letter-spacing: 1px; }
+
+/* Compat: mantém clue-item legado invisível se existir */
+.clue-item { display: none; }
+.folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 1rem; }
+.scrollbar-thin { scrollbar-width: thin; }
+
+/* --- LOGIN SCREEN --- */
+#login-screen { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; transition: opacity 0.8s; }
+.avatar-win { width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #3a3a5c, #1a1a2e); border: 3px solid rgba(255,255,255,0.1); margin-bottom: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.pass-input-win { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 12px 24px; width: 300px; outline: none; text-align: center; border-radius: 4px; font-size: 15px; }
+
+/* Start Menu */
+#start-menu { position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%) translateY(20px); width: 420px; height: 500px; background: var(--win-bg); border: 1px solid var(--win-border); border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); z-index: 999; display: none; flex-direction: column; backdrop-filter: var(--blur-amount); opacity: 0; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#start-menu.active { display: flex; opacity: 1; transform: translateX(-50%) translateY(0); }
+.start-pinned { padding: 30px; flex-grow: 1; }
+.start-footer { height: 64px; background: rgba(0,0,0,0.03); border-top: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; padding: 0 30px; }
