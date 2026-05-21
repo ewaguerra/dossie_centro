@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500;700&display=swap');
+
+:root {
+    /* TEMA DIA (Windows 11 Oficial) */
+    --bg-image: linear-gradient(135deg, #1a1a2e 0%, #16213e 45%, #0f3460 100%);
+    --bg-overlay: rgba(230, 235, 240, 0.2);
+    --win-bg: rgba(255, 255, 255, 0.75);
+    --win-border: rgba(255, 255, 255, 0.5);
+    --win-header-bg: rgba(240, 240, 240, 0.85);
+    --win-header-text: #1a1a1a;
+    --text-primary: #111;
+    --text-secondary: #4a5568;
+    --icon-text: #fff;
+    --taskbar-bg: rgba(243, 243, 243, 0.85);
+    --taskbar-text: #111;
+    --sys-blue: #0078d4;
+    --sys-word: #2b579a;
+    --sys-folder: #fbd971;
+    --sys-folder-back: #e3a92b;
+    --blur-amount: blur(20px);
+    --selection: rgba(0, 120, 212, 0.2);
+}
+
+body.night-mode {
+    /* TEMA NOITE (Cyber-Horror) */
+    --bg-image: linear-gradient(160deg, #0a0000 0%, #1a0505 40%, #050505 100%);
+    --bg-overlay: rgba(5, 0, 0, 0.9);
+    --win-bg: rgba(10, 5, 5, 0.85);
+    --win-border: rgba(255, 0, 60, 0.4);
+    --win-header-bg: rgba(20, 0, 0, 0.9);
+    --win-header-text: #ff003c;
+    --text-primary: #00ff41;
+    --text-secondary: #ff003c;
+    --icon-text: #ff003c;
+    --taskbar-bg: rgba(5, 0, 0, 0.95);
+    --taskbar-text: #ff003c;
+    --sys-blue: #ff003c;
+    --sys-word: #4a0000;
+    --sys-folder: #4a0000;
+    --sys-folder-back: #2d0000;
+}
+
+body, html { height: 100%; margin: 0; overflow: hidden; font-family: 'Segoe UI', sans-serif; background-color: #000; transition: background-color 0.8s ease; user-select: none; }
+
+.crt::after {
+    content: " "; display: block; position: fixed; inset: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+    z-index: 9999; background-size: 100% 2px; pointer-events: none; opacity: 0.05; transition: opacity 0.5s;
+}
+body.night-mode.crt::after { opacity: 0.15; }
+
+#desktop-environment { position: relative; width: 100%; height: 100%; background-image: var(--bg-image); background-size: cover; background-position: center; display: none; transition: background-image 1s; }
+#desktop-environment::before { content: ""; position: absolute; inset: 0; background: var(--bg-overlay); backdrop-filter: blur(2px); transition: background 1s; }
+
+/* --- SIDEBAR & CARDS THEMATIC DESIGN --- */
+.icon-container { 
+    position: absolute; top: 0; left: 0; bottom: 48px; width: 280px; 
+    background: rgba(15, 15, 18, 0.95); border-right: 1px solid rgba(255,255,255,0.1); 
+    display: flex; flex-direction: column; gap: 15px; padding: 25px 20px; z-index: 10; 
+    box-shadow: 5px 0 25px rgba(0,0,0,0.6); backdrop-filter: blur(10px); 
+    overflow-y: auto;
+}
+body.night-mode .icon-container { background: rgba(5, 0, 0, 0.95); border-right-color: #ff003c; }
+
+.icon-container::before { 
+    content: "PAINEL DE EVIDÊNCIAS"; color: #aaa; font-size: 12px; font-weight: 700; 
+    letter-spacing: 2px; border-bottom: 1px dashed #444; padding-bottom: 10px; margin-bottom: 10px; 
+}
+body.night-mode .icon-container::before { content: "DADOS SOTERRADOS"; color: #ff003c; border-bottom-color: #ff003c; }
+
+.desktop-icon, .folder-item, .clue-item { 
+    background: #f4f0e6; border: 1px solid #dcd3c6; border-radius: 2px; padding: 12px; 
+    box-shadow: 2px 3px 6px rgba(0,0,0,0.3); position: relative; cursor: pointer; transition: all 0.2s; 
+    display: flex; align-items: center; gap: 15px; color: #111; 
+}
+
+.desktop-icon { width: 100%; flex-direction: row; }
+.folder-item, .clue-item { flex-direction: column; padding: 15px 10px; }
+
+/* Tape effect for evidence cards */
+.desktop-icon::after, .folder-item::after, .clue-item::after { 
+    content: ""; position: absolute; top: -6px; left: 50%; transform: translateX(-50%) rotate(-2deg); 
+    width: 35px; height: 14px; background: rgba(255, 255, 255, 0.5); 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-left: 1px dashed rgba(0,0,0,0.1); border-right: 1px dashed rgba(0,0,0,0.1); 
+}
+
+body.night-mode .desktop-icon, body.night-mode .folder-item, body.night-mode .clue-item { 
+    background: #0a0000; border: 1px solid #ff003c; color: #ff003c; box-shadow: 0 0 8px rgba(255,0,60,0.2); 
+}
+body.night-mode .desktop-icon::after, body.night-mode .folder-item::after, body.night-mode .clue-item::after { 
+    background: rgba(255, 0, 60, 0.1); border-color: rgba(255,0,60,0.3); 
+}
+
+.desktop-icon:hover, .folder-item:hover, .clue-item:hover { 
+    transform: translateY(-2px) rotate(1deg); box-shadow: 4px 6px 12px rgba(0,0,0,0.4); 
+}
+body.night-mode .desktop-icon:hover, body.night-mode .folder-item:hover, body.night-mode .clue-item:hover { 
+    box-shadow: 0 0 15px rgba(255,0,60,0.5); 
+}
+
+.desktop-icon svg, .folder-item svg, .clue-item svg { width: 32px; height: 32px; filter: none; flex-shrink: 0; }
+.desktop-icon span, .folder-item span, .clue-item span { 
+    color: inherit; font-size: 11px; font-weight: 600; text-shadow: none; font-family: var(--font-code, 'Courier New', monospace); line-height: 1.3; text-align: left; 
+}
+.folder-item span, .clue-item span { text-align: center; }
+
+/* --- WINDOWS --- */
+.win { position: absolute; background: var(--win-bg); border: 1px solid var(--win-border); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; z-index: 50; backdrop-filter: var(--blur-amount); -webkit-backdrop-filter: var(--blur-amount); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.win-header { background: var(--win-header-bg); color: var(--win-header-text); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; cursor: move; font-size: 12px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.win-controls { display: flex; gap: 12px; align-items: center; }
+.win-controls span { cursor: pointer; opacity: 0.7; transition: 0.2s; font-size: 12px; }
+.close-btn:hover { color: #e81123; transform: scale(1.1); }
+.win-content { padding: 20px; overflow-y: auto; flex-grow: 1; color: var(--text-primary); font-size: 14px; }
+
+/* --- WORD --- */
+.word-ribbon { background: #f3f2f1; padding: 6px 12px; font-size: 11px; color: #666; border-bottom: 1px solid #e1dfdd; display: flex; gap: 15px; }
+body.night-mode .word-ribbon { background: #1a0000; color: #ff003c; border-bottom-color: #ff003c; }
+.word-page { background: white; margin: 15px; padding: 40px; box-shadow: 0 0 15px rgba(0,0,0,0.1); min-height: 300px; position: relative; }
+body.night-mode .word-page { background: #050000; }
+.blur-text { filter: blur(5px); user-select: none; opacity: 0.6; transition: 0.8s; }
+body.night-mode .blur-text { color: #ff003c; filter: blur(3px); opacity: 0.9; }
+
+/* --- FOLDERS --- */
+.folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 15px; padding: 10px; }
+.locked-msg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #ff003c; font-weight: 800; font-size: 10px; opacity: 0; pointer-events: none; z-index: 10; text-shadow: 0 0 5px black; }
+
+/* --- TASKBAR --- */
+#taskbar { position: fixed; bottom: 0; left: 0; width: 100%; height: 48px; background: var(--taskbar-bg); border-top: 1px solid var(--win-border); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: var(--blur-amount); -webkit-backdrop-filter: var(--blur-amount); transition: all 0.5s; }
+.task-icons { display: flex; gap: 4px; align-items: center; }
+.task-btn { width: 40px; height: 40px; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+.task-btn:hover { background: rgba(255,255,255,0.25); }
+.task-btn svg { width: 24px; height: 24px; fill: var(--taskbar-text); }
+#start-btn svg { fill: #0078d4; }
+body.night-mode #start-btn svg { fill: #ff003c; animation: pulse-red 2s infinite; }
+.task-right { position: absolute; right: 15px; display: flex; align-items: center; gap: 15px; color: var(--taskbar-text); font-size: 12px; font-weight: 500; }
+
+/* --- EFFECTS --- */
+@keyframes glitch { 0% { transform: translate(0); } 20% { transform: translate(-8px, 4px); filter: hue-rotate(90deg); } 40% { transform: translate(8px, -4px); filter: invert(0.2); } 100% { transform: translate(0); } }
+.system-glitch { animation: glitch 0.25s infinite; }
+@keyframes pulse-red { 0%, 100% { filter: drop-shadow(0 0 2px #ff003c); } 50% { filter: drop-shadow(0 0 10px #ff003c); } }
+
+#phantom-cursor { position: fixed; width: 18px; height: 22px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff003c"><path d="M7,2L21,11L14,12L17,22L14,23L11,13L4,16L7,2Z"/></svg>') no-repeat; pointer-events: none; z-index: 10001; opacity: 0; transition: opacity 0.5s; }
+
+#loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; flex-direction: column; color: white; font-family: var(--font-code, 'Courier New', monospace); }
+.spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--sys-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* --- TERMINAL ESPECÍFICO --- */
+#term-body a { color: #4facfe; text-decoration: underline; pointer-events: auto; }
+body.night-mode #term-body a { color: #ffeb3b; }
+#term-body a:hover { filter: brightness(1.2); }
+.typewriter-cursor::after { content: '█'; animation: blink 1s infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* --- LOGIN SCREEN --- */
+#login-screen { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; transition: opacity 0.8s; }
+.avatar-win { width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #3a3a5c, #1a1a2e); border: 3px solid rgba(255,255,255,0.1); margin-bottom: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.pass-input-win { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 12px 24px; width: 300px; outline: none; text-align: center; border-radius: 4px; font-size: 15px; }
+
+/* Start Menu */
+#start-menu { position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%) translateY(20px); width: 420px; height: 500px; background: var(--win-bg); border: 1px solid var(--win-border); border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); z-index: 999; display: none; flex-direction: column; backdrop-filter: var(--blur-amount); opacity: 0; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#start-menu.active { display: flex; opacity: 1; transform: translateX(-50%) translateY(0); }
+.start-pinned { padding: 30px; flex-grow: 1; }
+.start-footer { height: 64px; background: rgba(0,0,0,0.03); border-top: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; padding: 0 30px; }
+
+.clues-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 15px; padding: 10px; }
