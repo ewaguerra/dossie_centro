@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anhangabaú: O Arquivo dos Soterrados</title>
+  <link rel="stylesheet" href="/app/styles/tokens.css" />
+  <link rel="stylesheet" href="/app/styles/a11y.css" />
+  <link rel="stylesheet" href="/app/styles/components.css" />
+  <link rel="stylesheet" href="landing.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       PORTAL DE ACESSO — tela de senha
+  ════════════════════════════════════════════════ -->
+  <div id="portal-acesso" class="portal-acesso">
+    <div class="portal-ruido"></div>
+
+    <div class="portal-conteudo">
+      <img
+        src="/pages/centro/assets/ELEVADOR_FECHADO.webp"
+        alt="Elevador fechado"
+        class="portal-elevador"
+        id="portal-elevador-img"
+      />
+
+      <div class="portal-form-wrap">
+        <p class="portal-label">ACESSO RESTRITO</p>
+        <p class="portal-sublabel">Insira o código de patrocínio</p>
+        <div class="portal-input-row">
+          <input
+            type="password"
+            id="portal-senha"
+            class="portal-input"
+            placeholder="••••••"
+            maxlength="20"
+            autocomplete="off"
+            autofocus
+          />
+          <button id="portal-btn" class="portal-btn" type="button">ENTRAR</button>
+        </div>
+        <p class="portal-erro" id="portal-erro" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       NOISE TEXTURE OVERLAY — arquivo antigo
+  ════════════════════════════════════════════════ -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════
+       GLITCH CANVAS BACKGROUND
+  ════════════════════════════════════════════════ -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ══════════════════════════════════════════════
+       SCANLINES OVERLAY
+  ════════════════════════════════════════════════ -->
+  <div class="scanlines"></div>
+
+  <!-- ══════════════════════════════════════════════
+       NAV
+  ════════════════════════════════════════════════ -->
+  <nav class="nav">
+    <span class="nav-logo">ARQUIVO//SP</span>
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#modulos">Módulos</a>
+      <a href="#patrocinio">Patrocínio</a>
+    </div>
+    <a href="../centro/index.html" class="nav-cta">Acessar Demo</a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-grid-overlay"></div>
+
+    <!-- ── 13 ALMAS EM PARALLAX ──────────────────── -->
+    <!-- almas de fundo: atrás do banner -->
+    <div class="almas-stage almas-back" id="almas-back" aria-hidden="true"></div>
+
+    <!-- Partículas de poeira flutuando -->
+    <div class="hero-particles" id="hero-particles"></div>
+
+    <!-- BANNER — camada do meio, mais para trás -->
+    <div class="hero-banner-layer">
+      <p class="hero-eyebrow" data-glitch="PROTOCOLO 13 ALMAS">PROTOCOLO 13 ALMAS</p>
+      <div class="hero-banner-wrap">
+        <img
+          src="/pages/centro/assets/BANNER_SITE_LA.webp"
+          alt="Anhangabaú: O Arquivo dos Soterrados"
+          class="hero-banner-img"
+          id="hero-banner"
+        />
+      </div>
+    </div>
+
+    <!-- TEXTOS + CTAs — na frente de tudo -->
+    <div class="hero-center">
+      <p class="hero-desc">
+        Uma experiência transmídia de ficção interativa, cartografia forense<br/>
+        e horror urbano ambientada no coração soterrado de São Paulo.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#sobre" class="btn-primary">
+          <span class="btn-inner">Entender o Projeto</span>
+          <span class="btn-glow"></span>
+        </a>
+        <a href="#patrocinio" class="btn-ghost">Patrocínio</a>
+        <a href="#modulos" class="btn-ghost btn-ghost-map">
+          <span class="btn-map-dot"></span>Módulos Interativos
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" data-target="13">0</span><span class="stat-label">Fases investigativas</span></div>
+        <div class="stat stat-divider"></div>
+        <div class="stat"><span class="stat-num" data-target="177">0</span><span class="stat-label">Monumentos urbanos no mapa</span></div>
+        <div class="stat stat-divider"></div>
+        <div class="stat"><span class="stat-num" data-target="300">0</span><span class="stat-label">Rios soterrados sob o concreto</span></div>
+        <div class="stat stat-divider"></div>
+        <div class="stat"><span class="stat-num" data-target="3">0</span><span class="stat-label">Módulos interativos</span></div>
+      </div>
+    </div>
+
+    <!-- almas de frente: na frente do banner -->
+    <div class="almas-stage almas-front" id="almas-front" aria-hidden="true"></div>
+
+    <!-- scroll hint -->
+    <div class="hero-scroll-hint">
+      <span class="scroll-line"></span>
+      <span class="scroll-label">DESCER</span>
+    </div>
+  </section>
+
+  <div class="neon-divider" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════
+       SOBRE
+  ════════════════════════════════════════════════ -->
+  <section id="sobre" class="section sobre">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// DOSSIÊ DO PROJETO</span>
+        <h2 class="section-title">O que está <span class="accent">soterrado</span><br/>sob <span class="glitch-word" data-glitch="São Paulo">São Paulo</span>?</h2>
+      </div>
+
+      <!-- LEAD + MANIFESTO -->
+      <div class="dossie-lead-row">
+        <div class="dossie-lead-col">
+          <img
+            src="/pages/centro/assets/MARCO_ZERO.png"
+            alt="Marco Zero"
+            class="sobre-marco-zero-img sobre-marco-zero-img--full"
+          />
+          <p class="dossie-lead">
+            Sob as avenidas da maior metrópole da América do Sul jazem mais de 300 rios apagados,
+            territórios indígenas silenciados e uma fundação que o concreto tentou selar para sempre.
+          </p>
+        </div>
+        <div class="dossie-registro">
+          <!-- coluna esquerda: imagem + carimbo -->
+          <div class="dossie-registro__foto">
+            <div class="dossie-registro__foto-wrap">
+              <img src="/pages/centro/assets/ARQUIVISTA.png" alt="O Arquivista" />
+              <div class="dossie-registro__foto-noise"></div>
+            </div>
+            <div class="dossie-registro__carimbo">CLASSIFICADO</div>
+            <p class="dossie-registro__foto-leg">SUJEITO: O ARQUIVISTA<br/>STATUS: ATIVO · LOCALIZAÇÃO: DESCONHECIDA</p>
+          </div>
+
+          <!-- coluna direita: texto do dossiê -->
+          <div class="dossie-registro__corpo">
+            <div class="dossie-registro__header">
+              <span class="dossie-registro__num">REG-001</span>
+              <span class="dossie-registro__nivel">NÍVEL SIGMA-9</span>
+            </div>
+            <div class="dossie-registro__fita">TRANSMISSÃO CIFRADA — NÃO DISTRIBUIR</div>
+
+            <blockquote class="dossie-registro__quote">
+              <p>Não olhe para o céu.</p>
+              <p>Eles querem que você olhe para cima.</p>
+              <p>Mas a verdade está embaixo.</p>
+              <p>Sob o concreto. Sob o asfalto.<br/>Sob os alicerces da metrópole.</p>
+              <p class="dossie-registro__quote-destaque">Os rios ainda correm.<br/>As almas ainda resistem.</p>
+            </blockquote>
+
+            <div class="dossie-registro__assinatura">
+              <span class="dossie-registro__traço"></span>
+              <span class="dossie-registro__nome">O Arquivista</span>
+            </div>
+
+            <div class="dossie-registro__scanner" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINHA CLASSIFICATÓRIA -->
+      <div class="dossie-classif">
+        <span class="dossie-classif__linha">CLASSIFICAÇÃO: SIGMA-9 &nbsp;·&nbsp; ACESSO RESTRITO &nbsp;·&nbsp; PROTOCOLO 13 ALMAS</span>
+      </div>
+
+      <!-- CARDS DE EVIDÊNCIA: o que é o projeto -->
+      <div class="dossie-evidencias">
+        <div class="dossie-evidencia">
+          <div class="dossie-evidencia__num">001</div>
+          <div class="dossie-evidencia__corpo">
+            <h4 class="dossie-evidencia__titulo">O Projeto</h4>
+            <p class="dossie-evidencia__texto">
+              <strong>Anhangabaú: O Arquivo dos Soterrados</strong> é uma experiência transmídia
+              de investigação histórica. Cruzando literatura de suspense, arqueologia urbana e
+              gamificação, transforma o público em detetives encarregados de desvendar os segredos
+              fundacionais de São Paulo.
+            </p>
+          </div>
+        </div>
+
+        <div class="dossie-evidencia">
+          <div class="dossie-evidencia__num">002</div>
+          <div class="dossie-evidencia__corpo">
+            <h4 class="dossie-evidencia__titulo">Camada 1 — A Porta de Entrada</h4>
+            <p class="dossie-evidencia__texto">
+              Um thriller investigativo que introduz o leitor ao mistério central.
+              Os primeiros enigmas estão no texto. Quem lê já está dentro do caso.
+            </p>
+            <span class="dossie-evidencia__tag">E-BOOK · FICÇÃO INTERATIVA</span>
+          </div>
+        </div>
+
+        <div class="dossie-evidencia">
+          <div class="dossie-evidencia__num">003</div>
+          <div class="dossie-evidencia__corpo">
+            <h4 class="dossie-evidencia__titulo">Camada 2 — A Máquina do Tempo</h4>
+            <p class="dossie-evidencia__texto">
+              Cartografia digital avançada com MapLibre GL JS. O jogador raspa o asfalto moderno
+              e revela a geografia original — rios soterrados como o Saracura e o Itororó,
+              exatamente onde estão hoje, de 1554 a 2026.
+            </p>
+            <span class="dossie-evidencia__tag">MAPA INTERATIVO · GEOESPACIAL</span>
+          </div>
+        </div>
+
+        <div class="dossie-evidencia">
+          <div class="dossie-evidencia__num">004</div>
+          <div class="dossie-evidencia__corpo">
+            <h4 class="dossie-evidencia__titulo">Camada 4 — O Blog do Arquivista</h4>
+            <p class="dossie-evidencia__texto">
+              Um diário de campo disfarçado de blog. O Arquivista publica registros,
+              fragmentos cifrados e teorias sobre o caso — cada post esconde um puzzle,
+              uma coordenada ou uma instrução velada. Quem lê com atenção encontra
+              o que os outros deixam passar.
+            </p>
+            <span class="dossie-evidencia__tag">BLOG · PUZZLES · INVESTIGAÇÃO PROFUNDA</span>
+            <img
+              src="/pages/centro/assets/DOSSIE_ID.png"
+              alt="Dossiê de Identificação"
+              class="dossie-evidencia__img-right"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- TAGS -->
+      <div class="sobre-tags">
+        <span>Horror Urbano</span>
+        <span>Cartografia Forense</span>
+        <span>Ficção Interativa</span>
+        <span>História Especulativa</span>
+        <span>Gamificação</span>
+        <span>Mapa Real Interativo</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════
+       MÓDULOS — TRÊS CAMADAS
+  ════════════════════════════════════════════════ -->
+  <section id="modulos" class="section modulos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// ARQUITETURA NARRATIVA</span>
+        <div class="section-title-row">
+          <img
+            src="/pages/centro/assets/ICONE_ID_2.png"
+            alt="Ícone de identificação"
+            class="modulos-icone-id"
+          />
+          <h2 class="section-title">Três camadas.<br/><span class="accent">Uma investigação.</span></h2>
+        </div>
+      </div>
+
+      <div class="modulos-flow">
+        <!-- Módulo 1: Arquivista -->
+        <div class="modulo-card" data-num="01">
+          <div class="modulo-header">
+            <div class="modulo-icon">
+              <svg viewBox="0 0 40 40" fill="none">
+                <rect x="4" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="8" y="4" width="24" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="8" y1="16" x2="22" y2="16" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="8" y1="20" x2="20" y2="20" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="8" y1="24" x2="24" y2="24" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="30" cy="26" r="4" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="33" y1="29" x2="36" y2="32" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="modulo-meta">
+              <span class="modulo-num">MÓDULO 01</span>
+              <span class="modulo-status status-active">ATIVO</span>
+            </div>
+          </div>
+          <h3 class="modulo-title crt-title">O ARQUIVISTA</h3>
+          <p class="modulo-subtitle">Sistema Operacional Forense</p>
+          <p class="modulo-desc">
+            Uma máquina esquecida em algum departamento público fora de circulação.
+            Por trás de uma interface de terminal Linux, o jogador vasculha pastas sigilosas,
+            cruza registros históricos e desbloqueia arquivos que revelam o que foi soterrado
+            sob São Paulo. A senha de acesso está escondida no Blog do Arquivista.
+          </p>
+          <div class="modulo-features">
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>GeoScanner Urbano — linha do tempo investigativa de 1554 a 2026</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Terminal CLI — comandos secretos para acessar operações ocultas</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Desktop Forense — pastas, apps e arquivos bloqueados para investigação</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>85 documentos classificados em dossiês de memória urbana</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Arquivos criptografados com lógica narrativa AES-256</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Interface CRT com glitch, ruído, falhas e corrupção de dados</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>MapLibre GL integrado a camadas geográficas, coordenadas e pistas interativas</span>
+            </div>
+          </div>
+          <div class="modulo-footer">
+            <a href="../arquivista/index.html" class="modulo-link">Entrar no sistema →</a>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">pista revela<br/>próxima camada</div>
+        </div>
+
+        <!-- Módulo 2: Arquivo Morto -->
+        <div class="modulo-card" data-num="02">
+          <div class="modulo-header">
+            <div class="modulo-icon">
+              <svg viewBox="0 0 40 40" fill="none">
+                <path d="M8 6h16l8 8v22H8V6z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M24 6v8h8" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="13" y1="18" x2="27" y2="18" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="13" y1="22" x2="27" y2="22" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="13" y1="26" x2="20" y2="26" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="26" cy="26" r="1.5" fill="currentColor"/>
+                <circle cx="30" cy="26" r="1.5" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="modulo-meta">
+              <span class="modulo-num">MÓDULO 02</span>
+              <span class="modulo-status status-warning">RESTRITO</span>
+            </div>
+          </div>
+          <h3 class="modulo-title">BLOG DO ARQUIVISTA</h3>
+          <p class="modulo-subtitle">Arquivo Morto / Postagens Forenses</p>
+          <p class="modulo-desc">
+            Parece um blog sobre memória urbana. Mas por trás das postagens existem pistas
+            escondidas, palavras-chave cifradas e instruções veladas para quem sabe ler
+            como investigador. Cada post é uma peça do dossiê. O blog não conta a história —
+            ele testa se o leitor está pronto para entrar nela.
+          </p>
+          <div class="modulo-features">
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Postagens investigativas sobre o Vale do Anhangabaú, rios soterrados e apagamento urbano</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>4 pistas obrigatórias escondidas entre textos, imagens, datas e padrões de linguagem</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Caderno lateral de evidências que cresce conforme o jogador descobre fragmentos</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Áudios integrados com referências como pista sonora</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Sistema de filtros por categoria: mapa, água, testemunho, arquivo, desaparecimento e obra pública</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Desbloqueio progressivo da senha, das instruções e da rota até o mapa interativo</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Conexão direta com o Sistema Operacional Forense, onde a investigação continua</span>
+            </div>
+          </div>
+          <div class="modulo-footer">
+            <a href="../arquivo-morto/index.html" class="modulo-link">Ler o Arquivo Morto →</a>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">coordenadas<br/>reveladas</div>
+        </div>
+
+        <!-- Módulo 3: Centro -->
+        <div class="modulo-card" data-num="03">
+          <div class="modulo-header">
+            <div class="modulo-icon">
+              <svg viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                <line x1="20" y1="6" x2="20" y2="14" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="20" y1="26" x2="20" y2="34" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="6" y1="20" x2="14" y2="20" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="26" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M14 14l4 6" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"/>
+                <path d="M22 20l4-4" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"/>
+              </svg>
+            </div>
+            <div class="modulo-meta">
+              <span class="modulo-num">MÓDULO 03</span>
+              <span class="modulo-status status-danger">CONFIDENCIAL</span>
+            </div>
+          </div>
+          <h3 class="modulo-title">CENTRO VELHO E CENTRO NOVO</h3>
+          <p class="modulo-subtitle">Mapa Geoespacial Forense</p>
+          <p class="modulo-desc">
+            O núcleo vivo da investigação. O jogador retorna ao mapa em diferentes momentos,
+            desbloqueando novas camadas, missões e pistas escondidas pelo Centro Histórico.
+            São 13 fases progressivas que transformam o território em um tabuleiro forense —
+            onde cada rua, rio e monumento pode ser uma evidência.
+          </p>
+          <div class="modulo-features">
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>13 fases com senhas, missões e desbloqueios</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Micro pistas geoespaciais escondidas em diferentes camadas</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Triângulo Histórico como eixo da investigação</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Rios soterrados animados em azul neon</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>177 monumentos integrados como evidências urbanas</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Edifícios 3D e leitura espacial do centro</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Camadas geotécnicas, hidrológicas e de risco</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-dot"></span>
+              <span>Marcadores históricos conectados a dossiês e rotas</span>
+            </div>
+          </div>
+          <div class="modulo-footer">
+            <a href="../centro/index.html" class="modulo-link">Abrir mapa investigativo →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════
+       JORNADA DO USUÁRIO
+  ════════════════════════════════════════════════ -->
+  <section class="section jornada">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// FLUXO DE INVESTIGAÇÃO</span>
+        <div class="section-title-row">
+          <img
+            src="/pages/centro/assets/ALMA_NIVEL_2.PNG"
+            alt="Alma em vigília"
+            class="jornada-alma-float"
+          />
+          <h2 class="section-title">Como funciona a<br/><span class="accent">experiência</span></h2>
+        </div>
+      </div>
+      <div class="jornada-steps">
+        <div class="step" data-step="1">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h4>Ponto de Entrada</h4>
+            <p>Vindo das redes sociais ou do livro-jogo publicado na Amazon, o jogador acessa o Blog do Arquivista Desaparecido, lê as primeiras informações do caso, encontra a senha de acesso ao computador do Arquivista e inicia sua jornada investigativa.</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="2">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h4>Explora o Desktop Forense</h4>
+            <p>Abre dossiês, aciona o GeoScanner histórico, roda o terminal com comandos <code>summon all</code> para convocar as 13 almas.</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="3">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h4>Encontra o Manifesto</h4>
+            <p>Acessa o Arquivo Morto — um documento classificado que revela o apagamento sistemático de rios, territórios e memórias.</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="4">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h4>Coleta as 4 Pistas</h4>
+            <p>Clica em palavras-chave ocultas no texto, preenchendo o caderno lateral. Cada pista revela parte das coordenadas.</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="5">
+          <div class="step-num">05</div>
+          <div class="step-content">
+            <h4>Desce ao Centro</h4>
+            <p>Com todas as pistas, recebe as instruções finais, como por exemplo: "<em>Siga a água calada. Procure a aresta fria. Vá à Rua São Bento.</em>"</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="6">
+          <div class="step-num">06</div>
+          <div class="step-content">
+            <h4>Reconstrói o Passado</h4>
+            <p>No mapa forense, ativa camadas de evidência e literalmente vê o que foi soterrado sob o concreto da metrópole para resolver os mistérios e entender por que São Paulo tem sofrido tantos alagamentos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="neon-divider" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════
+       UNIVERSO TRANSMÍDIA
+  ════════════════════════════════════════════════ -->
+  <section class="section midias">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// UNIVERSO TRANSMÍDIA</span>
+        <h2 class="section-title">A investigação acontece<br/><span class="accent">em todo lugar</span></h2>
+        <p class="section-subtitle">Cada mídia é uma superfície diferente da mesma história. O jogador escolhe por onde entrar — e as pistas se conectam entre todas elas.</p>
+      </div>
+
+      <div class="midias-grid">
+
+        <!-- DIGITAL INTERATIVO -->
+        <div class="midia-card midia-card--destaque">
+          <div class="midia-card__label">DIGITAL INTERATIVO</div>
+          <div class="midia-card__items">
+            <div class="midia-item">
+              <span class="midia-item__icone">⬡</span>
+              <div>
+                <strong class="midia-item__nome">Mapa Interativo Real</strong>
+                <span class="midia-item__desc">Cartografia forense do Centro Histórico de SP com camadas geoespaciais, rios soterrados, 177 monumentos e 13 fases de investigação</span>
+              </div>
+            </div>
+            <div class="midia-item">
+              <span class="midia-item__icone">⬡</span>
+              <div>
+                <strong class="midia-item__nome">Desktop Forense</strong>
+                <span class="midia-item__desc">Sistema operacional fictício com terminal, pastas sigilosas, dossiês e arquivos bloqueados para investigação</span>
+              </div>
+            </div>
+            <div class="midia-item">
+              <span class="midia-item__icone">⬡</span>
+              <div>
+                <strong class="midia-item__nome">Escape Room Digital</strong>
+                <span class="midia-item__desc">Puzzles, senhas cifradas e enigmas distribuídos pelas mídias — só resolve quem cruza todas as pistas</span>
+              </div>
+            </div>
+            <div class="midia-item">
+              <span class="midia-item__icone">⬡</span>
+              <div>
+                <strong class="midia-item__nome">Blog do Arquivista</strong>
+                <span class="midia-item__desc">Diário de campo com postagens investigativas, fragmentos cifrados e instruções veladas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTEÚDO & PUBLICAÇÃO -->
+        <div class="midia-card">
+          <div class="midia-card__label">CONTEÚDO & PUBLICAÇÃO</div>
+          <div class="midia-card__items">
+            <div class="midia-item">
+              <span class="midia-item__icone">◈</span>
+              <div>
+                <strong class="midia-item__nome">E-book na Amazon</strong>
+                <span class="midia-item__desc">Porta de entrada da ficção — o livro-jogo que lança o caso e esconde as primeiras pistas</span>
+              </div>
+            </div>
+            <div class="midia-item">
+              <span class="midia-item__icone">◈</span>
+              <div>
+                <strong class="midia-item__nome">Podcast</strong>
+                <span class="midia-item__desc">Episódios que aprofundam a narrativa, entrevistas com personagens fictícios e pistas em áudio</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REDES SOCIAIS -->
+        <div class="midia-card">
+          <div class="midia-card__label">REDES SOCIAIS</div>
+          <div class="midia-card__items">
+            <div class="midia-item">
+              <span class="midia-item__icone">◈</span>
+              <div>
+                <strong class="midia-item__nome">Instagram</strong>
+                <span class="midia-item__desc">Dossiês visuais, fragmentos de pistas, mapas históricos e bastidores da investigação</span>
+              </div>
+            </div>
+            <div class="midia-item">
+              <span class="midia-item__icone">◈</span>
+              <div>
+                <strong class="midia-item__nome">TikTok</strong>
+                <span class="midia-item__desc">Vídeos curtos com curiosidades urbanas de SP, enigmas em formato de reel e chamadas de investigação</span>
+              </div>
+            </div>
+            <div class="midia-item">
+              <span class="midia-item__icone">◈</span>
+              <div>
+                <strong class="midia-item__nome">Canal no YouTube</strong>
+                <span class="midia-item__desc">Documentários ficcionais, vídeos de desbloqueio de fases e conteúdo aprofundado sobre memória urbana</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRESENÇA FÍSICA -->
+        <div class="midia-card midia-card--fisico">
+          <div class="midia-card__label">PRESENÇA FÍSICA</div>
+          <div class="midia-card__items">
+            <div class="midia-item">
+              <span class="midia-item__icone">◉</span>
+              <div>
+                <strong class="midia-item__nome">Parceiros Físicos</strong>
+                <span class="midia-item__desc">Cafés, livrarias, galerias e espaços culturais viram Pontos Narrativos no mapa — onde o jogador vai buscar selos, pistas e conteúdo exclusivo presencial</span>
+              </div>
+            </div>
+            <div class="midia-item">
+              <span class="midia-item__icone">◉</span>
+              <div>
+                <strong class="midia-item__nome">Estratégias de Rua</strong>
+                <span class="midia-item__desc">Ativações físicas no Centro Histórico: QR codes em pontos históricos, stickers narrativos, intervenções urbanas e rotas de investigação presencial</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- linha de conexão transmídia -->
+      <div class="midias-conexao">
+        <span class="midias-conexao__texto">Cada superfície é uma entrada. Todas as pistas levam ao mesmo arquivo.</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       DADOS E CONTEÚDO
+  ════════════════════════════════════════════════ -->
+  <section class="section dados">
+    <div class="container">
+      <div class="dados-grid">
+        <div class="dado-bloco">
+          <span class="dado-num dado-float" data-target="13">0</span>
+          <span class="dado-label">Almas convocáveis via terminal — rios, territórios e entidades históricas</span>
+        </div>
+        <div class="dado-bloco">
+          <span class="dado-num dado-float" data-target="177">0</span>
+          <span class="dado-label">Monumentos e marcos urbanos integrados ao mapa forense</span>
+        </div>
+        <div class="dado-bloco">
+          <span class="dado-num dado-float" data-target="85">0</span>
+          <span class="dado-label">Documentos classificados em dossiês de memória urbana</span>
+        </div>
+        <div class="dado-bloco">
+          <span class="dado-num dado-float" data-target="300">0</span>
+          <span class="dado-label">Rios soterrados que ainda correm sob o concreto de São Paulo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════
+       PATROCÍNIO
+  ════════════════════════════════════════════════ -->
+  <section id="patrocinio" class="section patrocinio">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// OPORTUNIDADE DE PATROCÍNIO</span>
+        <h2 class="section-title">Sua marca<br/><span class="accent">dentro da experiência</span></h2>
+      </div>
+
+      <p class="patrocinio-intro">
+        Em campanhas tradicionais, o público vê uma marca por alguns segundos. Aqui, ele interage com ela — dentro de uma investigação real, no mapa da cidade.
+      </p>
+
+      <div class="tiers-grid">
+        <div class="tier-card tier-bronze">
+          <div class="tier-header">
+            <span class="tier-badge">◈</span>
+            <h3 class="tier-name">ENGAJAMENTO ATIVO</h3>
+          </div>
+          <ul class="tier-benefits">
+            <li>O jogador encontra sua marca no mapa, visita um ponto físico, insere um código ou desbloqueia uma pista</li>
+            <li>Descoberta → interação → memória → compartilhamento</li>
+          </ul>
+        </div>
+
+        <div class="tier-card tier-silver">
+          <div class="tier-header">
+            <span class="tier-badge">◈</span>
+            <h3 class="tier-name">IMPACTO CULTURAL</h3>
+          </div>
+          <ul class="tier-benefits">
+            <li>O projeto une arqueologia urbana, tecnologia geoespacial e ficção interativa sobre São Paulo</li>
+            <li>Patrocinar é apoiar um novo formato de experiência cultural brasileira — e associar sua marca a isso</li>
+          </ul>
+        </div>
+
+        <div class="tier-card tier-gold">
+          <div class="tier-header">
+            <span class="tier-badge">◈</span>
+            <h3 class="tier-name">PRESENÇA NARRATIVA</h3>
+          </div>
+          <ul class="tier-benefits">
+            <li>Sua marca não aparece como banner. Ela se torna parte da jornada: um ponto de descoberta no mapa, uma chave de acesso, um fragmento dentro da narrativa urbana</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="patrocinio-cta-box">
+        <p><strong>// PONTOS NARRATIVOS</strong></p>
+        <p>Cafés, livrarias e espaços culturais podem virar estações da investigação.</p>
+        <p>Estabelecimentos parceiros entram no mapa como Pontos Narrativos — locais reais onde o jogador vai buscar pistas, resgatar selos ou desbloquear conteúdo exclusivo. A marca do espaço aparece integrada à rota investigativa, gerando visitas físicas com contexto narrativo.</p>
+        <p>Cafés · Livrarias · Espaços Culturais · Galerias · Museus · Bibliotecas</p>
+      </div>
+
+      <div class="section-header" style="margin-top:3rem;">
+        <span class="section-tag">// COTAS DE APOIO</span>
+        <h3 class="section-title">Escolha como sua marca<br/><span class="accent">entra no Arquivo</span></h3>
+      </div>
+
+      <div class="tiers-grid">
+        <div class="tier-card tier-bronze">
+          <div class="tier-header">
+            <span class="tier-badge">COTA 01</span>
+            <h3 class="tier-name">RASTRO</h3>
+          </div>
+          <ul class="tier-benefits">
+            <li>Entrada como apoiador do projeto</li>
+            <li>Logo no rodapé da landing page e nos créditos</li>
+            <li>Menção nos materiais digitais do projeto</li>
+            <li>Acesso antecipado a novos módulos</li>
+          </ul>
+          <div class="tier-footer"><a href="mailto:coluninja@gmail.com?subject=Cota%20Rastro" class="tier-cta">Quero saber mais</a></div>
+        </div>
+
+        <div class="tier-card tier-silver">
+          <div class="tier-header">
+            <span class="tier-badge">COTA 02</span>
+            <h3 class="tier-name">VESTÍGIO</h3>
+          </div>
+          <ul class="tier-benefits">
+            <li>Marca integrada à experiência</li>
+            <li>Tudo da Cota Rastro</li>
+            <li>Logo destacado na tela inicial de cada módulo</li>
+            <li>Co-criação de um dossiê patrocinado dentro da narrativa</li>
+            <li>Post de lançamento nas redes sociais do projeto</li>
+            <li>Relatório de engajamento mensal</li>
+          </ul>
+          <div class="tier-footer"><a href="mailto:coluninja@gmail.com?subject=Cota%20Vest%C3%ADgio" class="tier-cta">Quero saber mais</a></div>
+        </div>
+
+        <div class="tier-card tier-gold">
+          <div class="tier-header">
+            <span class="tier-badge featured-badge">DESTAQUE COTA 03</span>
+            <h3 class="tier-name">ARQUIVO VIVO</h3>
+          </div>
+          <ul class="tier-benefits">
+            <li>Integração premium na investigação</li>
+            <li>Tudo das cotas anteriores</li>
+            <li>Card dedicado no mapa interativo com a marca do parceiro</li>
+            <li>Integração narrativa personalizada nas pistas do projeto</li>
+            <li>Presença no blog, Desktop Forense, dossiês e redes sociais</li>
+            <li>Ponto Narrativo no mapa (café, galeria, livraria ou espaço)</li>
+            <li>Evento presencial de lançamento</li>
+            <li>Direitos de uso da experiência em eventos da marca</li>
+          </ul>
+          <div class="tier-footer"><a href="mailto:coluninja@gmail.com?subject=Cota%20Arquivo%20Vivo" class="tier-cta tier-cta-gold">Quero saber mais</a></div>
+        </div>
+
+        <div class="tier-card tier-silver">
+          <div class="tier-header">
+            <span class="tier-badge">COTA ESPECIAL</span>
+            <h3 class="tier-name">PERMANÊNCIA DIGITAL</h3>
+          </div>
+          <ul class="tier-benefits">
+            <li>Sua marca mantém o Arquivo no ar</li>
+            <li>Patrocínio da infraestrutura digital do projeto</li>
+            <li>Cobre hospedagem, domínio, armazenamento e manutenção técnica</li>
+            <li>Mapas, imagens e dossiês sempre disponíveis ao público</li>
+            <li>Selo exclusivo “Guardião da Permanência Digital”</li>
+            <li>Presença em créditos, rodapé e tela de carregamento</li>
+            <li>Visibilidade proporcional ao período contratado</li>
+          </ul>
+          <div class="tier-footer"><a href="mailto:coluninja@gmail.com?subject=Cota%20Perman%C3%AAncia%20Digital" class="tier-cta">Quero saber mais</a></div>
+        </div>
+      </div>
+
+      <div class="patrocinio-cta-box">
+        <p>Vamos conversar sobre o projeto?</p>
+        <p><strong>Tatiana Barros · (11) 97480-4181 · coluninja@gmail.com</strong></p>
+        <a href="mailto:coluninja@gmail.com?subject=Contato%20Patroc%C3%ADnio%20Anhangaba%C3%BA" class="btn-primary">
+          <span class="btn-inner">Entrar em Contato</span>
+          <span class="btn-glow"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">ARQUIVO//SP</span>
+        <p>Anhangabaú: O Arquivo dos Soterrados</p>
+        <p class="footer-sub">Um projeto de ficção interativa e cartografia forense</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <span class="footer-col-title">Módulos</span>
+          <a href="../arquivista/index.html">O Arquivista</a>
+          <a href="../arquivo-morto/index.html">Arquivo Morto</a>
+          <a href="../centro/index.html">Centro Histórico</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Projeto</span>
+          <a href="#sobre">Sobre</a>
+          <a href="#patrocinio">Patrocínio</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-banner-wrap" aria-hidden="true">
+      <img
+        src="/pages/centro/assets/BANNER_LA.png"
+        alt=""
+        class="footer-banner-img"
+      />
+    </div>
+    <div class="footer-bottom">
+      <span>Dados: GeoSampa / SIURB / OpenStreetMap © Contributors</span>
+      <span>São Paulo, 2026 · Todos os soterrados</span>
+    </div>
+  </footer>
+
+  <script src="landing.js"></script>
+</body>
+</html>
