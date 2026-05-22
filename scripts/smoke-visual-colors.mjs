@@ -14,7 +14,15 @@ const BASE = `http://127.0.0.1:${PORT}`;
 
 const PAGES = [
   { name: 'landing', path: '/landing/index.html', css: ['/landing/landing.css'] },
-  { name: 'centro', path: '/centro/index.html', css: ['/pages/centro/styles/centro-chrome.css', '/pages/centro/centro-sidebar.css'] },
+  { name: 'centro', path: '/centro/index.html', css: [
+    '/pages/centro/styles/centro-chrome.css',
+    '/pages/centro/styles/layout.css',
+    '/pages/centro/styles/sidebar.css',
+    '/pages/centro/styles/narrative-nav.css',
+    '/pages/centro/styles/feature-inspector.css',
+    '/pages/centro/styles/map-popups.css',
+    '/pages/centro/styles/responsive.css',
+  ] },
   { name: 'arquivo-morto', path: '/arquivo-morto/index.html', css: ['/arquivo-morto/css/arquivo-morto.css'] },
   { name: 'arquivista', path: '/arquivista/index.html', css: ['/arquivista/css/linux-desktop.css'] },
 ];
@@ -67,6 +75,8 @@ async function main() {
 
     const components = await fetchBody('/app/styles/components.css');
     assert(components.body.includes('var(--color-brand)'), 'nav-retorno usa brand', fails);
+    assert(components.body.includes('.nav-retorno__link'), 'nav-retorno BEM', fails);
+    assert(components.body.includes('[data-theme="terminal"]'), 'nav-retorno tema terminal', fails);
 
     for (const page of PAGES) {
       const html = await fetchBody(page.path);
@@ -92,15 +102,17 @@ async function main() {
     assert(chrome.includes('.hamburger-link--primary') && chrome.includes('var(--color-brand)'), 'centro nav âmbar', fails);
     assert(chrome.includes('var(--color-accent-strong)'), 'centro chrome HUD vermelho', fails);
 
-    const sidebar = (await fetchBody('/pages/centro/centro-sidebar.css')).body;
+    const sidebar = (await fetchBody('/pages/centro/styles/sidebar.css')).body
+      + (await fetchBody('/pages/centro/styles/map-popups.css')).body;
     assert(sidebar.includes('var(--centro-accent)'), 'centro sidebar hud alias', fails);
     assert(!sidebar.includes('#ef4444'), 'centro-sidebar sem #ef4444 hardcoded', fails);
     assert(sidebar.includes('var(--color-danger)'), 'centro-sidebar usa color-danger', fails);
     assert(sidebar.includes('var(--color-brand)'), 'centro-sidebar usa color-brand', fails);
 
     const linux = (await fetchBody('/arquivista/css/linux-desktop.css')).body;
-    assert(linux.includes('nav-retorno') || true, 'arquivista nav ok', fails);
-    assert(!/unsplash|transparenttextures/.test(linux), 'arquivista sem CDN textura', fails);
+    const arqHtml = (await fetchBody('/arquivista/index.html')).body;
+    assert(!linux.includes('.nav-retorno'), 'linux-desktop sem override nav-retorno', fails);
+    assert(!/unsplash|transparenttextures|wixstatic/i.test(linux + arqHtml), 'arquivista sem CDN textura', fails);
 
     const result = {
       date: new Date().toISOString().slice(0, 10),

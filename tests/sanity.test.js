@@ -57,8 +57,30 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── CSS crítico existe ──────────────────────────────────────────
-  it('centro-sidebar.css deve existir', () => {
+  it('centro-sidebar.css deve existir como agregador', () => {
     assert.ok(exists('centro/centro-sidebar.css'));
+    const agg = read('centro/centro-sidebar.css');
+    assert.ok(agg.includes("@import url('styles/sidebar.css')"), 'agregador importa sidebar');
+  });
+
+  it('centro CSS modular: modulos por responsabilidade', () => {
+    const modules = [
+      'centro/styles/layout.css',
+      'centro/styles/sidebar.css',
+      'centro/styles/narrative-nav.css',
+      'centro/styles/feature-inspector.css',
+      'centro/styles/profile-card.css',
+      'centro/styles/jesuit-frame.css',
+      'centro/styles/map-popups.css',
+      'centro/styles/responsive.css',
+    ];
+    for (const file of modules) {
+      assert.ok(exists(file), `${file} ausente`);
+    }
+    const html = read('centro/index.html');
+    assert.ok(html.includes('/pages/centro/styles/layout.css'), 'index carrega layout.css');
+    assert.ok(html.includes('/pages/centro/styles/sidebar.css'), 'index carrega sidebar.css');
+    assert.ok(!html.includes('/pages/centro/centro-sidebar.css'), 'index usa modulos explicitos');
   });
 
   // ── UX — Sidebar close button ───────────────────────────────────
@@ -195,15 +217,71 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!html.includes('style="'), 'centro nao deve ter style= inline');
     assert.ok(html.includes('/app/styles/tokens.css'), 'deve carregar tokens.css');
     assert.ok(html.includes('/app/styles/components.css'), 'deve carregar components.css');
+    assert.ok(html.includes('btn btn--nav'), 'nav buttons devem usar .btn');
+    assert.ok(html.includes('btn btn--ghost btn--icon'), 'hamburger deve usar .btn');
+    assert.ok(html.includes('sidebar-open-btn btn btn--icon'), 'sidebar open deve usar .btn');
+    assert.ok(html.includes('btn btn--bare btn--icon-sm'), 'sidebar close deve usar .btn');
+  });
+
+  it('design system: components.css contem componentes-base MVP', () => {
+    const css = read('vendor/app/styles/components.css');
+    const required = [
+      '.btn--primary',
+      '.btn--ghost',
+      '.btn--icon',
+      '.input',
+      '.checkbox',
+      '.card--popup',
+      '.card--inspector',
+      '.toast',
+      '.empty-state',
+      '.skeleton',
+    ];
+    for (const selector of required) {
+      assert.ok(css.includes(selector), `${selector} ausente em components.css`);
+    }
+    assert.ok(css.includes(':disabled'), 'estados disabled ausentes');
+    assert.ok(css.includes(':hover'), 'estados hover ausentes');
+    assert.ok(css.includes(':active'), 'estados active ausentes');
+  });
+
+  it('design system: nav-retorno unificado com BEM e data-theme', () => {
+    const css = read('vendor/app/styles/components.css');
+    assert.ok(css.includes('.nav-retorno__link'), 'nav-retorno__link ausente');
+    assert.ok(css.includes('min-width: 44px'), 'touch target 44px ausente');
+    assert.ok(css.includes('[data-theme="terminal"]'), 'tema terminal ausente');
+    assert.ok(css.includes('[data-theme="hud"]'), 'tema hud ausente');
+    assert.ok(!css.includes('.nav-retorno-link'), 'classe legada nav-retorno-link ainda presente');
+    assert.ok(!css.includes('.linux-desktop .nav-retorno'), 'override linux-desktop duplicado');
+
+    const am = read('arquivo-morto/index.html');
+    assert.ok(am.includes('data-theme="brand"'), 'arquivo-morto deve usar data-theme=brand');
+    assert.ok(am.includes('nav-retorno__link'), 'arquivo-morto deve usar BEM');
+
+    const arq = read('arquivista/index.html');
+    assert.ok(arq.includes('data-theme="terminal"'), 'arquivista deve usar data-theme=terminal');
+    assert.ok(arq.includes('nav-retorno__link--primary'), 'arquivista link primary');
+
+    const linux = read('arquivista/css/linux-desktop.css');
+    assert.ok(!linux.includes('.nav-retorno'), 'linux-desktop nao deve redefinir nav-retorno');
   });
 
   it('design system: sem Fira Code, Google Fonts nem texturas externas no runtime', () => {
     const runtimeCss = [
-      'centro/centro-sidebar.css',
+      'centro/styles/layout.css',
+      'centro/styles/sidebar.css',
+      'centro/styles/narrative-nav.css',
+      'centro/styles/feature-inspector.css',
+      'centro/styles/profile-card.css',
+      'centro/styles/jesuit-frame.css',
+      'centro/styles/map-popups.css',
+      'centro/styles/responsive.css',
       'centro/styles/centro-chrome.css',
       'landing/landing.css',
       'arquivo-morto/css/arquivo-morto.css',
       'arquivista/css/utility.css',
+      'arquivista/css/style.css',
+      'arquivista/css/desktop-layout.css',
       'arquivista/css/linux-desktop.css',
       'arquivista/css/window-system.css',
       'arquivista/css/effects.css',
@@ -213,17 +291,64 @@ describe('projeto_centro — sanity checks', () => {
     for (const file of runtimeCss) {
       const css = read(file);
       assert.ok(!/Fira Code|Fira\+Code|fonts\.googleapis/.test(css), `${file} sem Fira/CDN fontes`);
+      assert.ok(!/transparenttextures|unsplash|wixstatic/i.test(css), `${file} sem CDN textura`);
     }
-    const centroCss = read('centro/centro-sidebar.css');
-    assert.ok(/var\(--font-mono\)|var\(--font-code\)/.test(centroCss), 'centro usa tokens mono');
-    assert.ok(!/transparenttextures|unsplash/.test(centroCss), 'centro sem CDN textura');
+    const runtimeHtml = [
+      'centro/index.html',
+      'landing/index.html',
+      'arquivo-morto/index.html',
+      'arquivista/index.html',
+    ];
+    for (const file of runtimeHtml) {
+      const html = read(file);
+      assert.ok(!/transparenttextures|unsplash|wixstatic/i.test(html), `${file} sem CDN textura/img`);
+    }
     assert.ok(exists('vendor/app/styles/tokens.css'), 'tokens.css existe');
     assert.ok(exists('vendor/app/styles/a11y.css'), 'a11y.css existe');
     assert.ok(exists('vendor/app/styles/components.css'), 'components.css existe');
+    const centroCss = read('centro/styles/sidebar.css') + read('centro/styles/map-popups.css');
+    assert.ok(/var\(--font-mono\)|var\(--font-code\)/.test(centroCss), 'centro usa tokens mono');
   });
 
-  it('centro-sidebar.css nao deve referenciar BANNER_SITE.png ausente', () => {
-    const css = read('centro/centro-sidebar.css');
+  it('design system: narrative-nav visivel no mobile (flyTo)', () => {
+    const css = read('centro/styles/narrative-nav.css');
+    const responsive = read('centro/styles/responsive.css');
+    assert.ok(css.includes('jesuit-frame-bottom'), 'nav posicionada acima da moldura');
+    assert.ok(css.includes('overflow-x: auto'), 'nav com scroll horizontal');
+    assert.ok(css.includes('min-height: 44px'), 'touch target nos botoes');
+    assert.match(css, /\.narrative-nav\s*\{[^}]*display:\s*flex/s, 'nav sempre flex');
+    assert.ok(!responsive.includes('narrative-nav'), 'responsive nao esconde narrative-nav');
+    assert.ok(!responsive.includes('700px'), 'centro usa --bp-lg 768px');
+  });
+
+  it('design system: landing migrou tokens amber legados', () => {
+    const css = read('landing/landing.css');
+    assert.ok(!/--amber\s*:/.test(css), 'landing sem --amber local');
+    assert.ok(css.includes('var(--color-brand)'), 'landing usa color-brand');
+    assert.ok(css.includes('--brand-mid'), 'landing opacidades consolidadas');
+    assert.ok(!css.includes('--brand-mid:        var(--brand-mid)'), 'sem alias circular brand-mid');
+    assert.ok(!css.includes('--font-mono: var(--font-mono)'), 'landing sem alias circular de fonte');
+  });
+
+  it('design system: arquivo-morto migrou tokens amber legados', () => {
+    const css = read('arquivo-morto/css/arquivo-morto.css');
+    assert.ok(!/--am-amber\s*:/.test(css), 'arquivo-morto sem --am-amber local');
+    assert.ok(css.includes('var(--color-brand)'), 'arquivo-morto usa color-brand');
+    assert.ok(css.includes('var(--color-brand-dim)'), 'arquivo-morto usa color-brand-dim');
+    assert.ok(css.includes('var(--color-danger)'), 'am-red aponta para color-danger');
+    assert.ok(!/border-color: rgba\(245,\s*158,\s*11/.test(css), 'consumidores usam aliases locais');
+  });
+
+  it('design system: arquivista tem media queries criticas', () => {
+    const css = read('arquivista/css/linux-desktop.css');
+    assert.ok(css.includes('max-width: 768px'), 'mq tablet');
+    assert.ok(css.includes('max-width: 640px'), 'mq phone');
+    assert.ok(css.includes('max-width: 480px'), 'mq phone estreito');
+    assert.ok(css.includes('min-width: min(320px'), 'janelas limitadas ao viewport');
+  });
+
+  it('centro-sidebar.css agregador nao deve referenciar BANNER_SITE.png ausente', () => {
+    const css = read('centro/styles/sidebar.css') + read('centro/styles/jesuit-frame.css');
     assert.ok(!css.includes('BANNER_SITE.png'), 'nao deve referenciar PNG inexistente');
   });
 
@@ -265,6 +390,23 @@ describe('projeto_centro — sanity checks', () => {
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('centroToast'), 'centroToast ausente');
     assert.ok(runtime.includes('centro-toast'), 'centro-toast element ausente');
+    assert.ok(runtime.includes('toast is-hidden'), 'toast usa classe DS');
+    assert.ok(runtime.includes('toast__close'), 'toast usa BEM close');
+    assert.ok(!runtime.includes('toastEl.style.cssText'), 'toast sem style.cssText');
+    assert.ok(!runtime.includes('toastEl.style.background'), 'toast sem cor inline');
+  });
+
+  it('centro-runtime.js: showInspector debug usa card--inspector sem inline', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('showInspector'), 'showInspector presente');
+    assert.ok(runtime.includes('card card--inspector'), 'debug inspector usa card DS');
+    assert.ok(runtime.includes('debug-inspector__body'), 'debug inspector body com classe');
+    const fn = runtime.slice(
+      runtime.indexOf('function showInspector'),
+      runtime.indexOf('function initMap')
+    );
+    assert.ok(!fn.includes('style.cssText'), 'showInspector sem style.cssText');
+    assert.ok(!fn.includes('style='), 'showInspector sem style inline em HTML');
   });
 
   // ── Navegação — flyTo ───────────────────────────────────────────

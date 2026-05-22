@@ -99,7 +99,31 @@ describe('projeto_centro — HTTP integration', () => {
   it('deve responder 200 em /pages/centro/styles/centro-chrome.css', async () => {
     const res = await fetchPath('/pages/centro/styles/centro-chrome.css');
     assert.strictEqual(res.status, 200);
-    assert.ok(res.body.includes('.narrative-nav'), 'chrome css deve conter narrative-nav');
+    assert.ok(res.body.includes('.hamburger-nav'), 'chrome css deve conter hamburger');
+  });
+
+  it('deve responder 200 em /pages/centro/styles/narrative-nav.css', async () => {
+    const res = await fetchPath('/pages/centro/styles/narrative-nav.css');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.body.includes('.narrative-nav'), 'narrative-nav css deve existir');
+  });
+
+  it('deve responder 200 em modulos CSS do centro', async () => {
+    const modules = [
+      'layout.css',
+      'sidebar.css',
+      'feature-inspector.css',
+      'profile-card.css',
+      'jesuit-frame.css',
+      'map-popups.css',
+      'responsive.css',
+    ];
+    for (const file of modules) {
+      const res = await fetchPath(`/pages/centro/styles/${file}`);
+      assert.strictEqual(res.status, 200, `${file} deve responder 200`);
+    }
+    const layout = await fetchPath('/pages/centro/styles/layout.css');
+    assert.ok(layout.body.includes('#map'), 'layout.css deve conter #map');
   });
 
   it('deve responder 200 em /centro/data/catalog/layers.json', async () => {
@@ -119,7 +143,7 @@ describe('projeto_centro — HTTP integration', () => {
   it('deve responder 200 em /pages/centro/centro-sidebar.css (proxy route)', async () => {
     const res = await fetchPath('/pages/centro/centro-sidebar.css');
     assert.strictEqual(res.status, 200);
-    assert.ok(res.body.includes('#map'), 'CSS deve conter regra #map');
+    assert.ok(res.body.includes("@import url('styles/layout.css')"), 'agregador deve importar layout');
     assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600');
   });
 
