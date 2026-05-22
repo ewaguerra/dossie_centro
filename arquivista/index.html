@@ -17,10 +17,10 @@
 
     <div id="phantom-cursor"></div>
 
-    <nav class="nav-retorno" aria-label="Navegação entre módulos">
-      <a href="/landing/" class="nav-retorno-link">&#8592; PROTOCOLO</a>
-      <a href="/centro/" class="nav-retorno-link">MAPA</a>
-      <a href="/arquivo-morto/" class="nav-retorno-link">ARQUIVO MORTO</a>
+    <nav class="nav-retorno" data-theme="terminal" aria-label="Navegação entre módulos">
+      <a href="/landing/" class="nav-retorno__link nav-retorno__link--primary">&#8592; PROTOCOLO</a>
+      <a href="/centro/" class="nav-retorno__link">MAPA</a>
+      <a href="/arquivo-morto/" class="nav-retorno__link">ARQUIVO MORTO</a>
     </nav>
 
     <!-- TELA DE LOGIN (BOOT) -->
@@ -208,7 +208,10 @@
                 </div>
             </div>
             <div id="image-display" class="hidden text-center">
-                <img src="https://static.wixstatic.com/media/346de2_67f0a1201b8d4e90a93d0a6a7895e864~mv2.jpg" class="w-full rounded shadow-2xl border-dark mb-4">
+                <figure class="prova-hidrica-evidence w-full rounded shadow-2xl border-dark mb-4" role="img" aria-label="Evidência hídrica — reconstrução forense">
+                  <span class="prova-hidrica-evidence__scanline" aria-hidden="true"></span>
+                  <figcaption class="prova-hidrica-evidence__caption">REGISTRO SUBFLUVIAL // ANHANGABAÚ</figcaption>
+                </figure>
                 <button class="text-xs font-mono underline opacity-50 hover-opacity-100" id="reset-gallery">Voltar ao Diretório</button>
             </div>
         </div>
