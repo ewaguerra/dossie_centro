@@ -31,13 +31,17 @@ python3 server.py 3000
 
 Acessar: http://127.0.0.1:8080/centro/
 
-## Testes
+## Testes e CI local
+
+Repositório privado — **sem GitHub Actions**. Rodar antes de cada push:
 
 ```bash
-npm test
+npm run ci    # 82 testes (sanity + HTTP)
 # ou
-node --test tests/sanity.test.js
+npm test
 ```
+
+Detalhes: [docs/testing/ci-local.md](docs/testing/ci-local.md)
 
 ## Estrutura
 
@@ -58,7 +62,7 @@ projeto_centro/
 └── tests/               # Testes de sanidade
 ```
 
-> `centro/features/rio-animado.js` mantém utilitários de hidrografia; animação de fluxo está fora do escopo do runtime (ver `docs/capri/wcag-contrast-notes.md`).
+> `centro/features/rio-animado.js` mantém utilitários de hidrografia; animação de fluxo está fora do escopo do runtime (ver `docs/accessibility/contrast-notes.md`).
 
 ## Funcionalidades
 
@@ -66,11 +70,11 @@ projeto_centro/
 - Sidebar com 5 grupos de camadas (toggle)
 - 4 POI patrimoniais sempre visíveis (selos SVG temáticos)
 - 4 pistas históricas da Rua São Bento (symbol layer + popup)
-- Legenda de evidências na sidebar (`#poi-legend`)
+- Filtro temático de evidências na sidebar (`#poi-legend`)
 - Navegação flyTo entre pontos de interesse
 - Lazy loading de imagens
 - Toast de feedback para erros
-- CI/CD via GitHub Actions
+- CI local (`npm run ci`) — ver [docs/testing/ci-local.md](docs/testing/ci-local.md)
 
 ## Rotas do Servidor
 
@@ -90,7 +94,7 @@ var BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 // alternativas: positron | bright | dark-matter
 ```
 
-Histórico: o bake raster local original (`scripts/bake-centro-tiles.mjs`) foi removido após violação da OSM tile usage policy ter levado a 1378 tiles placeholder de "Access blocked" sendo servidos como conteúdo válido. Detalhes em [`docs/capri/offline-scope.md`](docs/capri/offline-scope.md).
+Histórico: o bake raster local original (`scripts/bake-centro-tiles.mjs`) foi removido após violação da OSM tile usage policy ter levado a 1378 tiles placeholder de "Access blocked" sendo servidos como conteúdo válido. Detalhes em [`docs/offline-scope.md`](docs/offline-scope.md). Índice de docs: [`docs/README.md`](docs/README.md).
 
 ### Sobrevivência do bug do cache imortal
 

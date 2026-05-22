@@ -1,6 +1,6 @@
 # WCAG — Avaliação básica de contraste (Centro)
 
-> **Status CAPRI:** dívida visual **aceita** — falhas documentadas abaixo; correção requer redesign aprovado (fora do escopo atual).
+> **Status:** dívida visual **aceita** — falhas documentadas abaixo; correção requer redesign aprovado.
 
 > **Escopo:** amostragem manual de pares foreground/background dos elementos principais de `/centro/`.  
 > **Não constitui** auditoria WCAG 2.2 completa (sem teste de teclado, ARIA, zoom 200%, etc.).
@@ -33,20 +33,18 @@
 |---|---|---|---|---|
 | Botões OP (`#ddd`) | `#dddddd` | `#222222` (aprox.) | ~9.0:1 | OK |
 
-## Pendências registradas (sem correção nesta fase)
+## Pendências (sem correção nesta fase)
 
-1. ~~**Meta footer `#666`**~~ — **corrigido P1** (2026-05-22): `.sidebar-header__meta` e `.layer-meta` usam `var(--color-text-muted)` (~6.1:1). Vermelho HUD (`--centro-accent`) mantido só em bordas/indicadores.
-2. **Accent `#dc2626` em texto pequeno** — chrome HUD forense; falha AA normal. Regra: usar `--color-danger` (`#ef4444`) para alertas em texto pequeno; reservar `--color-accent-strong` para bordas/indicadores. Ver `docs/design-system/brand-decision.md`.
-3. **`.as-digital-aviso` `#404040`** — contraste insuficiente; módulo arquivista/digital, fora do runtime centro ativo.
-4. **Links `.nav-retorno__link` (tema terminal) com opacidade 0.55** — falha AA; não alterados (restrição: sem redesenho UI).
-5. **Animações CSS** (`as-shake`, `as-reveal`) — `prefers-reduced-motion` adicionado em `centro-sidebar.css` para o módulo arquivista; landing tem regra própria.
+1. **Accent `#dc2626` em texto pequeno** — usar `--color-danger` para alertas; reservar accent para bordas. Ver `docs/design-system/brand-decision.md`.
+2. **`.as-digital-aviso` `#404040`** — módulo arquivista, fora do runtime centro.
+3. **Links `.nav-retorno__link` (terminal) opacidade 0.55** — falha AA.
+4. **Animações** — `prefers-reduced-motion` em `a11y.css` e módulos específicos.
 
 ## Animação do rio
 
-Fora do escopo do runtime. Hidrografia exibida como camada estática do catálogo (`05_hidrografia_rios__line`). Utilitários geométricos permanecem em `centro/features/rio-animado.js` (documentado, não carregado em `index.html`).
+Fora do runtime de produção. Hidrografia estática via catálogo. Utilitários em `centro/features/rio-animado.js` (não carregado em `index.html`).
 
-## Próximo passo recomendado (auditoria completa)
+## Próximo passo
 
-- TC-010b em `docs/capri/test-matrix.md` (axe-core / contraste automatizado).
-- Ferramenta: axe-core ou Lighthouse a11y em `/centro/` com mapa carregado.
-- Evidência MVP teclado/foco já registada em TC-010 (2026-05-22).
+- TC-010b em [../testing/test-matrix.md](../testing/test-matrix.md) (axe-core / Lighthouse).
+- Evidência teclado/foco em TC-010 (2026-05-22).

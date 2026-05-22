@@ -68,7 +68,7 @@ Centro adicionalmente:
 - Sem CDN, sem framework, sem build step
 - Offline-first (texturas externas removidas)
 - Uma mudança lógica por commit
-- WCAG completo **não** declarado — ver `docs/capri/wcag-contrast-notes.md`
+- WCAG completo **não** declarado — ver `docs/accessibility/contrast-notes.md`
 
 ## Validação
 
@@ -78,4 +78,4 @@ node scripts/smoke-centro.mjs
 node scripts/smoke-visual-colors.mjs
 ```
 
-Smoke manual de browser: `docs/capri/smoke-centro.md` (itens 3–9).
+Smoke manual de browser: `docs/testing/smoke-centro.md` (itens 3–9).

@@ -19,7 +19,7 @@ todos com MD5 idêntico (c069a15b2cc2d6b6f527ad09eb93c61a)
 → todos são o mesmo placeholder "Access blocked"
 ```
 
-Removidos no commit de migração: `osm-style.json`, `centro/assets/tiles/`, `vendor/maplibre/fonts/`, `scripts/bake-centro-tiles.mjs`.
+Removidos na migração: `osm-style.json`, `centro/assets/tiles/`, `vendor/maplibre/fonts/`, `scripts/bake-centro-tiles.mjs`.
 
 ---
 
@@ -65,11 +65,11 @@ Não está no escopo atual. Documentado em [openfreemap.org/self_hosting](https:
 
 ---
 
-## Restrição "sem CDN no runtime" — re-interpretada
+## Restrição "sem CDN no runtime"
 
-A regra original visava **proibir bundle JS/CSS via CDN** (Lucide, Three.js, jQuery etc.), problema que estava no projeto.
+A regra visava **proibir bundle JS/CSS via CDN** (Lucide, Three.js, jQuery etc.).
 
-OpenFreeMap não é "CDN de bundle" — é **fonte de dados cartográficos** servidos via HTTPS. É equivalente, em natureza, a um GeoJSON remoto ou a uma API REST. A restrição original continua respeitada:
+OpenFreeMap não é "CDN de bundle" — é **fonte de dados cartográficos** servidos via HTTPS:
 
 - ✓ Sem CDN de JS/CSS (MapLibre em `vendor/maplibre/`)
 - ✓ Sem chave de API
@@ -80,8 +80,8 @@ OpenFreeMap não é "CDN de bundle" — é **fonte de dados cartográficos** ser
 
 ## Testes automatizados
 
-- `http.test.js`: confirma que runtime aponta para OpenFreeMap e que artefatos do bake antigo retornam ≠ 200.
-- `sanity.test.js`: verifica constante `BASEMAP_STYLE`, `POI_TEXT_FONT` casando com fontstack do basemap, e remoção de `osm-style.json`/tiles/glyphs/bake.
-- `npm test` (suíte completa).
+- `http.test.js`: runtime aponta para OpenFreeMap; `osm-style.json` e tiles locais retornam ≠ 200.
+- `sanity.test.js`: `BASEMAP_STYLE`, ícones, filtro temático POI.
+- `npm test` — suíte completa (82 testes).
 
-Smoke browser: ver TC-010 em [test-matrix.md](./test-matrix.md).
+Smoke browser: [testing/smoke-centro.md](./testing/smoke-centro.md).

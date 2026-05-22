@@ -23,7 +23,7 @@ Texturas decorativas usam **CSS puro**, **SVG inline/data-URL** ou **gradientes*
 | Glyphs demotiles | Labels POI no mapa |
 | YouTube embed (arquivo-morto) | Conteúdo narrativo opcional com iframe |
 
-Ver [offline-scope.md](../capri/offline-scope.md).
+Ver [offline-scope.md](../offline-scope.md).
 
 ## Validação
 

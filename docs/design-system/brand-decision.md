@@ -26,7 +26,7 @@
 1. Comentário legado “laranja cartográfico” descrevia a **intenção de marca** (`#f59e0b`).
 2. O Centro implementou **vermelho** (`#dc2626`) como `--centro-accent` no sidebar/HUD — tom “red ops”, não âmbar.
 3. Landing e arquivo-morto já usavam âmbar como identidade predominante (agora via `--color-brand`).
-4. `#dc2626` em texto pequeno **falha WCAG AA** (~3.6:1 sobre `#1a1a1a`) — ver `docs/capri/wcag-contrast-notes.md`.
+4. `#dc2626` em texto pequeno **falha WCAG AA** (~3.6:1 sobre `#1a1a1a`) — ver `docs/accessibility/contrast-notes.md`.
 
 **Conclusão:** âmbar = identidade; vermelho = alerta ou chrome forense escopado. Não unificar tudo em vermelho nem substituir o HUD do Centro por âmbar nesta fase.
 
@@ -119,4 +119,4 @@ Revisão visual manual: landing, centro, arquivo-morto, arquivista — confirmar
 
 - `vendor/app/styles/tokens.css`
 - `centro/styles/centro-vars.css`
-- `docs/capri/wcag-contrast-notes.md`
+- `docs/accessibility/contrast-notes.md`

@@ -65,7 +65,7 @@ Complementos locais:
 
 ## Contraste conhecido
 
-Amostragem manual documentada em `docs/capri/wcag-contrast-notes.md`. Resumo:
+Amostragem manual documentada em `docs/accessibility/contrast-notes.md`. Resumo:
 
 ### Passa AA normal (≥ 4.5:1) sobre `#1a1a1a`
 
@@ -121,7 +121,7 @@ Regras de cor: [brand-decision.md](./brand-decision.md)
 | Skip links | Não implementados globalmente |
 | Landmarks | `<main>`, `<nav>` inconsistentes entre módulos |
 
-Próximo passo recomendado (fora do MVP): TC-010 em `docs/capri/test-matrix.md` — axe-core ou Lighthouse.
+Próximo passo recomendado (fora do MVP): TC-010 em `docs/testing/test-matrix.md` — axe-core ou Lighthouse.
 
 ---
 
@@ -147,7 +147,7 @@ npm test
 - Contraste em todos os estados hover/focus/disabled
 - Testes automatizados de a11y no CI
 
-Para auditoria formal, usar ferramentas externas e registar resultados em `docs/capri/`.
+Para auditoria formal, usar ferramentas externas e registar resultados em `docs/testing/`.
 
 ---
 
@@ -156,4 +156,4 @@ Para auditoria formal, usar ferramentas externas e registar resultados em `docs/
 - `vendor/app/styles/a11y.css`
 - [principles.md](./principles.md) — restrições de escopo
 - [brand-decision.md](./brand-decision.md) — âmbar vs vermelho e contraste
-- `docs/capri/wcag-contrast-notes.md` — ratios detalhados
+- `docs/accessibility/contrast-notes.md` — ratios detalhados

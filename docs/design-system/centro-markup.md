@@ -44,7 +44,7 @@ Estilos movidos para classes CSS reutilizáveis, com tokens globais onde aplicá
 
 ## Fora de escopo nesta etapa
 
-- JavaScript inline → migrado para `centro-runtime.js` (commit separado CAPRI)
+- JavaScript inline → migrado para `centro-runtime.js` (Fase 3 do plano de correção)
 - Refatoração completa de `centro-sidebar.css` → **concluída** (módulos em `centro/styles/`)
 
 ## Critérios de aceite
@@ -63,4 +63,4 @@ grep -n 'style=' centro/index.html    # vazio
 npm test                             # inclui teste "sem style inline"
 ```
 
-Manual: sidebar abrir/fechar, hamburger, narrative-nav, mapa — `docs/capri/smoke-centro.md`.
+Manual: sidebar abrir/fechar, hamburger, narrative-nav, mapa — `docs/testing/smoke-centro.md`.

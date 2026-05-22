@@ -8,7 +8,7 @@
 4. **Fase 5 — pendências rio/animação/contraste**: remoção de código morto em `pistas.js` e `rio-animado.js`.
 5. **Fase 4 — Lucide**: remoção de runtime Lucide e troca por SVG inline.
 6. **Fase 3 — extração JS inline**: criação de `centro/centro-runtime.js` e limpeza do `centro/index.html`.
-7. **Auditoria final CAPRI**: atualização das docs em `docs/capri/` e registro deste plano.
+7. **Auditoria final**: atualização das docs em `docs/` e registro deste plano.
 
 ## Restrições respeitadas
 
@@ -48,13 +48,13 @@
 
 ## Fase 5 — rio/animação/contraste (validação final)
 
-- Requisito explícito de animação de rio: **não encontrado** (README, ADR-0001, CAPRI, test-matrix).
+- Requisito explícito de animação de rio: **não encontrado** (README, ADR-0001, `docs/testing/test-matrix.md`).
 - Hidrografia ativa via catálogo estático (`05_hidrografia_rios__line`); animação de fluxo **fora do escopo**.
 - `rioAnimationFrame` / `rioAnimationStart`: ausentes no codebase.
 - `rio-animado.js`: removidos `RIO_FLOW_DASHES`, `animationMs` e camadas flow/arrow; módulo documentado; **não carregado** em `centro/index.html`.
 - `pistas.js`: removida função `clamp` não utilizada.
 - `requestAnimationFrame`: ausente em `centro/` (vendor/landing/arquivista mantêm usos próprios).
-- Contraste WCAG: avaliação básica em `docs/capri/wcag-contrast-notes.md` (pendências registradas, sem claim de conformidade total).
+- Contraste WCAG: avaliação básica em `docs/accessibility/contrast-notes.md` (pendências registradas, sem claim de conformidade total).
 - `prefers-reduced-motion`: regra adicionada para animações `.as-codigo-erro--shake` e `.as-recompensa--revelada`.
 - Testes: `npm test` passando após fase.
 
@@ -101,10 +101,10 @@
 
 ## Pendências pós-auditoria (fechamento 2026-05-21)
 
-- **Baseline formal:** `docs/capri/baseline-fase0.md`
-- **Offline parcial:** `docs/capri/offline-scope.md`
-- **Smoke manual:** `docs/capri/smoke-centro.md` (WebGL requer browser real)
-- **WCAG:** dívida aceita em `docs/capri/wcag-contrast-notes.md`
+- **Baseline formal:** `docs/baseline.md`
+- **Offline parcial:** `docs/offline-scope.md`
+- **Smoke manual:** `docs/testing/smoke-centro.md` (WebGL requer browser real)
+- **WCAG:** dívida aceita em `docs/accessibility/contrast-notes.md`
 - **Arquivista:** MapLibre migrado para `/vendor/maplibre/*` (sem unpkg)
 - **test-full.html:** marcado `DEV ONLY`; produção = `centro/index.html`
 - **BANNER_SITE.png 404:** removido; banner usa gradiente CSS

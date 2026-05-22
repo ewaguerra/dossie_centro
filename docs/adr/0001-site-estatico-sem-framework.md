@@ -49,10 +49,6 @@ O projeto_centro é um site narrativo/cartográfico focado em conteúdo estátic
 - **Positivas:** Site leve, deploy simplificado, sem lock-in de framework
 - **Negativas:** Gerenciamento manual de CDNs, sem hot-reload, testes E2E requerem ferramenta externa
 
-## Relação com CAPRI
+## Nota metodológica
 
-| Componente | Relação |
-|---|---|
-| **PDA** | Esta ADR documenta a decisão arquitetural |
-| **TE** | Stack sem framework — CDNs precisam de versão fixada |
-| **TC** | Testes sanity com `node:test` — E2E futuro |
+Decisões deste ADR foram revisadas com análise estruturada (framework CAPRI, externo ao repo). Componentes equivalentes: arquitetura (PDA), stack (TE), testes (TC).

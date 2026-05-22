@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/sanity.test.js tests/http.test.js",
+    "ci": "node --test tests/sanity.test.js tests/http.test.js",
     "validate": "node --test tests/sanity.test.js",
     "sync:maplibre": "node scripts/sync-maplibre.mjs",
     "sync:lucide-icons": "node scripts/sync-lucide-icons.mjs",

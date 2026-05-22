@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Smoke parcial do Centro — assets HTTP + console (Chrome headless com SwiftShader).
- * POIs visíveis e flyTo requerem browser interativo (ver docs/capri/smoke-centro.md).
+ * POIs visíveis e flyTo requerem browser interativo (ver docs/testing/smoke-centro.md).
  */
 import { spawn } from 'node:child_process';
 import { request } from 'node:http';

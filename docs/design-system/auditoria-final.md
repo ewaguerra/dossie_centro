@@ -77,7 +77,7 @@ Cobertura DS relevante: tokens/components/a11y carregados, 0 inline HTML Centro,
 
 ## Pendências reais (mantidas)
 
-1. **Contraste WCAG** — accent HUD em texto pequeno; terminal verde opacidade — ver [wcag-contrast-notes.md](../capri/wcag-contrast-notes.md). Meta sidebar/layer-meta corrigidos P1 (`--color-text-muted`). Sem claim WCAG completo.
+1. **Contraste WCAG** — accent HUD em texto pequeno; terminal verde opacidade — ver [wcag-contrast-notes.md](../accessibility/contrast-notes.md). Meta sidebar/layer-meta corrigidos P1 (`--color-text-muted`). Sem claim WCAG completo.
 2. **Arquivista** — carrega DS mas não adopta `.btn` em todo o HTML.
 3. **JS dinâmico Centro** — popups de pistas e painel de camadas ainda geram `style=` em strings HTML (fora do `index.html`).
 4. **YouTube arquivo-morto** — embed requer rede (documentado em offline-scope).

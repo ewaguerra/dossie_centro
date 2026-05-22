@@ -74,7 +74,7 @@ Para veredicto e pendências: [auditoria-final.md](./auditoria-final.md).
 | Foco / reduced-motion | parcial | global `a11y.css` | [accessibility.md](./accessibility.md) |
 | Testes `npm test` | 35 | **58/58** | [auditoria-final.md](./auditoria-final.md) |
 | Landing `.btn` DS | legado | hero/tier/portal adoptados | [components.md](./components.md) |
-| Mapa offline | tiles/glyphs externos | **1378 tiles + glyphs locais** | [offline-scope.md](../capri/offline-scope.md) |
+| Mapa offline | tiles/glyphs externos | **1378 tiles + glyphs locais** | [offline-scope.md](../offline-scope.md) |
 
 ### Centro — 10 módulos CSS (+ vars + chrome)
 
@@ -101,7 +101,7 @@ Para veredicto e pendências: [auditoria-final.md](./auditoria-final.md).
 | `images.unsplash.com` | Gradientes locais no Arquivista |
 | `static.wixstatic.com` | `.prova-hidrica-evidence` (CSS) |
 
-Tiles mapa e glyphs — **self-hosted** (Opção C); ver [offline-scope.md](../capri/offline-scope.md).
+Tiles mapa e glyphs — **self-hosted** (Opção C); ver [offline-scope.md](../offline-scope.md).
 
 ### Validação
 
