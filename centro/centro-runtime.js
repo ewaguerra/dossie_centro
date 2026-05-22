@@ -138,26 +138,24 @@
     if (!panel) {
       panel = document.createElement("div");
       panel.id = "inspector";
-      panel.style.cssText =
-        "position:fixed;bottom:20px;left:20px;z-index:1000;background:#fff;border:1px solid #ccc;border-radius:8px;padding:16px;max-width:400px;max-height:300px;overflow:auto;font-family:sans-serif;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.15);";
+      panel.className = "card card--inspector card--static debug-inspector";
       document.body.appendChild(panel);
     }
     var props = feature.properties || {};
-    var html = "<pre style=\"white-space:pre-wrap;margin:0\">" + JSON.stringify(props, null, 2) + "</pre>";
     panel.innerHTML = "";
     var closeBtn = document.createElement("button");
     closeBtn.type = "button";
+    closeBtn.className = "debug-inspector__close btn btn--bare btn--icon-sm";
+    closeBtn.setAttribute("aria-label", "Fechar inspector de debug");
     closeBtn.textContent = "\u00d7";
-    closeBtn.style.cssText =
-      "float:right;border:none;background:none;cursor:pointer;font-size:18px;";
     closeBtn.addEventListener("click", function () {
       panel.remove();
     });
-    var body = document.createElement("div");
-    body.innerHTML = html;
+    var body = document.createElement("pre");
+    body.className = "debug-inspector__body";
+    body.textContent = JSON.stringify(props, null, 2);
     panel.appendChild(closeBtn);
     panel.appendChild(body);
-    panel.style.display = "block";
   }
 
   function initMap() {
@@ -456,36 +454,41 @@
 
   function setupToast() {
     var toastEl = null;
+    var msgEl = null;
+
+    function hideToast() {
+      if (toastEl) toastEl.classList.add("is-hidden");
+    }
+
     window.centroToast = function (msg, type) {
       if (!toastEl) {
         toastEl = document.createElement("div");
         toastEl.id = "centro-toast";
-        toastEl.style.cssText =
-          "position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:999;background:#dc2626;color:#fff;padding:8px 20px;border-radius:6px;font-size:13px;font-family:sans-serif;opacity:0;transition:opacity 0.3s;pointer-events:none;max-width:90vw;text-align:center;";
+        toastEl.className = "toast is-hidden";
+        toastEl.setAttribute("role", "status");
+        toastEl.setAttribute("aria-live", "polite");
+
+        msgEl = document.createElement("span");
+        msgEl.className = "toast__message";
+
+        var closeBtn = document.createElement("button");
+        closeBtn.type = "button";
+        closeBtn.className = "toast__close";
+        closeBtn.setAttribute("aria-label", "Fechar");
+        closeBtn.textContent = "\u00d7";
+        closeBtn.addEventListener("click", hideToast);
+
+        toastEl.appendChild(msgEl);
+        toastEl.appendChild(closeBtn);
         document.body.appendChild(toastEl);
       }
-      toastEl.textContent = msg;
-      toastEl.style.background = type === "warn" ? "#d97706" : "#dc2626";
-      toastEl.style.opacity = "1";
-      var closeBtn = toastEl.querySelector(".toast-close");
-      if (!closeBtn) {
-        closeBtn = document.createElement("span");
-        closeBtn.className = "toast-close";
-        closeBtn.textContent = "×";
-        closeBtn.style.cssText =
-          "margin-left:10px;cursor:pointer;font-weight:bold;font-size:16px;opacity:0.7;";
-        closeBtn.addEventListener("click", function () {
-          toastEl.style.opacity = "0";
-        });
-        toastEl.appendChild(closeBtn);
-      } else {
-        toastEl.removeChild(closeBtn);
-        toastEl.appendChild(closeBtn);
-      }
+
+      msgEl.textContent = msg;
+      toastEl.classList.toggle("toast--warn", type === "warn");
+      toastEl.classList.remove("is-hidden");
+
       if (window.centroToastTimer) clearTimeout(window.centroToastTimer);
-      window.centroToastTimer = setTimeout(function () {
-        toastEl.style.opacity = "0";
-      }, 4000);
+      window.centroToastTimer = setTimeout(hideToast, 4000);
     };
     console.log("[CENTRO] Toast system ready");
   }
