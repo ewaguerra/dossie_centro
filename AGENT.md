@@ -93,7 +93,8 @@ Consequências práticas:
 
 ### 3.4 `localStorage` é o "Caderno do Arquivista"
 - Prefixo obrigatório: `centro`, `arquivo`, `arquivista` ou `protocolo13`.
-- Chaves canônicas atuais: `centroDebug`, `caderno_arquivista_*`,
+- Chaves canônicas atuais: `centroDebug`, `centroPoiThemeFilter`, `centroBuildings3D`,
+  `protocolo13_caderno_clues` (pistas do Arquivo Morto → desbloqueio de camadas no Centro),
   `arquivista_progress_*`. Documente toda chave nova num comentário no
   arquivo que a escreve.
 - O jogador **pode** apagar o localStorage. Sempre tenha fallback seguro
@@ -441,7 +442,7 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
    estabilidade visual sobre refactor.
 6. **Atualizar catálogo / fixtures.** Se adicionar layer, post, comando CLI
    ou rota narrativa, registre no índice apropriado.
-7. **Rodar `npm run ci`** (ou `npm test`). **88 testes** devem permanecer verdes.
+7. **Rodar `npm run ci`** (ou `npm test`). **92 testes** devem permanecer verdes.
 8. **Atualizar `AGENT.md`** se mudar uma convenção transversal.
 
 ---

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "description": "Camadas da sidebar que exigem pistas no Caderno do Arquivista (localStorage protocolo13_caderno_clues).",
+  "layers": {
+    "05_hidrografia_rios__line": ["agua-calada"],
+    "17_alagamentos_contexto_hidrografico__point": ["agua-calada"],
+    "03_eixo_existente__polygon": ["peso-fundacao"],
+    "03a_eixo_previsto__polygon": ["peso-fundacao"]
+  }
+}

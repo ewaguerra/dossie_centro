@@ -502,6 +502,17 @@
   font-family: var(--font-code);
 }
 
+.layer-row--locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.layer-meta--lock {
+  color: var(--centro-hud-alert, #dc2626);
+  font-style: italic;
+  text-transform: lowercase;
+}
+
 .layer-hint {
   font-size: 11px;
   color: var(--centro-ink-muted);

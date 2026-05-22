@@ -17,6 +17,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const MANIFEST_PATH = join(ROOT, "centro", "data", "icon-manifest.json");
+const MAP_ICONS_PATH = join(ROOT, "vendor", "app", "config", "map-icons.js");
 const LUCIDE_ICONS_DIR = join(ROOT, "node_modules", "lucide-static", "icons");
 const OUT_DIR = join(ROOT, "centro", "assets", "icons");
 const SILENT = process.argv.includes("--silent");
@@ -81,6 +82,49 @@ function buildMapIconSvg(inner, color, template) {
   return lines.join("\n");
 }
 
+function extractRegistryIconStems(mapIconsSource) {
+  var stems = new Set();
+  var re = /file:\s*"([^"]+)"/g;
+  var match;
+  while ((match = re.exec(mapIconsSource)) !== null) {
+    if (match[1].indexOf("icon-") === 0) {
+      stems.add(match[1]);
+    }
+  }
+  return stems;
+}
+
+function validateManifestRegistryParity(manifest, mapIconsSource) {
+  var manifestOuts = new Set(
+    (manifest.icons || []).map(function (entry) {
+      return entry.out;
+    })
+  );
+  var registryStems = extractRegistryIconStems(mapIconsSource);
+  var missingInManifest = [];
+  registryStems.forEach(function (stem) {
+    if (!manifestOuts.has(stem)) {
+      missingInManifest.push(stem);
+    }
+  });
+  var orphanManifest = [];
+  manifestOuts.forEach(function (out) {
+    if (!registryStems.has(out)) {
+      orphanManifest.push(out);
+    }
+  });
+  if (missingInManifest.length || orphanManifest.length) {
+    if (missingInManifest.length) {
+      warn("map-icons.js referencia icones ausentes no manifest:", missingInManifest.join(", "));
+    }
+    if (orphanManifest.length) {
+      warn("manifest tem icones sem entrada em map-icons.js:", orphanManifest.join(", "));
+    }
+    return false;
+  }
+  return true;
+}
+
 async function main() {
   if (!(await exists(MANIFEST_PATH))) {
     warn("manifest ausente:", MANIFEST_PATH);
@@ -94,6 +138,10 @@ async function main() {
   }
 
   var manifest = JSON.parse(await readFile(MANIFEST_PATH, "utf-8"));
+  var mapIconsSource = await readFile(MAP_ICONS_PATH, "utf-8");
+  if (!validateManifestRegistryParity(manifest, mapIconsSource)) {
+    process.exit(1);
+  }
   var icons = manifest.icons || [];
   var template = manifest.template || {};
   var ok = 0;

@@ -766,6 +766,35 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(pkg.scripts && pkg.scripts['healthcheck:centro'], 'npm run healthcheck:centro ausente');
   });
 
+  it('POI turistico wired no runtime e map-icons', () => {
+    const runtime = read('centro/centro-runtime.js');
+    const icons = read('vendor/app/config/map-icons.js');
+    const poiIcons = read('centro/features/poi-icons.js');
+    assert.ok(runtime.includes('poi-turistico'), 'runtime deve carregar POI turistico');
+    assert.ok(runtime.includes('centro_pois_turisticos__point'), 'geojson turistico ausente');
+    assert.ok(icons.includes('"poi-turistico"'), 'map-icons patrimonio turistico ausente');
+    assert.ok(icons.includes('icon-turismo'), 'icone turismo ausente no registry');
+    assert.ok(poiIcons.includes('poi-turistico-source'), 'poi-icons source turistico ausente');
+    assert.ok(exists('centro/data/context/centro_pois_turisticos__point.geojson'), 'geojson turistico ausente');
+  });
+
+  it('ponte transmidia: caderno localStorage e layer-unlocks no centro', () => {
+    const runtime = read('centro/centro-runtime.js');
+    const arquivo = read('arquivo-morto/js/arquivo-morto.js');
+    assert.ok(runtime.includes('protocolo13_caderno_clues'), 'chave caderno ausente no centro');
+    assert.ok(runtime.includes('layer-unlocks.json'), 'fetch layer-unlocks ausente');
+    assert.ok(runtime.includes('isLayerUnlocked'), 'isLayerUnlocked ausente');
+    assert.ok(runtime.includes('layer-row--locked'), 'UI locked ausente');
+    assert.ok(arquivo.includes('protocolo13_caderno_clues'), 'persistencia caderno ausente no arquivo-morto');
+    assert.ok(exists('centro/data/catalog/layer-unlocks.json'), 'layer-unlocks.json ausente');
+  });
+
+  it('sync-lucide-icons valida paridade manifest vs map-icons', () => {
+    const sync = read('scripts/sync-lucide-icons.mjs');
+    assert.ok(sync.includes('validateManifestRegistryParity'), 'validacao de paridade ausente');
+    assert.ok(sync.includes('MAP_ICONS_PATH'), 'map-icons.js deve ser lido pelo sync');
+  });
+
   // ── Popup CSS classes ───────────────────────────────────────────
   it('map-popups.css contem classes para poi-popup e pista-popup', () => {
     const css = read('centro/styles/map-popups.css');

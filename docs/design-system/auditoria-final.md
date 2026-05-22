@@ -53,7 +53,7 @@ Carregados explicitamente em `centro/index.html` (ordem de cascata):
 ## Testes automatizados
 
 ```bash
-npm run ci   # 88 testes (70 sanity + 18 HTTP)
+npm run ci   # 92 testes (74 sanity + 18 HTTP)
 node scripts/smoke-visual-colors.mjs
 node scripts/smoke-centro.mjs
 ```
@@ -68,7 +68,7 @@ Cobertura DS relevante: tokens/components/a11y carregados, 0 inline HTML Centro,
 |---|---|
 | “Modularização parcial — só vars + chrome” | **10 módulos** extraídos; monólito reduzido a agregador |
 | “~1700 linhas restantes em centro-sidebar” | Conteúdo movido para `centro/styles/*.css` |
-| “44/44 testes” | **88 testes** (`npm run ci`: sanity + HTTP) |
+| “44/44 testes” | **92 testes** (`npm run ci`: sanity + HTTP) |
 | “centroToast inline” | Migrado para `.toast` / `.toast--warn` |
 | “tiles OSM externos / self-hosted offline” | **OpenFreeMap** online; sem bake local de tiles |
 

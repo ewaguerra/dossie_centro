@@ -1,6 +1,6 @@
 # Matriz de testes — projeto_centro
 
-**Suíte automatizada:** `npm test` → **88 testes** (70 sanity + 18 HTTP) · verificado 2026-05-22
+**Suíte automatizada:** `npm test` → **92 testes** (74 sanity + 18 HTTP) · verificado 2026-05-22
 
 ## Automatizados (sanity)
 

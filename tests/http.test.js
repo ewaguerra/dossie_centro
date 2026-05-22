@@ -206,6 +206,13 @@ describe('projeto_centro — HTTP integration', () => {
     }
   });
 
+  it('deve responder 200 em /centro/data/catalog/layer-unlocks.json', async () => {
+    const res = await fetchPath('/centro/data/catalog/layer-unlocks.json');
+    assert.strictEqual(res.status, 200);
+    const data = JSON.parse(res.body);
+    assert.ok(data.layers && typeof data.layers === 'object');
+  });
+
   it('deve responder 200 em cada geojson referenciado pelo catalogo layers.json', async () => {
     const res = await fetchPath('/centro/data/catalog/layers.json');
     assert.strictEqual(res.status, 200);
@@ -232,6 +239,9 @@ describe('projeto_centro — HTTP integration', () => {
       '/centro/assets/icons/icon-monumentos.svg',
       '/centro/assets/icons/icon-pista.svg',
       '/centro/assets/icons/icon-droplets.svg',
+      '/centro/assets/icons/icon-turismo.svg',
+      '/centro/data/context/centro_pois_turisticos__point.geojson',
+      '/centro/data/catalog/layer-unlocks.json',
     ];
 
     for (const path of paths) {

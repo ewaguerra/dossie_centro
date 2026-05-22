@@ -2,7 +2,7 @@
 
 > Referência da stack em uso. Atualizar quando mudar versões, basemap ou contagem de testes.
 
-**Verificado:** 2026-05-22 · comando: `npm test`
+**Verificado:** 2026-05-22 · comando: `npm run ci`
 
 | Tecnologia | Versão | Origem | Notas |
 |---|---|---|---|
@@ -11,17 +11,27 @@
 | Ícones mapa | Lucide paths | `lucide-static` (dev) → `centro/assets/icons/*.svg` | Browser não carrega JS Lucide |
 | Runtime Centro | — | `centro/centro-runtime.js` | IIFE vanilla, sem bundler |
 | Servidor dev | Python 3 | `server.py` | Proxy + cache headers |
-| Testes | node:test | `tests/sanity.test.js`, `tests/http.test.js` | **82** testes (`npm test`) |
+| Testes | node:test | `tests/sanity.test.js`, `tests/http.test.js` | **92 testes** (`npm run ci`) |
 | Node.js | ≥18 | `package.json` `engines` | CI local na máquina da autora |
 
 ## Scripts npm
 
 | Script | Função |
 |---|---|
-| `npm test` | Sanity + HTTP (sobe `server.py` na porta 9876 dentro do http.test) |
-| `npm run ci` | Alias da suíte completa — rodar antes de `git push` |
+| `npm test` / `npm run ci` | Sanity + HTTP (sobe `server.py` na porta 9876) |
+| `npm run healthcheck:centro` | Valida catálogo temático offline |
 | `npm run sync:maplibre` | Copia MapLibre de `node_modules` para `vendor/` |
-| `npm run sync:lucide-icons` | Regenera SVGs a partir de `centro/data/icon-manifest.json` |
+| `npm run sync:lucide-icons` | Regenera SVGs + valida paridade manifest ↔ `map-icons.js` |
+
+## Catálogo de camadas (Centro)
+
+| Catálogo | Wired no runtime | Notas |
+|---|---|---|
+| `layers.json` + `groups.json` | **Sim** — sidebar | 9 camadas temáticas com GeoJSON no disco |
+| `layer-unlocks.json` | **Sim** — sidebar bloqueada | Exige `protocolo13_caderno_clues` (Arquivo Morto) |
+| `context-layers.json` | **Não** (inventário) | 15 entradas; 13 com ficheiro; OSM ruas/endereços ausentes |
+
+Camadas **fora de scope** até haver dados: macroáreas SP completas, regiões além do Centro, `04a_zeis2` (GeoJSON vazio).
 
 ## Limitações aceitas
 
@@ -30,7 +40,8 @@
 | Basemap online | [offline-scope.md](./offline-scope.md) |
 | Contraste WCAG parcial | [accessibility/contrast-notes.md](./accessibility/contrast-notes.md) |
 | Smoke WebGL manual | [testing/smoke-centro.md](./testing/smoke-centro.md) |
+| 13 fases ARG | Roadmap produto — não implementadas |
 
 ## CI
 
-Repositório **privado**, sem GitHub Actions (zero minutos / zero custo). Ver [testing/ci-local.md](./testing/ci-local.md).
+Repositório **privado**, sem GitHub Actions. Ver [testing/ci-local.md](./testing/ci-local.md).

@@ -9,11 +9,51 @@
     "agua-calada"
   ];
 
+  // Chave canónica ARG — lida pelo Centro para desbloquear camadas (AGENT.md §3.4).
+  const CADERNO_STORAGE_KEY = "protocolo13_caderno_clues";
+
   const state = {
     collectedClues: new Set(),
     activeFilter: 'all',
     searchQuery: ''
   };
+
+  // ── Caderno — persistência localStorage ─────────────────────────────
+  function loadCollectedCluesFromStorage() {
+    try {
+      const raw = localStorage.getItem(CADERNO_STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return;
+      parsed.forEach(function (id) {
+        if (typeof id === "string" && CLUES[id]) {
+          state.collectedClues.add(id);
+        }
+      });
+    } catch (_err) {
+      // localStorage indisponível ou JSON inválido — ignora.
+    }
+  }
+
+  function persistCollectedClues() {
+    try {
+      localStorage.setItem(
+        CADERNO_STORAGE_KEY,
+        JSON.stringify(Array.from(state.collectedClues))
+      );
+    } catch (_err) {
+      // localStorage indisponível — ignora.
+    }
+  }
+
+  function applyCollectedClueUi() {
+    state.collectedClues.forEach(function (clueId) {
+      document.querySelectorAll('[data-clue-id="' + clueId + '"]').forEach(function (node) {
+        node.classList.add("is-collected");
+        node.setAttribute("aria-pressed", "true");
+      });
+    });
+  }
 
   // ── Carregamento de Dados ─────────────────────────────────────────────
   async function loadClues() {
@@ -24,7 +64,10 @@
         acc[item.id] = item;
         return acc;
       }, {});
+      loadCollectedCluesFromStorage();
+      applyCollectedClueUi();
       renderClueLedger();
+      updateClueConclusion();
     } catch (err) {
       console.error("Erro ao carregar pistas:", err);
     }
@@ -64,6 +107,7 @@
 
     renderClueLedger();
     updateClueConclusion();
+    persistCollectedClues();
   }
 
   function renderClueLedger() {

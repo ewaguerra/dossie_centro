@@ -72,6 +72,7 @@
   var BUILDINGS_3D_LAYER_ID = "building-3d";
   var BUILDINGS_3D_STORAGE_KEY = "centroBuildings3D";
   var POI_THEME_STORAGE_KEY = "centroPoiThemeFilter";
+  var CADERNO_STORAGE_KEY = "protocolo13_caderno_clues";
 
   // Fallback por categoria quando MAPA_SP_ICONS não carregou (404 / ordem de script).
   var POI_FALLBACK_ICON_BY_ID = {
@@ -79,7 +80,11 @@
     "acervo-tombado": "icon-acervo.svg",
     "bem-arqueologico": "icon-arqueologia.svg",
     monumentos: "icon-monumentos.svg",
+    "poi-turistico": "icon-turismo.svg",
   };
+
+  // Regras de desbloqueio sidebar ← Caderno do Arquivista (layer-unlocks.json).
+  var layerUnlockRules = null;
 
   // Promise resolvida quando o mapa dispara 'load' — permite encadear
   // ativações de camadas sem polling do DOM.
@@ -138,6 +143,32 @@
     }
     var stem = POI_FALLBACK_ICON_BY_ID[poiId] || "icon-memoria.svg";
     return "/centro/assets/icons/" + stem;
+  }
+
+  function getCollectedClueIds() {
+    try {
+      var raw = window.localStorage && window.localStorage.getItem(CADERNO_STORAGE_KEY);
+      if (!raw) return new Set();
+      var parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return new Set();
+      var ids = new Set();
+      for (var i = 0; i < parsed.length; i++) {
+        if (typeof parsed[i] === "string") ids.add(parsed[i]);
+      }
+      return ids;
+    } catch (_e) {
+      return new Set();
+    }
+  }
+
+  function isLayerUnlocked(layerId) {
+    if (!layerUnlockRules || !layerUnlockRules[layerId]) return true;
+    var required = layerUnlockRules[layerId];
+    var collected = getCollectedClueIds();
+    for (var i = 0; i < required.length; i++) {
+      if (!collected.has(required[i])) return false;
+    }
+    return true;
   }
 
   // Hash routing pode ignorar center/zoom do constructor; revalida contra maxBounds.
@@ -740,6 +771,7 @@
           { id: "acervo-tombado", file: "centro_acervo_tombado__point", sourceId: poi.ACERVO_TOMBADO_LAYERS.sourceId, iconLayerId: poi.ACERVO_TOMBADO_LAYERS.iconLayerId, titleProp: "nm_acervo" },
           { id: "bem-arqueologico", file: "centro_bem_arqueologico__point", sourceId: poi.BEM_ARQUEOLOGICO_LAYERS.sourceId, iconLayerId: poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId },
           { id: "monumentos", file: "centro_monumentos__point", sourceId: poi.MONUMENTOS_LAYERS.sourceId, iconLayerId: poi.MONUMENTOS_LAYERS.iconLayerId, titleProp: "nm_obra" },
+          { id: "poi-turistico", file: "centro_pois_turisticos__point", sourceId: poi.POI_TURISTICO_LAYERS.sourceId, iconLayerId: poi.POI_TURISTICO_LAYERS.iconLayerId, titleProp: "name", descProp: "category" },
         ];
         for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
           var poiCfg = poiConfigs[poiIndex];
@@ -763,7 +795,7 @@
             }
           }
         }
-        console.log("[CENTRO] 4 POI layers adicionados (fluxo único)");
+        console.log("[CENTRO] 5 POI layers adicionados (fluxo único)");
       } else {
         console.warn("[CENTRO] CENTRO.poiIcons nao disponivel — POI layers ignorados");
       }
@@ -866,10 +898,15 @@
       catalogPromise = Promise.all([
         fetch("/centro/data/catalog/layers.json").then(function (r) { return r.json(); }),
         fetch("/centro/data/catalog/groups.json").then(function (r) { return r.json(); }),
+        fetch("/centro/data/catalog/layer-unlocks.json").then(function (r) {
+          return r.ok ? r.json() : { layers: {} };
+        }),
       ]).then(function (payload) {
         var layers = payload[0];
         var groups = payload[1];
+        var unlocks = payload[2];
         var layersList = (layers && layers.layers) || [];
+        layerUnlockRules = (unlocks && unlocks.layers) || {};
         catalogIndex = new Map();
         for (var i = 0; i < layersList.length; i++) {
           catalogIndex.set(layersList[i].id, layersList[i]);
@@ -911,13 +948,20 @@
 
       for (var i = 0; i < groupLayers.length; i++) {
         var ly = groupLayers[i];
+        var locked = !isLayerUnlocked(ly.id);
         var label = document.createElement("label");
-        label.className = "layer-row";
+        label.className = locked ? "layer-row layer-row--locked" : "layer-row";
 
         var cb = document.createElement("input");
         cb.type = "checkbox";
         cb.dataset.layerId = ly.id;
-        if (ly.visible !== false) cb.checked = true;
+        if (locked) {
+          cb.disabled = true;
+          cb.checked = false;
+          cb.setAttribute("aria-label", (ly.title || ly.id) + " (bloqueada — registre pistas no Caderno)");
+        } else if (ly.visible !== false) {
+          cb.checked = true;
+        }
 
         var span = document.createElement("span");
         span.textContent = ly.title || ly.id;
@@ -926,7 +970,12 @@
         label.appendChild(document.createTextNode(" "));
         label.appendChild(span);
 
-        if (ly.feature_count !== undefined) {
+        if (locked) {
+          var lockMeta = document.createElement("span");
+          lockMeta.className = "layer-meta layer-meta--lock";
+          lockMeta.textContent = "bloqueada";
+          label.appendChild(lockMeta);
+        } else if (ly.feature_count !== undefined) {
           var meta = document.createElement("span");
           meta.className = "layer-meta";
           meta.textContent = ly.feature_count + " feats";
@@ -1128,6 +1177,16 @@
       cb.addEventListener("change", function () {
         var lid = cb.dataset.layerId;
         if (!lid || !catalogIndex) return;
+        if (!isLayerUnlocked(lid)) {
+          cb.checked = false;
+          if (typeof window.centroToast === "function") {
+            window.centroToast(
+              "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto).",
+              "warn"
+            );
+          }
+          return;
+        }
         var cfg = catalogIndex.get(lid);
         if (!cfg) return;
         mapReadyPromise.then(function () {
@@ -1145,7 +1204,7 @@
     // Ativa as camadas marcadas por padrão assim que o mapa estiver pronto.
     mapReadyPromise.then(function () {
       panel
-        .querySelectorAll("input[type=\"checkbox\"][data-layer-id]:checked")
+        .querySelectorAll("input[type=\"checkbox\"][data-layer-id]:checked:not(:disabled)")
         .forEach(function (cb) {
           cb.dispatchEvent(new Event("change"));
         });

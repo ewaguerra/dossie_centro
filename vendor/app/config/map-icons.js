@@ -40,6 +40,13 @@ window.MAPA_SP_ICONS = {
       label: "Monumentos",
       layerIds: ["monumentos-icon", "monumentos-label"],
     },
+    "poi-turistico": {
+      file: "icon-turismo",
+      lucide: "binoculars",
+      color: "#2563eb",
+      label: "Pontos turísticos",
+      layerIds: ["poi-turistico-icon", "poi-turistico-label"],
+    },
   },
 
   pistas: {
@@ -67,7 +74,7 @@ window.MAPA_SP_ICONS = {
     "15_osm_lazer__point": { lucide: "trees", color: "#ec4899" },
     "15_osm_servicos__point": { lucide: "landmark", color: "#0f766e" },
     "15_osm_educacao__point": { lucide: "graduation-cap", color: "#1d4ed8" },
-    "17_alagamentos_contexto_hidrografico__point": { lucide: "droplets", color: "#0284c7" },
+    "17_alagamentos_contexto_hidrografico__point": { lucide: "droplets", file: "icon-droplets", color: "#0284c7" },
   },
 
   settings: {
@@ -102,13 +109,15 @@ window.MAPA_SP_ICONS = {
 
   resolveLayerIcon: function (layerId) {
     var entry = this.getLayerEntry(layerId);
-    if (!entry || !entry.lucide) return null;
+    if (!entry) return null;
+    if (entry.file) return this.getIconPath(entry.file);
+    if (!entry.lucide) return null;
     return this.getIconPath("icon-" + entry.lucide);
   },
 
   getThemeFilters: function () {
     var items = [];
-    var order = ["memoria-paulistana", "acervo-tombado", "bem-arqueologico", "monumentos"];
+    var order = ["memoria-paulistana", "acervo-tombado", "bem-arqueologico", "monumentos", "poi-turistico"];
     for (var i = 0; i < order.length; i++) {
       var id = order[i];
       var entry = this.patrimonio[id];

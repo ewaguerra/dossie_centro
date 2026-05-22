@@ -1,13 +1,13 @@
 /**
- * POI Icons — ícones SVG para camadas de interesse: busca, memória, acervo, arqueologia, monumentos
+ * POI Icons — camadas symbol para património, turismo e interacção
  */
 (function () {
   "use strict";
 
   var POI_TURISTICO_LAYERS = Object.freeze({
-    idle: "poi-turistico-idle",
-    hover: "poi-turistico-hover",
-    hitbox: "poi-turistico-hitbox",
+    sourceId: "poi-turistico-source",
+    iconLayerId: "poi-turistico-icon",
+    hitboxLayerId: "poi-turistico-hitbox",
   });
 
   var MEMORIA_PAULISTANA_LAYERS = Object.freeze({
@@ -35,23 +35,14 @@
   });
 
   var POI_INTERACTION_LAYER_IDS = Object.freeze([
-    "poi-turistico-hitbox",
-    "poi-turistico-idle",
-    "poi-turistico-hover",
-    "memoria-paulistana-hitbox",
+    "poi-turistico-icon",
     "memoria-paulistana-icon",
-    "acervo-tombado-hitbox",
     "acervo-tombado-icon",
-    "bem-arqueologico-hitbox",
     "bem-arqueologico-icon",
-    "monumentos-hitbox",
     "monumentos-icon",
-    "rsb-pistas-hitbox",
     "rsb-pistas-icon",
-    "rsb-pistas-outline",
   ]);
 
-  // ── Exports ────────────────────────────────────────────────────────────
   window.CENTRO = window.CENTRO || {};
   window.CENTRO.poiIcons = {
     POI_TURISTICO_LAYERS: POI_TURISTICO_LAYERS,
