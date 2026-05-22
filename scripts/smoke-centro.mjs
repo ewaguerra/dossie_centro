@@ -39,6 +39,8 @@ const ASSET_PATHS = [
   '/centro/assets/icons/icon-acervo.svg',
   '/centro/assets/icons/icon-arqueologia.svg',
   '/centro/assets/icons/icon-monumentos.svg',
+  '/centro/assets/icons/icon-pista.svg',
+  '/centro/assets/icons/icon-droplets.svg',
   '/centro/assets/pistas/rua-sao-bento-pistas.json',
 ];
 

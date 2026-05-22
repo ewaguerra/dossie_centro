@@ -73,8 +73,9 @@ Centro adicionalmente:
 ## Validação
 
 ```bash
-npm test
+npm test   # 54/54 — sanity + HTTP
 node scripts/smoke-centro.mjs
+node scripts/smoke-visual-colors.mjs
 ```
 
 Smoke manual de browser: `docs/capri/smoke-centro.md` (itens 3–9).

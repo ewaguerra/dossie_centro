@@ -103,6 +103,113 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('ACERVO_TOMBADO_LAYERS'), 'POI layer ACERVO ausente');
     assert.ok(runtime.includes('BEM_ARQUEOLOGICO_LAYERS'), 'POI layer ARQUEOLOGIA ausente');
     assert.ok(runtime.includes('MONUMENTOS_LAYERS'), 'POI layer MONUMENTOS ausente');
+    assert.ok(runtime.includes('MAPA_SP_ICONS'), 'runtime deve usar registry MAPA_SP_ICONS');
+    assert.ok(runtime.includes('resolvePatrimonio'), 'resolvePatrimonio ausente');
+  });
+
+  it('centro-runtime.js: pistas usam symbol layer via addPistasLayer (sem Marker generico)', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('function addPistasLayer'), 'addPistasLayer ausente');
+    assert.ok(runtime.includes('rsb-pistas-icon'), 'layer rsb-pistas-icon ausente');
+    assert.ok(!runtime.includes('new maplibregl.Marker({ color:'), 'nao deve usar Marker vermelho generico');
+  });
+
+  it('map-icons.js: registry patrimonio e pistas com resolve helpers', () => {
+    const icons = read('vendor/app/config/map-icons.js');
+    assert.ok(icons.includes('patrimonio'), 'patrimonio registry ausente');
+    assert.ok(icons.includes('scroll-text'), 'icone memoria (scroll-text) ausente');
+    assert.ok(icons.includes('resolvePatrimonio'), 'resolvePatrimonio ausente');
+    assert.ok(icons.includes('resolvePistasIcon'), 'resolvePistasIcon ausente');
+    assert.ok(icons.includes('icon-pista'), 'icon-pista ausente');
+  });
+
+  it('icones POI SVG sao distintos (gerados de lucide-static, nao map-pin)', () => {
+    const files = [
+      'centro/assets/icons/icon-memoria.svg',
+      'centro/assets/icons/icon-acervo.svg',
+      'centro/assets/icons/icon-arqueologia.svg',
+      'centro/assets/icons/icon-monumentos.svg',
+    ];
+    const bodies = files.map(function (path) {
+      const svg = read(path);
+      assert.ok(svg.includes('viewBox="0 0 32 32"'), path + ' deve ser canvas 32px');
+      assert.ok(svg.includes('<path'), path + ' deve conter paths Lucide');
+      assert.ok(!svg.includes('a7 7 0 0 0-7 7c0 5'), path + ' nao deve ser map-pin generico');
+      return svg.replace(/\s+/g, ' ');
+    });
+    const unique = new Set(bodies);
+    assert.strictEqual(unique.size, bodies.length, 'cada POI patrimonial deve ter SVG unico');
+  });
+
+  it('centro-runtime.js: addLayerToMap usa resolveLayerIcon para pontos da sidebar', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('resolveLayerIcon'), 'resolveLayerIcon ausente');
+    assert.ok(runtime.includes('addPointLayerWithIcon'), 'addPointLayerWithIcon ausente');
+    assert.ok(runtime.includes('getMapIconHaloPaint'), 'halo de icones ausente');
+    assert.ok(runtime.includes('icon-halo-color'), 'icon-halo-color ausente');
+  });
+
+  it('icon-droplets.svg existe para camada de alagamentos', () => {
+    const svg = read('centro/assets/icons/icon-droplets.svg');
+    assert.ok(svg.includes('<path'), 'droplets deve conter paths Lucide');
+    assert.ok(svg.includes('#0284c7'), 'droplets deve usar azul hidrologico');
+  });
+
+  it('icones POI usam fills distintos (nao confundir vermelho com ouro)', () => {
+    function ringStroke(path) {
+      const svg = read(path);
+      const match = svg.match(/class="map-icon-disc"[^>]*stroke="([^"]+)"/)
+        || svg.match(/<circle cx="16" cy="16" r="14" fill="#fdfbf7" stroke="([^"]+)"/);
+      assert.ok(match, 'disco forense com stroke de categoria ausente em ' + path);
+      return match[1];
+    }
+    const strokes = [
+      ringStroke('centro/assets/icons/icon-memoria.svg'),
+      ringStroke('centro/assets/icons/icon-acervo.svg'),
+      ringStroke('centro/assets/icons/icon-arqueologia.svg'),
+      ringStroke('centro/assets/icons/icon-monumentos.svg'),
+      ringStroke('centro/assets/icons/icon-pista.svg'),
+      ringStroke('centro/assets/icons/icon-droplets.svg'),
+    ];
+    const unique = new Set(strokes);
+    assert.strictEqual(unique.size, strokes.length, 'cada icone deve ter cor unica: ' + strokes.join(', '));
+    assert.strictEqual(strokes[4], '#eab308', 'pistas deve ser ouro');
+    assert.strictEqual(strokes[3], '#be123c', 'monumentos deve ser carmesim');
+  });
+
+  it('icones POI usam Lucide stroke puro (fill none, como botoes OP)', () => {
+    const memoria = read('centro/assets/icons/icon-memoria.svg');
+    assert.ok(memoria.includes('fill="none"'), 'paths Lucide devem ser stroke-only');
+    assert.ok(memoria.includes('stroke-width="2"'), 'stroke-width Lucide padrao');
+    assert.ok(memoria.includes('fill="#fdfbf7"'), 'disco papel forense (--centro-paper)');
+    assert.ok(memoria.includes('data-template="disc-forensic"'), 'template disc-forensic');
+    assert.ok(memoria.includes('width="32"'), 'canvas 32px');
+  });
+
+  it('centro/index.html expoe legenda poi-legend com filtro por tematica', () => {
+    const html = read('centro/index.html');
+    assert.ok(html.includes('poi-legend__list'), 'lista poi-legend ausente');
+    assert.ok(html.includes('poi-legend__kicker'), 'kicker poi-legend ausente');
+    assert.ok(html.includes('Filtro por temática'), 'titulo de filtro ausente');
+    assert.ok(html.includes('poi-legend__hint'), 'hint poi-legend ausente');
+  });
+
+  it('map-icons.js expoe getThemeFilters com layerIds do patrimonio', () => {
+    const icons = read('vendor/app/config/map-icons.js');
+    assert.ok(icons.includes('getThemeFilters'), 'getThemeFilters ausente');
+    assert.ok(icons.includes('getLegendItems'), 'getLegendItems ausente');
+    assert.ok(icons.includes('layerIds'), 'layerIds ausente');
+    assert.ok(icons.includes('memoria-paulistana-icon'), 'layer memoria ausente');
+    assert.ok(icons.includes('rsb-pistas-icon'), 'layer pistas ausente');
+    assert.ok(icons.includes('palette'), 'palette central ausente');
+  });
+
+  it('centro-runtime.js filtra visibilidade de tematicas POI no mapa', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('setupPoiThemeFilter'), 'setupPoiThemeFilter ausente');
+    assert.ok(runtime.includes('applyAllPoiThemeFilters'), 'applyAllPoiThemeFilters ausente');
+    assert.ok(runtime.includes('POI_THEME_STORAGE_KEY'), 'persistencia de filtro ausente');
+    assert.ok(runtime.includes('setLayoutProperty'), 'toggle de visibilidade ausente');
   });
 
   // ── Fase 3 — HTML declarativo, runtime externo ──────────────────
@@ -227,6 +334,10 @@ describe('projeto_centro — sanity checks', () => {
     const css = read('vendor/app/styles/components.css');
     const required = [
       '.btn--primary',
+      '.btn--brand-solid',
+      '.btn--brand-ghost',
+      '.btn--subtle',
+      '.btn--block',
       '.btn--ghost',
       '.btn--icon',
       '.input',
@@ -330,6 +441,30 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!css.includes('--font-mono: var(--font-mono)'), 'landing sem alias circular de fonte');
   });
 
+  it('design system: landing CTAs usam btn DS (brand-solid, brand-ghost, subtle)', () => {
+    const html = read('landing/index.html');
+    const css = read('landing/landing.css');
+    assert.ok(html.includes('btn--brand-solid'), 'hero/patrocinio usam btn--brand-solid');
+    assert.ok(html.includes('btn--brand-ghost'), 'hero secundarios usam btn--brand-ghost');
+    assert.ok(html.includes('btn--subtle'), 'tier cards usam btn--subtle');
+    assert.ok(!html.includes('class="btn-primary"'), 'sem btn-primary legado');
+    assert.ok(!html.includes('tier-cta'), 'sem tier-cta legado');
+    assert.ok(!css.includes('.tier-cta'), 'landing.css sem bloco tier-cta');
+    assert.ok(!css.includes('.btn-primary'), 'landing.css sem bloco btn-primary');
+    assert.ok(!html.includes('portal-btn" class="portal-btn'), 'portal usa btn DS');
+    assert.ok(html.includes('id="portal-btn" class="btn btn--primary"'), 'portal btn--primary');
+    assert.ok(!css.includes('.portal-btn'), 'landing.css sem bloco portal-btn');
+  });
+
+  it('design system: arquivo-morto controles youtube usam btn--primary', () => {
+    const html = read('arquivo-morto/index.html');
+    const css = read('arquivo-morto/css/arquivo-morto.css');
+    assert.ok(html.includes('btn btn--primary'), 'botoes youtube usam btn DS');
+    assert.ok(!html.includes('youtube-anexo__btn'), 'sem classe youtube-anexo__btn legada');
+    assert.ok(!css.includes('.youtube-anexo__btn'), 'css sem bloco youtube-anexo__btn');
+    assert.ok(css.includes('.youtube-anexo__controls .btn'), 'overrides finos no anexo');
+  });
+
   it('design system: arquivo-morto migrou tokens amber legados', () => {
     const css = read('arquivo-morto/css/arquivo-morto.css');
     assert.ok(!/--am-amber\s*:/.test(css), 'arquivo-morto sem --am-amber local');
@@ -352,8 +487,8 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!css.includes('BANNER_SITE.png'), 'nao deve referenciar PNG inexistente');
   });
 
-  // ── Lucide removido — SVG inline na navegação ───────────────────
-  it('centro nao deve carregar bundle Lucide', () => {
+  // ── Lucide: devDependency + sync, nunca bundle no browser ───────
+  it('centro nao deve carregar bundle Lucide no runtime', () => {
     const html = read('centro/index.html');
     const runtime = read('centro/centro-runtime.js');
     assert.ok(!/lucide/i.test(html), 'referencia Lucide no HTML');
@@ -364,6 +499,17 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('aria-label="Navegar para a Praça da Sé"'), 'botao OP:SÉ acessivel');
     assert.ok(html.includes('aria-label="Navegar para o Vale do Anhangabaú"'), 'botao OP:ANHANGABAÚ acessivel');
     assert.ok(html.includes('aria-label="Navegar para a visão geral do mapa"'), 'botao OP:GERAL acessivel');
+  });
+
+  it('lucide-static e sync-lucide-icons configurados para gerar SVGs offline', () => {
+    const pkg = JSON.parse(read('package.json'));
+    assert.ok(pkg.devDependencies && pkg.devDependencies['lucide-static'], 'lucide-static devDependency ausente');
+    assert.ok(pkg.scripts['sync:lucide-icons'], 'script sync:lucide-icons ausente');
+    assert.ok(exists('scripts/sync-lucide-icons.mjs'), 'sync-lucide-icons.mjs ausente');
+    assert.ok(exists('centro/data/icon-manifest.json'), 'icon-manifest.json ausente');
+    const manifest = JSON.parse(read('centro/data/icon-manifest.json'));
+    assert.ok(Array.isArray(manifest.icons) && manifest.icons.length >= 6, 'manifest deve listar icones');
+    assert.ok(manifest.template && manifest.template.id === 'disc-forensic', 'template disc-forensic no manifest');
   });
 
   // ── Rio / animação — sem variáveis mortas ───────────────────────
@@ -425,5 +571,143 @@ describe('projeto_centro — sanity checks', () => {
       assert.ok(exists(path), f + ' nao encontrado');
       assert.doesNotThrow(() => new Function(read(path)), f + ' nao parseavel');
     });
+  });
+
+  // ── XSS-safety — popups via DOM API ─────────────────────────────
+  it('centro-runtime.js: popups POI e Pista nao usam setHTML com strings concatenadas', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('setDOMContent'), 'popups devem usar setDOMContent');
+    assert.ok(runtime.includes('createPoiPopupNode'), 'POI popup builder DOM ausente');
+    assert.ok(runtime.includes('createPistaPopupNode'), 'Pista popup builder DOM ausente');
+    assert.ok(!/Popup\([^)]*\)[\s\S]{0,300}\.setHTML\(/.test(runtime), 'runtime nao deve usar setHTML em Popup');
+    assert.ok(!/innerHTML\s*=\s*"<[a-z]/i.test(runtime) || runtime.includes('panel.innerHTML = ""'), 'runtime evita injecao via innerHTML literal');
+  });
+
+  // ── Click handler escopado e debug-gated ────────────────────────
+  it('centro-runtime.js: click inspector e debug-gated e queryRenderedFeatures e escopado', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('DEBUG_INSPECTOR'), 'flag DEBUG_INSPECTOR ausente');
+    assert.ok(runtime.includes('if (DEBUG_INSPECTOR)'), 'inspector deve ser gated pelo flag');
+    assert.ok(/queryRenderedFeatures\s*\(\s*e\.point\s*,\s*queryOpts\s*\)/.test(runtime) || /queryRenderedFeatures\s*\(\s*e\.point\s*,\s*\{\s*layers/.test(runtime), 'queryRenderedFeatures deve passar layers');
+    assert.ok(runtime.includes('poiInteractionLayerIds'), 'lista de layers POI para escopar a query ausente');
+  });
+
+  // ── Catalog cache ───────────────────────────────────────────────
+  it('centro-runtime.js: catalogo carregado uma unica vez e indexado por id', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('function loadCatalog'), 'loadCatalog ausente');
+    assert.ok(runtime.includes('catalogIndex'), 'catalogIndex (Map) ausente');
+    assert.ok(runtime.includes('new Map()'), 'indice deve usar Map nativo');
+    assert.ok(!/\bsetInterval\s*\(/.test(runtime), 'wiring deve ser direto, sem chamada setInterval');
+    assert.ok(!runtime.includes('bindLayerCheckboxesWhenReady'), 'polling antigo deve estar removido');
+    assert.ok(runtime.includes('mapReadyPromise'), 'mapReadyPromise gating de addLayer/removeLayer ausente');
+  });
+
+  // ── map.loadImage canonico para raster, Image() para SVG ────────
+  it('centro-runtime.js: ensureImage roteia SVG via Image() e raster via map.loadImage', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('mapInstance.loadImage'), 'deve usar map.loadImage para raster');
+    assert.ok(runtime.includes('response.data'), 'deve usar response.data do loadImage');
+    assert.ok(runtime.includes('isSvgUrl'), 'detector de SVG ausente');
+    assert.ok(runtime.includes('loadHtmlImage'), 'fallback Image() ausente');
+    assert.ok(/!isSvgUrl\([^)]+\)\s*&&/.test(runtime), 'SVG deve evitar createImageBitmap pipeline');
+  });
+
+  // ── MapOptions PT-BR e attribution compacto ─────────────────────
+  it('centro-runtime.js: MapOptions com locale PT-BR e attributionControl compacto', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('MAPLIBRE_LOCALE_PT_BR'), 'tabela locale PT-BR ausente');
+    assert.ok(runtime.includes('NavigationControl.ZoomIn'), 'chaves de locale ausentes');
+    assert.ok(runtime.includes('Aproximar zoom'), 'traducao PT-BR ausente');
+    assert.ok(/attributionControl:\s*\{\s*compact:\s*true\s*\}/.test(runtime), 'attributionControl compact ausente');
+    assert.ok(runtime.includes('locale: MAPLIBRE_LOCALE_PT_BR'), 'locale nao passado ao Map');
+  });
+
+  // ── Contraste WCAG labels POI ───────────────────────────────────
+  it('centro-runtime.js: labels POI usam texto escuro com halo branco', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('"text-color": "#1a1a1a"'), 'texto escuro ausente');
+    assert.ok(runtime.includes('"text-halo-color": "#ffffff"'), 'halo branco ausente');
+    assert.ok(/"text-halo-width":\s*1\.5/.test(runtime), 'halo width 1.5');
+    assert.ok(!/"text-color":\s*"#fff"/.test(runtime), 'nao deve manter branco antigo');
+  });
+
+  // ── Maquete 3D (fill-extrusion OpenFreeMap) ─────────────────────
+  it('centro/index.html deve expor toggle de maquete 3D na sidebar', () => {
+    const html = read('centro/index.html');
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(html.includes('centro-buildings-3d-toggle'), 'checkbox 3D ausente no HTML');
+    assert.ok(html.includes('Maquete estrutural 3D'), 'label da maquete 3D ausente');
+    assert.ok(html.includes('sidebar-extras'), 'container sidebar-extras ausente');
+    assert.ok(html.includes('buildings-legend'), 'legenda de faixas de altura ausente');
+    assert.ok(runtime.includes('BUILDINGS_3D_LAYER_ID'), 'constante da layer 3D ausente');
+    assert.ok(runtime.includes('setBuildings3DEnabled'), 'handler setBuildings3DEnabled ausente');
+    assert.ok(runtime.includes('MAPA_SP_THEME'), 'runtime deve usar theme.js para paint 3D');
+    assert.ok(runtime.includes('getBuildings3DExtrusionPaint'), 'runtime deve aplicar paint do theme');
+  });
+
+  it('theme.js expoe helpers de fill-extrusion para buildings3D', () => {
+    const theme = read('vendor/app/config/theme.js');
+    assert.ok(theme.includes('getBuildings3DExtrusionColorExpression'), 'expressao de cor ausente');
+    assert.ok(theme.includes('getBuildings3DExtrusionPaint'), 'paint extrusion ausente');
+    assert.ok(theme.includes('getBuildings3DFilter'), 'filtro hide_3d ausente');
+    assert.ok(theme.includes('heightBands'), 'heightBands preservado');
+  });
+
+  // ── Test harness CDN removidos ──────────────────────────────────
+  it('test-map.html e test-centro-like.html (raiz) nao devem existir (CDN)', () => {
+    assert.ok(!exists('test-map.html'), 'test-map.html (CDN) ainda presente');
+    assert.ok(!exists('test-centro-like.html'), 'test-centro-like.html (CDN) ainda presente');
+  });
+
+  // ── MapLibre v5 + sync-maplibre.mjs ─────────────────────────────
+  it('package.json declara maplibre-gl ^5 e sync script', () => {
+    const pkg = JSON.parse(read('package.json'));
+    assert.ok(pkg.dependencies && pkg.dependencies['maplibre-gl'], 'maplibre-gl ausente');
+    assert.match(pkg.dependencies['maplibre-gl'], /^\^5\./, 'maplibre-gl deve estar em ^5.x');
+    assert.ok(pkg.scripts && pkg.scripts['sync:maplibre'], 'script sync:maplibre ausente');
+    assert.ok(pkg.scripts.postinstall && pkg.scripts.postinstall.includes('sync-maplibre'), 'postinstall sync ausente');
+    assert.ok(exists('scripts/sync-maplibre.mjs'), 'sync-maplibre.mjs ausente');
+    const sync = read('scripts/sync-maplibre.mjs');
+    assert.ok(sync.includes('vendor/maplibre'), 'sync deve mirar vendor/maplibre');
+    assert.ok(sync.includes('node_modules/maplibre-gl/dist'), 'sync deve copiar de node_modules');
+  });
+
+  // ── Migra\u00e7\u00e3o para OpenFreeMap ─────────────────────────────────
+  it('runtime aponta para OpenFreeMap como basemap (vector tiles gratuitos)', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('BASEMAP_STYLE'), 'constante BASEMAP_STYLE ausente');
+    assert.ok(
+      runtime.includes('tiles.openfreemap.org/styles/'),
+      'runtime deve apontar para OpenFreeMap'
+    );
+    assert.ok(!runtime.includes('"/osm-style.json"'), 'runtime nao deve usar osm-style.json local');
+    assert.ok(
+      runtime.includes('POI_TEXT_FONT'),
+      'POI_TEXT_FONT centralizado para casar com fontstack do basemap'
+    );
+    assert.ok(
+      runtime.includes('Noto Sans Regular'),
+      'POI labels devem usar Noto Sans (default OpenFreeMap)'
+    );
+  });
+
+  it('artefatos do bake offline antigo foram removidos', () => {
+    assert.ok(!exists('osm-style.json'), 'osm-style.json removido');
+    assert.ok(!exists('centro/assets/tiles'), 'diret\u00f3rio de tiles removido');
+    assert.ok(!exists('vendor/maplibre/fonts'), 'cache de glyphs removido');
+    assert.ok(!exists('scripts/bake-centro-tiles.mjs'), 'bake script removido');
+    assert.ok(!exists('test-simples.html'), 'harness test-simples removido');
+  });
+
+  // ── Popup CSS classes ───────────────────────────────────────────
+  it('map-popups.css contem classes para poi-popup e pista-popup', () => {
+    const css = read('centro/styles/map-popups.css');
+    assert.ok(css.includes('.poi-popup'), '.poi-popup ausente');
+    assert.ok(css.includes('.pista-popup'), '.pista-popup ausente');
+    assert.ok(css.includes('.pista-popup__title'), '.pista-popup__title ausente');
+    assert.ok(css.includes('.pista-popup__desc'), '.pista-popup__desc ausente');
+    assert.ok(css.includes('.pista-popup__img'), '.pista-popup__img ausente');
+    assert.ok(css.includes('.pista-popup__source'), '.pista-popup__source ausente');
   });
 });

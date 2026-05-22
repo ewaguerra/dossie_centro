@@ -2,36 +2,86 @@
 
 > Define o que funciona **sem internet** após `python3 server.py`.
 
-## Offline garantido (app local)
+**Atualizado:** 2026-05-22 — basemap migrado de OSM raster offline (bake quebrado) para **OpenFreeMap vector tiles online** (gratuito, sem chave).
+
+---
+
+## Histórico — por que abandonamos o bake raster offline
+
+O bake original (`scripts/bake-centro-tiles.mjs`) baixava tiles de `tile.openstreetmap.org` violando a [OSM Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/): User-Agent sem URL/email real, bulk download de 1378 tiles, throttle de ~8 req/s. A OSM detectou e passou a servir um **PNG placeholder de "Access blocked"** com HTTP 200 para todas as requisições.
+
+Validação forense pós-incidente (2026-05-22):
+
+```
+1378 PNG em centro/assets/tiles/
+todos com tamanho idêntico (6987 bytes)
+todos com MD5 idêntico (c069a15b2cc2d6b6f527ad09eb93c61a)
+→ todos são o mesmo placeholder "Access blocked"
+```
+
+Removidos no commit de migração: `osm-style.json`, `centro/assets/tiles/`, `vendor/maplibre/fonts/`, `scripts/bake-centro-tiles.mjs`.
+
+---
+
+## Estado atual
+
+### Online (depende de rede)
+
+| Recurso | Origem | Tipo |
+|---|---|---|
+| Basemap (tiles + glyphs + sprite) | `https://tiles.openfreemap.org/styles/liberty` | Vector tiles gratuitas (OpenFreeMap) |
+| Style alternativo | `liberty` / `positron` / `bright` / `dark-matter` | Trocável em `BASEMAP_STYLE` do runtime |
+
+OpenFreeMap é open-source, sem chave, sem limite. Dados originais OSM (ODbL). [openfreemap.org](https://openfreemap.org/)
+
+### Offline garantido (app local)
 
 | Recurso | Origem |
 |---|---|
 | HTML/CSS/JS do Centro | `centro/`, `vendor/`, proxy `/app/*` |
-| MapLibre GL JS | `vendor/maplibre/` (Centro e Arquivista) |
+| MapLibre GL JS | `vendor/maplibre/` (sync'd de `node_modules` via `npm run sync:maplibre`) |
 | GeoJSON, catálogo, ícones POI | `centro/data/`, `centro/assets/` |
 | Imagens de pistas locais | `centro/assets/pistas/*.jpg` |
 
-## Requer rede (pré-existente, fora do escopo CAPRI atual)
+---
+
+## Caminho para offline completo (opcional, futuro)
+
+Se houver requisito de cartografia 100% offline, OpenFreeMap disponibiliza **PMTiles** baixáveis:
+
+- Brasil completo: ~2.5 GB (`.pmtiles`)
+- Servir via `pmtiles://` protocol no MapLibre + `pmtiles` JS plugin
+
+Não está no escopo atual. Documentado em [openfreemap.org/self_hosting](https://openfreemap.org/self_hosting/).
+
+---
+
+## Requer rede (fora do mapa)
 
 | Recurso | URL | Impacto |
 |---|---|---|
-| Tiles basemap OSM | `tile.openstreetmap.org` | Mapa raster vazio offline |
-| Glyphs MapLibre (labels POI) | `demotiles.maplibre.org` | Labels de texto POI omitidos; ícones SVG permanecem |
-| YouTube embed (arquivo-morto) | `youtube-nocookie.com` | Vídeo anexo; página funciona sem carregar iframe |
+| YouTube embed (arquivo-morto) | `youtube-nocookie.com` | Vídeo anexo; página legível sem iframe |
 | Links/fontes em metadados GeoJSON | diversos | Só afetam links em popups |
 
-**Texturas decorativas:** removidas de CDN — ver [offline-textures.md](../design-system/offline-textures.md).
+---
 
-## Restrição “sem CDN” no monorepo
+## Restrição "sem CDN no runtime" — re-interpretada
 
-- **Centro:** sem CDN em runtime de produção ✓
-- **Arquivista:** MapLibre migrado para `/vendor/maplibre/*` (2026-05-21) ✓
-- **Landing / arquivo-morto:** verificar individualmente se necessário
+A regra original visava **proibir bundle JS/CSS via CDN** (Lucide, Three.js, jQuery etc.), problema que estava no projeto.
 
-## Self-host futuro (opcional)
+OpenFreeMap não é "CDN de bundle" — é **fonte de dados cartográficos** servidos via HTTPS. É equivalente, em natureza, a um GeoJSON remoto ou a uma API REST. A restrição original continua respeitada:
 
-Para offline total do mapa:
+- ✓ Sem CDN de JS/CSS (MapLibre em `vendor/maplibre/`)
+- ✓ Sem chave de API
+- ✓ Sem rastreamento de usuário
+- ✓ Licença ODbL respeitada (atribuição via `attributionControl`)
 
-1. Tiles raster locais ou MBTiles + source no `osm-style.json`
-2. Glyphs em `vendor/fonts/` ou path relativo no style
-3. Substituir textura CSS por asset em `centro/assets/`
+---
+
+## Testes automatizados
+
+- `http.test.js`: confirma que runtime aponta para OpenFreeMap e que artefatos do bake antigo retornam ≠ 200.
+- `sanity.test.js`: verifica constante `BASEMAP_STYLE`, `POI_TEXT_FONT` casando com fontstack do basemap, e remoção de `osm-style.json`/tiles/glyphs/bake.
+- `npm test` (suíte completa).
+
+Smoke browser: ver TC-010 em [test-matrix.md](./test-matrix.md).

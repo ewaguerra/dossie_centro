@@ -12,8 +12,8 @@
     - var(--jesuit-frame-bottom)
     - var(--centro-sidebar-gap) * 3
   );
-  background: #fdfbf7;
-  border: 1px solid #dcd3c6;
+  background: var(--centro-paper);
+  border: 1px solid var(--centro-paper-border);
   border-top: 4px solid var(--centro-accent);
   border-radius: 2px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -21,6 +21,7 @@
   flex-direction: column;
   z-index: 40;
   overflow: hidden;
+  color: var(--centro-ink-mid);
 }
 
 .feature-inspector[hidden] { display: none; }
@@ -31,9 +32,9 @@
   align-items: flex-start;
   gap: 10px;
   padding: 16px 16px 12px;
-  border-bottom: 2px dashed #dcd3c6;
+  border-bottom: 2px dashed var(--centro-paper-border);
   flex-shrink: 0;
-  background: #f4f0e6;
+  background: var(--centro-paper-elev);
 }
 
 .feature-inspector-kicker {
@@ -49,8 +50,9 @@
 .feature-inspector-header h2 {
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--centro-ink);
   line-height: 1.3;
+  font-family: var(--font-mono);
 }
 
 #feature-inspector-close {
@@ -60,7 +62,7 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--color-text-muted);
+  color: var(--centro-ink-faint);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -69,8 +71,8 @@
 }
 
 #feature-inspector-close:hover {
-  background: var(--color-bg-subtle);
-  color: var(--color-text);
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--centro-accent);
 }
 
 #feature-inspector-close svg { width: 15px; height: 15px; }
@@ -78,10 +80,11 @@
 .feature-inspector-meta {
   padding: 8px 14px;
   font-size: 11px;
-  color: var(--color-text-mid);
-  background: var(--color-bg-subtle);
-  border-bottom: 1px solid var(--color-border-light);
+  color: var(--centro-ink-muted);
+  background: var(--centro-paper-elev);
+  border-bottom: 1px solid var(--centro-paper-border);
   flex-shrink: 0;
+  font-family: var(--font-code);
 }
 
 .feature-inspector-body {
@@ -90,15 +93,16 @@
   padding: 12px 14px;
   font-size: 12px;
   line-height: 1.6;
-  color: var(--color-text-mid);
+  color: var(--centro-ink-mid);
 }
 
 .poi-card {
   margin-top: 10px;
   padding: 10px 10px 8px;
-  border: 1px solid var(--color-border-light);
-  border-radius: 8px;
-  background: var(--color-bg-subtle);
+  border: 1px solid var(--centro-paper-border);
+  border-radius: 2px;
+  background: var(--centro-paper-elev);
+  color: var(--centro-ink-mid);
 }
 
 .poi-card__title {
@@ -108,10 +112,11 @@
   text-transform: uppercase;
   color: var(--centro-accent-dark);
   margin-bottom: 6px;
+  font-family: var(--font-code);
 }
 
 .poi-card__hook {
-  color: var(--color-text);
+  color: var(--centro-ink);
   font-size: 12px;
   line-height: 1.5;
   margin-bottom: 8px;
@@ -119,8 +124,9 @@
 
 .poi-card__prompt {
   font-size: 12px;
-  color: var(--color-text-mid);
+  color: var(--centro-ink-muted);
   margin-bottom: 8px;
+  font-style: italic;
 }
 
 .poi-card__choices {
@@ -130,10 +136,12 @@
 
 .poi-card__choice {
   padding: 7px 8px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: var(--color-bg);
-  color: var(--color-text);
+  border: 1px solid var(--centro-paper-border);
+  border-radius: 2px;
+  background: var(--centro-paper-hover);
+  color: var(--centro-ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
 }
 
 button.poi-card__choice {
@@ -142,10 +150,9 @@ button.poi-card__choice {
 }
 
 button.poi-card__choice:hover:not(:disabled) {
-  /* Seleção POI: identidade âmbar (--color-accent = --color-brand) */
   border-color: var(--color-accent);
-  background: rgba(245,158,11,0.08);
-  color: var(--color-text);
+  background: rgba(245, 158, 11, 0.08);
+  color: var(--centro-ink);
 }
 
 button.poi-card__choice:disabled {
@@ -155,9 +162,9 @@ button.poi-card__choice:disabled {
 
 .poi-card__choice--selected {
   border-color: var(--color-accent) !important;
-  background: rgba(245,158,11,0.12) !important;
+  background: rgba(245, 158, 11, 0.12) !important;
   opacity: 1 !important;
-  color: var(--color-text) !important;
+  color: var(--centro-ink) !important;
 }
 
 .poi-card__feedback {
@@ -166,8 +173,8 @@ button.poi-card__choice:disabled {
   font-size: 11px;
   font-family: var(--font-mono);
   letter-spacing: 0.08em;
-  color: var(--color-accent);
-  opacity: 0.75;
+  color: var(--color-brand-dim);
+  opacity: 0.9;
 }
 
 .poi-card__feedback--visible {
@@ -186,6 +193,7 @@ button.poi-card__choice:disabled {
   padding: var(--space-4);
   font-family: var(--font-ui);
   font-size: var(--fs-sm);
+  color: var(--centro-ink-mid);
 }
 
 .debug-inspector__close {
@@ -198,5 +206,5 @@ button.poi-card__choice:disabled {
   margin: 0;
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
-  color: inherit;
+  color: var(--centro-ink);
 }

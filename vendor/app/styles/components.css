@@ -60,6 +60,65 @@
   border-color: var(--color-brand-dim);
 }
 
+/* Identidade âmbar — marketing (landing, patrocínio); sólido vs ghost suave */
+.btn--brand-solid {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+  color: var(--color-bg);
+}
+
+.btn--brand-solid:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+  color: var(--color-bg);
+}
+
+.btn--brand-solid:active:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-brand-dim);
+  border-color: var(--color-brand-dim);
+}
+
+.btn--brand-ghost {
+  background: transparent;
+  border-color: var(--color-brand-border);
+  color: var(--color-brand);
+}
+
+.btn--brand-ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-brand-soft);
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.btn--brand-ghost:active:not(:disabled):not([aria-disabled="true"]) {
+  background: rgba(245, 158, 11, 0.22);
+  border-color: var(--color-brand-dim);
+}
+
+/* Neutro discreto — tier cards, links secundários em superfícies escuras */
+.btn--subtle {
+  background: transparent;
+  border-color: var(--color-border-light);
+  color: var(--color-text-mid);
+}
+
+.btn--subtle:hover:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--color-text);
+  border-color: var(--color-border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.btn--subtle:active:not(:disabled):not([aria-disabled="true"]) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn--block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  text-decoration: none;
+}
+
 /* HUD forense Centro — chrome/alerta vermelho, não identidade âmbar */
 .btn--ghost {
   background: rgba(5, 5, 5, 0.9);
@@ -221,12 +280,12 @@
 }
 
 .card--inspector {
-  background: #fdfbf7;
-  border: 1px solid #dcd3c6;
+  background: var(--centro-paper, #fdfbf7);
+  border: 1px solid var(--centro-paper-border, #dcd3c6);
   border-top: 4px solid var(--color-accent-strong);
   border-radius: var(--radius-xs);
   box-shadow: var(--shadow-lg);
-  color: var(--color-text-mid);
+  color: var(--centro-ink-mid, #3d3830);
 }
 
 .card--inspector:hover {

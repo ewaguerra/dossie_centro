@@ -18,8 +18,9 @@
 | Texto principal (`--color-text`) | `#e5e5e5` | `#1a1a1a` | 13.8:1 | OK | OK |
 | Texto muted (`--color-text-muted`) | `#999999` | `#1a1a1a` | 6.1:1 | OK | OK |
 | Intro sidebar (inline) | `#888888` | `#1a1a1a` | 4.9:1 | OK | OK |
-| Meta footer (inline) | `#666666` | `#1a1a1a` | 3.0:1 | **FAIL** | OK |
-| Accent vermelho (`--centro-accent`) | `#dc2626` | `#1a1a1a` | 3.6:1 | **FAIL** | OK |
+| Meta footer (`.sidebar-header__meta`) | `var(--color-text-muted)` `#999` | `#1a1a1a` | 6.1:1 | OK | OK |
+| Layer meta (`.layer-meta`) | `var(--color-text-muted)` `#999` | `#1a1a1a` | 6.1:1 | OK | OK |
+| Accent vermelho HUD (`--centro-accent`) | `#dc2626` | `#1a1a1a` | 3.6:1 | **FAIL** | OK |
 | Status verde (inline) | `#4ade80` | `#1a1a1a` | 10.0:1 | OK | OK |
 | Aviso digital (`.as-digital-aviso`) | `#404040` | `#1a1a1a` | 1.7:1 | **FAIL** | **FAIL** |
 | Nav link muted (`.nav-retorno__link`, tema terminal) | `rgba(0,255,0,0.55)` | `#050505` | ~* | **FAIL** | **FAIL** |
@@ -34,7 +35,7 @@
 
 ## Pendências registradas (sem correção nesta fase)
 
-1. **Meta footer `#666`** — legível apenas como texto grande; revisar se usado em `<span>` pequeno.
+1. ~~**Meta footer `#666`**~~ — **corrigido P1** (2026-05-22): `.sidebar-header__meta` e `.layer-meta` usam `var(--color-text-muted)` (~6.1:1). Vermelho HUD (`--centro-accent`) mantido só em bordas/indicadores.
 2. **Accent `#dc2626` em texto pequeno** — chrome HUD forense; falha AA normal. Regra: usar `--color-danger` (`#ef4444`) para alertas em texto pequeno; reservar `--color-accent-strong` para bordas/indicadores. Ver `docs/design-system/brand-decision.md`.
 3. **`.as-digital-aviso` `#404040`** — contraste insuficiente; módulo arquivista/digital, fora do runtime centro ativo.
 4. **Links `.nav-retorno__link` (tema terminal) com opacidade 0.55** — falha AA; não alterados (restrição: sem redesenho UI).
@@ -46,5 +47,6 @@ Fora do escopo do runtime. Hidrografia exibida como camada estática do catálog
 
 ## Próximo passo recomendado (auditoria completa)
 
-- TC-010 em `docs/capri/test-matrix.md` (navegação por teclado + contraste automatizado).
+- TC-010b em `docs/capri/test-matrix.md` (axe-core / contraste automatizado).
 - Ferramenta: axe-core ou Lighthouse a11y em `/centro/` com mapa carregado.
+- Evidência MVP teclado/foco já registada em TC-010 (2026-05-22).

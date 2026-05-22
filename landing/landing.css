@@ -422,21 +422,26 @@ body {
   animation: revealUp 0.6s 1.1s ease forwards;
 }
 
-.btn-primary {
-  position: relative;
-  display: inline-block;
-  font-family: var(--font-mono);
+/* Hero / patrocínio — sizing + efeito glow/lift (cores em DS .btn--brand-*) */
+.hero-actions .btn,
+.patrocinio-cta-box .btn--brand-solid {
   font-size: 0.85rem;
   letter-spacing: 0.1em;
-  color: var(--bg);
-  background: var(--color-brand);
   padding: 0.75rem 1.75rem;
   text-decoration: none;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.btn-primary:hover {
+.hero-actions .btn--brand-solid,
+.patrocinio-cta-box .btn--brand-solid {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s,
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.hero-actions .btn--brand-solid:hover:not(:disabled):not([aria-disabled="true"]),
+.patrocinio-cta-box .btn--brand-solid:hover:not(:disabled):not([aria-disabled="true"]) {
   transform: translateY(-2px);
   box-shadow: 0 6px 24px var(--brand-mid);
 }
@@ -449,27 +454,9 @@ body {
   transition: opacity 0.3s;
 }
 
-.btn-primary:hover .btn-glow { opacity: 1; }
+.hero-actions .btn--brand-solid:hover .btn-glow,
+.patrocinio-cta-box .btn--brand-solid:hover .btn-glow { opacity: 1; }
 .btn-inner { position: relative; z-index: 1; }
-
-.btn-ghost {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-  color: var(--color-brand);
-  border: 1px solid var(--border);
-  padding: 0.75rem 1.75rem;
-  text-decoration: none;
-  transition: background 0.2s, border-color 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.btn-ghost:hover {
-  background: var(--glow);
-  border-color: var(--color-brand);
-}
 
 /* Ponto pulsante no botão mapa */
 .btn-map-dot {
@@ -1791,38 +1778,33 @@ body {
   z-index: 1;
 }
 
-.tier-cta {
-  display: block;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  color: var(--white-dim);
-  border: 1px solid var(--border-2);
+/* Tier cards — sizing e tokens locais sobre DS .btn--subtle / .btn--brand-solid */
+#patrocinio .tier-footer .btn {
+  letter-spacing: 0.08em;
+  font-size: 0.76rem;
   padding: 0.65rem 1rem;
-  text-decoration: none;
-  transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 
-.tier-cta:hover {
+#patrocinio .tier-footer .btn--subtle {
+  border-color: var(--border-2);
+  color: var(--white-dim);
+}
+
+#patrocinio .tier-footer .btn--subtle:hover:not(:disabled):not([aria-disabled="true"]) {
   color: var(--white);
   border-color: var(--border);
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
-.tier-cta--gold {
-  background: var(--color-brand);
-  color: var(--bg);
-  border-color: var(--color-brand);
+#patrocinio .tier-card.tier-gold .btn--brand-solid {
   font-weight: 700;
 }
-.tier-cta--gold:hover { background: #fbbf24; border-color: #fbbf24; color: var(--bg); }
 
-.tier-cta--cyan {
-  color: #22d3ee;
-  border-color: rgba(34,211,238,0.25);
+#patrocinio .tier-card.tier-gold .btn--brand-solid:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: #fbbf24;
+  border-color: #fbbf24;
+  color: var(--bg);
 }
-.tier-cta--cyan:hover { background: rgba(34,211,238,0.06); border-color: #22d3ee; }
 
 /* ── CTA box final ── */
 .patrocinio-cta-box {
@@ -2458,11 +2440,6 @@ body {
   line-height: 1.5;
 }
 
-#patrocinio .tier-cta {
-  letter-spacing: 0.08em;
-  font-size: 0.76rem;
-}
-
 #patrocinio .patrocinio-cta-box {
   margin-top: 2.1rem;
   border: 1px solid var(--border);
@@ -2710,21 +2687,20 @@ body {
   letter-spacing: 0.1em;
 }
 
-.portal-btn {
-  background: var(--brand-panel-bg);
+.portal-input-row .btn {
+  flex-shrink: 0;
+  border-radius: 0;
   border: none;
   border-left: 1px solid var(--brand-mid);
   padding: 0.7rem 1.1rem;
-  color: var(--brand-bright);
-  font-family: 'Courier New', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  color: var(--brand-bright);
+  background: var(--brand-panel-bg);
 }
 
-.portal-btn:hover {
+.portal-input-row .btn:hover:not(:disabled):not([aria-disabled="true"]) {
   background: var(--brand-fill);
   color: var(--color-brand);
 }

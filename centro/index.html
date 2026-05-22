@@ -71,12 +71,25 @@
     </div>
     <div id="sidebar-status" class="sidebar-status">Carregando…</div>
     <div class="sidebar-extras">
-      <label class="sidebar-extras__row" for="openfreemap-3d-buildings-toggle">
-        <input id="openfreemap-3d-buildings-toggle" type="checkbox" />
+      <label class="sidebar-extras__row layer-row" for="centro-buildings-3d-toggle">
+        <input type="checkbox" id="centro-buildings-3d-toggle" />
         <span class="sidebar-extras__text">
-          <strong>Maquete Estrutural 3D</strong> <span class="sidebar-extras__muted">(Projeção de Contenção Urbana)</span>
+          Maquete estrutural 3D
+          <span class="sidebar-extras__muted"> — extrusão por altura (OpenFreeMap)</span>
         </span>
       </label>
+      <div id="buildings-legend" class="buildings-legend" hidden>
+        <div class="buildings-legend__title">Faixas de altura</div>
+        <div class="buildings-legend__grid" id="buildings-legend-grid"></div>
+      </div>
+      <div id="poi-legend" class="poi-legend">
+        <div class="poi-legend__header">
+          <span class="poi-legend__kicker">Filtro por temática</span>
+          <div class="poi-legend__title">Evidências no mapa</div>
+          <p class="poi-legend__hint">Marque só as categorias que deseja ver no mapa.</p>
+        </div>
+        <div class="poi-legend__list" id="poi-legend-grid" role="group" aria-label="Filtrar evidências por temática"></div>
+      </div>
     </div>
     <div id="layers-panel" class="layers-list"></div>
   </aside>

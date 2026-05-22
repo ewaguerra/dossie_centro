@@ -8,7 +8,7 @@
 | Runtime Centro | n/a | `centro/centro-runtime.js` | VERIFIED | IIFE; bootstrap + mapa + POI + UI. |
 | Ícones UI | SVG inline | `centro/index.html` | VERIFIED | Lucide removido. |
 | Cache HTTP | n/a | `server.py` | VERIFIED | Testes HTTP assertam Cache-Control. |
-| Testes | node:test | `tests/*.test.js` | VERIFIED | 35/35 passando. |
+| Testes | node:test | `tests/*.test.js` | VERIFIED | 54/54 passando (`npm test`, 2026-05-22). |
 | JavaScript | ES modules / IIFE | Nativo browser | VERIFIED | Sem bundler. |
 | HTML5 / CSS3 | W3C | Nativo browser | VERIFIED | `centro/index.html` declarativo. |
 | Node.js | >=18 | `package.json` | VERIFIED | Engine >=18. |

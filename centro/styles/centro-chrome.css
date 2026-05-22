@@ -94,7 +94,7 @@
   gap: 12px;
   margin-top: 8px;
   font-size: 9px;
-  color: #666666;
+  color: var(--color-text-muted);
   border-top: 1px solid #1a1a1a;
   padding-top: 8px;
 }

@@ -17,7 +17,11 @@ Botão base mono, borda neutra, touch-friendly quando combinado com modificadore
 | Classe | Cor / estilo | Quando usar |
 |---|---|---|
 | *(base)* | Neutro escuro | Ações secundárias genéricas |
-| `.btn--primary` | Âmbar (`--color-brand`) | CTAs, confirmação, identidade |
+| `.btn--primary` | Âmbar suave (`--color-brand-soft`) | CTAs genéricos, confirmação |
+| `.btn--brand-solid` | Âmbar sólido + texto escuro | Hero landing, tier destaque, contacto |
+| `.btn--brand-ghost` | Transparente + borda âmbar | Secundários marketing (landing) |
+| `.btn--subtle` | Neutro discreto | Tier cards, ações secundárias |
+| `.btn--block` | Largura total | CTAs em card footer |
 | `.btn--ghost` | Vermelho HUD | Chrome forense Centro (hamburger) |
 | `.btn--icon` | 40×40 px | Ícone único — abrir painel, menu |
 | `.btn--icon-sm` | 28×28 px | Fechar inline (header sidebar) |
@@ -211,7 +215,7 @@ Responsive ≤480px: fonte e padding compactos — ver `components.css`.
 ## Validação
 
 ```bash
-npm test
+npm test   # inclui asserts toast + nav-retorno
 grep -R "components.css" landing centro arquivo-morto arquivista
 ```
 

@@ -476,15 +476,13 @@ body.arquivo-rota-vertical-ativa .registro-post {
   margin: 0.9rem 0;
 }
 
-.youtube-anexo__btn {
-  border: 1px solid var(--am-brand-panel);
+.youtube-anexo__controls .btn {
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.8);
-  color: #fde68a;
-  font-family: var(--am-font-mono);
   font-size: 0.72rem;
   padding: 6px 14px;
-  cursor: pointer;
+  background: rgba(15, 23, 42, 0.8);
+  border-color: var(--am-brand-panel);
+  color: #fde68a;
   transition:
     color 150ms ease,
     border-color 150ms ease,
@@ -492,13 +490,11 @@ body.arquivo-rota-vertical-ativa .registro-post {
     transform 150ms ease;
 }
 
-.youtube-anexo__btn:hover,
-.youtube-anexo__btn:focus-visible {
+.youtube-anexo__controls .btn:hover:not(:disabled):not([aria-disabled="true"]) {
   color: #fff7ed;
   border-color: var(--am-brand-intense);
   background: rgba(120, 53, 15, 0.62);
   transform: translateY(-1px);
-  outline: none;
 }
 
 .youtube-anexo__frame-wrap {

@@ -6,12 +6,19 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/sanity.test.js tests/http.test.js",
-    "validate": "node --test tests/sanity.test.js"
+    "validate": "node --test tests/sanity.test.js",
+    "sync:maplibre": "node scripts/sync-maplibre.mjs",
+    "sync:lucide-icons": "node scripts/sync-lucide-icons.mjs",
+    "sync:icons": "node scripts/sync-lucide-icons.mjs",
+    "postinstall": "node scripts/sync-maplibre.mjs --silent || true; node scripts/sync-lucide-icons.mjs --silent || true"
   },
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "maplibre-gl": "^4.7.1"
+    "maplibre-gl": "^5.0.0"
+  },
+  "devDependencies": {
+    "lucide-static": "^0.511.0"
   }
 }

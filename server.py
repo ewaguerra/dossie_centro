@@ -8,21 +8,23 @@ PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
 class ProxyHandler(http.server.SimpleHTTPRequestHandler):
+    # Vendor third-party (MapLibre etc.) tem nome estável e nunca muda em dev:
+    # pode ser imutável. Qualquer outra coisa do projeto é mutável e precisa
+    # revalidar a cada request — senão tiles antigos, JS antigo ou CSS antigo
+    # ficam fantasiando o navegador (bug "Access blocked / 403" do OSM, etc.).
+    IMMUTABLE_PREFIXES = ('/vendor/', '/app/vendor/')
+
     def end_headers(self):
         request_path = (self.path or '').split('?', 1)[0]
 
-        # Cache agressivo para vendor local (offline-friendly, evita re-download)
-        if request_path.startswith('/vendor/') or request_path.startswith('/app/vendor/'):
+        if request_path.startswith(self.IMMUTABLE_PREFIXES):
             self.send_header('Cache-Control', 'public, max-age=31536000, immutable')
-        # HTML sempre revalidado para refletir mudanças locais rapidamente
-        elif request_path.endswith('.html') or request_path == '/':
-            self.send_header('Cache-Control', 'no-cache')
-        # JS/CSS próprios com cache moderado para equilíbrio entre dev e performance
-        elif request_path.endswith('.js') or request_path.endswith('.css'):
-            self.send_header('Cache-Control', 'public, max-age=3600')
-        # Demais assets locais com cache curto
         else:
-            self.send_header('Cache-Control', 'public, max-age=300')
+            # no-cache != no-store: o navegador pode guardar a resposta, mas
+            # PRECISA revalidar com o servidor (If-Modified-Since / ETag)
+            # antes de usá-la. Em dev isso devolve 304 quase sempre — rápido e
+            # imune a placeholders fantasmas.
+            self.send_header('Cache-Control', 'no-cache, must-revalidate')
 
         self.send_header('X-Content-Type-Options', 'nosniff')
         super().end_headers()

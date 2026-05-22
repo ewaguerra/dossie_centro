@@ -121,44 +121,48 @@
 }
 /* ── Seção Parceiros — botão de ativação rápida ─────────────────────── */
 .parceiros-section {
-  padding: 0.75rem 1rem 0.9rem;
+  padding: 0 0 0.5rem;
   border-bottom: 1px solid var(--color-border-light);
   margin-bottom: 0.25rem;
 }
 
 .parceiros-section__header {
-  margin-bottom: 0.55rem;
+  margin: 10px 15px 0.55rem;
 }
 
 .parceiros-section__eyebrow {
   font-size: 0.55rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
+  color: var(--centro-ink-faint);
   font-family: var(--font-mono);
 }
 
 .parceiros-btn {
-  width: 100%;
+  width: calc(100% - 30px);
+  margin: 0 15px 12px;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(220, 38, 38, 0.06);
-  border: 1px solid rgba(220, 38, 38, 0.25);
-  border-radius: 4px;
+  background: var(--centro-paper);
+  border: 1px solid var(--centro-paper-border);
+  border-radius: 2px;
   padding: 0.75rem 0.9rem;
   cursor: pointer;
   font-family: var(--font-mono);
   text-align: left;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
   position: relative;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.35);
+  color: var(--centro-ink-mid);
 }
 .parceiros-btn:hover {
-  background: rgba(220, 38, 38, 0.12);
-  border-color: rgba(220, 38, 38, 0.5);
+  background: var(--centro-paper-hover);
+  border-color: rgba(220, 38, 38, 0.45);
+  box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.45);
 }
 .parceiros-btn--ativo {
-  background: rgba(220, 38, 38, 0.12);
+  background: #fef2f2;
   border-color: rgba(220, 38, 38, 0.55);
 }
 
@@ -178,11 +182,11 @@
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-text);
+  color: var(--centro-ink);
 }
 .parceiros-btn__sub {
   font-size: 0.6rem;
-  color: var(--color-text-muted);
+  color: var(--centro-ink-muted);
   letter-spacing: 0.04em;
 }
 
@@ -671,4 +675,76 @@ a.as-sponsor__nome:hover {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding-top: 0.35rem;
   margin-top: 0.1rem;
+}
+
+/* ── POI popup (memória, acervo, monumentos, arqueologia) ──────────── */
+.maplibregl-popup-content {
+  background: var(--centro-paper, #fdfbf7) !important;
+  border: 1px solid var(--centro-paper-border, #dcd3c6) !important;
+  border-top: 3px solid var(--centro-accent, #dc2626) !important;
+  border-radius: 2px !important;
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.45) !important;
+  color: var(--centro-ink-mid, #3d3830) !important;
+  font-family: var(--font-mono);
+}
+
+.maplibregl-popup-tip {
+  border-top-color: var(--centro-paper, #fdfbf7) !important;
+}
+
+.poi-popup {
+  font-family: var(--font-mono);
+  max-width: 260px;
+  line-height: 1.4;
+  color: var(--centro-ink-mid);
+}
+
+.poi-popup b {
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--centro-ink);
+}
+
+.poi-popup small {
+  font-size: 0.78rem;
+  color: var(--centro-ink-muted);
+}
+
+/* ── Pista popup (Rua São Bento histórica) ─────────────────────────── */
+.pista-popup {
+  font-family: var(--font-mono);
+  max-width: 260px;
+  color: var(--centro-ink-mid);
+}
+
+.pista-popup__title {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--centro-ink);
+}
+
+.pista-popup__desc {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--centro-ink-muted);
+  line-height: 1.4;
+}
+
+.pista-popup__img {
+  width: 100%;
+  border-radius: 2px;
+  display: block;
+  border: 1px solid var(--centro-paper-border);
+}
+
+.pista-popup__source {
+  margin: 4px 0 0;
+  font-size: 10px;
+  color: var(--centro-ink-faint);
+}
+
+.pista-popup__source a {
+  color: var(--centro-accent-dark);
 }

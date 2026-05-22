@@ -1,12 +1,84 @@
 /**
  * Runtime principal da página Centro.
  * Extraído de scripts inline para manter HTML válido e facilitar manutenção.
+ *
+ * Compatível com MapLibre GL JS v4.x e v5.x.
  */
 (function () {
   "use strict";
 
+  var U = (window.CENTRO && window.CENTRO.utils) || {};
+  var CENTRO_CENTER = U.CENTRO_CENTER || [-46.6361, -23.5505];
+  var CENTRO_MAX_BOUNDS = U.CENTRO_MAX_BOUNDS || [[-46.67, -23.59], [-46.58, -23.52]];
+  var MIN_ZOOM = U.MIN_ZOOM || 13;
+  var MAX_ZOOM = U.MAX_ZOOM || 17;
+
+  // OpenFreeMap (https://openfreemap.org) — vector tiles + glyphs + sprite
+  // gratuitos, sem chave de API. Trocas possíveis: liberty | positron |
+  // bright | dark-matter. O style URL já vem com sources, glyphs e sprite
+  // configurados pela OpenFreeMap — não precisamos manter osm-style.json.
+  var BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
+
+  // Fonte para labels POI: precisa existir no fontstack do basemap. Noto
+  // Sans Regular é o default da OpenFreeMap.
+  var POI_TEXT_FONT = ["Noto Sans Regular"];
+
+  // Localização PT-BR para tooltips de controles MapLibre.
+  var MAPLIBRE_LOCALE_PT_BR = {
+    "AttributionControl.ToggleAttribution": "Alternar atribuição",
+    "AttributionControl.MapFeedback": "Comentários sobre o mapa",
+    "FullscreenControl.Enter": "Entrar em tela cheia",
+    "FullscreenControl.Exit": "Sair da tela cheia",
+    "GeolocateControl.FindMyLocation": "Mostrar minha localização",
+    "GeolocateControl.LocationNotAvailable": "Localização indisponível",
+    "LogoControl.Title": "Logotipo MapLibre",
+    "Map.Title": "Mapa",
+    "NavigationControl.ResetBearing": "Recentralizar bússola",
+    "NavigationControl.ZoomIn": "Aproximar zoom",
+    "NavigationControl.ZoomOut": "Afastar zoom",
+    "ScaleControl.Feet": "pés",
+    "ScaleControl.Meters": "m",
+    "ScaleControl.Kilometers": "km",
+    "ScaleControl.Miles": "mi",
+    "ScaleControl.NauticalMiles": "nm",
+    "TerrainControl.Enable": "Ativar terreno",
+    "TerrainControl.Disable": "Desativar terreno",
+    "CooperativeGesturesHandler.WindowsHelpText": "Use Ctrl + rolagem para ampliar o mapa",
+    "CooperativeGesturesHandler.MacHelpText": "Use ⌘ + rolagem para ampliar o mapa",
+    "CooperativeGesturesHandler.MobileHelpText": "Use dois dedos para mover o mapa",
+  };
+
+  // Habilita o debug-inspector apenas quando o usuário pediu explicitamente
+  // (?debug=1 ou localStorage.centroDebug=1). Mantém produção limpa.
+  var DEBUG_INSPECTOR = (function () {
+    try {
+      if (/[?&]debug=1\b/.test(window.location.search)) return true;
+      if (window.localStorage && window.localStorage.getItem("centroDebug") === "1") return true;
+    } catch (_e) {
+      // localStorage indisponível em alguns contextos — ignora.
+    }
+    return false;
+  })();
+
   var map = null;
   var activeLayers = new Set();
+  var poiInteractionLayerIds = [];
+
+  // Catálogo (layers.json + groups.json) é carregado uma única vez e indexado.
+  var catalogPromise = null;
+  var catalogIndex = null;
+
+  // Maquete 3D — layer fill-extrusion nativa do estilo OpenFreeMap liberty.
+  var BUILDINGS_3D_LAYER_ID = "building-3d";
+  var BUILDINGS_3D_STORAGE_KEY = "centroBuildings3D";
+  var POI_THEME_STORAGE_KEY = "centroPoiThemeFilter";
+
+  // Promise resolvida quando o mapa dispara 'load' — permite encadear
+  // ativações de camadas sem polling do DOM.
+  var mapReadyResolve = null;
+  var mapReadyPromise = new Promise(function (resolve) {
+    mapReadyResolve = resolve;
+  });
 
   function setupHamburgerMenu() {
     var btn = document.getElementById("hamburger-btn");
@@ -49,21 +121,65 @@
     mapInstance.__centroPoiHandlers[handlerKey] = handler;
   }
 
-  function loadImageElement(url) {
+  // SVG não é suportado por createImageBitmap no Chromium (usado por
+  // map.loadImage em v4), então rotamos SVG via HTMLImageElement direto.
+  // Raster (png/jpg/webp) passa por map.loadImage para se beneficiar do
+  // pipeline de transformRequest e do tratamento de erro via on('error').
+  function isSvgUrl(url) {
+    return /\.svg(\?.*)?$/i.test(url);
+  }
+
+  function loadHtmlImage(url) {
     return new Promise(function (resolve, reject) {
       var image = new Image();
-      image.onload = function () {
-        resolve(image);
+      image.onload = function () { resolve(image); };
+      image.onerror = function () {
+        reject(new Error("Falha ao carregar imagem: " + url));
       };
-      image.onerror = reject;
       image.src = url;
     });
   }
 
   async function ensureImage(mapInstance, imageId, imagePath) {
     if (mapInstance.hasImage(imageId)) return;
-    var image = await loadImageElement(imagePath);
-    mapInstance.addImage(imageId, image);
+    var imageData;
+    if (!isSvgUrl(imagePath) && typeof mapInstance.loadImage === "function") {
+      var response = await mapInstance.loadImage(imagePath);
+      imageData = response && response.data ? response.data : response;
+    } else {
+      imageData = await loadHtmlImage(imagePath);
+    }
+    if (!mapInstance.hasImage(imageId)) {
+      mapInstance.addImage(imageId, imageData);
+    }
+  }
+
+  // Constrói o conteúdo do popup POI como nó DOM, evitando setHTML
+  // (que não sanitiza). Valores vêm de GeoJSON e podem conter caracteres
+  // que quebrariam HTML interpolado por concatenação de strings.
+  function createPoiPopupNode(name, secondary) {
+    var root = document.createElement("div");
+    root.className = "poi-popup";
+    var title = document.createElement("b");
+    title.textContent = name || "POI";
+    root.appendChild(title);
+    if (secondary) {
+      root.appendChild(document.createElement("br"));
+      var small = document.createElement("small");
+      small.textContent = secondary;
+      root.appendChild(small);
+    }
+    return root;
+  }
+
+  function getMapIconHaloPaint() {
+    var iconsRegistry = window.MAPA_SP_ICONS;
+    var paper = (iconsRegistry && iconsRegistry.settings && iconsRegistry.settings.paper) || "#fdfbf7";
+    return {
+      "icon-halo-color": paper,
+      "icon-halo-width": 2,
+      "icon-halo-blur": 0.5,
+    };
   }
 
   async function addPOILayer(mapInstance, cfg) {
@@ -86,9 +202,11 @@
       source: sourceId,
       layout: {
         "icon-image": imageId,
-        "icon-size": 0.7,
+        "icon-size": 0.82,
         "icon-allow-overlap": true,
+        "icon-anchor": "center",
       },
+      paint: getMapIconHaloPaint(),
     });
 
     if (titleProp && styleSupportsTextLabels(mapInstance)) {
@@ -98,15 +216,18 @@
         source: sourceId,
         layout: {
           "text-field": ["get", titleProp],
-          "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
+          "text-font": POI_TEXT_FONT,
           "text-size": 10,
           "text-offset": [0, 2],
           "text-anchor": "top",
         },
         paint: {
-          "text-color": "#fff",
-          "text-halo-color": "rgba(0,0,0,0.8)",
-          "text-halo-width": 1,
+          // Texto escuro com halo branco oferece contraste WCAG melhor
+          // sobre raster OSM claro do que o branco-com-halo-preto anterior.
+          "text-color": "#1a1a1a",
+          "text-halo-color": "#ffffff",
+          "text-halo-width": 1.5,
+          "text-halo-blur": 0.5,
         },
       });
     }
@@ -121,7 +242,7 @@
           : "";
       new maplibregl.Popup()
         .setLngLat(e.lngLat)
-        .setHTML("<b>" + name + "</b><br><small>" + secondary + "</small>")
+        .setDOMContent(createPoiPopupNode(name, secondary))
         .addTo(mapInstance);
     });
 
@@ -131,6 +252,91 @@
     bindLayerEventOnce(mapInstance, "mouseleave", iconLayerId, function () {
       mapInstance.getCanvas().style.cursor = "";
     });
+
+    if (poiInteractionLayerIds.indexOf(iconLayerId) === -1) {
+      poiInteractionLayerIds.push(iconLayerId);
+    }
+  }
+
+  function pistaItemFromProperties(properties) {
+    if (!properties) return null;
+    return {
+      title: properties.title || "Pista",
+      description: properties.description || "",
+      image: properties.image || "",
+      sourceUrl: properties.sourceUrl || "",
+    };
+  }
+
+  async function addPistasLayer(mapInstance, items) {
+    var pistasCfg = window.CENTRO && window.CENTRO.pistas && window.CENTRO.pistas.CONFIG;
+    var iconsRegistry = window.MAPA_SP_ICONS;
+    var sourceId = (pistasCfg && pistasCfg.sourceId) || "rsb-pistas-source";
+    var iconLayerId = (pistasCfg && pistasCfg.iconLayerId) || "rsb-pistas-icon";
+    var iconPath =
+      iconsRegistry && typeof iconsRegistry.resolvePistasIcon === "function"
+        ? iconsRegistry.resolvePistasIcon()
+        : "/centro/assets/icons/icon-pista.svg";
+    var imageId = "rsb-pista-icon";
+    var features = [];
+
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      if (!item.lngLat || !Array.isArray(item.lngLat) || item.lngLat.length < 2) continue;
+      features.push({
+        type: "Feature",
+        geometry: { type: "Point", coordinates: item.lngLat },
+        properties: {
+          id: item.id || "",
+          title: item.title || "",
+          description: item.description || "",
+          image: item.image || "",
+          sourceUrl: item.sourceUrl || "",
+        },
+      });
+    }
+
+    ensureSource(mapInstance, sourceId, {
+      type: "geojson",
+      data: { type: "FeatureCollection", features: features },
+    });
+    await ensureImage(mapInstance, imageId, iconPath);
+
+    ensureLayer(mapInstance, {
+      id: iconLayerId,
+      type: "symbol",
+      source: sourceId,
+      layout: {
+        "icon-image": imageId,
+        "icon-size": 0.82,
+        "icon-allow-overlap": true,
+        "icon-anchor": "center",
+      },
+      paint: getMapIconHaloPaint(),
+    });
+
+    bindLayerEventOnce(mapInstance, "click", iconLayerId, function (e) {
+      var properties = (e.features && e.features[0] && e.features[0].properties) || {};
+      var pistaItem = pistaItemFromProperties(properties);
+      if (!pistaItem) return;
+      new maplibregl.Popup({ offset: 25, maxWidth: "300px" })
+        .setLngLat(e.lngLat)
+        .setDOMContent(createPistaPopupNode(pistaItem))
+        .addTo(mapInstance);
+    });
+
+    bindLayerEventOnce(mapInstance, "mouseenter", iconLayerId, function () {
+      mapInstance.getCanvas().style.cursor = "pointer";
+    });
+    bindLayerEventOnce(mapInstance, "mouseleave", iconLayerId, function () {
+      mapInstance.getCanvas().style.cursor = "";
+    });
+
+    if (poiInteractionLayerIds.indexOf(iconLayerId) === -1) {
+      poiInteractionLayerIds.push(iconLayerId);
+    }
+
+    return features.length;
   }
 
   function showInspector(feature) {
@@ -158,33 +364,341 @@
     panel.appendChild(body);
   }
 
+  // Constrói o conteúdo do popup de pista como nó DOM. Os campos vêm
+  // de assets/pistas/rua-sao-bento-pistas.json (trusted), mas usar
+  // textContent evita XSS caso a fonte mude e mantém aderência ao
+  // pattern recomendado pela doc do MapLibre (setHTML não sanitiza).
+  function createPistaPopupNode(item) {
+    var root = document.createElement("div");
+    root.className = "pista-popup";
+
+    var h3 = document.createElement("h3");
+    h3.className = "pista-popup__title";
+    h3.textContent = item.title || "Pista";
+    root.appendChild(h3);
+
+    if (item.description) {
+      var p = document.createElement("p");
+      p.className = "pista-popup__desc";
+      p.textContent = item.description;
+      root.appendChild(p);
+    }
+
+    if (item.image) {
+      var img = document.createElement("img");
+      img.className = "pista-popup__img";
+      img.alt = item.title || "";
+      img.loading = "lazy";
+      img.src = "/centro/" + String(item.image).replace(/^\.?\//, "");
+      root.appendChild(img);
+    }
+
+    if (item.sourceUrl) {
+      var pSrc = document.createElement("p");
+      pSrc.className = "pista-popup__source";
+      var label = document.createElement("span");
+      label.textContent = "Fonte: ";
+      pSrc.appendChild(label);
+
+      var a = document.createElement("a");
+      a.href = item.sourceUrl;
+      a.target = "_blank";
+      a.rel = "noopener";
+      var clean = String(item.sourceUrl).replace(/^https?:\/\//, "").substring(0, 40);
+      a.textContent = clean + "\u2026";
+      pSrc.appendChild(a);
+
+      root.appendChild(pSrc);
+    }
+
+    return root;
+  }
+
+  function getBuildings3DInitialEnabled() {
+    try {
+      var stored = window.localStorage && window.localStorage.getItem(BUILDINGS_3D_STORAGE_KEY);
+      if (stored === "1") return true;
+      if (stored === "0") return false;
+    } catch (_e) {
+      // localStorage indisponível — default off.
+    }
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return false;
+    }
+    return false;
+  }
+
+  function loadPoiThemeFilterState() {
+    var icons = window.MAPA_SP_ICONS;
+    if (!icons || typeof icons.getThemeFilters !== "function") return {};
+    var themes = icons.getThemeFilters();
+    var state = {};
+    for (var i = 0; i < themes.length; i++) {
+      state[themes[i].id] = true;
+    }
+    try {
+      var raw = window.localStorage && window.localStorage.getItem(POI_THEME_STORAGE_KEY);
+      if (!raw) return state;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return state;
+      for (var j = 0; j < themes.length; j++) {
+        var themeId = themes[j].id;
+        if (typeof parsed[themeId] === "boolean") {
+          state[themeId] = parsed[themeId];
+        }
+      }
+    } catch (_e) {
+      // localStorage indisponível ou JSON inválido — mantém defaults.
+    }
+    return state;
+  }
+
+  function savePoiThemeFilterState(state) {
+    try {
+      if (window.localStorage) {
+        window.localStorage.setItem(POI_THEME_STORAGE_KEY, JSON.stringify(state));
+      }
+    } catch (_e) {
+      // localStorage indisponível — ignora.
+    }
+  }
+
+  function setPoiThemeLayerVisibility(theme, visible) {
+    if (!map || !theme || !theme.layerIds) return;
+    var visibility = visible ? "visible" : "none";
+    for (var i = 0; i < theme.layerIds.length; i++) {
+      var layerId = theme.layerIds[i];
+      if (map.getLayer(layerId)) {
+        map.setLayoutProperty(layerId, "visibility", visibility);
+      }
+    }
+  }
+
+  function applyAllPoiThemeFilters() {
+    var icons = window.MAPA_SP_ICONS;
+    if (!icons || typeof icons.getThemeFilters !== "function") return;
+    var state = loadPoiThemeFilterState();
+    var themes = icons.getThemeFilters();
+    for (var i = 0; i < themes.length; i++) {
+      var theme = themes[i];
+      setPoiThemeLayerVisibility(theme, state[theme.id] !== false);
+    }
+  }
+
+  function setupPoiThemeFilter() {
+    var grid = document.getElementById("poi-legend-grid");
+    var icons = window.MAPA_SP_ICONS;
+    if (!grid || !icons || typeof icons.getThemeFilters !== "function") return;
+
+    grid.innerHTML = "";
+    var state = loadPoiThemeFilterState();
+    var themes = icons.getThemeFilters();
+
+    for (var i = 0; i < themes.length; i++) {
+      (function (theme) {
+        var row = document.createElement("label");
+        row.className = "poi-legend__item";
+        row.dataset.themeId = theme.id;
+
+        var toggle = document.createElement("input");
+        toggle.type = "checkbox";
+        toggle.className = "poi-legend__toggle";
+        toggle.checked = state[theme.id] !== false;
+        toggle.setAttribute("aria-label", theme.label);
+        row.classList.toggle("poi-legend__item--off", !toggle.checked);
+
+        if (theme.iconPath) {
+          var img = document.createElement("img");
+          img.className = "poi-legend__icon";
+          img.src = theme.iconPath;
+          img.alt = "";
+          img.width = 22;
+          img.height = 22;
+          img.loading = "lazy";
+          img.decoding = "async";
+          row.appendChild(toggle);
+          row.appendChild(img);
+        } else {
+          row.appendChild(toggle);
+        }
+
+        var label = document.createElement("span");
+        label.className = "poi-legend__label";
+        label.textContent = theme.label;
+        row.appendChild(label);
+
+        toggle.addEventListener("change", function () {
+          state[theme.id] = toggle.checked;
+          row.classList.toggle("poi-legend__item--off", !toggle.checked);
+          savePoiThemeFilterState(state);
+          mapReadyPromise.then(function () {
+            setPoiThemeLayerVisibility(theme, toggle.checked);
+          });
+        });
+
+        grid.appendChild(row);
+      })(themes[i]);
+    }
+  }
+
+  function renderBuildings3DLegend() {
+    var grid = document.getElementById("buildings-legend-grid");
+    var theme = window.MAPA_SP_THEME;
+    if (!grid || !theme || !theme.buildings3D) return;
+
+    grid.innerHTML = "";
+    var order = typeof theme.getBuildings3DHeightBandOrder === "function"
+      ? theme.getBuildings3DHeightBandOrder()
+      : ["ground", "low", "medium", "tall", "tower", "skyscraper"];
+    var labels = typeof theme.getBuildings3DHeightBandLabels === "function"
+      ? theme.getBuildings3DHeightBandLabels()
+      : {};
+
+    for (var i = 0; i < order.length; i++) {
+      var key = order[i];
+      var band = theme.buildings3D.heightBands[key];
+      if (!band) continue;
+
+      var item = document.createElement("div");
+      item.className = "buildings-legend__item";
+
+      var swatch = document.createElement("span");
+      swatch.className = "buildings-legend__swatch";
+      swatch.style.backgroundColor = band.color;
+      swatch.setAttribute("aria-hidden", "true");
+
+      var label = document.createElement("span");
+      label.className = "buildings-legend__label";
+      label.textContent = labels[key] || key;
+
+      item.appendChild(swatch);
+      item.appendChild(label);
+      grid.appendChild(item);
+    }
+  }
+
+  function updateBuildings3DLegendVisibility(visible) {
+    var legend = document.getElementById("buildings-legend");
+    if (!legend) return;
+    legend.hidden = !visible;
+  }
+
+  function syncBuildings3DToggleUI(enabled) {
+    var cb = document.getElementById("centro-buildings-3d-toggle");
+    if (cb) cb.checked = !!enabled;
+    updateBuildings3DLegendVisibility(!!enabled);
+  }
+
+  function setBuildings3DEnabled(enabled, options) {
+    options = options || {};
+    if (!map || !map.getLayer || !map.getLayer(BUILDINGS_3D_LAYER_ID)) {
+      if (!options.silent) {
+        console.warn("[CENTRO] Camada", BUILDINGS_3D_LAYER_ID, "indisponível no estilo atual");
+      }
+      return false;
+    }
+
+    var theme = window.MAPA_SP_THEME;
+
+    if (enabled && theme && typeof theme.getBuildings3DExtrusionPaint === "function") {
+      var paint = theme.getBuildings3DExtrusionPaint();
+      var paintKeys = Object.keys(paint);
+      for (var p = 0; p < paintKeys.length; p++) {
+        map.setPaintProperty(BUILDINGS_3D_LAYER_ID, paintKeys[p], paint[paintKeys[p]]);
+      }
+      if (typeof theme.getBuildings3DFilter === "function") {
+        map.setFilter(BUILDINGS_3D_LAYER_ID, theme.getBuildings3DFilter());
+      }
+      map.setLayoutProperty(BUILDINGS_3D_LAYER_ID, "visibility", "visible");
+    } else {
+      map.setLayoutProperty(BUILDINGS_3D_LAYER_ID, "visibility", "none");
+    }
+
+    if (options.persist !== false) {
+      try {
+        if (window.localStorage) {
+          window.localStorage.setItem(BUILDINGS_3D_STORAGE_KEY, enabled ? "1" : "0");
+        }
+      } catch (_e) {
+        // Ignora falha de persistência.
+      }
+    }
+
+    return true;
+  }
+
+  function initBuildings3DState() {
+    var enabled = getBuildings3DInitialEnabled();
+    var ok = setBuildings3DEnabled(enabled, { persist: false, silent: true });
+    if (!ok && enabled) {
+      enabled = false;
+    }
+    syncBuildings3DToggleUI(enabled);
+  }
+
+  function setupBuildings3DToggle() {
+    var cb = document.getElementById("centro-buildings-3d-toggle");
+    if (!cb) return;
+
+    renderBuildings3DLegend();
+
+    cb.addEventListener("change", function () {
+      mapReadyPromise.then(function () {
+        var wantOn = cb.checked;
+        var ok = setBuildings3DEnabled(wantOn);
+        if (!ok && wantOn) {
+          cb.checked = false;
+          updateBuildings3DLegendVisibility(false);
+          if (typeof window.centroToast === "function") {
+            window.centroToast("Maquete 3D indisponível neste estilo.", "warn");
+          }
+          return;
+        }
+        updateBuildings3DLegendVisibility(wantOn);
+      });
+    });
+  }
+
   function initMap() {
     map = new maplibregl.Map({
       container: "map",
-      style: "/osm-style.json",
-      center: [-46.6361, -23.5505],
+      style: BASEMAP_STYLE,
+      center: CENTRO_CENTER,
       zoom: 14,
       hash: true,
-      maxBounds: [[-46.67, -23.59], [-46.58, -23.52]],
-      minZoom: 13,
-      maxZoom: 17,
+      maxBounds: CENTRO_MAX_BOUNDS,
+      minZoom: MIN_ZOOM,
+      maxZoom: MAX_ZOOM,
+      locale: MAPLIBRE_LOCALE_PT_BR,
+      attributionControl: { compact: true },
     });
     map.addControl(new maplibregl.NavigationControl(), "top-right");
     map.addControl(new maplibregl.ScaleControl(), "bottom-left");
+
+    map.on("error", function (e) {
+      var err = e && e.error;
+      if (err && (err.status === 404 || err.status === 0)) return;
+      console.warn("[CENTRO] MapLibre error:", err || e);
+    });
 
     map.on("load", async function () {
       console.log("[CENTRO] Mapa carregado com layout original");
 
       var poi = window.CENTRO && window.CENTRO.poiIcons;
+      var iconsRegistry = window.MAPA_SP_ICONS;
       if (poi) {
         var poiConfigs = [
-          { id: "memoria-paulistana", iconFile: "icon-memoria", file: "centro_memoria_paulistana__point", sourceId: poi.MEMORIA_PAULISTANA_LAYERS.sourceId, iconLayerId: poi.MEMORIA_PAULISTANA_LAYERS.iconLayerId, titleProp: "nm_titulo_placa", descProp: "dc_enunciado_placa", addrProp: "nm_endereco_placa" },
-          { id: "acervo-tombado", iconFile: "icon-acervo", file: "centro_acervo_tombado__point", sourceId: poi.ACERVO_TOMBADO_LAYERS.sourceId, iconLayerId: poi.ACERVO_TOMBADO_LAYERS.iconLayerId, titleProp: "nm_acervo" },
-          { id: "bem-arqueologico", iconFile: "icon-arqueologia", file: "centro_bem_arqueologico__point", sourceId: poi.BEM_ARQUEOLOGICO_LAYERS.sourceId, iconLayerId: poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId },
-          { id: "monumentos", iconFile: "icon-monumentos", file: "centro_monumentos__point", sourceId: poi.MONUMENTOS_LAYERS.sourceId, iconLayerId: poi.MONUMENTOS_LAYERS.iconLayerId, titleProp: "nm_obra" },
+          { id: "memoria-paulistana", file: "centro_memoria_paulistana__point", sourceId: poi.MEMORIA_PAULISTANA_LAYERS.sourceId, iconLayerId: poi.MEMORIA_PAULISTANA_LAYERS.iconLayerId, titleProp: "nm_titulo_placa", descProp: "dc_enunciado_placa", addrProp: "nm_endereco_placa" },
+          { id: "acervo-tombado", file: "centro_acervo_tombado__point", sourceId: poi.ACERVO_TOMBADO_LAYERS.sourceId, iconLayerId: poi.ACERVO_TOMBADO_LAYERS.iconLayerId, titleProp: "nm_acervo" },
+          { id: "bem-arqueologico", file: "centro_bem_arqueologico__point", sourceId: poi.BEM_ARQUEOLOGICO_LAYERS.sourceId, iconLayerId: poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId },
+          { id: "monumentos", file: "centro_monumentos__point", sourceId: poi.MONUMENTOS_LAYERS.sourceId, iconLayerId: poi.MONUMENTOS_LAYERS.iconLayerId, titleProp: "nm_obra" },
         ];
         for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
           var poiCfg = poiConfigs[poiIndex];
+          var iconPath =
+            iconsRegistry && typeof iconsRegistry.resolvePatrimonio === "function"
+              ? iconsRegistry.resolvePatrimonio(poiCfg.id)
+              : "/centro/assets/icons/icon-memoria.svg";
           try {
             await addPOILayer(map, {
               sourceId: poiCfg.sourceId,
@@ -192,7 +706,7 @@
               labelLayerId: poiCfg.id + "-label",
               imageId: poiCfg.id + "-pin",
               dataPath: "/centro/data/context/" + poiCfg.file + ".geojson",
-              iconPath: "/centro/assets/icons/" + poiCfg.iconFile + ".svg",
+              iconPath: iconPath,
               titleProp: poiCfg.titleProp,
               descProp: poiCfg.descProp,
               addrProp: poiCfg.addrProp,
@@ -213,36 +727,38 @@
         .then(function (r) {
           return r.json();
         })
-        .then(function (items) {
-          var pistaMarkers = [];
-          items.forEach(function (item) {
-            if (!item.lngLat || !Array.isArray(item.lngLat) || item.lngLat.length < 2) return;
-            var popupHtml =
-              "<div class=\"pista-popup\" style=\"font-family:sans-serif;max-width:260px;\">" +
-              "<h3 style=\"margin:0 0 6px;font-size:14px;\">" + item.title + "</h3>" +
-              (item.description ? "<p style=\"margin:0 0 8px;font-size:12px;color:#555;\">" + item.description + "</p>" : "") +
-              "<img src=\"/centro/" + item.image + "\" alt=\"" + item.title + "\" style=\"width:100%;border-radius:4px;\" />" +
-              (item.sourceUrl
-                ? "<p style=\"margin:4px 0 0;font-size:10px;color:#999;\">Fonte: <a href=\"" + item.sourceUrl + "\" target=\"_blank\" rel=\"noopener\" style=\"color:#666;\">" + item.sourceUrl.replace(/^https?:\/\//, "").substring(0, 40) + "…</a></p>"
-                : "") +
-              "</div>";
-            var marker = new maplibregl.Marker({ color: "#c0392b" })
-              .setLngLat(item.lngLat)
-              .setPopup(new maplibregl.Popup({ offset: 25, maxWidth: "300px" }).setHTML(popupHtml))
-              .addTo(map);
-            pistaMarkers.push(marker);
-          });
-          console.log("[CENTRO] " + pistaMarkers.length + " markers de pistas adicionados");
+        .then(async function (items) {
+          try {
+            var count = await addPistasLayer(map, items);
+            console.log("[CENTRO] " + count + " pistas adicionadas (symbol layer)");
+          } catch (e) {
+            console.warn("[CENTRO] Erro ao carregar pistas:", e);
+          }
+          applyAllPoiThemeFilters();
         })
         .catch(function (e) {
           console.warn("[CENTRO] Erro ao carregar pistas:", e);
+          applyAllPoiThemeFilters();
         });
 
-      map.on("click", function (e) {
-        var features = map.queryRenderedFeatures(e.point);
-        if (!features || features.length === 0) return;
-        showInspector(features[0]);
-      });
+      // Inspector é uma ferramenta de DEBUG. Em produção fica desabilitado;
+      // para ativar use ?debug=1 ou localStorage.centroDebug=1.
+      // Escopa a query às layers conhecidas (POIs + catálogo ativo) para
+      // não varrer o style todo a cada clique.
+      if (DEBUG_INSPECTOR) {
+        map.on("click", function (e) {
+          var diagnosticLayers = poiInteractionLayerIds.concat(
+            Array.from(activeLayers).map(function (id) {
+              return map.getLayer(id + "-fill") ? id + "-fill" : id;
+            })
+          );
+          var queryOpts = diagnosticLayers.length ? { layers: diagnosticLayers } : undefined;
+          var features = map.queryRenderedFeatures(e.point, queryOpts);
+          if (!features || features.length === 0) return;
+          showInspector(features[0]);
+        });
+        console.log("[CENTRO] Debug inspector ativo (?debug=1)");
+      }
 
       var closeBtn = document.getElementById("sidebar-close-btn");
       var openBtn = document.getElementById("sidebar-open-btn");
@@ -259,6 +775,10 @@
           openBtn.hidden = true;
         });
       }
+
+      if (mapReadyResolve) mapReadyResolve();
+
+      initBuildings3DState();
     });
   }
 
@@ -294,45 +814,109 @@
     });
   };
 
+  // Carrega o catálogo (layers.json + groups.json) uma única vez e
+  // indexa por id. Toda interação subsequente da sidebar usa o cache.
+  function loadCatalog() {
+    if (!catalogPromise) {
+      catalogPromise = Promise.all([
+        fetch("/centro/data/catalog/layers.json").then(function (r) { return r.json(); }),
+        fetch("/centro/data/catalog/groups.json").then(function (r) { return r.json(); }),
+      ]).then(function (payload) {
+        var layers = payload[0];
+        var groups = payload[1];
+        var layersList = (layers && layers.layers) || [];
+        catalogIndex = new Map();
+        for (var i = 0; i < layersList.length; i++) {
+          catalogIndex.set(layersList[i].id, layersList[i]);
+        }
+        return {
+          layers: layersList,
+          groups: Array.isArray(groups) ? groups : (groups && groups.groups) || [],
+        };
+      });
+    }
+    return catalogPromise;
+  }
+
+  // Constrói o DOM da sidebar a partir do catálogo. Usa createElement +
+  // textContent para evitar interpolação de strings em innerHTML.
+  function renderSidebarPanel(panel, groupsList, layersList) {
+    panel.innerHTML = "";
+    var hasAny = false;
+
+    for (var g = 0; g < groupsList.length; g++) {
+      var group = groupsList[g];
+      var groupLayers = layersList.filter(function (l) {
+        return l.group === group.id;
+      });
+      if (groupLayers.length === 0) continue;
+      hasAny = true;
+
+      var details = document.createElement("details");
+      details.className = "group";
+      details.open = true;
+
+      var summary = document.createElement("summary");
+      summary.textContent = (group.title || group.id) + " ";
+      var count = document.createElement("span");
+      count.className = "group__count";
+      count.textContent = "(" + groupLayers.length + ")";
+      summary.appendChild(count);
+      details.appendChild(summary);
+
+      for (var i = 0; i < groupLayers.length; i++) {
+        var ly = groupLayers[i];
+        var label = document.createElement("label");
+        label.className = "layer-row";
+
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.dataset.layerId = ly.id;
+        if (ly.visible !== false) cb.checked = true;
+
+        var span = document.createElement("span");
+        span.textContent = ly.title || ly.id;
+
+        label.appendChild(cb);
+        label.appendChild(document.createTextNode(" "));
+        label.appendChild(span);
+
+        if (ly.feature_count !== undefined) {
+          var meta = document.createElement("span");
+          meta.className = "layer-meta";
+          meta.textContent = ly.feature_count + " feats";
+          label.appendChild(meta);
+        }
+        details.appendChild(label);
+      }
+      panel.appendChild(details);
+    }
+
+    if (!hasAny) {
+      var empty = document.createElement("p");
+      empty.className = "sidebar-empty";
+      empty.textContent = "Nenhuma camada disponível";
+      panel.appendChild(empty);
+    }
+  }
+
   function loadSidebarData() {
     var statusEl = document.getElementById("sidebar-status");
     var panel = document.getElementById("layers-panel");
     if (!panel) return;
 
-    fetch("/centro/data/catalog/layers.json")
-      .then(function (layersResp) {
-        return Promise.all([layersResp.json(), fetch("/centro/data/catalog/groups.json").then(function (groupsResp) { return groupsResp.json(); })]);
-      })
-      .then(function (payload) {
-        var layers = payload[0];
-        var groups = payload[1];
+    loadCatalog()
+      .then(function (data) {
         if (statusEl) statusEl.style.display = "none";
-        var groupsList = Array.isArray(groups) ? groups : groups.groups || [];
-        var layersList = layers.layers || [];
-        var html = "";
-
-        for (var g = 0; g < groupsList.length; g++) {
-          var group = groupsList[g];
-          var groupLayers = layersList.filter(function (l) {
-            return l.group === group.id;
-          });
-          if (groupLayers.length === 0) continue;
-
-          html += "<details class=\"group\" open>";
-          html += "<summary>" + (group.title || group.id) + " <span style=\"color:#555;font-weight:normal;\">(" + groupLayers.length + ")</span></summary>";
-          for (var i = 0; i < groupLayers.length; i++) {
-            var ly = groupLayers[i];
-            html += "<label class=\"layer-row\">";
-            html += "<input type=\"checkbox\" " + (ly.visible !== false ? "checked" : "") + " data-layer-id=\"" + ly.id + "\">";
-            html += " <span>" + (ly.title || ly.id) + "</span>";
-            if (ly.feature_count !== undefined) html += " <span class=\"layer-meta\">" + ly.feature_count + " feats</span>";
-            html += "</label>";
-          }
-          html += "</details>";
-        }
-
-        panel.innerHTML = html || "<p style=\"color:#888;\">Nenhuma camada disponível</p>";
-        console.log("[CENTRO] Sidebar carregada:", groupsList.length, "grupos,", layersList.length, "camadas");
+        renderSidebarPanel(panel, data.groups, data.layers);
+        wireLayerCheckboxes(panel);
+        console.log(
+          "[CENTRO] Sidebar carregada:",
+          data.groups.length,
+          "grupos,",
+          data.layers.length,
+          "camadas"
+        );
       })
       .catch(function (e) {
         console.error("[CENTRO] Erro ao carregar sidebar:", e);
@@ -343,41 +927,128 @@
       });
   }
 
-  function addLayerToMap(cfg) {
+  function buildLayerDataUrl(cfg) {
+    var filePath = cfg.file || "";
+    if (filePath.indexOf("data/context/") === 0) {
+      return "/centro/" + filePath;
+    }
+    if (filePath.indexOf("data/processed/") === 0) {
+      return "/centro/" + filePath;
+    }
+    return "/centro/data/processed/" + filePath.replace(/^.*processed\//, "");
+  }
+
+  function applyLayerZoomBounds(layerConfig, cfg) {
+    if (cfg.minzoom != null) layerConfig.minzoom = cfg.minzoom;
+    if (cfg.maxzoom != null) layerConfig.maxzoom = cfg.maxzoom;
+    return layerConfig;
+  }
+
+  async function addPointLayerWithIcon(cfg, sid) {
+    var iconsRegistry = window.MAPA_SP_ICONS;
+    var iconPath =
+      iconsRegistry && typeof iconsRegistry.resolveLayerIcon === "function"
+        ? iconsRegistry.resolveLayerIcon(cfg.id)
+        : null;
+    if (!iconPath) return false;
+
+    var imageId = cfg.id + "-symbol";
+    try {
+      await ensureImage(map, imageId, iconPath);
+    } catch (iconErr) {
+      console.warn("[CENTRO] Icone indisponivel, fallback circle:", cfg.id, iconErr.message);
+      return false;
+    }
+
+    ensureLayer(
+      map,
+      applyLayerZoomBounds(
+        {
+          id: cfg.id,
+          type: "symbol",
+          source: sid,
+          layout: {
+            "icon-image": imageId,
+            "icon-size": 0.82,
+            "icon-allow-overlap": true,
+            "icon-anchor": "center",
+          },
+          paint: getMapIconHaloPaint(),
+        },
+        cfg
+      )
+    );
+    return true;
+  }
+
+  async function addLayerToMap(cfg) {
     if (!map || !map.getSource) return;
     var sid = cfg.id + "-src";
-    var geom = cfg.geom || "polygon";
+    var geom = cfg.geom || cfg.geometry || "polygon";
     if (map.getSource(sid)) return;
 
-    var filePath = cfg.file || "";
-    var dataUrl = "/centro/data/processed/" + filePath.replace(/^.*processed\//, "");
+    var dataUrl = buildLayerDataUrl(cfg);
 
     try {
-      map.addSource(sid, { type: "geojson", data: dataUrl });
+      ensureSource(map, sid, { type: "geojson", data: dataUrl });
       var paint = (cfg.style && cfg.style.paint) || {};
-      var color = paint["fill-color"] || (cfg.style && cfg.style.color) || "#3388ff";
+      var color =
+        paint["fill-color"] ||
+        paint["circle-color"] ||
+        (cfg.style && cfg.style.color) ||
+        "#3388ff";
 
       if (geom === "polygon" || geom === "fill") {
-        map.addLayer({
-          id: cfg.id + "-fill",
-          type: "fill",
-          source: sid,
-          paint: { "fill-color": color, "fill-opacity": 0.25 },
-        });
+        ensureLayer(
+          map,
+          applyLayerZoomBounds(
+            {
+              id: cfg.id + "-fill",
+              type: "fill",
+              source: sid,
+              paint:
+                Object.keys(paint).length > 0
+                  ? paint
+                  : { "fill-color": color, "fill-opacity": 0.25 },
+            },
+            cfg
+          )
+        );
       } else if (geom === "point") {
-        map.addLayer({
-          id: cfg.id,
-          type: "circle",
-          source: sid,
-          paint: { "circle-radius": 6, "circle-color": color },
-        });
+        var usedIcon = await addPointLayerWithIcon(cfg, sid);
+        if (!usedIcon) {
+          ensureLayer(
+            map,
+            applyLayerZoomBounds(
+              {
+                id: cfg.id,
+                type: "circle",
+                source: sid,
+                paint:
+                  Object.keys(paint).length > 0
+                    ? paint
+                    : { "circle-radius": 6, "circle-color": color },
+              },
+              cfg
+            )
+          );
+        }
       } else if (geom === "line") {
-        map.addLayer({
-          id: cfg.id,
-          type: "line",
-          source: sid,
-          paint: { "line-color": color, "line-width": 2 },
-        });
+        ensureLayer(
+          map,
+          applyLayerZoomBounds(
+            {
+              id: cfg.id,
+              type: "line",
+              source: sid,
+              paint:
+                Object.keys(paint).length > 0
+                  ? paint
+                  : { "line-color": color, "line-width": 2 },
+            },
+            cfg
+          )
+        );
       }
 
       activeLayers.add(cfg.id);
@@ -399,38 +1070,37 @@
     activeLayers.delete(id);
   }
 
-  function bindLayerCheckboxesWhenReady() {
-    var attempts = 0;
-    var checkInterval = setInterval(function () {
-      attempts += 1;
-      if (document.querySelector(".layer-row input")) {
-        clearInterval(checkInterval);
-        document.querySelectorAll(".layer-row input[type=\"checkbox\"]").forEach(function (cb) {
-          cb.addEventListener("change", function () {
-            var lid = this.dataset.layerId;
-            if (!lid) return;
-            fetch("/centro/data/catalog/layers.json")
-              .then(function (r) {
-                return r.json();
-              })
-              .then(function (data) {
-                var cfg = data.layers.find(function (l) {
-                  return l.id === lid;
-                });
-                if (!cfg) return;
-                if (cb.checked) addLayerToMap(cfg);
-                else removeLayerFromMap(lid);
-              });
-          });
+  // Conecta os checkboxes ao mapa. Substitui o polling com setInterval
+  // anterior: agora é chamado uma única vez logo após o render da sidebar,
+  // e cada mudança consulta o catálogo já indexado em memória.
+  function wireLayerCheckboxes(panel) {
+    var checkboxes = panel.querySelectorAll("input[type=\"checkbox\"][data-layer-id]");
+    checkboxes.forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        var lid = cb.dataset.layerId;
+        if (!lid || !catalogIndex) return;
+        var cfg = catalogIndex.get(lid);
+        if (!cfg) return;
+        mapReadyPromise.then(function () {
+          if (cb.checked) {
+            addLayerToMap(cfg).catch(function (err) {
+              console.warn("[CENTRO] Erro ao adicionar camada", lid, err);
+            });
+          } else {
+            removeLayerFromMap(lid);
+          }
         });
-        document
-          .querySelectorAll(".layer-row input[type=\"checkbox\"]:checked")
-          .forEach(function (cb) {
-            cb.dispatchEvent(new Event("change"));
-          });
-      }
-      if (attempts > 50) clearInterval(checkInterval);
-    }, 100);
+      });
+    });
+
+    // Ativa as camadas marcadas por padrão assim que o mapa estiver pronto.
+    mapReadyPromise.then(function () {
+      panel
+        .querySelectorAll("input[type=\"checkbox\"][data-layer-id]:checked")
+        .forEach(function (cb) {
+          cb.dispatchEvent(new Event("change"));
+        });
+    });
   }
 
   function setupLazyImageObserver() {
@@ -535,12 +1205,13 @@
   function bootstrap() {
     setupHamburgerMenu();
     setupSidebarToggle();
+    setupBuildings3DToggle();
+    setupPoiThemeFilter();
     setupNarrativeNav();
     setupToast();
     setupLazyImageObserver();
     setupKeyboardShortcuts();
     loadSidebarData();
-    bindLayerCheckboxesWhenReady();
     initMap();
   }
 

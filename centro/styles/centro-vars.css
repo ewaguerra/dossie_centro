@@ -33,4 +33,14 @@
   --jesuit-frame-shadow: rgba(220, 38, 38, 0.15);
   --jesuit-frame-size-top: 56px;
   --jesuit-frame-size-side: 44px;
+
+  /* Dossiê forense — superfície papel + tinta (cards de evidência) */
+  --centro-paper: #fdfbf7;
+  --centro-paper-elev: #f4f0e6;
+  --centro-paper-hover: #fffef9;
+  --centro-paper-border: #dcd3c6;
+  --centro-ink: #1a1a1a;
+  --centro-ink-mid: #3d3830;
+  --centro-ink-muted: #5c564c;
+  --centro-ink-faint: #7a7368;
 }

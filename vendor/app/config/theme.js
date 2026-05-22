@@ -657,5 +657,63 @@ window.MAPA_SP_THEME = {
     }
 
     return layout;
-  }
+  },
+
+  // ── Prédios 3D (fill-extrusion OpenFreeMap) ─────────────────────────
+  // Usado por centro-runtime.js ao ativar a maquete estrutural na sidebar.
+
+  getBuildings3DHeightBandOrder() {
+    return ["ground", "low", "medium", "tall", "tower", "skyscraper"];
+  },
+
+  getBuildings3DHeightBandLabels() {
+    return {
+      ground: "Térreo (0–6 m)",
+      low: "Baixo (6–15 m)",
+      medium: "Médio (15–30 m)",
+      tall: "Alto (30–60 m)",
+      tower: "Torre (60–100 m)",
+      skyscraper: "Marco (+100 m)",
+    };
+  },
+
+  getBuildings3DExtrusionColorExpression() {
+    var bands = this.buildings3D.heightBands;
+    var order = this.getBuildings3DHeightBandOrder();
+    var expr = ["case"];
+    var height = ["coalesce", ["get", "render_height"], 0];
+
+    for (var i = 0; i < order.length; i++) {
+      var key = order[i];
+      var band = bands[key];
+      if (!band) continue;
+      if (band.max !== Infinity) {
+        expr.push(["<", height, band.max]);
+        expr.push(band.color);
+      }
+    }
+
+    expr.push(bands.skyscraper ? bands.skyscraper.color : "#f5f5f5");
+    return expr;
+  },
+
+  getBuildings3DFilter() {
+    return [
+      "all",
+      [
+        "any",
+        ["!", ["has", "hide_3d"]],
+        ["!=", ["get", "hide_3d"], true],
+      ],
+    ];
+  },
+
+  getBuildings3DExtrusionPaint() {
+    return {
+      "fill-extrusion-color": this.getBuildings3DExtrusionColorExpression(),
+      "fill-extrusion-opacity": 0.88,
+      "fill-extrusion-base": ["coalesce", ["get", "render_min_height"], 0],
+      "fill-extrusion-height": ["coalesce", ["get", "render_height"], 6],
+    };
+  },
 };

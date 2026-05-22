@@ -55,15 +55,26 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('/pages/centro/centro-runtime.js'), 'HTML deve carregar runtime externo do Centro');
     assert.ok(!/lucide/i.test(res.body), 'HTML nao deve referenciar Lucide');
-    assert.strictEqual(res.headers['cache-control'], 'no-cache');
+    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
   });
 
-  it('deve responder 200 em /osm-style.json', async () => {
-    const res = await fetchPath('/osm-style.json');
+  it('runtime deve referenciar basemap OpenFreeMap (sem osm-style.json local)', async () => {
+    const res = await fetchPath('/pages/centro/centro-runtime.js');
     assert.strictEqual(res.status, 200);
-    const style = JSON.parse(res.body);
-    assert.ok(style.sources && style.sources.osm, 'Style deve conter source osm');
-    assert.ok(style.glyphs, 'Style deve conter glyphs para labels POI');
+    assert.ok(
+      res.body.includes('tiles.openfreemap.org/styles/'),
+      'runtime deve apontar para OpenFreeMap'
+    );
+    assert.ok(!res.body.includes('/osm-style.json'), 'runtime nao deve referenciar osm-style.json');
+  });
+
+  it('osm-style.json, tiles e glyphs locais foram removidos com a migra\u00e7\u00e3o para OpenFreeMap', async () => {
+    const styleRes = await fetchPath('/osm-style.json');
+    assert.notStrictEqual(styleRes.status, 200, 'osm-style.json nao deve existir');
+    const tileRes = await fetchPath('/centro/assets/tiles/14/6067/9301.png');
+    assert.notStrictEqual(tileRes.status, 200, 'tiles locais nao devem existir');
+    const glyphRes = await fetchPath('/vendor/maplibre/fonts/Open%20Sans%20Regular/0-255.pbf');
+    assert.notStrictEqual(glyphRes.status, 200, 'glyphs locais nao devem existir');
   });
 
   it('deve responder 200 em /vendor/maplibre/maplibre-gl.js', async () => {
@@ -78,7 +89,7 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('function bootstrap'), 'runtime deve conter bootstrap');
     assert.ok(res.body.includes('function initMap'), 'runtime deve conter initMap');
-    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600');
+    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
   });
 
   it('deve responder 200 em /app/styles/a11y.css', async () => {
@@ -86,14 +97,14 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('var(--color-accent)'), 'a11y deve usar token accent');
     assert.ok(res.body.includes('prefers-reduced-motion'), 'a11y deve ter reduced-motion');
-    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600');
+    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
   });
 
   it('deve responder 200 em /app/styles/tokens.css', async () => {
     const res = await fetchPath('/app/styles/tokens.css');
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('--color-brand'), 'tokens deve conter --color-brand');
-    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600');
+    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
   });
 
   it('deve responder 200 em /pages/centro/styles/centro-chrome.css', async () => {
@@ -144,7 +155,7 @@ describe('projeto_centro — HTTP integration', () => {
     const res = await fetchPath('/pages/centro/centro-sidebar.css');
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes("@import url('styles/layout.css')"), 'agregador deve importar layout');
-    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600');
+    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
   });
 
   it('deve responder 200 em pistas JSON + imagens', async () => {
@@ -161,7 +172,38 @@ describe('projeto_centro — HTTP integration', () => {
     const res = await fetchPath('/app/config/theme.js');
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('MAPA_SP_THEME'), 'theme.js deve conter MAPA_SP_THEME');
-    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600');
+    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
+  });
+
+  it('headers de cache: somente /vendor/ recebe immutable; assets do projeto sao no-cache', async () => {
+    const vendor = await fetchPath('/vendor/maplibre/maplibre-gl.js');
+    assert.strictEqual(vendor.status, 200);
+    assert.match(
+      vendor.headers['cache-control'] || '',
+      /immutable/,
+      'vendor third-party precisa ser immutable'
+    );
+
+    const projectPaths = [
+      '/centro/index.html',
+      '/pages/centro/centro-runtime.js',
+      '/app/styles/tokens.css',
+      '/centro/data/catalog/layers.json',
+      '/centro/assets/icons/icon-memoria.svg',
+    ];
+    for (const path of projectPaths) {
+      const res = await fetchPath(path);
+      const cc = res.headers['cache-control'] || '';
+      assert.ok(
+        !cc.includes('immutable'),
+        `${path} NUNCA pode ser immutable (cache imortal causou o bug "Access blocked")`
+      );
+      assert.match(
+        cc,
+        /no-cache/,
+        `${path} precisa revalidar a cada request (no-cache)`
+      );
+    }
   });
 
   it('deve responder 200 em geojson e icones SVG dos POIs', async () => {
@@ -174,6 +216,8 @@ describe('projeto_centro — HTTP integration', () => {
       '/centro/assets/icons/icon-acervo.svg',
       '/centro/assets/icons/icon-arqueologia.svg',
       '/centro/assets/icons/icon-monumentos.svg',
+      '/centro/assets/icons/icon-pista.svg',
+      '/centro/assets/icons/icon-droplets.svg',
     ];
 
     for (const path of paths) {
