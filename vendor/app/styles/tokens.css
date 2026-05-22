@@ -91,7 +91,15 @@
   --z-modal: 1000;
   --z-hud: 1100;
 
-  /* ── Breakpoints (referência em media queries) ────────── */
+  /*
+   * Breakpoints — usar valores literais em @media (vars não funcionam em MQ).
+   * Referência: docs/design-system/breakpoints.md
+   *
+   * --bp-sm: 480px   phone estreito
+   * --bp-md: 640px   phone / phablet
+   * --bp-lg: 768px   tablet portrait
+   * --bp-xl: 1024px  tablet landscape / desktop estreito
+   */
   --bp-sm: 480px;
   --bp-md: 640px;
   --bp-lg: 768px;

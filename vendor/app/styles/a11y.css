@@ -2,7 +2,7 @@
  * Acessibilidade visual global — foco e reduced motion
  * Carregar após tokens.css em landing, centro, arquivo-morto e arquivista.
  *
- * @see docs/design-system/a11y.md
+ * @see docs/design-system/accessibility.md
  */
 
 :where(
@@ -15,7 +15,10 @@
   summary,
   [tabindex]:not([tabindex="-1"]),
   .btn,
-  .nav-retorno-link,
+  .input,
+  .checkbox,
+  .toast__close,
+  .nav-retorno__link,
   .nav-btn,
   .hamburger-btn,
   .hamburger-link
@@ -26,7 +29,12 @@
 }
 
 /* Centro HUD: outline no chrome forense, não na identidade âmbar */
-.has-jesuit-frame :where(.nav-btn, .sidebar-close-btn, .sidebar-open-btn):focus-visible {
+.has-jesuit-frame :where(
+  .nav-btn,
+  .btn--ghost,
+  .btn--bare,
+  .sidebar-open-btn
+):focus-visible {
   outline-color: var(--color-accent-strong);
 }
 
