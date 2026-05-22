@@ -572,6 +572,20 @@ revealEls.forEach(el => revealObserver.observe(el));
 })();
 
 
+/* ── PROTOCOLO 13 — fase ARG (localStorage) ─────────── */
+(function initProtocoloPhase() {
+  const KEY = 'protocolo13_phase';
+  const MAX = 13;
+  try {
+    if (!localStorage.getItem(KEY)) localStorage.setItem(KEY, '1');
+    const phase = Math.min(MAX, Math.max(1, parseInt(localStorage.getItem(KEY), 10) || 1));
+    const badge = document.getElementById('protocolo-phase-badge');
+    if (badge) badge.textContent = 'Fase ' + phase + ' de ' + MAX + ' (activa)';
+  } catch (_e) {
+    // localStorage indisponível
+  }
+})();
+
 /* ── SMOOTH SCROLL ───────────────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {

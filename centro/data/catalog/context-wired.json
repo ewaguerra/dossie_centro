@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "description": "Camadas context com GeoJSON no disco. Exclui OSM ausente e centro_pois_turisticos (já em addPOILayer).",
+  "layerIds": [
+    "centro_rios_geosampa__line",
+    "centro_area_inundavel__polygon",
+    "centro_rios_osm__line",
+    "centro_monumentos__point",
+    "centro_bem_tombado__polygon",
+    "centro_bem_arqueologico__point",
+    "centro_acervo_tombado__point",
+    "centro_memoria_paulistana__point",
+    "centro_carta_geotecnica__polygon",
+    "centro_risco_alagamento__point",
+    "centro_declividade__polygon",
+    "centro_arquivo_superficial__point"
+  ]
+}

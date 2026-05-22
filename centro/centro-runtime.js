@@ -2,7 +2,7 @@
  * Runtime principal da página Centro.
  * Extraído de scripts inline para manter HTML válido e facilitar manutenção.
  *
- * Compatível com MapLibre GL JS v4.x e v5.x.
+ * MapLibre GL JS 5.
  */
 (function () {
   "use strict";
@@ -146,27 +146,17 @@
   }
 
   function getCollectedClueIds() {
-    try {
-      var raw = window.localStorage && window.localStorage.getItem(CADERNO_STORAGE_KEY);
-      if (!raw) return new Set();
-      var parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return new Set();
-      var ids = new Set();
-      for (var i = 0; i < parsed.length; i++) {
-        if (typeof parsed[i] === "string") ids.add(parsed[i]);
-      }
-      return ids;
-    } catch (_e) {
-      return new Set();
+    var lu = window.CENTRO && window.CENTRO.layerUnlocks;
+    if (lu && typeof lu.getCollectedClueIds === "function") {
+      return lu.getCollectedClueIds();
     }
+    return new Set();
   }
 
   function isLayerUnlocked(layerId) {
-    if (!layerUnlockRules || !layerUnlockRules[layerId]) return true;
-    var required = layerUnlockRules[layerId];
-    var collected = getCollectedClueIds();
-    for (var i = 0; i < required.length; i++) {
-      if (!collected.has(required[i])) return false;
+    var lu = window.CENTRO && window.CENTRO.layerUnlocks;
+    if (lu && typeof lu.isLayerUnlocked === "function") {
+      return lu.isLayerUnlocked(layerId, layerUnlockRules);
     }
     return true;
   }
@@ -706,6 +696,58 @@
     return true;
   }
 
+  async function addTrianguloHistoricoOverlay() {
+    if (!map) return;
+    var th = window.CENTRO && window.CENTRO.trianguloHistorico;
+    if (!th || typeof th.buildTrianguloHistoricoGeojson !== "function") return;
+    var cfg = th.CONFIG;
+    if (!cfg || map.getSource(cfg.sourceId)) return;
+
+    try {
+      var feature = await th.buildTrianguloHistoricoGeojson();
+      var feat =
+        feature && feature.type === "Feature"
+          ? feature
+          : {
+              type: "Feature",
+              properties: (feature && feature.properties) || { name: cfg.label },
+              geometry: feature && feature.geometry,
+            };
+      ensureSource(map, cfg.sourceId, {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [feat] },
+      });
+      ensureLayer(
+        map,
+        {
+          id: cfg.fillLayerId,
+          type: "fill",
+          source: cfg.sourceId,
+          paint: {
+            "fill-color": cfg.fillColor,
+            "fill-opacity": cfg.fillOpacity,
+          },
+        },
+        getCatalogInsertBeforeId()
+      );
+      ensureLayer(
+        map,
+        {
+          id: cfg.outlineLayerId,
+          type: "line",
+          source: cfg.sourceId,
+          paint: {
+            "line-color": cfg.outlineColor,
+            "line-width": cfg.outlineWidth,
+          },
+        },
+        getCatalogInsertBeforeId()
+      );
+    } catch (e) {
+      console.warn("[CENTRO] Triângulo histórico indisponível:", e);
+    }
+  }
+
   function ensureMapGroundReadable() {
     if (!map || !map.getLayer) return;
     try {
@@ -783,6 +825,8 @@
       clampViewToCentroBounds(map);
       ensureMapGroundReadable();
       console.log("[CENTRO] Mapa carregado com layout original");
+
+      await addTrianguloHistoricoOverlay();
 
       var poi = window.CENTRO && window.CENTRO.poiIcons;
       if (poi) {
@@ -915,25 +959,17 @@
   // indexa por id. Toda interação subsequente da sidebar usa o cache.
   function loadCatalog() {
     if (!catalogPromise) {
-      catalogPromise = Promise.all([
-        fetch("/centro/data/catalog/layers.json").then(function (r) { return r.json(); }),
-        fetch("/centro/data/catalog/groups.json").then(function (r) { return r.json(); }),
-        fetch("/centro/data/catalog/layer-unlocks.json").then(function (r) {
-          return r.ok ? r.json() : { layers: {} };
-        }),
-      ]).then(function (payload) {
-        var layers = payload[0];
-        var groups = payload[1];
-        var unlocks = payload[2];
-        var layersList = (layers && layers.layers) || [];
-        layerUnlockRules = (unlocks && unlocks.layers) || {};
-        catalogIndex = new Map();
-        for (var i = 0; i < layersList.length; i++) {
-          catalogIndex.set(layersList[i].id, layersList[i]);
-        }
+      var loader = window.CENTRO && window.CENTRO.catalogLoad;
+      if (!loader || typeof loader.loadCatalog !== "function") {
+        catalogPromise = Promise.reject(new Error("CENTRO.catalogLoad indisponível"));
+        return catalogPromise;
+      }
+      catalogPromise = loader.loadCatalog().then(function (data) {
+        layerUnlockRules = data.layerUnlockRules;
+        catalogIndex = data.catalogIndex;
         return {
-          layers: layersList,
-          groups: Array.isArray(groups) ? groups : (groups && groups.groups) || [],
+          layers: data.layers,
+          groups: data.groups,
         };
       });
     }
@@ -1024,12 +1060,18 @@
         if (statusEl) statusEl.style.display = "none";
         renderSidebarPanel(panel, data.groups, data.layers);
         wireLayerCheckboxes(panel);
+        var phaseApi = window.CENTRO && window.CENTRO.protocoloPhase;
+        var phaseNum = phaseApi && typeof phaseApi.getPhase === "function" ? phaseApi.getPhase() : 1;
         console.log(
           "[CENTRO] Sidebar carregada:",
           data.groups.length,
           "grupos,",
           data.layers.length,
-          "camadas"
+          "camadas (fase ARG",
+          phaseNum,
+          "/",
+          phaseApi && phaseApi.MAX_PHASE ? phaseApi.MAX_PHASE : 13,
+          ")"
         );
       })
       .catch(function (e) {

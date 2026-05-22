@@ -213,6 +213,34 @@ describe('projeto_centro — HTTP integration', () => {
     assert.ok(data.layers && typeof data.layers === 'object');
   });
 
+  it('deve responder 200 em cada geojson de context-wired.json', async () => {
+    const res = await fetchPath('/centro/data/catalog/context-wired.json');
+    assert.strictEqual(res.status, 200);
+    const wired = JSON.parse(res.body);
+    const ctxRes = await fetchPath('/centro/data/catalog/context-layers.json');
+    const ctx = JSON.parse(ctxRes.body);
+    for (const id of wired.layerIds) {
+      const ly = (ctx.layers || []).find((l) => l.id === id);
+      assert.ok(ly && ly.file, id + ' sem file');
+      const geoPath = '/centro/' + ly.file.replace(/^\//, '');
+      const geo = await fetchPath(geoPath);
+      assert.strictEqual(geo.status, 200, geoPath + ' (context ' + id + ')');
+    }
+  });
+
+  it('rotas e2e: index redirecciona para landing e superficies 200', async () => {
+    const index = await fetchPath('/index.html');
+    assert.strictEqual(index.status, 200);
+    assert.ok(
+      index.body.includes('/landing/') || index.body.includes('landing'),
+      'index deve redireccionar para landing'
+    );
+    for (const path of ['/landing/', '/centro/', '/arquivo-morto/', '/arquivista/']) {
+      const res = await fetchPath(path);
+      assert.strictEqual(res.status, 200, path + ' deve responder 200');
+    }
+  });
+
   it('deve responder 200 em cada geojson referenciado pelo catalogo layers.json', async () => {
     const res = await fetchPath('/centro/data/catalog/layers.json');
     assert.strictEqual(res.status, 200);

@@ -508,7 +508,7 @@
 }
 
 .layer-meta--lock {
-  color: var(--centro-hud-alert, #dc2626);
+  color: var(--color-danger, #ef4444);
   font-style: italic;
   text-transform: lowercase;
 }

@@ -468,6 +468,17 @@ body {
   flex-shrink: 0;
 }
 
+.hero-phase-badge {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand-dim);
+  opacity: 0;
+  animation: revealUp 0.6s 1.2s ease forwards;
+}
+
 /* ── HERO STATS ──────────────────────────────────────── */
 .hero-stats {
   display: flex;

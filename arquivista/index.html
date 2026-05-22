@@ -15,6 +15,8 @@
 </head>
 <body class="linux-desktop crt">
 
+    <a class="skip-link" href="#desktop">Pular para o desktop</a>
+
     <div id="phantom-cursor"></div>
 
     <nav class="nav-retorno" data-theme="terminal" aria-label="Navegação entre módulos">
@@ -91,34 +93,34 @@
             
             <!-- DOCK LATERAL (DASH) -->
             <aside class="dock">
-                <div class="dock-item" data-app="dossie" title="Dossiê_Oficial">
+                <div class="dock-item" role="button" tabindex="0" data-app="dossie" title="Dossiê_Oficial">
                     <div class="dock-icon">📂</div>
                     <span class="dock-label" data-scramble="Dossiê_Oficial">Dossiê_Oficial</span>
                 </div>
 
-                <div class="dock-item" data-app="fotos" title="Fotos_Soterradas">
+                <div class="dock-item" role="button" tabindex="0" data-app="fotos" title="Fotos_Soterradas">
                     <div class="dock-icon">🖼️</div>
                     <span class="dock-label" data-scramble="Fotos_Soterradas">Fotos_Soterradas</span>
                 </div>
 
-                <div class="dock-item" data-app="codinomes" title="Codinomes.docx">
+                <div class="dock-item" role="button" tabindex="0" data-app="codinomes" title="Codinomes.docx">
                     <div class="dock-icon">📄</div>
                     <span class="dock-label" data-scramble="Codinomes.docx">Codinomes.docx</span>
                 </div>
 
-                <div class="dock-item" data-app="geoscanner" title="GeoScanner Urbano">
+                <div class="dock-item" role="button" tabindex="0" data-app="geoscanner" title="GeoScanner Urbano">
                     <div class="dock-icon">🗺️</div>
                     <span class="dock-label" data-scramble="GeoScanner Urbano">GeoScanner Urbano</span>
                 </div>
 
-                <div class="dock-item" data-app="cmd" title="CMD_Hack.exe">
+                <div class="dock-item" role="button" tabindex="0" data-app="cmd" title="CMD_Hack.exe">
                     <div class="dock-icon">⌘</div>
                     <span class="dock-label" data-scramble="CMD_Hack.exe">CMD_Hack.exe</span>
                 </div>
 
                 <div class="dock-separator"></div>
 
-                <div class="dock-item" data-app="apps" id="show-apps">
+                <div class="dock-item" role="button" tabindex="0" data-app="apps" id="show-apps">
                     <div class="dock-icon">⠿</div>
                 </div>
             </aside>
@@ -237,21 +239,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </template>
-
-    <template id="tpl-geoscanner">
-        <div class="flex flex-col h-full bg-black">
-            <div id="geoscanner-map" class="flex-grow relative">
-                <div id="river-overlay" class="absolute inset-0 bg-river-blue opacity-0 transition-opacity duration-1000 z-10 pointer-events-none"></div>
-            </div>
-            <div class="p-6 bg-system-dark border-t border-dark z-20">
-                <div class="flex justify-between items-center mb-4">
-                    <span id="year-label" class="font-mono font-bold text-xl text-system-green">Ano: 2026</span>
-                    <span id="status-label" class="text-xs font-mono font-bold uppercase px-3 py-1 border border-system-green">Asfalto Moderno</span>
-                </div>
-                <input type="range" id="timeSlider" min="1554" max="2026" value="2026" class="w-full h-1 bg-gray-700 rounded-lg cursor-pointer appearance-none outline-none accent-system-green">
             </div>
         </div>
     </template>

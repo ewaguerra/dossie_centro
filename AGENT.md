@@ -234,8 +234,8 @@ Tokens canônicos em `tokens.css`: `--color-brand`, `--color-brand-dim`,
 - **GeoScanner Urbano (dock):** o ícone **não embeda** mapa próprio —
   o handler em `arquivista/js/script.js` faz `window.location.href =
   '/centro/'`. O template `tpl-geoscanner` em `arquivista/index.html`
-  é código morto **catalogado em §12 como dívida tolerada** (remover só
-  com confirmação). Se algum dia voltar a embeber MapLibre aqui, reusar
+  redirecciona para `/centro/` (com `?clues=` se houver caderno). Template
+  `tpl-geoscanner` foi **removido**. Se algum dia voltar a embeber MapLibre aqui, reusar
   `BASEMAP_STYLE` de `centro/centro-runtime.js` (não duplicar a constante).
 
 ### 5.5 Centro (`/centro/`)
@@ -259,10 +259,10 @@ MapLibre**. As convenções específicas:
   - `layers.json` + `groups.json` → **wired** na sidebar (9 camadas, 5
     grupos). Toda layer nova na sidebar exige entrada aqui **e** GeoJSON em
     `centro/data/processed/`.
-  - `context-layers.json` + `context-groups.json` → **inventário** (15
-    camadas) não carregadas pelo runtime; os GeoJSON em `centro/data/context/`
-    ficam disponíveis para POIs (`addPOILayer`) ou wiring futuro decidido
-    em sprint CAPRI.
+  - `context-layers.json` + `context-groups.json` + `context-wired.json` →
+    **12 camadas wired** na sidebar (ficheiros em `centro/data/context/`).
+    Excluídas: OSM ruas/endereços (sem GeoJSON), `centro_pois_turisticos`
+    (já em `addPOILayer`). Carregamento via `centro/features/catalog-load.js`.
 - **Fundo do mapa:** o body é `#121212` (HUD). O `#map` recebe
   `--map-ground-bg` (`#f8f4f0`) em `centro/styles/layout.css` e o runtime
   força `background-color` no layer `background` do estilo via
@@ -288,9 +288,8 @@ MapLibre**. As convenções específicas:
   `tests/sanity.test.js`. Ver §6 para a regra geral de `innerHTML`.
 - **Módulos satélite em `centro/features/`** (carregados pelo
   `centro/index.html` antes do runtime, na ordem em que aparecem):
-  - `triangulo-historico.js` — overlay do Triângulo Histórico (carregado
-    pelo HTML mas **ainda não wired** no runtime; deixar até a sprint
-    produto decidir; remover do `<script>` se ficar permanentemente sem uso)
+  - `triangulo-historico.js` — overlay do Triângulo Histórico; runtime chama
+    `addTrianguloHistoricoOverlay()` no evento `load` do mapa
   - `pistas.js` — helper de pistas (Rua São Bento), exposto em
     `window.CENTRO.pistas` e consumido pelo runtime
   - `poi-icons.js` — declara as sources/layers symbol de patrimónios e
@@ -549,7 +548,7 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
    estabilidade visual sobre refactor.
 6. **Atualizar catálogo / fixtures.** Se adicionar layer, post, comando CLI
    ou rota narrativa, registre no índice apropriado.
-7. **Rodar `npm run ci`** (ou `npm test`). **92 testes** devem permanecer verdes.
+7. **Rodar `npm run ci`** (ou `npm test`). **100 testes** devem permanecer verdes.
 8. **Atualizar `AGENT.md`** se mudar uma convenção transversal.
 
 ---
@@ -567,7 +566,7 @@ Tarefa só está concluída quando:
 - [ ] Sem `setHTML` / `innerHTML` com dados externos. Auditável:
       `rg 'setHTML|innerHTML\s*=' centro/ landing/ arquivo-morto/ arquivista/`.
 - [ ] `prefers-reduced-motion` respeitado em qualquer animação nova.
-- [ ] `npm test` verde (92 testes hoje — ver §10).
+- [ ] `npm test` verde (100 testes hoje — ver §10).
 - [ ] Sem **runtime dependency** nova em `package.json` (devDependencies
       para test/sync/lint seguem fluxo normal de PR — ver §12).
 
@@ -604,19 +603,20 @@ Pare e pergunte antes de:
 
 ### 12.1 Dívida tolerada — não "limpar" por iniciativa própria
 
-CAPRI 2026-05-22 catalogou estes itens como **DEFER** ou **WONT FIX**.
-Não desfazer em refactor cosmético; reabrir só com novo gate CAPRI.
+Itens **ainda abertos** (reabrir só com gate CAPRI):
 
 | Item | Estado | Onde está |
 |---|---|---|
-| `centro/centro-runtime.js` monolítico (~1 350 linhas) | DEFER (G-08 / US-05.2) — modularizar em sprint futura | runtime |
-| `arquivista/js/script.js` (~890 linhas) | Idem, prioridade menor | arquivista |
-| A11y do dock Arquivista (foco, contraste botões legado) | DEFER (G-09 / US-05.4) | `arquivista/index.html` |
-| `04a_zeis2__polygon.geojson` vazio | WONT FIX (G-07) até haver geometria; **manter** o ficheiro como marcador | `centro/data/processed/` |
-| `tpl-geoscanner` em `arquivista/index.html` | Código morto após decisão de redireccionar; remover só com revisão narrativa | arquivista |
-| 13 fases prometidas na landing | DEFER (G-04) — copy mantida; cronograma = roadmap produto | `landing/` |
-| Contraste WCAG AA formal (`#dc2626` sobre `#1f1f1f`) | DEFER — ver `docs/accessibility/` | design system |
-| Smoke E2E automatizado (Playwright) | Backlog (US-05.3); hoje é manual via `docs/testing/smoke-centro.md` | tests |
+| `centro/centro-runtime.js` ainda grande (~1 350 linhas) | Parcial — extraídos `catalog-load`, `layer-unlocks`, `protocolo-phase`; runtime principal continua monolítico | `centro/features/` + runtime |
+| `arquivista/js/script.js` (~890 linhas) | DEFER — modularizar em sprint futura | arquivista |
+| `04a_zeis2__polygon.geojson` vazio | WONT FIX (G-07) até haver geometria | `centro/data/processed/` |
+| Fases 2–13 do ARG | Roadmap — fase 1 via `protocolo13_phase`; copy honesta na landing | `landing/`, `protocolo-phase.js` |
+| Contraste WCAG AA formal (outros pares além de `.layer-meta--lock`) | Parcial — ver `docs/accessibility/contrast-notes.md` | design system |
+| Playwright browser E2E | HTTP + smoke manual cobrem regressões; Playwright opcional se instalar browsers | `docs/testing/smoke-centro.md` |
+| `15_osm_ruas` / `15_osm_enderecos` | GeoJSON ausente — não wired até existir ficheiro | `context-layers.json` |
+| PMTiles offline Brasil | Fora de scope — ver `docs/offline-scope.md` | — |
+
+**Implementado (2026-05):** context wired (12 camadas), triângulo overlay, deep-link `?clues=`, `tpl-geoscanner` removido, skip-link + foco dock Arquivista, execution map em `docs/architecture/map-init-flow.md`.
 
 ---
 

@@ -11,7 +11,7 @@
 | Ícones mapa | Lucide paths | `lucide-static` (dev) → `centro/assets/icons/*.svg` | Browser não carrega JS Lucide |
 | Runtime Centro | — | `centro/centro-runtime.js` | IIFE vanilla, sem bundler |
 | Servidor dev | Python 3 | `server.py` | Proxy + cache headers |
-| Testes | node:test | `tests/sanity.test.js`, `tests/http.test.js` | **92 testes** (`npm run ci`) |
+| Testes | node:test | `tests/sanity.test.js`, `tests/http.test.js` | **100 testes** (`npm run ci`) |
 | Node.js | ≥18 | `package.json` `engines` | CI local na máquina da autora |
 
 ## Scripts npm
@@ -31,7 +31,16 @@
 | `layer-unlocks.json` | **Sim** — sidebar bloqueada | Exige `protocolo13_caderno_clues` (Arquivo Morto) |
 | `context-layers.json` | **Não** (inventário) | 15 entradas; 13 com ficheiro; OSM ruas/endereços ausentes |
 
-Camadas **fora de scope** até haver dados: macroáreas SP completas, regiões além do Centro, `04a_zeis2` (GeoJSON vazio).
+Camadas **fora de scope** até haver dados:
+
+| ID / tema | Motivo |
+|---|---|
+| `15_osm_ruas__line`, `15_osm_enderecos__point` | GeoJSON ausente no disco (não wired) |
+| `centro_pois_turisticos__point` (context) | Já servido por `addPOILayer` — evita duplicata na sidebar |
+| `04a_zeis2__polygon` | GeoJSON vazio — WONT FIX até geometria (CAPRI G-07) |
+| Macroáreas SP completas, regiões além do Centro | Roadmap produto |
+
+Fluxo de init: [architecture/map-init-flow.md](./architecture/map-init-flow.md).
 
 ## Limitações aceitas
 

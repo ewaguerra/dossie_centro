@@ -631,9 +631,11 @@ describe('projeto_centro — sanity checks', () => {
   // ── Catalog cache ───────────────────────────────────────────────
   it('centro-runtime.js: catalogo carregado uma unica vez e indexado por id', () => {
     const runtime = read('centro/centro-runtime.js');
+    const load = read('centro/features/catalog-load.js');
     assert.ok(runtime.includes('function loadCatalog'), 'loadCatalog ausente');
-    assert.ok(runtime.includes('catalogIndex'), 'catalogIndex (Map) ausente');
-    assert.ok(runtime.includes('new Map()'), 'indice deve usar Map nativo');
+    assert.ok(runtime.includes('catalogIndex'), 'catalogIndex ausente no runtime');
+    assert.ok(runtime.includes('CENTRO.catalogLoad'), 'runtime deve delegar a catalog-load');
+    assert.ok(load.includes('new Map()'), 'indice deve usar Map nativo em catalog-load');
     assert.ok(!/\bsetInterval\s*\(/.test(runtime), 'wiring deve ser direto, sem chamada setInterval');
     assert.ok(!runtime.includes('bindLayerCheckboxesWhenReady'), 'polling antigo deve estar removido');
     assert.ok(runtime.includes('mapReadyPromise'), 'mapReadyPromise gating de addLayer/removeLayer ausente');
@@ -793,6 +795,57 @@ describe('projeto_centro — sanity checks', () => {
     const sync = read('scripts/sync-lucide-icons.mjs');
     assert.ok(sync.includes('validateManifestRegistryParity'), 'validacao de paridade ausente');
     assert.ok(sync.includes('MAP_ICONS_PATH'), 'map-icons.js deve ser lido pelo sync');
+  });
+
+  // ── Backlog AGENT implementado (2026-05) ────────────────────────
+  it('centro: modulos features catalog-load, layer-unlocks, protocolo-phase', () => {
+    assert.ok(exists('centro/features/catalog-load.js'), 'catalog-load.js ausente');
+    assert.ok(exists('centro/features/layer-unlocks.js'), 'layer-unlocks.js ausente');
+    assert.ok(exists('centro/features/protocolo-phase.js'), 'protocolo-phase.js ausente');
+    const html = read('centro/index.html');
+    assert.ok(html.includes('catalog-load.js'), 'index deve carregar catalog-load');
+    assert.ok(html.includes('layer-unlocks.js'), 'index deve carregar layer-unlocks');
+    const load = read('centro/features/catalog-load.js');
+    assert.ok(load.includes('context-wired.json'), 'catalog-load deve ler context-wired');
+  });
+
+  it('context-wired.json lista 12 camadas com ficheiro no disco', () => {
+    const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    assert.strictEqual(wired.layerIds.length, 12);
+    for (const id of wired.layerIds) {
+      const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
+      const ly = ctx.layers.find((l) => l.id === id);
+      assert.ok(ly && ly.file, 'layer ' + id + ' sem file em context-layers');
+      assert.ok(exists('centro/' + ly.file), ly.file + ' ausente no disco');
+    }
+  });
+
+  it('centro-runtime wired triangulo historico no map load', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('addTrianguloHistoricoOverlay'), 'overlay triangulo ausente');
+    assert.ok(runtime.includes('CENTRO.catalogLoad'), 'deve delegar catalogo a catalog-load');
+  });
+
+  it('arquivista: tpl-geoscanner removido e skip-link presente', () => {
+    const html = read('arquivista/index.html');
+    assert.ok(!html.includes('tpl-geoscanner'), 'template geoscanner morto deve estar removido');
+    assert.ok(html.includes('skip-link'), 'skip-link ausente');
+    assert.ok(html.includes('href="#desktop"'), 'skip-link deve apontar ao desktop');
+  });
+
+  it('arquivista geoscanner redirecciona com deep-link clues quando houver caderno', () => {
+    const js = read('arquivista/js/script.js');
+    assert.ok(js.includes("case 'geoscanner'"), 'handler geoscanner ausente');
+    assert.ok(js.includes('protocolo13_caderno_clues'), 'deve ler caderno para query clues');
+    assert.ok(js.includes('?clues='), 'deve montar query clues no redirect');
+  });
+
+  it('landing: fase ARG protocolo13_phase e copy honesta', () => {
+    const js = read('landing/landing.js');
+    const html = read('landing/index.html');
+    assert.ok(js.includes('protocolo13_phase'), 'init fase ausente');
+    assert.ok(html.includes('protocolo-phase-badge'), 'badge de fase ausente');
+    assert.ok(html.includes('fase 1 activa'), 'copy deve indicar fase 1 activa');
   });
 
   // ── Popup CSS classes ───────────────────────────────────────────

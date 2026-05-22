@@ -63,9 +63,22 @@
         setupWordApp();
         break;
 
-      case 'geoscanner':
-        window.location.href = '/centro/';
+      case 'geoscanner': {
+        var centroUrl = '/centro/';
+        try {
+          var raw = localStorage.getItem('protocolo13_caderno_clues');
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              centroUrl += '?clues=' + encodeURIComponent(parsed.join(','));
+            }
+          }
+        } catch (_e) {
+          // ignora — navega sem query
+        }
+        window.location.href = centroUrl;
         break;
+      }
 
       case 'terminal':
       case 'cmd':
