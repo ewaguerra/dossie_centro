@@ -17,6 +17,7 @@
   <link href="/pages/centro/styles/feature-inspector.css" rel="stylesheet" />
   <link href="/pages/centro/styles/profile-card.css" rel="stylesheet" />
   <link href="/pages/centro/styles/jesuit-frame.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/subterranean-cutaway.css" rel="stylesheet" />
   <link href="/pages/centro/styles/map-popups.css" rel="stylesheet" />
   <link href="/pages/centro/styles/responsive.css" rel="stylesheet" />
 </head>
@@ -83,6 +84,16 @@
         <div class="buildings-legend__title">Faixas de altura</div>
         <div class="buildings-legend__grid" id="buildings-legend-grid"></div>
       </div>
+      <label class="sidebar-extras__row layer-row subterranean-toggle" for="centro-subterranean-toggle">
+        <input type="checkbox" id="centro-subterranean-toggle" />
+        <span class="sidebar-extras__text">
+          Visão subterrânea
+          <span class="sidebar-extras__muted"> — Fase 7: Rasgue o Asfalto</span>
+        </span>
+      </label>
+      <div id="subterranean-status" class="subterranean-status" aria-live="polite"></div>
+      <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
+      <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
       <div id="poi-legend" class="poi-legend">
         <details id="poi-legend-details" class="poi-legend__details">
           <summary class="poi-legend__summary" aria-controls="poi-legend-panel">
@@ -113,6 +124,64 @@
     <div class="feature-inspector-content"></div>
   </aside>
 
+  <!-- Card de missão: guia passo a passo para a Visão Subterrânea (Fase 7) -->
+  <div id="subterranean-guide" class="subterranean-guide" role="complementary" aria-label="Guia de missão — Fase 7">
+    <div class="subterranean-guide__header">
+      <span class="subterranean-guide__kicker">MISSÃO / FASE 7</span>
+      <span class="subterranean-guide__title">RASGUE O ASFALTO</span>
+      <button id="subterranean-guide-close" class="subterranean-guide__close btn btn--bare btn--icon-sm" type="button" aria-label="Fechar guia">✕</button>
+    </div>
+    <ol class="subterranean-guide__steps">
+      <li class="subterranean-guide__step">
+        <span class="subterranean-guide__step-num">01</span>
+        <div class="subterranean-guide__step-body">
+          <strong>Activar modo mestre</strong>
+          <span>Acesse <code>?master=1</code> na URL — desbloqueia Fase 7 e todas as pistas.</span>
+          <a class="subterranean-guide__btn" href="?master=1">ACTIVAR AGORA →</a>
+        </div>
+      </li>
+      <li class="subterranean-guide__step">
+        <span class="subterranean-guide__step-num">02</span>
+        <div class="subterranean-guide__step-body">
+          <strong>Abrir painel lateral</strong>
+          <span>Clique no ícone ☰ (canto superior esquerdo) e active o toggle <em>Visão subterrânea</em>.</span>
+        </div>
+      </li>
+      <li class="subterranean-guide__step">
+        <span class="subterranean-guide__step-num">03</span>
+        <div class="subterranean-guide__step-body">
+          <strong>Voar para o subsolo</strong>
+          <span>Clique para inclinar o mapa a 70° e centrar no corte vertical. O layer aparece com efeito glitch.</span>
+          <button id="subterranean-fly-btn" class="subterranean-guide__btn" type="button">VOAR PARA O SUBSOLO ↗</button>
+        </div>
+      </li>
+      <li class="subterranean-guide__step">
+        <span class="subterranean-guide__step-num">04</span>
+        <div class="subterranean-guide__step-body">
+          <strong>Clique nas 13 esferas vermelhas</strong>
+          <span>Cada esfera pulsa em frequência diferente. Ao clicar: partículas explodem, esfera vira verde, pista registrada.</span>
+        </div>
+      </li>
+      <li class="subterranean-guide__step">
+        <span class="subterranean-guide__step-num">05</span>
+        <div class="subterranean-guide__step-body">
+          <strong>Elementos geológicos</strong>
+          <span>Clique também no Rio Anhangabaú, túnel do metrô e fundações para registrar evidências.</span>
+        </div>
+      </li>
+      <li class="subterranean-guide__step subterranean-guide__step--final">
+        <span class="subterranean-guide__step-num">13</span>
+        <div class="subterranean-guide__step-body">
+          <strong>13/13 almas — Fase 7 concluída</strong>
+          <span>Todas as almas coletadas fecham o ciclo do Protocolo 13.</span>
+        </div>
+      </li>
+    </ol>
+    <div class="subterranean-guide__footer">
+      <span class="subterranean-guide__footer-note">Progresso salvo em <code>localStorage</code> — persiste entre sessões.</span>
+    </div>
+  </div>
+
   <div id="narrative-nav" class="narrative-nav">
     <button class="nav-btn btn btn--nav" type="button" data-nav-lng="-46.635" data-nav-lat="-23.545" data-nav-zoom="16" data-nav-pitch="40" aria-label="Navegar para o Triângulo Histórico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2"></circle></svg> OP:TRIÂNGULO</button>
     <button class="nav-btn btn btn--nav" type="button" data-nav-lng="-46.6335" data-nav-lat="-23.5505" data-nav-zoom="17" data-nav-pitch="60" aria-label="Navegar para a Praça da Sé"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 21h16"></path><path d="M6 21V8l6-5 6 5v13"></path><path d="M9 12h6"></path><path d="M9 16h6"></path></svg> OP:SÉ</button>
@@ -140,6 +209,7 @@
   <script src="/pages/centro/features/layer-unlocks.js" defer></script>
   <script src="/pages/centro/features/catalog-load.js" defer></script>
   <script src="/pages/centro/features/protocolo-phase.js" defer></script>
+  <script type="module" src="/pages/centro/features/subterranean-cutaway.js"></script>
   <script src="/pages/centro/centro-runtime.js" defer></script>
 </body>
 </html>

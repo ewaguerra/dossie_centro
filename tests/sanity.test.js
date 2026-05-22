@@ -225,7 +225,10 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(scriptTags.length > 0, 'deve carregar scripts externos');
     scriptTags.forEach(function(tag) {
       assert.ok(/\bsrc=/.test(tag), 'cada script deve ter src: ' + tag);
-      assert.ok(/\bdefer\b/.test(tag), 'cada script deve usar defer: ' + tag);
+      assert.ok(
+        /\bdefer\b/.test(tag) || /\btype="module"/.test(tag),
+        'cada script deve usar defer ou type=module: ' + tag
+      );
     });
     assert.ok(html.includes('/pages/centro/centro-runtime.js'), 'deve carregar centro-runtime.js');
   });
@@ -690,6 +693,37 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('buildings-3d.js'), 'index deve carregar buildings-3d.js');
   });
 
+  it('centro: visão subterrânea usa Three.js vendorizado em custom layer', () => {
+    const html = read('centro/index.html');
+    const runtime = read('centro/centro-runtime.js');
+    const feature = read('centro/features/subterranean-cutaway.js');
+    const css = read('centro/styles/subterranean-cutaway.css');
+    const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    const pkg = JSON.parse(read('package.json'));
+
+    assert.ok(html.includes('centro-subterranean-toggle'), 'toggle subterrâneo ausente');
+    assert.ok(html.includes('subterranean-cutaway.css'), 'CSS subterrâneo ausente');
+    assert.ok(html.includes('subterranean-cutaway.js'), 'feature subterrânea ausente');
+    assert.ok(html.includes('type="module" src="/pages/centro/features/subterranean-cutaway.js"'), 'feature Three deve carregar como module');
+    assert.ok(runtime.includes('CENTRO.subterraneanCutaway'), 'runtime deve delegar visão subterrânea');
+    assert.ok(runtime.includes('centro:subterranean-ready'), 'runtime deve tolerar carregamento module');
+    assert.ok(feature.includes('type: "custom"'), 'deve usar custom layer MapLibre');
+    assert.ok(feature.includes('import * as THREE'), 'feature deve importar Three.js');
+    assert.ok(feature.includes('/vendor/three/three.module.min.js'), 'Three deve vir de vendor local');
+    assert.ok(feature.includes('new THREE.Scene'), 'scene Three ausente');
+    assert.ok(feature.includes('new THREE.WebGLRenderer'), 'renderer Three ausente');
+    assert.ok(feature.includes('new THREE.Raycaster'), 'Raycaster Three ausente');
+    assert.ok(feature.includes('agua-calada'), 'gate agua-calada ausente');
+    assert.ok(feature.includes('aresta-fria'), 'gate aresta-fria ausente');
+    assert.ok(feature.includes('peso-fundacao'), 'gate peso-fundacao ausente');
+    assert.ok(pkg.dependencies && pkg.dependencies.three, 'three dependency ausente');
+    assert.ok(pkg.scripts && pkg.scripts['sync:three'], 'sync:three ausente');
+    assert.ok(exists('scripts/sync-three.mjs'), 'sync-three.mjs ausente');
+    assert.ok(exists('vendor/three/three.module.min.js'), 'three.module.min.js vendorizado ausente');
+    assert.strictEqual(gates.phaseTitles['7'], 'Rasgue o Asfalto');
+    assert.ok(css.includes('subterranean-active'), 'estado visual subterrâneo ausente');
+  });
+
   it('theme.js expoe helpers de fill-extrusion para buildings3D', () => {
     const theme = read('vendor/app/config/theme.js');
     assert.ok(theme.includes('getBuildings3DExtrusionColorExpression'), 'expressao de cor ausente');
@@ -710,8 +744,10 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(pkg.dependencies && pkg.dependencies['maplibre-gl'], 'maplibre-gl ausente');
     assert.match(pkg.dependencies['maplibre-gl'], /^\^5\./, 'maplibre-gl deve estar em ^5.x');
     assert.ok(pkg.scripts && pkg.scripts['sync:maplibre'], 'script sync:maplibre ausente');
-    assert.ok(pkg.scripts.postinstall && pkg.scripts.postinstall.includes('sync-maplibre'), 'postinstall sync ausente');
+    assert.ok(pkg.scripts.postinstall && pkg.scripts.postinstall.includes('sync-maplibre'), 'postinstall maplibre sync ausente');
+    assert.ok(pkg.scripts.postinstall && pkg.scripts.postinstall.includes('sync-three'), 'postinstall three sync ausente');
     assert.ok(exists('scripts/sync-maplibre.mjs'), 'sync-maplibre.mjs ausente');
+    assert.ok(exists('scripts/sync-three.mjs'), 'sync-three.mjs ausente');
     const sync = read('scripts/sync-maplibre.mjs');
     assert.ok(sync.includes('vendor/maplibre'), 'sync deve mirar vendor/maplibre');
     assert.ok(sync.includes('node_modules/maplibre-gl/dist'), 'sync deve copiar de node_modules');

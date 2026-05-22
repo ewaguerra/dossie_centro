@@ -114,6 +114,16 @@
   }
 
   function ensureLayer(mapInstance, layerConfig, beforeId) {
+    // Um layer sem id ou sem source cria estado corrompido no MapLibre e
+    // provoca TypeError em mousemove. Descarta silenciosamente com aviso.
+    if (!layerConfig || !layerConfig.id) {
+      console.warn("[CENTRO] ensureLayer: id ausente — layer ignorado", layerConfig);
+      return;
+    }
+    if (layerConfig.type !== "background" && !layerConfig.source) {
+      console.warn("[CENTRO] ensureLayer: source ausente para layer", layerConfig.id, "— ignorado");
+      return;
+    }
     if (!mapInstance.getLayer(layerConfig.id)) {
       if (beforeId && mapInstance.getLayer(beforeId)) {
         mapInstance.addLayer(layerConfig, beforeId);
@@ -279,6 +289,11 @@
     var descProp = cfg.descProp;
     var addrProp = cfg.addrProp;
     var iconPath = cfg.iconPath;
+
+    if (!sourceId || !iconLayerId) {
+      console.warn("[CENTRO] addPOILayer: sourceId ou iconLayerId ausente — cfg:", JSON.stringify({ sourceId: sourceId, iconLayerId: iconLayerId, dataPath: dataPath }));
+      return;
+    }
 
     ensureSource(mapInstance, sourceId, { type: "geojson", data: dataPath });
     await ensureImage(mapInstance, imageId, iconPath);
@@ -503,6 +518,7 @@
 
   var buildings3dApi = null;
   var poiFilterApi = null;
+  var subterraneanApi = null;
 
   function ensureBuildings3dApi() {
     if (!buildings3dApi && window.CENTRO && window.CENTRO.buildings3D) {
@@ -528,6 +544,18 @@
     return poiFilterApi;
   }
 
+  function ensureSubterraneanApi() {
+    if (!subterraneanApi && window.CENTRO && window.CENTRO.subterraneanCutaway) {
+      subterraneanApi = window.CENTRO.subterraneanCutaway.create({
+        getMap: function () {
+          return map;
+        },
+        mapReadyPromise: mapReadyPromise,
+      });
+    }
+    return subterraneanApi;
+  }
+
   function applyAllPoiThemeFilters() {
     var api = ensurePoiFilterApi();
     if (api) api.applyAll();
@@ -541,6 +569,16 @@
   function setBuildings3DEnabled(enabled, options) {
     var api = ensureBuildings3dApi();
     return api ? api.setEnabled(enabled, options) : false;
+  }
+
+  function setSubterraneanEnabled(enabled, options) {
+    var api = ensureSubterraneanApi();
+    return api ? api.setEnabled(enabled, options) : false;
+  }
+
+  function subterraneanFlyToView() {
+    var api = ensureSubterraneanApi();
+    if (api && typeof api.flyToView === "function") api.flyToView();
   }
 
   async function addTrianguloHistoricoOverlay() {
@@ -619,9 +657,35 @@
     if (api) api.initState();
   }
 
+  function initSubterraneanState() {
+    var api = ensureSubterraneanApi();
+    if (api) {
+      api.initState();
+      return;
+    }
+    document.addEventListener("centro:subterranean-ready", function onReady() {
+      document.removeEventListener("centro:subterranean-ready", onReady);
+      var readyApi = ensureSubterraneanApi();
+      if (readyApi) readyApi.initState();
+    });
+  }
+
   function setupBuildings3DToggle() {
     var api = ensureBuildings3dApi();
     if (api) api.setupToggle();
+  }
+
+  function setupSubterraneanToggle() {
+    var api = ensureSubterraneanApi();
+    if (api) {
+      api.setupToggle();
+      return;
+    }
+    document.addEventListener("centro:subterranean-ready", function onReady() {
+      document.removeEventListener("centro:subterranean-ready", onReady);
+      var readyApi = ensureSubterraneanApi();
+      if (readyApi) readyApi.setupToggle();
+    });
   }
 
   function initMap() {
@@ -745,6 +809,7 @@
       if (mapReadyResolve) mapReadyResolve();
 
       initBuildings3DState();
+      initSubterraneanState();
     });
   }
 
@@ -1211,15 +1276,60 @@
     });
   }
 
+  function setupSubterraneanFlyButtons() {
+    var FLY_BTN_IDS = ["subterranean-fly-btn", "subterranean-fly-sidebar-btn"];
+    FLY_BTN_IDS.forEach(function (id) {
+      var btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        mapReadyPromise.then(function () { subterraneanFlyToView(); });
+      });
+    });
+
+    // Mostrar/ocultar o botão do sidebar sincronizado com o estado do toggle
+    function syncFlyBtn() {
+      var sidebarBtn = document.getElementById("subterranean-fly-sidebar-btn");
+      if (!sidebarBtn) return;
+      var cb = document.getElementById("centro-subterranean-toggle");
+      sidebarBtn.hidden = !(cb && cb.checked);
+    }
+    syncFlyBtn();
+    document.addEventListener("centro:subterranean-ready", function () {
+      var cb = document.getElementById("centro-subterranean-toggle");
+      if (cb) cb.addEventListener("change", syncFlyBtn);
+    });
+  }
+
+  function setupSubterraneanGuide() {
+    var GUIDE_KEY = "centroSubterraneanGuideDismissed";
+    var guide    = document.getElementById("subterranean-guide");
+    var closeBtn = document.getElementById("subterranean-guide-close");
+    if (!guide || !closeBtn) return;
+    try {
+      if (window.localStorage && window.localStorage.getItem(GUIDE_KEY) === "1") {
+        guide.hidden = true;
+        return;
+      }
+    } catch (_e) { /* ignora */ }
+    guide.hidden = false;
+    closeBtn.addEventListener("click", function () {
+      guide.hidden = true;
+      try { if (window.localStorage) window.localStorage.setItem(GUIDE_KEY, "1"); } catch (_e) { /* ignora */ }
+    });
+  }
+
   function bootstrap() {
     setupHamburgerMenu();
     setupSidebarToggle();
     setupBuildings3DToggle();
+    setupSubterraneanToggle();
+    setupSubterraneanFlyButtons();
     setupPoiThemeFilter();
     setupNarrativeNav();
     setupToast();
     setupLazyImageObserver();
     setupKeyboardShortcuts();
+    setupSubterraneanGuide();
     loadSidebarData();
     initMap();
   }

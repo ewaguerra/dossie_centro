@@ -389,11 +389,13 @@ Forense:
   hardware; ou `chrome://flags` → "Override software rendering list" → Enabled.
 - Validação fora do projeto: <https://get.webgl.org/>.
 
-**Sobre 3D:** o único 3D suportado é a **fill-extrusion nativa** do estilo
-OpenFreeMap `liberty` (layer `building-3d` — ver §5.5). Tentativa de
-catedral 3D com Three.js foi avaliada e descartada (**CAPRI G-06 = WONT
-FIX**: dados de geometria insuficientes). **Não reintroduzir `vendor/three/`
-nem `three.module.js`** sem reabrir a decisão.
+**Sobre 3D:** a maquete estrutural continua a usar **fill-extrusion nativa**
+do estilo OpenFreeMap `liberty` (layer `building-3d` — ver §5.5). A exceção
+aprovada é a **Visão subterrânea / Fase 7 — Rasgue o Asfalto**, que pode usar
+Three.js como `custom layer` MapLibre para renderizar o corte vertical do
+subsolo e raycast de elementos clicáveis. Three.js deve ficar vendorizado em
+`vendor/three/` via `npm run sync:three`, sem CDN e sem bundler. Não usar
+Three.js para substituir POIs, catálogo GeoJSON ou a maquete `building-3d`.
 
 ### 7.2 Tiles com texto "Access blocked" ou conteúdo idêntico
 Sintoma do incidente 2026-05-22 (OSM servindo placeholder PNG com HTTP 200
@@ -604,8 +606,9 @@ Tarefa só está concluída quando:
       `rg 'setHTML|innerHTML\s*=' centro/ landing/ arquivo-morto/ arquivista/`.
 - [ ] `prefers-reduced-motion` respeitado em qualquer animação nova.
 - [ ] `npm test` verde (106 testes hoje — ver §10).
-- [ ] Sem **runtime dependency** nova em `package.json` (devDependencies
-      para test/sync/lint seguem fluxo normal de PR — ver §12).
+- [ ] Sem **runtime dependency** nova em `package.json` salvo exceções
+      aprovadas neste documento (hoje: `three` para a Visão subterrânea).
+      DevDependencies para test/sync/lint seguem fluxo normal de PR — ver §12.
 
 ---
 
@@ -636,7 +639,7 @@ Pare e pergunte antes de:
   `Camadas`, mensagens de toast neutro) podem entrar com revisão de pt-BR.
 - Voltar a baixar tiles em massa de `tile.openstreetmap.org` (viola usage
   policy — esse foi o incidente que motivou OpenFreeMap).
-- Reintroduzir Three.js / `vendor/three/` — CAPRI G-06 = WONT FIX (§7.1).
+- Ampliar uso de Three.js para além da Visão subterrânea / Fase 7 (§7.1).
 
 ### 12.1 Dívida tolerada — não "limpar" por iniciativa própria
 
