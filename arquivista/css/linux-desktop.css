@@ -615,7 +615,12 @@ html, body {
   font-style: italic;
 }
 
-/* Responsividade crítica — arquivista em viewports estreitas */
+/*
+ * Responsividade crítica — arquivista (desktop-first)
+ * Breakpoints: docs/design-system/breakpoints.md
+ */
+
+/* --bp-lg: 768px */
 @media (max-width: 768px) {
   .linux-desktop .desktop-panel {
     min-width: 0;
@@ -628,25 +633,76 @@ html, body {
     padding: 0.35rem 0.5rem;
   }
 
+  .linux-desktop .top-bar-left span:last-child {
+    display: none;
+  }
+
   .linux-desktop .workspace-switcher {
-    order: 3;
-    width: 100%;
-    justify-content: center;
+    width: 108px;
+    padding: 8px;
+    right: 4px;
   }
 
   .linux-desktop .dock {
-    transform: scale(0.85);
-    transform-origin: bottom center;
-  }
-}
-
-@media (max-width: 480px) {
-  .linux-desktop .nav-retorno {
-    font-size: 0.65rem;
-    padding: 0.35rem 0.5rem;
+    left: 4px;
+    transform: translateY(-50%) scale(0.85);
+    transform-origin: center left;
   }
 
   .linux-desktop .window {
+    min-width: min(320px, calc(100vw - 16px));
+    max-width: calc(100vw - 8px);
+  }
+
+  .linux-desktop .window.maximized {
+    top: 28px !important;
+    height: calc(100% - 28px - 52px) !important;
+  }
+
+  .linux-desktop .imgv-box {
+    width: min(520px, 96vw);
+    max-height: 90vh;
+  }
+}
+
+/* --bp-md: 640px */
+@media (max-width: 640px) {
+  .linux-desktop .workspace-switcher {
+    display: none;
+  }
+
+  .linux-desktop .top-bar-center {
+    position: static;
+    transform: none;
+    font-size: 11px;
+  }
+
+  .linux-desktop .login-input {
+    width: min(280px, 88vw);
+  }
+
+  .linux-desktop .boot-logo h1 {
+    font-size: 1.35rem;
+    letter-spacing: 3px;
+  }
+}
+
+/* --bp-sm: 480px */
+@media (max-width: 480px) {
+  .linux-desktop .window {
     border-radius: 0;
+  }
+
+  .linux-desktop .dock {
+    transform: translateY(-50%) scale(0.72);
+  }
+
+  .linux-desktop .dock-label {
+    display: none;
+  }
+
+  .linux-desktop .top-bar-right {
+    gap: 6px;
+    font-size: 11px;
   }
 }

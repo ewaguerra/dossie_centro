@@ -17,8 +17,10 @@
 |---|---|---|
 | Tiles basemap OSM | `tile.openstreetmap.org` | Mapa raster vazio offline |
 | Glyphs MapLibre (labels POI) | `demotiles.maplibre.org` | Labels de texto POI omitidos; ícones SVG permanecem |
-| Textura decorativa sidebar | `transparenttextures.com` | Fallback para `#1a1a1a` sólido |
+| YouTube embed (arquivo-morto) | `youtube-nocookie.com` | Vídeo anexo; página funciona sem carregar iframe |
 | Links/fontes em metadados GeoJSON | diversos | Só afetam links em popups |
+
+**Texturas decorativas:** removidas de CDN — ver [offline-textures.md](../design-system/offline-textures.md).
 
 ## Restrição “sem CDN” no monorepo
 

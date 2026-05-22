@@ -152,6 +152,50 @@ body, html {
 .z-20 { z-index: 20; }
 
 .hidden { display: none; }
+
+/* Evidência PROVA_HÍDRICA — placeholder CSS local (ver offline-textures.md) */
+.prova-hidrica-evidence {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 65, 0.22);
+  background-color: #0a1520;
+  background-image:
+    linear-gradient(180deg, rgba(0, 60, 90, 0.35) 0%, transparent 45%, rgba(0, 25, 40, 0.5) 100%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03) 0 1px,
+      transparent 1px 48px
+    ),
+    radial-gradient(ellipse 80% 60% at 35% 55%, rgba(0, 120, 160, 0.25), transparent 70%);
+}
+
+.prova-hidrica-evidence__scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.12) 0 2px,
+    transparent 2px 4px
+  );
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.prova-hidrica-evidence__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-mono, 'Courier New', monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(0, 255, 65, 0.75);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+}
 .overflow-y-auto { overflow-y: auto; }
 .pointer-events-none { pointer-events: none; }
 .cursor-pointer { cursor: pointer; }
@@ -256,6 +300,20 @@ body, html {
   background: #111;
   border-bottom: 1px solid rgba(0,255,65,0.12);
   flex-shrink: 0;
+}
+
+/* --bp-md: 640px — evitar overflow na toolbar do explorador */
+@media (max-width: 640px) {
+  .fe-toolbar {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+
+  .fe-pathbar,
+  .fe-search {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
 }
 
 .fe-toolbar-group { display: flex; gap: 2px; }
