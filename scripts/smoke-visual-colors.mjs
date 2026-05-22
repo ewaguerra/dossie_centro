@@ -72,6 +72,7 @@ async function main() {
       const html = await fetchBody(page.path);
       assert(html.status === 200, `${page.name} html ${html.status}`, fails);
       assert(html.body.includes('/app/styles/tokens.css'), `${page.name} carrega tokens`, fails);
+      assert(html.body.includes('/app/styles/a11y.css'), `${page.name} carrega a11y`, fails);
 
       for (const cssPath of page.css) {
         const css = await fetchBody(cssPath);

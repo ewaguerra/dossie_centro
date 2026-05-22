@@ -167,6 +167,22 @@ describe('projeto_centro — sanity checks', () => {
     }
   });
 
+  it('design system: todas paginas principais carregam a11y.css', () => {
+    for (const page of ['landing/index.html', 'centro/index.html', 'arquivo-morto/index.html', 'arquivista/index.html']) {
+      const html = read(page);
+      assert.ok(html.includes('/app/styles/a11y.css'), `${page} deve carregar a11y.css`);
+    }
+  });
+
+  it('design system: a11y.css foco global e reduced-motion', () => {
+    const css = read('vendor/app/styles/a11y.css');
+    assert.ok(css.includes(':focus-visible'), 'a11y deve ter focus-visible');
+    assert.ok(css.includes('var(--color-accent)'), 'foco deve usar --color-accent');
+    assert.ok(css.includes('var(--radius-xs)'), 'foco deve usar --radius-xs');
+    assert.ok(css.includes('prefers-reduced-motion: reduce'), 'a11y deve ter reduced-motion');
+    assert.ok(css.includes('scroll-behavior: auto'), 'reduced-motion deve resetar scroll');
+  });
+
   it('design system: todas paginas principais carregam tokens.css', () => {
     for (const page of ['landing/index.html', 'centro/index.html', 'arquivo-morto/index.html', 'arquivista/index.html']) {
       const html = read(page);

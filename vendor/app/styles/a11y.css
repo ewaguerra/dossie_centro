@@ -1,5 +1,8 @@
 /**
  * Acessibilidade visual global — foco e reduced motion
+ * Carregar após tokens.css em landing, centro, arquivo-morto e arquivista.
+ *
+ * @see docs/design-system/a11y.md
  */
 
 :where(
@@ -10,28 +13,33 @@
   select,
   textarea,
   summary,
+  [tabindex]:not([tabindex="-1"]),
   .btn,
   .nav-retorno-link,
   .nav-btn,
   .hamburger-btn,
   .hamburger-link
 ):focus-visible {
-  outline: 2px solid var(--color-brand, #f59e0b);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+  border-radius: var(--radius-xs);
 }
 
-/* Centro HUD: outline no chrome forense (--color-accent-strong), não na identidade âmbar */
+/* Centro HUD: outline no chrome forense, não na identidade âmbar */
 .has-jesuit-frame :where(.nav-btn, .sidebar-close-btn, .sidebar-open-btn):focus-visible {
-  outline-color: var(--color-accent-strong, #dc2626);
+  outline-color: var(--color-accent-strong);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

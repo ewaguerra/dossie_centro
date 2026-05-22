@@ -81,6 +81,14 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600');
   });
 
+  it('deve responder 200 em /app/styles/a11y.css', async () => {
+    const res = await fetchPath('/app/styles/a11y.css');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.body.includes('var(--color-accent)'), 'a11y deve usar token accent');
+    assert.ok(res.body.includes('prefers-reduced-motion'), 'a11y deve ter reduced-motion');
+    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600');
+  });
+
   it('deve responder 200 em /app/styles/tokens.css', async () => {
     const res = await fetchPath('/app/styles/tokens.css');
     assert.strictEqual(res.status, 200);
