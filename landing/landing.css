@@ -8,21 +8,47 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #04070f;
+  --bg:        var(--color-bg);
   --bg-2:      #080c16;
-  --bg-3:      #0d1220;
-  /* Marca âmbar → tokens globais (vendor/app/styles/tokens.css) */
+  --bg-3:      var(--color-bg-elev-1);
+  /*
+   * Marca âmbar → tokens.css (--color-brand, --color-brand-border, --color-brand-soft, --color-brand-dim).
+   * --amber removido; não reintroduzir token local para #f59e0b.
+   */
   --border:    var(--color-brand-border);
-  --border-2:  rgba(245, 158, 11, 0.08); /* subtil; sem token global equivalente */
+  --border-2:  rgba(245, 158, 11, 0.08); /* 0.08 ≠ brand-soft (0.15); alias local */
   --glow:      var(--color-brand-soft);
+  /* Opacidades narrativas locais (matiz = --color-brand) */
+  --brand-grid:       rgba(245, 158, 11, 0.025);
+  --brand-haze:       rgba(245, 158, 11, 0.02);
+  --brand-trace:      rgba(245, 158, 11, 0.01);
+  --brand-faint:      rgba(245, 158, 11, 0.03);
+  --brand-whisper:    rgba(245, 158, 11, 0.04);
+  --brand-dust:       rgba(245, 158, 11, 0.05);
+  --brand-mist:       rgba(245, 158, 11, 0.06);
+  --brand-veil:       rgba(245, 158, 11, 0.07);
+  --brand-subtle:     rgba(245, 158, 11, 0.055);
+  --brand-glow:       rgba(245, 158, 11, 0.1);
+  --brand-panel-bg:   rgba(245, 158, 11, 0.12);
+  --brand-line:       rgba(245, 158, 11, 0.25);
+  --brand-muted:      rgba(245, 158, 11, 0.2);
+  --brand-fill:       rgba(245, 158, 11, 0.22);
+  --brand-accent-dim: rgba(245, 158, 11, 0.3);
+  --brand-mid:        rgba(245, 158, 11, 0.35);
+  --brand-strong:     rgba(245, 158, 11, 0.4);
+  --brand-panel:      rgba(245, 158, 11, 0.45);
+  --brand-bold:       rgba(245, 158, 11, 0.5);
+  --brand-bright:     rgba(245, 158, 11, 0.8);
+  --brand-label:      rgba(245, 158, 11, 0.9);
+  --brand-shadow-sm:  var(--brand-dust);
+  --brand-shadow-md:  var(--brand-veil);
+  --brand-shadow-lg:  rgba(245, 158, 11, 0.16);
   --green:     #00ff41;
   --green-dim: #00cc33;
   --red:       #ff003c;
-  --white:     #e8e4d8;
+  --white:     var(--color-text);
   --white-dim: #9ca3af;
-  --font-mono: 'Courier New', Courier, monospace;
-  --font-serif: Georgia, 'Times New Roman', serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: var(--font-ui);
 }
 
 html { scroll-behavior: smooth; }
@@ -217,8 +243,8 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(245,158,11,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,158,11,0.025) 1px, transparent 1px);
+    linear-gradient(var(--brand-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--brand-grid) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
 }
@@ -412,7 +438,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(245,158,11,0.35);
+  box-shadow: 0 6px 24px var(--brand-mid);
 }
 
 .btn-glow {
@@ -603,7 +629,7 @@ body {
   transition: background 0.2s;
 }
 .dossie-evidencia:hover {
-  background: rgba(245,158,11,0.04);
+  background: var(--brand-whisper);
 }
 .dossie-evidencia:nth-child(1) {
   grid-column: 1 / -1;
@@ -776,7 +802,7 @@ body {
   display: flex;
   gap: 0;
   background: #06080f;
-  border: 1px solid rgba(245,158,11,0.2);
+  border: 1px solid var(--brand-muted);
   position: relative;
   overflow: hidden;
 }
@@ -808,9 +834,9 @@ body {
   position: relative;
   width: 190px;
   height: 190px;
-  border: 2px solid rgba(245,158,11,0.5);
+  border: 2px solid var(--brand-bold);
   box-shadow:
-    0 0 0 4px rgba(245,158,11,0.08),
+    0 0 0 4px var(--border-2),
     0 0 32px var(--color-brand-border),
     inset 0 0 16px rgba(0,0,0,0.4);
 }
@@ -929,7 +955,7 @@ body {
 }
 
 .dossie-registro__quote {
-  border-left: 3px solid rgba(245,158,11,0.4);
+  border-left: 3px solid var(--brand-strong);
   padding-left: 1.1rem;
   margin: 0;
 }
@@ -947,7 +973,7 @@ body {
   font-style: italic;
   font-size: 1.05rem !important;
   margin-top: 0.5rem !important;
-  text-shadow: 0 0 20px rgba(245,158,11,0.3);
+  text-shadow: 0 0 20px var(--brand-accent-dim);
 }
 
 .dossie-registro__assinatura {
@@ -960,7 +986,7 @@ body {
 .dossie-registro__traço {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, rgba(245,158,11,0.4), transparent);
+  background: linear-gradient(90deg, var(--brand-strong), transparent);
 }
 
 .dossie-registro__nome {
@@ -1031,7 +1057,7 @@ body {
   font-family: var(--font-mono);
   font-size: 4rem;
   font-weight: 900;
-  color: rgba(245,158,11,0.04);
+  color: var(--brand-whisper);
   line-height: 1;
   pointer-events: none;
 }
@@ -1043,7 +1069,7 @@ body {
   top: var(--y, 50%);
   left: var(--x, 50%);
   width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--brand-mist) 0%, transparent 70%);
   transform: translate(-50%, -50%);
   pointer-events: none;
   opacity: 0;
@@ -1053,7 +1079,7 @@ body {
 .modulo-card:hover::after { opacity: 1; }
 .modulo-card:hover {
   border-color: var(--border);
-  box-shadow: 0 0 40px rgba(245,158,11,0.05);
+  box-shadow: 0 0 40px var(--brand-dust);
   transform: translateY(-4px);
 }
 
@@ -1160,7 +1186,7 @@ body {
 .modulo-stack {
   font-family: var(--font-mono);
   font-size: 0.62rem;
-  color: rgba(245,158,11,0.4);
+  color: var(--brand-strong);
   letter-spacing: 0.05em;
 }
 
@@ -1208,7 +1234,7 @@ body {
 .arrow-label {
   font-family: var(--font-mono);
   font-size: 0.55rem;
-  color: rgba(245,158,11,0.4);
+  color: var(--brand-strong);
   text-align: center;
   letter-spacing: 0.05em;
   writing-mode: vertical-rl;
@@ -1248,7 +1274,7 @@ body {
   font-family: var(--font-mono);
   font-size: 2rem;
   font-weight: 900;
-  color: rgba(245,158,11,0.2);
+  color: var(--brand-muted);
   line-height: 1;
   margin-bottom: 0.75rem;
 }
@@ -1333,7 +1359,7 @@ body {
   gap: 1rem;
   padding: 1rem 1.5rem;
   border: 1px solid var(--border-2);
-  background: rgba(245,158,11,0.03);
+  background: var(--brand-faint);
 }
 
 .os-icon {
@@ -1425,7 +1451,7 @@ body {
 .pat-pilar {
   background: var(--bg-3);
   border: 1px solid var(--border-2);
-  border-top: 3px solid rgba(245,158,11,0.25);
+  border-top: 3px solid var(--brand-line);
   padding: 2rem 1.5rem 1.75rem;
   position: relative;
   overflow: hidden;
@@ -1442,8 +1468,8 @@ body {
 .pat-pilar:nth-child(3) { transition-delay: 0.2s; }
 
 .pat-pilar.in-view:hover {
-  border-color: rgba(245,158,11,0.4);
-  box-shadow: 0 8px 32px rgba(245,158,11,0.07);
+  border-color: var(--brand-strong);
+  box-shadow: 0 8px 32px var(--brand-veil);
   transform: translateY(-4px);
 }
 
@@ -1494,7 +1520,7 @@ body {
 
 /* ── Pontos Narrativos ── */
 .pat-espacos {
-  background: linear-gradient(135deg, rgba(245,158,11,0.05) 0%, rgba(255,0,60,0.02) 50%, transparent 100%);
+  background: linear-gradient(135deg, var(--brand-dust) 0%, rgba(255,0,60,0.02) 50%, transparent 100%);
   border: 1px solid var(--border);
   border-left: 3px solid var(--color-brand);
   padding: 2.5rem;
@@ -1539,7 +1565,7 @@ body {
   letter-spacing: 0.08em;
   padding: 0.35rem 0.75rem;
   border: 1px solid var(--border-2);
-  background: rgba(245,158,11,0.04);
+  background: var(--brand-whisper);
   white-space: nowrap;
 }
 
@@ -1594,7 +1620,7 @@ body {
   width: 100%;
   position: absolute;
   top: 0; left: 0;
-  background: var(--tier-accent, rgba(245,158,11,0.3));
+  background: var(--tier-accent, var(--brand-accent-dim));
   transition: background 0.3s;
 }
 
@@ -1605,7 +1631,7 @@ body {
   top: var(--ty, 50%);
   left: var(--tx, 50%);
   width: 380px; height: 380px;
-  background: radial-gradient(circle, var(--tier-glow, rgba(245,158,11,0.06)) 0%, transparent 65%);
+  background: radial-gradient(circle, var(--tier-glow, var(--brand-mist)) 0%, transparent 65%);
   transform: translate(-50%, -50%);
   pointer-events: none;
   opacity: 0;
@@ -1635,13 +1661,13 @@ body {
 
 .tier-gold {
   --tier-accent: var(--color-brand);
-  --tier-glow: rgba(245,158,11,0.1);
+  --tier-glow: var(--brand-glow);
   border-color: var(--color-brand-soft);
-  box-shadow: 0 0 40px rgba(245,158,11,0.06);
+  box-shadow: 0 0 40px var(--brand-mist);
 }
 .tier-gold.in-view:hover {
-  border-color: rgba(245,158,11,0.35);
-  box-shadow: 0 12px 48px rgba(245,158,11,0.16);
+  border-color: var(--brand-mid);
+  box-shadow: 0 12px 48px var(--brand-shadow-lg);
 }
 
 .tier-digital {
@@ -1693,7 +1719,7 @@ body {
   line-height: 1;
 }
 
-.tier-num--gold { color: rgba(245,158,11,0.35); }
+.tier-num--gold { color: var(--brand-mid); }
 .tier-num--cyan { color: rgba(34,211,238,0.35); font-size: 1.4rem; }
 
 .tier-badge {
@@ -1802,8 +1828,8 @@ body {
 .patrocinio-cta-box {
   text-align: center;
   padding: 3.5rem 2rem;
-  border: 1px solid rgba(245,158,11,0.2);
-  background: linear-gradient(135deg, rgba(245,158,11,0.04) 0%, rgba(255,0,60,0.02) 100%);
+  border: 1px solid var(--brand-muted);
+  background: linear-gradient(135deg, var(--brand-whisper) 0%, rgba(255,0,60,0.02) 100%);
   position: relative;
   overflow: hidden;
 }
@@ -1811,7 +1837,7 @@ body {
 .patrocinio-cta-box__bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(245,158,11,0.06), transparent);
+  background: radial-gradient(ellipse 60% 80% at 50% 100%, var(--brand-mist), transparent);
   pointer-events: none;
 }
 
@@ -1886,7 +1912,7 @@ body {
 }
 
 .midia-card:hover {
-  background: rgba(245,158,11,0.03);
+  background: var(--brand-faint);
 }
 
 /* card destaque — ocupa coluna inteira */
@@ -1897,7 +1923,7 @@ body {
 }
 
 .midia-card--destaque:hover {
-  background: rgba(245,158,11,0.04);
+  background: var(--brand-whisper);
 }
 
 /* card físico — toque diferenciado */
@@ -2181,22 +2207,22 @@ body {
   transition: background 0.2s, box-shadow 0.25s;
 }
 .dossie-evidencia:hover {
-  background: rgba(245,158,11,0.055);
-  box-shadow: inset 3px 0 0 rgba(245,158,11,0.35);
+  background: var(--brand-subtle);
+  box-shadow: inset 3px 0 0 var(--brand-mid);
 }
 
 .dossie-evidencia__num {
   transition: color 0.25s;
 }
 .dossie-evidencia:hover .dossie-evidencia__num {
-  color: rgba(245,158,11,0.45);
+  color: var(--brand-panel);
 }
 
 /* .patrocinio-cta-box e variantes — declaradas acima */
 
 @keyframes ctaGlowPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
-  50%       { box-shadow: 0 0 20px 4px rgba(245,158,11,0.25); }
+  50%       { box-shadow: 0 0 20px 4px var(--brand-line); }
 }
 
 /* ── Neon river line — divisor entre seções ────────── */
@@ -2354,11 +2380,11 @@ body {
 @keyframes floatNum {
   0%, 100% {
     transform: translateY(0px);
-    text-shadow: 0 0 12px rgba(245,158,11,0.2);
+    text-shadow: 0 0 12px var(--brand-muted);
   }
   50% {
     transform: translateY(-7px);
-    text-shadow: 0 12px 24px rgba(245,158,11,0.35), 0 0 40px var(--color-brand-soft);
+    text-shadow: 0 12px 24px var(--brand-mid), 0 0 40px var(--color-brand-soft);
   }
 }
 
@@ -2381,7 +2407,7 @@ body {
   height: 50%;
   background: radial-gradient(
     ellipse 80% 60% at 50% 0%,
-    rgba(245,158,11,0.04) 0%,
+    var(--brand-whisper) 0%,
     rgba(255,0,60,0.02) 40%,
     rgba(0,229,255,0.015) 70%,
     transparent 100%
@@ -2403,7 +2429,7 @@ body {
   border: 1px solid var(--border-2);
   border-left: 2px solid var(--color-brand);
   padding: 1.35rem 1.4rem;
-  background: linear-gradient(90deg, rgba(245,158,11,0.06), rgba(245,158,11,0.01) 60%, transparent);
+  background: linear-gradient(90deg, var(--brand-mist), var(--brand-trace) 60%, transparent);
 }
 
 #patrocinio .tiers-grid {
@@ -2441,8 +2467,8 @@ body {
   margin-top: 2.1rem;
   border: 1px solid var(--border);
   background:
-    radial-gradient(circle at 50% 0, rgba(245,158,11,0.07), transparent 60%),
-    rgba(245,158,11,0.02);
+    radial-gradient(circle at 50% 0, var(--brand-veil), transparent 60%),
+    var(--brand-haze);
 }
 
 @keyframes auroraShift {
@@ -2646,7 +2672,7 @@ body {
   font-family: 'Courier New', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.28em;
-  color: rgba(245, 158, 11, 0.9);
+  color: var(--brand-label);
   text-transform: uppercase;
 }
 
@@ -2663,7 +2689,7 @@ body {
   display: flex;
   gap: 0;
   width: min(320px, 90vw);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  border: 1px solid var(--brand-mid);
 }
 
 .portal-input {
@@ -2685,11 +2711,11 @@ body {
 }
 
 .portal-btn {
-  background: rgba(245, 158, 11, 0.12);
+  background: var(--brand-panel-bg);
   border: none;
-  border-left: 1px solid rgba(245, 158, 11, 0.35);
+  border-left: 1px solid var(--brand-mid);
   padding: 0.7rem 1.1rem;
-  color: rgba(245, 158, 11, 0.8);
+  color: var(--brand-bright);
   font-family: 'Courier New', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.2em;
@@ -2699,7 +2725,7 @@ body {
 }
 
 .portal-btn:hover {
-  background: rgba(245, 158, 11, 0.22);
+  background: var(--brand-fill);
   color: var(--color-brand);
 }
 

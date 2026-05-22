@@ -5,13 +5,25 @@
 :root {
   --am-bg:          #080c16;
   --am-surface:     #0d1526;
-  --am-border:      rgba(245, 158, 11, 0.14); /* 0.14 ≠ brand-border (0.18); mantido local */
+  /* Borda dossier: 0.14 ≠ --color-brand-border (0.18) */
+  --am-border:      rgba(245, 158, 11, 0.14);
   --am-text:        #d4c9b0;
   --am-text-muted:  #7a6e5e;
-  /* Marca âmbar → var(--color-brand); dim narrativo sem token global equivalente */
-  --am-amber-dim:   rgba(245, 158, 11, 0.35);
-  --am-red:         #ef4444;
-  --am-green:       #22c55e;
+  /*
+   * Marca âmbar sólida → var(--color-brand) nos consumidores.
+   * --am-amber removido; opacidades abaixo são aliases locais (mesmo matiz #f59e0b).
+   */
+  --am-amber-dim:      rgba(245, 158, 11, 0.35);
+  --am-brand-bg-hover: rgba(245, 158, 11, 0.08);
+  --am-brand-glow:     rgba(245, 158, 11, 0.12);
+  --am-brand-muted:    rgba(245, 158, 11, 0.2);
+  --am-brand-mid:      rgba(245, 158, 11, 0.32);
+  --am-brand-panel:    rgba(245, 158, 11, 0.45);
+  --am-brand-strong:   rgba(245, 158, 11, 0.5);
+  --am-brand-hover:    rgba(245, 158, 11, 0.6);
+  --am-brand-intense:  rgba(245, 158, 11, 0.9);
+  --am-red:            var(--color-danger);
+  --am-green:          var(--color-success);
   --am-width:       68ch;
   --am-font-body:   Georgia, "Times New Roman", serif;
   --am-font-mono:   "Courier New", Courier, monospace;
@@ -104,7 +116,7 @@ body.arquivo-morto-page {
 }
 
 .clue-word:focus-visible {
-  outline: 2px solid rgba(245, 158, 11, 0.5);
+  outline: 2px solid var(--am-brand-strong);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -124,7 +136,7 @@ body.arquivo-morto-page {
   bottom: calc(100% + 8px);
   width: min(300px, 72vw);
   padding: 10px 12px;
-  border: 1px solid rgba(245, 158, 11, 0.45);
+  border: 1px solid var(--am-brand-panel);
   border-radius: 10px;
   background: rgba(8, 12, 22, 0.97);
   color: #fde68a;
@@ -166,8 +178,8 @@ body.arquivo-morto-page {
 }
 
 .arquivo-palavra.is-rota-vertical-flash {
-  color: #b45309;
-  border-color: #b45309;
+  color: var(--color-brand-dim);
+  border-color: var(--color-brand-dim);
   text-shadow: 0 0 8px rgba(180, 83, 9, 0.4);
 }
 
@@ -184,8 +196,8 @@ a.arquivo-link:hover {
 }
 
 a.arquivo-link.is-rota-vertical-flash {
-  color: #b45309;
-  border-color: #b45309;
+  color: var(--color-brand-dim);
+  border-color: var(--color-brand-dim);
 }
 
 body.arquivo-rota-vertical-ativa .registro-post {
@@ -226,7 +238,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
 .suma-pistas {
   margin-top: 3rem;
   padding: 1.5rem 1.75rem;
-  border: 1px solid rgba(245, 158, 11, 0.32);
+  border: 1px solid var(--am-brand-mid);
   border-radius: 4px;
   background: rgba(13, 21, 38, 0.82);
 }
@@ -251,7 +263,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
   font-weight: 700;
   color: #f0e8d8;
   letter-spacing: 0.01em;
-  text-shadow: 0 0 5px rgba(245, 158, 11, 0.2);
+  text-shadow: 0 0 5px var(--am-brand-muted);
   margin-bottom: 1rem;
 }
 
@@ -358,7 +370,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
 .suma-pistas__conclusao {
   margin-top: 1.5rem;
   padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(245, 158, 11, 0.5);
+  border: 1px solid var(--am-brand-strong);
   border-radius: 4px;
   background: rgba(8, 12, 22, 0.6);
 }
@@ -417,8 +429,8 @@ body.arquivo-rota-vertical-ativa .registro-post {
 }
 
 .mapa-link:hover {
-  background: rgba(245, 158, 11, 0.08);
-  border-color: rgba(245, 158, 11, 0.6);
+  background: var(--am-brand-bg-hover);
+  border-color: var(--am-brand-hover);
 }
 
 /* ── Player YouTube — Anexo Aurora 1951 ───────────────────────────────── */
@@ -426,10 +438,10 @@ body.arquivo-rota-vertical-ativa .registro-post {
   position: relative;
   margin: 2rem 0;
   padding: 1.25rem;
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  border: 1px solid var(--am-amber-dim);
   border-radius: 18px;
   background:
-    radial-gradient(circle at top left, rgba(245, 158, 11, 0.12), transparent 38%),
+    radial-gradient(circle at top left, var(--am-brand-glow), transparent 38%),
     rgba(15, 23, 42, 0.82);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
   overflow: hidden;
@@ -465,7 +477,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
 }
 
 .youtube-anexo__btn {
-  border: 1px solid rgba(245, 158, 11, 0.45);
+  border: 1px solid var(--am-brand-panel);
   border-radius: 999px;
   background: rgba(15, 23, 42, 0.8);
   color: #fde68a;
@@ -483,7 +495,7 @@ body.arquivo-rota-vertical-ativa .registro-post {
 .youtube-anexo__btn:hover,
 .youtube-anexo__btn:focus-visible {
   color: #fff7ed;
-  border-color: rgba(245, 158, 11, 0.9);
+  border-color: var(--am-brand-intense);
   background: rgba(120, 53, 15, 0.62);
   transform: translateY(-1px);
   outline: none;
