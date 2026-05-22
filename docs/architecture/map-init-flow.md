@@ -38,9 +38,17 @@ sequenceDiagram
 
 | Fonte | Ficheiros | Camadas |
 |---|---|---|
-| Processed | `layers.json` + `groups.json` | 9 |
-| Context wired | `context-layers.json` + `context-wired.json` + `context-groups.json` | 12 |
+| Processed | `layers.json` + `groups.json` | 10 (incl. ZEIS-2 viewport) |
+| Context wired | `context-layers.json` + `context-wired.json` + `context-groups.json` | 14 (OSM ruas/endereços + 12) |
 | Locks | `layer-unlocks.json` + `protocolo13_caderno_clues` | subset |
+
+## Dados OSM / ZEIS (origem `mapa_sp_salto`)
+
+```bash
+npm run sync:geojson-from-salto   # clip ao polígono 16_regiao_centro (+ ZEIS-2 ao bbox do mapa)
+```
+
+Requer `shapely` (`pip install shapely`) e o repo irmão em `../mapa_sp_salto`.
 
 ## Smoke manual
 

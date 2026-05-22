@@ -11,7 +11,7 @@
       "coverageCheck": "bbox-info",
       "coverageNote": "Mapeamento de superfície (clipped pelo perímetro Alpha).",
       "file": "data/context/15_osm_ruas__line.geojson",
-      "file_size_bytes": 4335576,
+      "file_size_bytes": 4314526,
       "feature_count": 10108,
       "geometry": "line",
       "type": "line",
@@ -21,18 +21,74 @@
       "style": {
         "paint": {
           "line-color": [
-            "match", ["get", "highway"],
-            ["primary", "primary_link", "trunk", "trunk_link", "motorway", "motorway_link"], "#ffb3ba",
-            ["secondary", "secondary_link", "tertiary", "tertiary_link"], "#bae1ff",
-            ["pedestrian", "living_street", "footway", "path", "cycleway", "steps"], "#baffc9",
-            ["residential", "unclassified"], "#f1f5f9",
+            "match",
+            [
+              "get",
+              "highway"
+            ],
+            [
+              "primary",
+              "primary_link",
+              "trunk",
+              "trunk_link",
+              "motorway",
+              "motorway_link"
+            ],
+            "#ffb3ba",
+            [
+              "secondary",
+              "secondary_link",
+              "tertiary",
+              "tertiary_link"
+            ],
+            "#bae1ff",
+            [
+              "pedestrian",
+              "living_street",
+              "footway",
+              "path",
+              "cycleway",
+              "steps"
+            ],
+            "#baffc9",
+            [
+              "residential",
+              "unclassified"
+            ],
+            "#f1f5f9",
             "#f8fafc"
           ],
           "line-width": [
-            "match", ["get", "highway"],
-            ["primary", "primary_link", "trunk", "trunk_link", "motorway", "motorway_link"], 2.5,
-            ["secondary", "secondary_link", "tertiary", "tertiary_link"], 1.5,
-            ["pedestrian", "living_street", "footway", "path", "cycleway", "steps"], 1.0,
+            "match",
+            [
+              "get",
+              "highway"
+            ],
+            [
+              "primary",
+              "primary_link",
+              "trunk",
+              "trunk_link",
+              "motorway",
+              "motorway_link"
+            ],
+            2.5,
+            [
+              "secondary",
+              "secondary_link",
+              "tertiary",
+              "tertiary_link"
+            ],
+            1.5,
+            [
+              "pedestrian",
+              "living_street",
+              "footway",
+              "path",
+              "cycleway",
+              "steps"
+            ],
+            1.0,
             1.2
           ],
           "line-opacity": 0.6
@@ -48,8 +104,8 @@
       "coverageCheck": "bbox-info",
       "coverageNote": "Rastreio parcial de superfície: números ativos apenas em escala 16+.",
       "file": "data/context/15_osm_enderecos__point.geojson",
-      "file_size_bytes": 5220932,
-      "feature_count": 19893,
+      "file_size_bytes": 7796619,
+      "feature_count": 23932,
       "geometry": "point",
       "type": "circle",
       "minzoom": 16,
@@ -58,19 +114,76 @@
       "style": {
         "paint": {
           "circle-radius": [
-            "interpolate", ["linear"], ["zoom"],
-            16, 3,
-            20, 6
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            16,
+            3,
+            20,
+            6
           ],
           "circle-color": [
-            "match", ["get", "amenity"],
-            ["restaurant", "fast_food", "cafe", "bar", "pub", "ice_cream"], "#baffc9",
-            ["bank", "pharmacy", "clinic", "dentist", "hospital", "veterinary"], "#ffb3ba",
-            ["school", "university", "college", "kindergarten"], "#ffffba",
-            ["parking", "taxi", "fuel", "parking_entrance", "bus_station"], "#e2e8f0",
-            ["place_of_worship"], "#ffdfba",
-            ["theatre", "arts_centre", "cinema", "nightclub"], "#e0bbe4",
-            ["post_office", "police", "townhall", "fire_station", "courthouse"], "#d1d5db",
+            "match",
+            [
+              "get",
+              "amenity"
+            ],
+            [
+              "restaurant",
+              "fast_food",
+              "cafe",
+              "bar",
+              "pub",
+              "ice_cream"
+            ],
+            "#baffc9",
+            [
+              "bank",
+              "pharmacy",
+              "clinic",
+              "dentist",
+              "hospital",
+              "veterinary"
+            ],
+            "#ffb3ba",
+            [
+              "school",
+              "university",
+              "college",
+              "kindergarten"
+            ],
+            "#ffffba",
+            [
+              "parking",
+              "taxi",
+              "fuel",
+              "parking_entrance",
+              "bus_station"
+            ],
+            "#e2e8f0",
+            [
+              "place_of_worship"
+            ],
+            "#ffdfba",
+            [
+              "theatre",
+              "arts_centre",
+              "cinema",
+              "nightclub"
+            ],
+            "#e0bbe4",
+            [
+              "post_office",
+              "police",
+              "townhall",
+              "fire_station",
+              "courthouse"
+            ],
+            "#d1d5db",
             "#bae1ff"
           ],
           "circle-opacity": 0.7,
@@ -195,10 +308,17 @@
       "style": {
         "paint": {
           "fill-color": [
-            "match", ["get", "qt_tempo_retorno"],
-            5,   "#dc2626",
-            25,  "#ea580c",
-            100, "#2563eb",
+            "match",
+            [
+              "get",
+              "qt_tempo_retorno"
+            ],
+            5,
+            "#dc2626",
+            25,
+            "#ea580c",
+            100,
+            "#2563eb",
             "#2563eb"
           ],
           "fill-opacity": 0.18,
@@ -206,8 +326,14 @@
         }
       },
       "metadata": {
-        "periodos_retorno": [5, 25, 100],
-        "periodos_no_centro": [100],
+        "periodos_retorno": [
+          5,
+          25,
+          100
+        ],
+        "periodos_no_centro": [
+          100
+        ],
         "generatedBy": "scripts/build_centro_area_inundavel_from_geosampa_wfs.py"
       }
     },
@@ -231,7 +357,10 @@
           "line-color": "#7dd3fc",
           "line-width": 2,
           "line-opacity": 0.75,
-          "line-dasharray": [4, 2]
+          "line-dasharray": [
+            4,
+            2
+          ]
         }
       },
       "metadata": {
@@ -259,7 +388,21 @@
       "visible": false,
       "style": {
         "paint": {
-          "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 4, 15, 7, 18, 10],
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            12,
+            4,
+            15,
+            7,
+            18,
+            10
+          ],
           "circle-color": "#b45309",
           "circle-opacity": 0.85,
           "circle-stroke-color": "#92400e",
@@ -472,16 +615,29 @@
       "style": {
         "paint": {
           "fill-color": [
-            "match", ["get", "tx_unidade_geotecnica"],
-            "I",   "#3b82f6",
-            "II",  "#60a5fa",
-            "III", "#86efac",
-            "IV",  "#4ade80",
-            "VI",  "#a3e635",
-            "X",   "#facc15",
-            "XI",  "#f97316",
-            "XIII","#fb923c",
-            "XIV", "#fbbf24",
+            "match",
+            [
+              "get",
+              "tx_unidade_geotecnica"
+            ],
+            "I",
+            "#3b82f6",
+            "II",
+            "#60a5fa",
+            "III",
+            "#86efac",
+            "IV",
+            "#4ade80",
+            "VI",
+            "#a3e635",
+            "X",
+            "#facc15",
+            "XI",
+            "#f97316",
+            "XIII",
+            "#fb923c",
+            "XIV",
+            "#fbbf24",
             "#94a3b8"
           ],
           "fill-opacity": 0.22,
@@ -513,7 +669,21 @@
       "visible": false,
       "style": {
         "paint": {
-          "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 5, 15, 9, 18, 13],
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            11,
+            5,
+            15,
+            9,
+            18,
+            13
+          ],
           "circle-color": "#2563eb",
           "circle-opacity": 0.85,
           "circle-stroke-color": "#1d4ed8",
@@ -545,11 +715,19 @@
       "style": {
         "paint": {
           "fill-color": [
-            "match", ["get", "nm_classe"],
-            "0 a 05%",   "#4ade80",
-            "05 a 25%",  "#facc15",
-            "25 a 60%",  "#f97316",
-            "> 60%",     "#ef4444",
+            "match",
+            [
+              "get",
+              "nm_classe"
+            ],
+            "0 a 05%",
+            "#4ade80",
+            "05 a 25%",
+            "#facc15",
+            "25 a 60%",
+            "#f97316",
+            "> 60%",
+            "#ef4444",
             "#94a3b8"
           ],
           "fill-opacity": 0.28,
@@ -578,7 +756,21 @@
       "visible": true,
       "style": {
         "paint": {
-          "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 7, 15, 12, 18, 18],
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            11,
+            7,
+            15,
+            12,
+            18,
+            18
+          ],
           "circle-color": "#dc2626",
           "circle-opacity": 0.9,
           "circle-stroke-color": "#fef2f2",

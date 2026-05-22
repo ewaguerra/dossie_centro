@@ -1,7 +1,13 @@
 {
-  "strategy": "centro_urban_context",
-  "generated_at": "2026-05-05T05:35:43.946063",
+  "strategy": "sync-geojson-from-salto",
+  "generated_at": "2026-05-22T17:11:02.470621+00:00",
+  "source_repo": "/home/tati_3pontos/Documentos/Projetos/mapa_sp_salto",
   "context_layers": [
+    {
+      "id": "04a_zeis2__polygon",
+      "features": 5,
+      "status": "clipped"
+    },
     {
       "id": "15_osm_ruas__line",
       "features": 10108,
@@ -9,7 +15,7 @@
     },
     {
       "id": "15_osm_enderecos__point",
-      "features": 19893,
+      "features": 23932,
       "status": "clipped"
     }
   ],

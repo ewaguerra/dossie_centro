@@ -30,7 +30,14 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
     def translate_path(self, path):
-        # /pages/centro/* → ./centro/*
+        # Legado: mídia da landing costumava apontar para /pages/centro/assets/
+        if path.startswith('/pages/centro/assets/'):
+            rel = path[len('/pages/centro/assets/'):]
+            landing_asset = os.path.join(ROOT, 'landing', 'assets', rel)
+            if os.path.exists(landing_asset):
+                return landing_asset
+
+        # /pages/centro/* → ./centro/* (HTML, JS, CSS, data, ícones do mapa)
         if path.startswith('/pages/centro/'):
             rel = path[len('/pages/centro/'):]
             translated = os.path.join(ROOT, 'centro', rel)
@@ -73,7 +80,7 @@ if __name__ == '__main__':
     server = http.server.HTTPServer(('127.0.0.1', PORT), ProxyHandler)
     print(f"🚀 Servidor proxy rodando em http://127.0.0.1:{PORT}")
     print(f"   Projeto: {ROOT}")
-    print(f"   Paths /pages/centro/ → /centro/ e /app/ → /vendor/app/ resolvidos")
+    print(f"   Paths /pages/centro/ → /centro/, /pages/centro/assets/ → /landing/assets/, /app/ → /vendor/app/")
     print(f"   Ctrl+C para parar.")
     try:
         server.serve_forever()

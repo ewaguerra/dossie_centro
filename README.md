@@ -36,7 +36,7 @@ Acessar: http://127.0.0.1:8080/centro/
 Repositório privado — **sem GitHub Actions**. Rodar antes de cada push:
 
 ```bash
-npm run ci    # 92 testes (sanity + HTTP)
+npm run ci    # 106 testes (sanity + HTTP)
 npm run healthcheck:centro   # catálogo offline (opcional)
 # ou
 npm test
@@ -82,6 +82,8 @@ projeto_centro/
 | Path | Origem |
 |---|---|
 | `/pages/centro/*` | `./centro/*` |
+| `/pages/centro/assets/*` | `./landing/assets/*` (legado) |
+| `/landing/assets/*` | `./landing/assets/*` |
 | `/app/*` | `./vendor/app/*` |
 | `/vendor/maplibre/*` | `./vendor/maplibre/*` |
 | `/centro/*` | `./centro/*` (default handler) |

@@ -191,7 +191,7 @@
         "</ol>",
         "<p>Abra o MapLibre e pesquise pela rua nomeada no texto como Aresta Fria.</p>",
         '<p class="conclusao-final-discreta">Releia o trecho que nomeia a Aresta Fria.</p>',
-        '<a href="/pages/centro/index.html" class="mapa-link">Abrir MapLibre</a>'
+        '<a href="/centro/" class="mapa-link">Abrir MapLibre</a>'
       ].join("\n");
 
       conclusion.scrollIntoView({ behavior: "smooth", block: "nearest" });

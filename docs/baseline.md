@@ -17,8 +17,8 @@ python3 server.py 8080
 |---|---|
 | Comando | `npm run ci` / `npm test` |
 | Arquivos | `tests/sanity.test.js`, `tests/http.test.js` |
-| Total | **103** |
-| Passando | **103** |
+| Total | **106** |
+| Passando | **106** |
 
 ## Greps de baseline
 

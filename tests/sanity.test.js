@@ -813,6 +813,17 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(load.includes('context-wired.json'), 'catalog-load deve ler context-wired');
   });
 
+  it('04a_zeis2: geojson no viewport e wired em layers/groups', () => {
+    const z2 = JSON.parse(read('centro/data/processed/04a_zeis2__polygon.geojson'));
+    assert.ok(z2.features && z2.features.length > 0, 'zeis2 deve ter features no viewport');
+    const layers = JSON.parse(read('centro/data/catalog/layers.json'));
+    const groups = JSON.parse(read('centro/data/catalog/groups.json'));
+    assert.ok(layers.layers.some((l) => l.id === '04a_zeis2__polygon'), 'zeis2 em layers.json');
+    const zg = groups.find((g) => g.id === '03_zoneamento');
+    assert.ok(zg && zg.layers.includes('04a_zeis2__polygon'), 'zeis2 em groups 03_zoneamento');
+    assert.ok(exists('scripts/sync-geojson-from-salto.py'), 'script sync salto ausente');
+  });
+
   it('centro: phase-gates, modulos 3D/POI e gates na sidebar', () => {
     assert.ok(exists('centro/data/catalog/phase-gates.json'), 'phase-gates.json ausente');
     const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
@@ -851,9 +862,11 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(script.includes('openArquivistaApplication'), 'script deve delegar openApplication');
   });
 
-  it('context-wired.json lista 12 camadas com ficheiro no disco', () => {
+  it('context-wired.json lista 14 camadas com ficheiro no disco', () => {
     const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
-    assert.strictEqual(wired.layerIds.length, 12);
+    assert.strictEqual(wired.layerIds.length, 14);
+    assert.ok(wired.layerIds.includes('15_osm_ruas__line'), 'OSM ruas wired');
+    assert.ok(wired.layerIds.includes('15_osm_enderecos__point'), 'OSM enderecos wired');
     for (const id of wired.layerIds) {
       const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
       const ly = ctx.layers.find((l) => l.id === id);
@@ -880,6 +893,21 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(js.includes('case "geoscanner"') || js.includes("case 'geoscanner'"), 'handler geoscanner ausente');
     assert.ok(js.includes('protocolo13_caderno_clues'), 'deve ler caderno para query clues');
     assert.ok(js.includes('?clues='), 'deve montar query clues no redirect');
+  });
+
+  it('landing: assets usam /landing/assets/ (nao pages/centro/assets)', () => {
+    const html = read('landing/index.html');
+    const js = read('landing/landing.js');
+    assert.ok(html.includes('/landing/assets/'), 'landing HTML deve usar /landing/assets/');
+    assert.ok(!html.includes('/pages/centro/assets/'), 'nao deve referenciar path legado no HTML');
+    assert.ok(js.includes('/landing/assets/'), 'landing.js deve usar /landing/assets/');
+    assert.ok(exists('landing/assets/README.md'), 'README de assets da landing ausente');
+  });
+
+  it('server.py: alias legado pages/centro/assets para landing/assets', () => {
+    const py = read('server.py');
+    assert.ok(py.includes('/pages/centro/assets/'), 'proxy deve tratar assets legados');
+    assert.ok(py.includes("landing', 'assets'"), 'destino deve ser landing/assets');
   });
 
   it('landing: fase ARG protocolo13_phase e copy honesta', () => {

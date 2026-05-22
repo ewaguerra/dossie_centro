@@ -5,7 +5,7 @@ Checklist pós-alteração no mapa. Itens parciais também via `node scripts/smo
 ## Pré-requisitos
 
 ```bash
-npm run ci                 # 103/103
+npm run ci                 # 106/106
 python3 server.py          # http://127.0.0.1:8080
 node scripts/smoke-centro.mjs   # assets + console (parcial)
 ```
@@ -29,7 +29,8 @@ Abrir: **http://127.0.0.1:8080/centro/**
 | 9 | Sidebar lista grupos de camadas após load | ☐ |
 | 10 | Pistas Rua São Bento (symbol layer) com popup | ☐ |
 | 11 | Triângulo Histórico (overlay preto) visível após load | ☐ |
-| 12 | Sidebar: grupos context (Topografia, Património, Geotécnica…) | ☐ |
+| 12 | Sidebar: grupos context (Topografia, Património, Geotécnica…) + OSM ruas/endereços | ☐ |
+| 12b | ZEIS-2 em Controlo Zonal (5 polígonos no viewport; off por defeito) | ☐ |
 | 13 | Camada bloqueada → toast; `?clues=agua-calada` desbloqueia hidro | ☐ |
 | 14 | GeoScanner no Arquivista abre `/centro/?clues=…` se houver caderno | ☐ |
 

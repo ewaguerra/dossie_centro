@@ -613,7 +613,7 @@
         || val.endsWith('CAFE_PARCEIRO');
       if (aceito) {
         overlay.remove();
-        openImageViewer('/pages/centro/assets/codinome_cafe_parceiro.png', 'CODINOME_CAFE_PARCEIRO');
+        openImageViewer('/landing/assets/codinome_cafe_parceiro.png', 'CODINOME_CAFE_PARCEIRO');
         onSuccess();
       } else {
         erro.textContent = 'CODINOME INVÁLIDO — verifique o selo e tente novamente.';

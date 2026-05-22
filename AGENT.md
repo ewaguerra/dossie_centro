@@ -126,6 +126,41 @@ Consequências práticas:
 | Servidor dev              | `python3 server.py` (proxy próprio porta 8080)                          |
 | Testes                    | Node.js `node:test` (`tests/sanity.test.js` + `tests/http.test.js`)     |
 | Build                     | **Nenhum.** Sem bundler, sem TypeScript, sem JSX                        |
+| Dados cartográficos       | **100% em `centro/data/`** neste repositório — runtime **não** lê `mapa_sp_salto` |
+
+### Soberania de dados (independência do `mapa_sp_salto`)
+
+O **jogador e o deploy** (GitHub Pages, `python3 server.py`) dependem **só** de ficheiros
+versionados em `projeto_centro`:
+
+- GeoJSON em `centro/data/processed/` e `centro/data/context/`
+- Catálogo em `centro/data/catalog/`
+- Ícones em `centro/assets/`
+
+O repositório irmão `mapa_sp_salto` é **opcional** e **só para manutenção**: pipeline
+mais amplo (cidade inteira, raw OSM, `mapasp.json` com URLs nucleo-digital). O script
+`npm run sync:geojson-from-salto` **copia e recorta** para aqui; o resultado tem de ser
+**commitado** neste repo. Quem clona só `projeto_centro` não precisa do salto para o mapa
+funcionar.
+
+**Regra:** nunca referenciar paths `../mapa_sp_salto` no HTML/JS do browser. Host externo
+permitido em runtime continua a ser só OpenFreeMap + YouTube (§6).
+
+### Aliases de URL (`server.py`) — não confundir com “imports”
+
+O projeto **não usa bundler**; “imports” no browser são só `<script src>` e `<link href>`.
+O `server.py` reescreve prefixos para pastas no disco:
+
+| URL pedida | Ficheiro real |
+|---|---|
+| `/pages/centro/*` | `centro/*` (mapa, `centro-runtime.js`, `centro/data/`, ícones SVG) |
+| `/pages/centro/assets/*` | `landing/assets/*` (legado — preferir `/landing/assets/`) |
+| `/centro/*` | `centro/*` (handler default na raiz do repo) |
+| `/landing/*` | `landing/*` |
+| `/app/*` | `vendor/app/*` |
+
+**Mídia narrativa (PNG/WebP):** `landing/assets/` — listagem em `landing/assets/README.md`.
+**Mapa:** `centro/assets/icons/`, `centro/assets/pistas/` — não misturar com a landing.
 
 ### Scripts npm
 
@@ -135,6 +170,7 @@ Consequências práticas:
 | `npm run healthcheck:centro` | Valida catálogo temático offline (sem rede) |
 | `npm run sync:maplibre` | Copia MapLibre de `node_modules` para `vendor/maplibre/` |
 | `npm run sync:lucide-icons` | Regenera SVGs **e valida paridade** manifest ↔ `map-icons.js`; **falha** se divergir (CAPRI E-02) |
+| `npm run sync:geojson-from-salto` | **Dev only:** regenera GeoJSON em `centro/data/` a partir de `../mapa_sp_salto`; commitar o output (requer `shapely`) |
 | `node scripts/smoke-centro.mjs` | Smoke headless (HTTP + console). Requer `server.py` a correr |
 | `node scripts/smoke-visual-colors.mjs` | Snapshot rápido de paleta no Centro |
 
@@ -256,13 +292,14 @@ MapLibre**. As convenções específicas:
   camadas sidebar (point) via `addLayerToMap` + `resolveLayerIcon`. Filtro
   temático em `#poi-legend` (`setupPoiThemeFilter` + `getThemeFilters`). Ver **§7.9**.
 - **Dois catálogos** em `centro/data/catalog/`:
-  - `layers.json` + `groups.json` → **wired** na sidebar (9 camadas, 5
-    grupos). Toda layer nova na sidebar exige entrada aqui **e** GeoJSON em
-    `centro/data/processed/`.
+  - `layers.json` + `groups.json` → **wired** na sidebar (10 camadas processed,
+    5 grupos). Toda layer nova exige entrada aqui **e** GeoJSON em
+    `centro/data/processed/` **commitado neste repo**.
   - `context-layers.json` + `context-groups.json` + `context-wired.json` →
-    **12 camadas wired** na sidebar (ficheiros em `centro/data/context/`).
-    Excluídas: OSM ruas/endereços (sem GeoJSON), `centro_pois_turisticos`
-    (já em `addPOILayer`). Carregamento via `centro/features/catalog-load.js`.
+    **14 camadas wired** (OSM ruas/endereços + 12 context em `centro/data/context/`).
+    Regeneração opcional: `npm run sync:geojson-from-salto` → **commitar** os `.geojson`.
+    Excluída da sidebar: `centro_pois_turisticos` (já em `addPOILayer`).
+    Carregamento via `centro/features/catalog-load.js`.
 - **Fundo do mapa:** o body é `#121212` (HUD). O `#map` recebe
   `--map-ground-bg` (`#f8f4f0`) em `centro/styles/layout.css` e o runtime
   força `background-color` no layer `background` do estilo via
@@ -548,7 +585,7 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
    estabilidade visual sobre refactor.
 6. **Atualizar catálogo / fixtures.** Se adicionar layer, post, comando CLI
    ou rota narrativa, registre no índice apropriado.
-7. **Rodar `npm run ci`** (ou `npm test`). **103 testes** devem permanecer verdes.
+7. **Rodar `npm run ci`** (ou `npm test`). **106 testes** devem permanecer verdes.
 8. **Atualizar `AGENT.md`** se mudar uma convenção transversal.
 
 ---
@@ -566,7 +603,7 @@ Tarefa só está concluída quando:
 - [ ] Sem `setHTML` / `innerHTML` com dados externos. Auditável:
       `rg 'setHTML|innerHTML\s*=' centro/ landing/ arquivo-morto/ arquivista/`.
 - [ ] `prefers-reduced-motion` respeitado em qualquer animação nova.
-- [ ] `npm test` verde (103 testes hoje — ver §10).
+- [ ] `npm test` verde (106 testes hoje — ver §10).
 - [ ] Sem **runtime dependency** nova em `package.json` (devDependencies
       para test/sync/lint seguem fluxo normal de PR — ver §12).
 
@@ -584,8 +621,8 @@ Pare e pergunte antes de:
   layer `building-3d` em todos os zooms).
 - Apagar ou renomear arquivos em `centro/data/processed/`,
   `centro/data/context/`, `centro/data/catalog/`, `arquivo-morto/posts/`,
-  `arquivo-morto/assets/`, `arquivista/data/`, `centro/assets/pistas/` ou
-  `centro/assets/imagens/`. Os ícones em `centro/assets/icons/` são
+  `arquivo-morto/assets/`, `arquivista/data/`,   `centro/assets/pistas/` ou
+  `landing/assets/` (mídia da landing). Os ícones em `centro/assets/icons/` são
   **regenerados** por `npm run sync:lucide-icons` — renomear via
   `icon-manifest.json` está ok desde que o sync rode em seguida.
 - Alterar a estrutura do catálogo (`layers.json` / `groups.json` /
@@ -609,15 +646,14 @@ Itens **ainda abertos** (reabrir só com gate CAPRI):
 |---|---|---|
 | `centro/centro-runtime.js` ainda grande (~1 230 linhas) | Parcial — extraídos `catalog-load`, `layer-unlocks`, `protocolo-phase`, `buildings-3d`, `poi-theme-filter` | `centro/features/` + runtime |
 | `arquivista/js/script.js` (~846 linhas) | Parcial — `open-application.js` extrai dock/apps; script principal ainda grande | `arquivista/js/` |
-| `04a_zeis2__polygon.geojson` vazio | WONT FIX (G-07) até haver geometria | `centro/data/processed/` |
+| `04a_zeis2__polygon` (cidade inteira) | Só **5 polígonos** no viewport do mapa (clip bbox); não intersecta `16_regiao_centro` | `sync:geojson-from-salto` |
 | Fases 2–13 do ARG (conteúdo narrativo) | Roadmap — **gates técnicos** em `phase-gates.json` + sidebar `layer-row--phase-locked`; avanço por pistas via `clueCountAdvance` | `protocolo-phase.js`, landing copy |
 | Contraste WCAG AA formal (outros pares) | Parcial — corrigidos `.as-digital-aviso` e `nav-retorno` terminal; resto em `docs/accessibility/contrast-notes.md` | design system |
 | Playwright browser E2E | HTTP + smoke manual cobrem regressões; Playwright opcional se instalar browsers | `docs/testing/smoke-centro.md` |
-| `15_osm_ruas` / `15_osm_enderecos` | GeoJSON ausente — não wired até existir ficheiro | `context-layers.json` |
 | PMTiles offline Brasil | Fora de scope — ver `docs/offline-scope.md` | — |
 | `map-icons.js` gerado só do manifest (E-02 fase 2) | DEFER — hoje manifest + `map-icons.js` em paridade manual via sync | `scripts/sync-lucide-icons.mjs` |
 
-**Implementado (2026-05):** context wired (12 camadas), triângulo overlay, deep-link `?clues=` e `?phase=`, `tpl-geoscanner` removido, skip-link + foco dock Arquivista, `phase-gates.json`, badge `#centro-phase-badge`, módulos `buildings-3d.js` / `poi-theme-filter.js`, `open-application.js`, execution map em `docs/architecture/map-init-flow.md`.
+**Implementado (2026-05):** context wired (14 camadas, OSM + património), ZEIS-2 no viewport, `sync:geojson-from-salto`, triângulo overlay, deep-link `?clues=` e `?phase=`, `tpl-geoscanner` removido, skip-link + foco dock Arquivista, `phase-gates.json`, badge `#centro-phase-badge`, módulos `buildings-3d.js` / `poi-theme-filter.js`, `open-application.js`, execution map em `docs/architecture/map-init-flow.md`.
 
 ---
 

@@ -21,7 +21,7 @@
     if (val === SENHA) {
       /* troca imagem para elevador aberto */
       elevImg.onerror = null;
-      elevImg.src = '/pages/centro/assets/ELEVADOR_ABERTO.png';
+      elevImg.src = '/landing/assets/ELEVADOR_ABERTO.png';
       elevImg.style.transition = 'opacity 0.4s';
       erroMsg.textContent = '';
 
@@ -64,9 +64,9 @@
 
   /* ── Imagens por tipo ──────────────────────────────── */
   const IMG = {
-    fire:   '/pages/centro/assets/ALMA_NIVEL_2.PNG',
-    shadow: '/pages/centro/assets/ALMA_PNG.png',
-    ether:  '/pages/centro/assets/ALMA_FINAL_PNG.png',
+    fire:   '/landing/assets/ALMA_NIVEL_2.PNG',
+    shadow: '/landing/assets/ALMA_PNG.png',
+    ether:  '/landing/assets/ALMA_FINAL_PNG.png',
   };
 
   /* ── Configuração de distorção por tipo ────────────── */

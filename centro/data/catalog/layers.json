@@ -192,6 +192,29 @@
       "geom": "polygon"
     },
     {
+      "id": "04a_zeis2__polygon",
+      "title": "Célula de Ocupação: ZEIS-2",
+      "group": "03_zoneamento",
+      "group_title": "Controlo Zonal",
+      "source_file": "data/processed/03_zoneamento/04a_zeis2__polygon.geojson",
+      "file": "data/processed/04a_zeis2__polygon.geojson",
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#f59e0b",
+        "paint": {
+          "fill-color": "#fef08a",
+          "fill-opacity": 0.06,
+          "fill-outline-color": "#eab308"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
       "id": "04a_zeis3__polygon",
       "title": "Célula de Ocupação: ZEIS-3",
       "group": "03_zoneamento",
