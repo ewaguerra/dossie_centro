@@ -11,7 +11,7 @@
 | Ícones mapa | Lucide paths | `lucide-static` (dev) → `centro/assets/icons/*.svg` | Browser não carrega JS Lucide |
 | Runtime Centro | — | `centro/centro-runtime.js` | IIFE vanilla, sem bundler |
 | Servidor dev | Python 3 | `server.py` | Proxy + cache headers |
-| Testes | node:test | `tests/sanity.test.js`, `tests/http.test.js` | **100 testes** (`npm run ci`) |
+| Testes | node:test | `tests/sanity.test.js`, `tests/http.test.js` | **103 testes** (`npm run ci`) |
 | Node.js | ≥18 | `package.json` `engines` | CI local na máquina da autora |
 
 ## Scripts npm

@@ -70,8 +70,6 @@
 
   // Maquete 3D — fill-extrusion nativa do estilo OpenFreeMap liberty.
   var BUILDINGS_3D_LAYER_ID = "building-3d";
-  var BUILDINGS_3D_STORAGE_KEY = "centroBuildings3D";
-  var POI_THEME_STORAGE_KEY = "centroPoiThemeFilter";
   var CADERNO_STORAGE_KEY = "protocolo13_caderno_clues";
 
   // Fallback por categoria quando MAPA_SP_ICONS não carregou (404 / ordem de script).
@@ -159,6 +157,26 @@
       return lu.isLayerUnlocked(layerId, layerUnlockRules);
     }
     return true;
+  }
+
+  function isLayerPhaseUnlocked(layerId) {
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.isLayerPhaseUnlocked === "function") {
+      return ph.isLayerPhaseUnlocked(layerId);
+    }
+    return true;
+  }
+
+  function isLayerAccessible(layerId) {
+    return isLayerUnlocked(layerId) && isLayerPhaseUnlocked(layerId);
+  }
+
+  function getMinPhaseLabel(layerId) {
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.getMinPhaseForLayer === "function") {
+      return String(ph.getMinPhaseForLayer(layerId));
+    }
+    return "?";
   }
 
   // Hash routing pode ignorar center/zoom do constructor; revalida contra maxBounds.
@@ -483,217 +501,46 @@
     return root;
   }
 
-  function getBuildings3DInitialEnabled() {
-    try {
-      var stored = window.localStorage && window.localStorage.getItem(BUILDINGS_3D_STORAGE_KEY);
-      if (stored === "1") return true;
-      if (stored === "0") return false;
-    } catch (_e) {
-      // localStorage indisponível — default off.
+  var buildings3dApi = null;
+  var poiFilterApi = null;
+
+  function ensureBuildings3dApi() {
+    if (!buildings3dApi && window.CENTRO && window.CENTRO.buildings3D) {
+      buildings3dApi = window.CENTRO.buildings3D.create({
+        getMap: function () {
+          return map;
+        },
+        mapReadyPromise: mapReadyPromise,
+      });
     }
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return false;
-    }
-    return true;
+    return buildings3dApi;
   }
 
-  function loadPoiThemeFilterState() {
-    var icons = window.MAPA_SP_ICONS;
-    if (!icons || typeof icons.getThemeFilters !== "function") return {};
-    var themes = icons.getThemeFilters();
-    var state = {};
-    for (var i = 0; i < themes.length; i++) {
-      state[themes[i].id] = true;
+  function ensurePoiFilterApi() {
+    if (!poiFilterApi && window.CENTRO && window.CENTRO.poiThemeFilter) {
+      poiFilterApi = window.CENTRO.poiThemeFilter.create({
+        getMap: function () {
+          return map;
+        },
+        mapReadyPromise: mapReadyPromise,
+      });
     }
-    try {
-      var raw = window.localStorage && window.localStorage.getItem(POI_THEME_STORAGE_KEY);
-      if (!raw) return state;
-      var parsed = JSON.parse(raw);
-      if (!parsed || typeof parsed !== "object") return state;
-      for (var j = 0; j < themes.length; j++) {
-        var themeId = themes[j].id;
-        if (typeof parsed[themeId] === "boolean") {
-          state[themeId] = parsed[themeId];
-        }
-      }
-    } catch (_e) {
-      // localStorage indisponível ou JSON inválido — mantém defaults.
-    }
-    return state;
-  }
-
-  function savePoiThemeFilterState(state) {
-    try {
-      if (window.localStorage) {
-        window.localStorage.setItem(POI_THEME_STORAGE_KEY, JSON.stringify(state));
-      }
-    } catch (_e) {
-      // localStorage indisponível — ignora.
-    }
-  }
-
-  function setPoiThemeLayerVisibility(theme, visible) {
-    if (!map || !theme || !theme.layerIds) return;
-    var visibility = visible ? "visible" : "none";
-    for (var i = 0; i < theme.layerIds.length; i++) {
-      var layerId = theme.layerIds[i];
-      if (map.getLayer(layerId)) {
-        map.setLayoutProperty(layerId, "visibility", visibility);
-      }
-    }
+    return poiFilterApi;
   }
 
   function applyAllPoiThemeFilters() {
-    var icons = window.MAPA_SP_ICONS;
-    if (!icons || typeof icons.getThemeFilters !== "function") return;
-    var state = loadPoiThemeFilterState();
-    var themes = icons.getThemeFilters();
-    for (var i = 0; i < themes.length; i++) {
-      var theme = themes[i];
-      setPoiThemeLayerVisibility(theme, state[theme.id] !== false);
-    }
+    var api = ensurePoiFilterApi();
+    if (api) api.applyAll();
   }
 
   function setupPoiThemeFilter() {
-    var grid = document.getElementById("poi-legend-grid");
-    var icons = window.MAPA_SP_ICONS;
-    if (!grid || !icons || typeof icons.getThemeFilters !== "function") return;
-
-    grid.innerHTML = "";
-    var state = loadPoiThemeFilterState();
-    var themes = icons.getThemeFilters();
-
-    for (var i = 0; i < themes.length; i++) {
-      (function (theme) {
-        var row = document.createElement("label");
-        row.className = "poi-legend__item";
-        row.dataset.themeId = theme.id;
-
-        var toggle = document.createElement("input");
-        toggle.type = "checkbox";
-        toggle.className = "poi-legend__toggle";
-        toggle.checked = state[theme.id] !== false;
-        toggle.setAttribute("aria-label", theme.label);
-        row.classList.toggle("poi-legend__item--off", !toggle.checked);
-
-        if (theme.iconPath) {
-          var img = document.createElement("img");
-          img.className = "poi-legend__icon";
-          img.src = theme.iconPath;
-          img.alt = "";
-          img.width = 22;
-          img.height = 22;
-          img.loading = "lazy";
-          img.decoding = "async";
-          row.appendChild(toggle);
-          row.appendChild(img);
-        } else {
-          row.appendChild(toggle);
-        }
-
-        var label = document.createElement("span");
-        label.className = "poi-legend__label";
-        label.textContent = theme.label;
-        row.appendChild(label);
-
-        toggle.addEventListener("change", function () {
-          state[theme.id] = toggle.checked;
-          row.classList.toggle("poi-legend__item--off", !toggle.checked);
-          savePoiThemeFilterState(state);
-          mapReadyPromise.then(function () {
-            setPoiThemeLayerVisibility(theme, toggle.checked);
-          });
-        });
-
-        grid.appendChild(row);
-      })(themes[i]);
-    }
-  }
-
-  function renderBuildings3DLegend() {
-    var grid = document.getElementById("buildings-legend-grid");
-    var theme = window.MAPA_SP_THEME;
-    if (!grid || !theme || !theme.buildings3D) return;
-
-    grid.innerHTML = "";
-    var order = typeof theme.getBuildings3DHeightBandOrder === "function"
-      ? theme.getBuildings3DHeightBandOrder()
-      : ["ground", "low", "medium", "tall", "tower", "skyscraper"];
-    var labels = typeof theme.getBuildings3DHeightBandLabels === "function"
-      ? theme.getBuildings3DHeightBandLabels()
-      : {};
-
-    for (var i = 0; i < order.length; i++) {
-      var key = order[i];
-      var band = theme.buildings3D.heightBands[key];
-      if (!band) continue;
-
-      var item = document.createElement("div");
-      item.className = "buildings-legend__item";
-
-      var swatch = document.createElement("span");
-      swatch.className = "buildings-legend__swatch";
-      swatch.style.backgroundColor = band.color;
-      swatch.setAttribute("aria-hidden", "true");
-
-      var label = document.createElement("span");
-      label.className = "buildings-legend__label";
-      label.textContent = labels[key] || key;
-
-      item.appendChild(swatch);
-      item.appendChild(label);
-      grid.appendChild(item);
-    }
-  }
-
-  function updateBuildings3DLegendVisibility(visible) {
-    var legend = document.getElementById("buildings-legend");
-    if (!legend) return;
-    legend.hidden = !visible;
-  }
-
-  function syncBuildings3DToggleUI(enabled) {
-    var cb = document.getElementById("centro-buildings-3d-toggle");
-    if (cb) cb.checked = !!enabled;
-    updateBuildings3DLegendVisibility(!!enabled);
+    var api = ensurePoiFilterApi();
+    if (api) api.setup();
   }
 
   function setBuildings3DEnabled(enabled, options) {
-    options = options || {};
-    if (!map || !map.getLayer || !map.getLayer(BUILDINGS_3D_LAYER_ID)) {
-      if (!options.silent) {
-        console.warn("[CENTRO] Camada", BUILDINGS_3D_LAYER_ID, "indisponível no estilo atual");
-      }
-      return false;
-    }
-
-    var theme = window.MAPA_SP_THEME;
-
-    if (enabled && theme && typeof theme.getBuildings3DExtrusionPaint === "function") {
-      var paint = theme.getBuildings3DExtrusionPaint();
-      var paintKeys = Object.keys(paint);
-      for (var p = 0; p < paintKeys.length; p++) {
-        map.setPaintProperty(BUILDINGS_3D_LAYER_ID, paintKeys[p], paint[paintKeys[p]]);
-      }
-      if (typeof theme.getBuildings3DFilter === "function") {
-        map.setFilter(BUILDINGS_3D_LAYER_ID, theme.getBuildings3DFilter());
-      }
-      map.setLayoutProperty(BUILDINGS_3D_LAYER_ID, "visibility", "visible");
-    } else {
-      map.setLayoutProperty(BUILDINGS_3D_LAYER_ID, "visibility", "none");
-    }
-
-    if (options.persist !== false) {
-      try {
-        if (window.localStorage) {
-          window.localStorage.setItem(BUILDINGS_3D_STORAGE_KEY, enabled ? "1" : "0");
-        }
-      } catch (_e) {
-        // Ignora falha de persistência.
-      }
-    }
-
-    return true;
+    var api = ensureBuildings3dApi();
+    return api ? api.setEnabled(enabled, options) : false;
   }
 
   async function addTrianguloHistoricoOverlay() {
@@ -768,35 +615,13 @@
   }
 
   function initBuildings3DState() {
-    var enabled = getBuildings3DInitialEnabled();
-    var ok = setBuildings3DEnabled(enabled, { persist: false, silent: true });
-    if (!ok && enabled) {
-      enabled = false;
-    }
-    syncBuildings3DToggleUI(enabled);
+    var api = ensureBuildings3dApi();
+    if (api) api.initState();
   }
 
   function setupBuildings3DToggle() {
-    var cb = document.getElementById("centro-buildings-3d-toggle");
-    if (!cb) return;
-
-    renderBuildings3DLegend();
-
-    cb.addEventListener("change", function () {
-      mapReadyPromise.then(function () {
-        var wantOn = cb.checked;
-        var ok = setBuildings3DEnabled(wantOn);
-        if (!ok && wantOn) {
-          cb.checked = false;
-          updateBuildings3DLegendVisibility(false);
-          if (typeof window.centroToast === "function") {
-            window.centroToast("Maquete 3D indisponível neste estilo.", "warn");
-          }
-          return;
-        }
-        updateBuildings3DLegendVisibility(wantOn);
-      });
-    });
+    var api = ensureBuildings3dApi();
+    if (api) api.setupToggle();
   }
 
   function initMap() {
@@ -1004,9 +829,14 @@
 
       for (var i = 0; i < groupLayers.length; i++) {
         var ly = groupLayers[i];
-        var locked = !isLayerUnlocked(ly.id);
+        var clueLocked = !isLayerUnlocked(ly.id);
+        var phaseLocked = !clueLocked && !isLayerPhaseUnlocked(ly.id);
+        var locked = clueLocked || phaseLocked;
         var label = document.createElement("label");
-        label.className = locked ? "layer-row layer-row--locked" : "layer-row";
+        var rowClass = "layer-row";
+        if (locked) rowClass += " layer-row--locked";
+        if (phaseLocked) rowClass += " layer-row--phase-locked";
+        label.className = rowClass;
 
         var cb = document.createElement("input");
         cb.type = "checkbox";
@@ -1014,7 +844,10 @@
         if (locked) {
           cb.disabled = true;
           cb.checked = false;
-          cb.setAttribute("aria-label", (ly.title || ly.id) + " (bloqueada — registre pistas no Caderno)");
+          var lockHint = clueLocked
+            ? " (bloqueada — registre pistas no Caderno)"
+            : " (bloqueada — avance de fase no ARG)";
+          cb.setAttribute("aria-label", (ly.title || ly.id) + lockHint);
         } else if (ly.visible !== false) {
           cb.checked = true;
         }
@@ -1029,7 +862,7 @@
         if (locked) {
           var lockMeta = document.createElement("span");
           lockMeta.className = "layer-meta layer-meta--lock";
-          lockMeta.textContent = "bloqueada";
+          lockMeta.textContent = phaseLocked ? "fase " + getMinPhaseLabel(ly.id) : "bloqueada";
           label.appendChild(lockMeta);
         } else if (ly.feature_count !== undefined) {
           var meta = document.createElement("span");
@@ -1061,6 +894,12 @@
         renderSidebarPanel(panel, data.groups, data.layers);
         wireLayerCheckboxes(panel);
         var phaseApi = window.CENTRO && window.CENTRO.protocoloPhase;
+        if (phaseApi && typeof phaseApi.maybeAdvancePhaseFromClues === "function") {
+          phaseApi.maybeAdvancePhaseFromClues();
+        }
+        if (phaseApi && typeof phaseApi.updatePhaseBadge === "function") {
+          phaseApi.updatePhaseBadge();
+        }
         var phaseNum = phaseApi && typeof phaseApi.getPhase === "function" ? phaseApi.getPhase() : 1;
         console.log(
           "[CENTRO] Sidebar carregada:",
@@ -1239,13 +1078,13 @@
       cb.addEventListener("change", function () {
         var lid = cb.dataset.layerId;
         if (!lid || !catalogIndex) return;
-        if (!isLayerUnlocked(lid)) {
+        if (!isLayerAccessible(lid)) {
           cb.checked = false;
           if (typeof window.centroToast === "function") {
-            window.centroToast(
-              "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto).",
-              "warn"
-            );
+            var msg = !isLayerUnlocked(lid)
+              ? "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto)."
+              : "Camada bloqueada. Avance de fase no ARG (fase mínima " + getMinPhaseLabel(lid) + ").";
+            window.centroToast(msg, "warn");
           }
           return;
         }

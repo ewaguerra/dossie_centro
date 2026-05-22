@@ -507,6 +507,18 @@
   cursor: not-allowed;
 }
 
+.layer-row--phase-locked .layer-meta--lock {
+  color: var(--color-brand-dim, #d97706);
+}
+
+.sidebar-header__phase {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: var(--fs-xs, 0.72rem);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
 .layer-meta--lock {
   color: var(--color-danger, #ef4444);
   font-style: italic;

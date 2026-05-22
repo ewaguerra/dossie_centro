@@ -469,7 +469,7 @@
 /* Terminal verde — arquivista */
 .nav-retorno[data-theme="terminal"] {
   --nav-retorno-border: rgba(0, 255, 0, 0.3);
-  --nav-retorno-link: rgba(0, 255, 0, 0.55);
+  --nav-retorno-link: rgba(0, 255, 0, 0.82);
   --nav-retorno-link-hover: #00ff00;
   --nav-retorno-link-hover-border: rgba(0, 255, 0, 0.4);
   --nav-retorno-link-active: rgba(0, 255, 0, 0.85);

@@ -208,8 +208,10 @@ describe('projeto_centro — sanity checks', () => {
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('setupPoiThemeFilter'), 'setupPoiThemeFilter ausente');
     assert.ok(runtime.includes('applyAllPoiThemeFilters'), 'applyAllPoiThemeFilters ausente');
-    assert.ok(runtime.includes('POI_THEME_STORAGE_KEY'), 'persistencia de filtro ausente');
-    assert.ok(runtime.includes('setLayoutProperty'), 'toggle de visibilidade ausente');
+    assert.ok(runtime.includes('CENTRO.poiThemeFilter'), 'runtime deve delegar filtro POI');
+    const poiFilter = read('centro/features/poi-theme-filter.js');
+    assert.ok(poiFilter.includes('centroPoiThemeFilter'), 'persistencia de filtro ausente');
+    assert.ok(poiFilter.includes('setLayoutProperty'), 'toggle de visibilidade ausente');
   });
 
   // ── Fase 3 — HTML declarativo, runtime externo ──────────────────
@@ -680,8 +682,10 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('buildings-legend'), 'legenda de faixas de altura ausente');
     assert.ok(runtime.includes('BUILDINGS_3D_LAYER_ID'), 'constante da layer 3D ausente');
     assert.ok(runtime.includes('setBuildings3DEnabled'), 'handler setBuildings3DEnabled ausente');
-    assert.ok(runtime.includes('MAPA_SP_THEME'), 'runtime deve usar theme.js para paint 3D');
-    assert.ok(runtime.includes('getBuildings3DExtrusionPaint'), 'runtime deve aplicar paint do theme');
+    assert.ok(runtime.includes('CENTRO.buildings3D'), 'runtime deve delegar 3D a buildings-3d.js');
+    const b3d = read('centro/features/buildings-3d.js');
+    assert.ok(b3d.includes('getBuildings3DExtrusionPaint'), 'modulo 3D deve aplicar paint do theme');
+    assert.ok(html.includes('buildings-3d.js'), 'index deve carregar buildings-3d.js');
   });
 
   it('theme.js expoe helpers de fill-extrusion para buildings3D', () => {
@@ -809,6 +813,44 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(load.includes('context-wired.json'), 'catalog-load deve ler context-wired');
   });
 
+  it('centro: phase-gates, modulos 3D/POI e gates na sidebar', () => {
+    assert.ok(exists('centro/data/catalog/phase-gates.json'), 'phase-gates.json ausente');
+    const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    assert.ok(gates.layerMinPhase && Object.keys(gates.layerMinPhase).length > 0, 'layerMinPhase vazio');
+    const html = read('centro/index.html');
+    assert.ok(html.includes('poi-theme-filter.js'), 'index deve carregar poi-theme-filter.js');
+    assert.ok(html.includes('centro-phase-badge'), 'badge de fase no centro ausente');
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('isLayerPhaseUnlocked'), 'gate de fase ausente no runtime');
+    assert.ok(runtime.includes('layer-row--phase-locked'), 'UI phase-locked ausente');
+    const phase = read('centro/features/protocolo-phase.js');
+    assert.ok(phase.includes('phase-gates.json'), 'protocolo-phase deve carregar gates');
+    assert.ok(phase.includes('isLayerPhaseUnlocked'), 'API isLayerPhaseUnlocked ausente');
+  });
+
+  it('WCAG: contraste aviso digital e nav terminal', () => {
+    const popups = read('centro/styles/map-popups.css');
+    assert.match(
+      popups,
+      /\.as-digital-aviso\s*\{[^}]*color:\s*#9ca3af/,
+      'aviso digital deve usar cor com contraste melhor'
+    );
+    const components = read('vendor/app/styles/components.css');
+    assert.match(
+      components,
+      /\.nav-retorno\[data-theme="terminal"\][^}]*--nav-retorno-link:\s*rgba\(0,\s*255,\s*0,\s*0\.82\)/,
+      'link terminal deve usar opacidade >= 0.82'
+    );
+  });
+
+  it('arquivista: open-application.js extraido do script principal', () => {
+    assert.ok(exists('arquivista/js/open-application.js'), 'open-application.js ausente');
+    const html = read('arquivista/index.html');
+    assert.ok(html.includes('open-application.js'), 'index deve carregar open-application.js');
+    const script = read('arquivista/js/script.js');
+    assert.ok(script.includes('openArquivistaApplication'), 'script deve delegar openApplication');
+  });
+
   it('context-wired.json lista 12 camadas com ficheiro no disco', () => {
     const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
     assert.strictEqual(wired.layerIds.length, 12);
@@ -834,8 +876,8 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('arquivista geoscanner redirecciona com deep-link clues quando houver caderno', () => {
-    const js = read('arquivista/js/script.js');
-    assert.ok(js.includes("case 'geoscanner'"), 'handler geoscanner ausente');
+    const js = read('arquivista/js/open-application.js');
+    assert.ok(js.includes('case "geoscanner"') || js.includes("case 'geoscanner'"), 'handler geoscanner ausente');
     assert.ok(js.includes('protocolo13_caderno_clues'), 'deve ler caderno para query clues');
     assert.ok(js.includes('?clues='), 'deve montar query clues no redirect');
   });

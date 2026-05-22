@@ -26,75 +26,14 @@
   });
 
   function openApplication(app) {
-    console.log('[Arquivista] openApplication:', app);
-    switch (app) {
-      case 'dossie':
-      case 'dossiê':
-        windowManager.createWindow({
-          id: 'win-dossie',
-          title: '📁  Explorador — C:\\PROTOCOLO_13ALMAS\\Dossiê_Oficial',
-          width: '760px',
-          height: '550px',
-          content: document.getElementById('tpl-dossie').innerHTML
-        });
-        console.log('[Arquivista] Janela do dossiê criada, iniciando renderClues()');
-        renderClues();
-        break;
-
-      case 'fotos':
-        windowManager.createWindow({
-          id: 'win-fotos',
-          title: 'Visualizador de Fotos',
-          width: '540px',
-          height: '420px',
-          content: document.getElementById('tpl-fotos').innerHTML
-        });
-        setupPhotosApp();
-        break;
-
-      case 'codinomes':
-        windowManager.createWindow({
-          id: 'win-codinomes',
-          title: 'Codinomes.docx - Word',
-          width: '500px',
-          height: '550px',
-          content: document.getElementById('tpl-codinomes').innerHTML
-        });
-        setupWordApp();
-        break;
-
-      case 'geoscanner': {
-        var centroUrl = '/centro/';
-        try {
-          var raw = localStorage.getItem('protocolo13_caderno_clues');
-          if (raw) {
-            var parsed = JSON.parse(raw);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              centroUrl += '?clues=' + encodeURIComponent(parsed.join(','));
-            }
-          }
-        } catch (_e) {
-          // ignora — navega sem query
-        }
-        window.location.href = centroUrl;
-        break;
-      }
-
-      case 'terminal':
-      case 'cmd':
-        windowManager.createWindow({
-          id: 'win-terminal',
-          title: 'root@arquivista_sys:~# - Hacking Interface',
-          width: '650px',
-          height: '400px',
-          content: document.getElementById('tpl-terminal').innerHTML
-        });
-        setupTerminal();
-        break;
-      
-      case 'arquivo':
-        window.open('../arquivo-morto/', '_blank');
-        break;
+    if (typeof window.openArquivistaApplication === 'function') {
+      window.openArquivistaApplication(app, {
+        windowManager: windowManager,
+        renderClues: renderClues,
+        setupPhotosApp: setupPhotosApp,
+        setupWordApp: setupWordApp,
+        setupTerminal: setupTerminal,
+      });
     }
   }
 

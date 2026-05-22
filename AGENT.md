@@ -548,7 +548,7 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
    estabilidade visual sobre refactor.
 6. **Atualizar catálogo / fixtures.** Se adicionar layer, post, comando CLI
    ou rota narrativa, registre no índice apropriado.
-7. **Rodar `npm run ci`** (ou `npm test`). **100 testes** devem permanecer verdes.
+7. **Rodar `npm run ci`** (ou `npm test`). **103 testes** devem permanecer verdes.
 8. **Atualizar `AGENT.md`** se mudar uma convenção transversal.
 
 ---
@@ -566,7 +566,7 @@ Tarefa só está concluída quando:
 - [ ] Sem `setHTML` / `innerHTML` com dados externos. Auditável:
       `rg 'setHTML|innerHTML\s*=' centro/ landing/ arquivo-morto/ arquivista/`.
 - [ ] `prefers-reduced-motion` respeitado em qualquer animação nova.
-- [ ] `npm test` verde (100 testes hoje — ver §10).
+- [ ] `npm test` verde (103 testes hoje — ver §10).
 - [ ] Sem **runtime dependency** nova em `package.json` (devDependencies
       para test/sync/lint seguem fluxo normal de PR — ver §12).
 
@@ -607,16 +607,17 @@ Itens **ainda abertos** (reabrir só com gate CAPRI):
 
 | Item | Estado | Onde está |
 |---|---|---|
-| `centro/centro-runtime.js` ainda grande (~1 350 linhas) | Parcial — extraídos `catalog-load`, `layer-unlocks`, `protocolo-phase`; runtime principal continua monolítico | `centro/features/` + runtime |
-| `arquivista/js/script.js` (~890 linhas) | DEFER — modularizar em sprint futura | arquivista |
+| `centro/centro-runtime.js` ainda grande (~1 230 linhas) | Parcial — extraídos `catalog-load`, `layer-unlocks`, `protocolo-phase`, `buildings-3d`, `poi-theme-filter` | `centro/features/` + runtime |
+| `arquivista/js/script.js` (~846 linhas) | Parcial — `open-application.js` extrai dock/apps; script principal ainda grande | `arquivista/js/` |
 | `04a_zeis2__polygon.geojson` vazio | WONT FIX (G-07) até haver geometria | `centro/data/processed/` |
-| Fases 2–13 do ARG | Roadmap — fase 1 via `protocolo13_phase`; copy honesta na landing | `landing/`, `protocolo-phase.js` |
-| Contraste WCAG AA formal (outros pares além de `.layer-meta--lock`) | Parcial — ver `docs/accessibility/contrast-notes.md` | design system |
+| Fases 2–13 do ARG (conteúdo narrativo) | Roadmap — **gates técnicos** em `phase-gates.json` + sidebar `layer-row--phase-locked`; avanço por pistas via `clueCountAdvance` | `protocolo-phase.js`, landing copy |
+| Contraste WCAG AA formal (outros pares) | Parcial — corrigidos `.as-digital-aviso` e `nav-retorno` terminal; resto em `docs/accessibility/contrast-notes.md` | design system |
 | Playwright browser E2E | HTTP + smoke manual cobrem regressões; Playwright opcional se instalar browsers | `docs/testing/smoke-centro.md` |
 | `15_osm_ruas` / `15_osm_enderecos` | GeoJSON ausente — não wired até existir ficheiro | `context-layers.json` |
 | PMTiles offline Brasil | Fora de scope — ver `docs/offline-scope.md` | — |
+| `map-icons.js` gerado só do manifest (E-02 fase 2) | DEFER — hoje manifest + `map-icons.js` em paridade manual via sync | `scripts/sync-lucide-icons.mjs` |
 
-**Implementado (2026-05):** context wired (12 camadas), triângulo overlay, deep-link `?clues=`, `tpl-geoscanner` removido, skip-link + foco dock Arquivista, execution map em `docs/architecture/map-init-flow.md`.
+**Implementado (2026-05):** context wired (12 camadas), triângulo overlay, deep-link `?clues=` e `?phase=`, `tpl-geoscanner` removido, skip-link + foco dock Arquivista, `phase-gates.json`, badge `#centro-phase-badge`, módulos `buildings-3d.js` / `poi-theme-filter.js`, `open-application.js`, execution map em `docs/architecture/map-init-flow.md`.
 
 ---
 

@@ -22,8 +22,8 @@
 | Layer meta (`.layer-meta`) | `var(--color-text-muted)` `#999` | `#1a1a1a` | 6.1:1 | OK | OK |
 | Accent vermelho HUD (`--centro-accent`) | `#dc2626` | `#1a1a1a` | 3.6:1 | **FAIL** | OK |
 | Status verde (inline) | `#4ade80` | `#1a1a1a` | 10.0:1 | OK | OK |
-| Aviso digital (`.as-digital-aviso`) | `#404040` | `#1a1a1a` | 1.7:1 | **FAIL** | **FAIL** |
-| Nav link muted (`.nav-retorno__link`, tema terminal) | `rgba(0,255,0,0.55)` | `#050505` | ~* | **FAIL** | **FAIL** |
+| Aviso digital (`.as-digital-aviso`) | `#9ca3af` | `#1a1a1a` | ~5.5:1 | **PASS** | verificar | Corrigido 2026-05 |
+| Nav link muted (`.nav-retorno__link`, tema terminal) | `rgba(0,255,0,0.82)` | `#050505` | ~* | **PASS** estimado | verificar | Corrigido 2026-05 |
 
 \* estimativa com opacidade sobre fundo escuro.
 
