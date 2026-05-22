@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500;700&display=swap');
+/* Órfão — não carregado em index.html. Sem CDN; mono via tokens.css (--font-mono). */
 
 :root {
     /* TEMA DIA (Windows 11 Oficial) */
@@ -100,7 +100,7 @@ body.night-mode .desktop-icon:hover, body.night-mode .folder-item:hover, body.ni
 
 .desktop-icon svg, .folder-item svg, .clue-item svg { width: 32px; height: 32px; filter: none; flex-shrink: 0; }
 .desktop-icon span, .folder-item span, .clue-item span { 
-    color: inherit; font-size: 11px; font-weight: 600; text-shadow: none; font-family: var(--font-code, 'Courier New', monospace); line-height: 1.3; text-align: left; 
+    color: inherit; font-size: 11px; font-weight: 600; text-shadow: none; font-family: var(--font-mono); line-height: 1.3; text-align: left; 
 }
 .folder-item span, .clue-item span { text-align: center; }
 
@@ -141,7 +141,7 @@ body.night-mode #start-btn svg { fill: #ff003c; animation: pulse-red 2s infinite
 
 #phantom-cursor { position: fixed; width: 18px; height: 22px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff003c"><path d="M7,2L21,11L14,12L17,22L14,23L11,13L4,16L7,2Z"/></svg>') no-repeat; pointer-events: none; z-index: 10001; opacity: 0; transition: opacity 0.5s; }
 
-#loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; flex-direction: column; color: white; font-family: var(--font-code, 'Courier New', monospace); }
+#loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; flex-direction: column; color: white; font-family: var(--font-mono); }
 .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--sys-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 

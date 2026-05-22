@@ -43,7 +43,8 @@
   --color-danger: #ef4444;
   --color-confidential: #d97706;
 
-  /* ── Tipografia ───────────────────────────────────────── */
+  /* Mono offline — Courier New do sistema; sem fonte externa auto-hospedada (.woff2).
+     --font-code é alias de --font-mono. Ver docs/design-system/typography.md */
   --font-mono: 'Courier New', Courier, monospace;
   --font-serif: Georgia, 'Times New Roman', serif;
   --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

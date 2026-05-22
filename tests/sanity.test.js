@@ -197,12 +197,26 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('/app/styles/components.css'), 'deve carregar components.css');
   });
 
-  it('design system: sem Fira Code nem texturas externas no runtime', () => {
+  it('design system: sem Fira Code, Google Fonts nem texturas externas no runtime', () => {
+    const runtimeCss = [
+      'centro/centro-sidebar.css',
+      'centro/styles/centro-chrome.css',
+      'landing/landing.css',
+      'arquivo-morto/css/arquivo-morto.css',
+      'arquivista/css/utility.css',
+      'arquivista/css/linux-desktop.css',
+      'arquivista/css/window-system.css',
+      'arquivista/css/effects.css',
+      'vendor/app/styles/tokens.css',
+      'vendor/app/styles/components.css',
+    ];
+    for (const file of runtimeCss) {
+      const css = read(file);
+      assert.ok(!/Fira Code|Fira\+Code|fonts\.googleapis/.test(css), `${file} sem Fira/CDN fontes`);
+    }
     const centroCss = read('centro/centro-sidebar.css');
-    const utility = read('arquivista/css/utility.css');
-    assert.ok(!/Fira Code/.test(centroCss), 'centro-sidebar sem Fira Code');
+    assert.ok(/var\(--font-mono\)|var\(--font-code\)/.test(centroCss), 'centro usa tokens mono');
     assert.ok(!/transparenttextures|unsplash/.test(centroCss), 'centro sem CDN textura');
-    assert.ok(!/unsplash/.test(utility), 'arquivista utility sem unsplash');
     assert.ok(exists('vendor/app/styles/tokens.css'), 'tokens.css existe');
     assert.ok(exists('vendor/app/styles/a11y.css'), 'a11y.css existe');
     assert.ok(exists('vendor/app/styles/components.css'), 'components.css existe');

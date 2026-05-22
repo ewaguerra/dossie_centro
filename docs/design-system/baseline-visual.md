@@ -24,7 +24,7 @@
 | Família | Onde | Carregada? |
 |---|---|---|
 | Courier New | 4 páginas | sistema |
-| Fira Code | centro, arquivista | **não** (fallback silencioso) |
+| Fira Code | ~~centro, arquivista~~ | **Removida** — `--font-mono` / `--font-code` (ver typography.md) |
 | Georgia | landing, arquivo-morto | sistema |
 | Segoe UI / system | landing, arquivista | sistema |
 
@@ -46,5 +46,5 @@
 ```bash
 npm test   # 35/35 (pré-DS)
 grep -c 'style=' centro/index.html   # 23
-grep -r 'Fira Code' centro/ arquivista/  # 9+ refs
+grep -r 'Fira Code' centro/ arquivista/  # 0 em runtime (ver typography.md)
 ```

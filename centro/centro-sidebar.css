@@ -19,7 +19,7 @@
 
 html, body {
   height: 100%;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
   color: var(--color-text);
   background: var(--color-bg-subtle);
@@ -386,7 +386,7 @@ body {
   top: 8px; right: -8px;
   background: var(--centro-accent);
   color: #fff;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-mono);
   font-size: 9px;
   font-weight: bold;
   padding: 2px 6px;
@@ -427,7 +427,7 @@ body {
   cursor: pointer;
   line-height: 1.2;
   word-break: break-word;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-mono);
 }
 
 .layer-meta {
@@ -637,7 +637,7 @@ button.poi-card__choice:disabled {
   display: none;
   margin-top: 6px;
   font-size: 11px;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.08em;
   color: var(--color-accent);
   opacity: 0.75;
@@ -1153,7 +1153,7 @@ button.poi-card__choice:disabled {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-text-muted);
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 
 .parceiros-btn {
@@ -1166,7 +1166,7 @@ button.poi-card__choice:disabled {
   border-radius: 4px;
   padding: 0.75rem 0.9rem;
   cursor: pointer;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   text-align: left;
   transition: background 0.2s, border-color 0.2s;
   position: relative;
@@ -1219,7 +1219,7 @@ button.poi-card__choice:disabled {
 
 /* ── Arquivo de Superfície — Card de Ponto Patrocinado ──────────────── */
 .arquivo-superficial-card {
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   color: #1a1a1a;
   background: #ffffff;
   border-radius: 4px;
@@ -1416,7 +1416,7 @@ a.as-sponsor__nome:hover {
   background: none;
   border: none;
   color: #737373;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   cursor: pointer;
@@ -1491,7 +1491,7 @@ a.as-sponsor__nome:hover {
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   transition: background 0.15s, border-color 0.15s;
 }
 .as-escolha-btn:hover {
@@ -1547,7 +1547,7 @@ a.as-sponsor__nome:hover {
   border: 1px solid #d0d0d0;
   border-radius: 2px;
   padding: 0.5rem 0.65rem;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   color: #111111;
@@ -1566,7 +1566,7 @@ a.as-sponsor__nome:hover {
   border: 1px solid rgba(220, 38, 38, 0.45);
   border-radius: 2px;
   padding: 0.5rem 0.8rem;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1626,7 +1626,7 @@ a.as-sponsor__nome:hover {
   color: #1a1a1a;
   margin: 0 0 0.4rem;
   line-height: 1.5;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
 }
 .as-sucesso-linha:first-of-type::before {
   content: '> ';
@@ -1658,7 +1658,7 @@ a.as-sponsor__nome:hover {
 }
 
 .as-tooltip {
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-mono);
   padding: 0.65rem 0.85rem;
   min-width: 180px;
 }

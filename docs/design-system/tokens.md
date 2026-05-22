@@ -44,7 +44,7 @@ Carregamento: **primeiro** `<link>` de CSS em landing, centro, arquivo-morto e a
 | `--font-mono` | `'Courier New', Courier, monospace` |
 | `--font-serif` | `Georgia, 'Times New Roman', serif` |
 | `--font-ui` | system UI stack |
-| `--font-code` | `var(--font-mono)` |
+| `--font-code` | `var(--font-mono)` — alias; **Fira Code não usada** (ver [typography.md](./typography.md)) |
 
 ## Escala, espaçamento, radius, shadow, motion, z-index
 
