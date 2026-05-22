@@ -736,6 +736,36 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!exists('test-simples.html'), 'harness test-simples removido');
   });
 
+  // ── MapLibre agent fixes (hash, layering, fallback, healthcheck) ─
+  it('centro-runtime.js valida hash/view contra maxBounds no load', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('clampViewToCentroBounds'), 'clampViewToCentroBounds ausente');
+    assert.ok(runtime.includes('LngLatBounds.convert(CENTRO_MAX_BOUNDS)'), 'validacao de bounds ausente');
+    assert.ok(runtime.includes('clampViewToCentroBounds(map)'), 'clamp deve rodar no load');
+  });
+
+  it('centro-runtime.js insere camadas do catalogo abaixo dos POIs (beforeId)', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('getCatalogInsertBeforeId'), 'getCatalogInsertBeforeId ausente');
+    assert.ok(runtime.includes('addLayer(layerConfig, beforeId)'), 'ensureLayer deve aceitar beforeId');
+    assert.ok(runtime.includes('getCatalogInsertBeforeId()'), 'addLayerToMap deve usar beforeId');
+  });
+
+  it('centro-runtime.js fallback de icone POI e por categoria, nao unico', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('POI_FALLBACK_ICON_BY_ID'), 'mapa de fallback ausente');
+    assert.ok(runtime.includes('resolvePatrimonioIconPath'), 'helper resolvePatrimonioIconPath ausente');
+    assert.ok(runtime.includes('icon-arqueologia.svg'), 'fallback arqueologia ausente');
+    assert.ok(runtime.includes('icon-monumentos.svg'), 'fallback monumentos ausente');
+  });
+
+  it('healthcheck CLI ESM substitui centro-healthcheck.js obsoleto', () => {
+    assert.ok(!exists('centro/centro-healthcheck.js'), 'healthcheck CJS legado deve estar removido');
+    assert.ok(exists('scripts/centro-healthcheck.mjs'), 'scripts/centro-healthcheck.mjs ausente');
+    const pkg = JSON.parse(read('package.json'));
+    assert.ok(pkg.scripts && pkg.scripts['healthcheck:centro'], 'npm run healthcheck:centro ausente');
+  });
+
   // ── Popup CSS classes ───────────────────────────────────────────
   it('map-popups.css contem classes para poi-popup e pista-popup', () => {
     const css = read('centro/styles/map-popups.css');

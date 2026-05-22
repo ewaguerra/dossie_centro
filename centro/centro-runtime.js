@@ -73,6 +73,14 @@
   var BUILDINGS_3D_STORAGE_KEY = "centroBuildings3D";
   var POI_THEME_STORAGE_KEY = "centroPoiThemeFilter";
 
+  // Fallback por categoria quando MAPA_SP_ICONS não carregou (404 / ordem de script).
+  var POI_FALLBACK_ICON_BY_ID = {
+    "memoria-paulistana": "icon-memoria.svg",
+    "acervo-tombado": "icon-acervo.svg",
+    "bem-arqueologico": "icon-arqueologia.svg",
+    monumentos: "icon-monumentos.svg",
+  };
+
   // Promise resolvida quando o mapa dispara 'load' — permite encadear
   // ativações de camadas sem polling do DOM.
   var mapReadyResolve = null;
@@ -102,9 +110,49 @@
     }
   }
 
-  function ensureLayer(mapInstance, layerConfig) {
+  function ensureLayer(mapInstance, layerConfig, beforeId) {
     if (!mapInstance.getLayer(layerConfig.id)) {
-      mapInstance.addLayer(layerConfig);
+      if (beforeId && mapInstance.getLayer(beforeId)) {
+        mapInstance.addLayer(layerConfig, beforeId);
+      } else {
+        mapInstance.addLayer(layerConfig);
+      }
+    }
+  }
+
+  // Camadas temáticas da sidebar ficam abaixo dos símbolos POI/pistas.
+  function getCatalogInsertBeforeId() {
+    if (!map) return undefined;
+    for (var i = 0; i < poiInteractionLayerIds.length; i++) {
+      var layerId = poiInteractionLayerIds[i];
+      if (map.getLayer(layerId)) return layerId;
+    }
+    return undefined;
+  }
+
+  function resolvePatrimonioIconPath(poiId) {
+    var iconsRegistry = window.MAPA_SP_ICONS;
+    if (iconsRegistry && typeof iconsRegistry.resolvePatrimonio === "function") {
+      var resolved = iconsRegistry.resolvePatrimonio(poiId);
+      if (resolved) return resolved;
+    }
+    var stem = POI_FALLBACK_ICON_BY_ID[poiId] || "icon-memoria.svg";
+    return "/centro/assets/icons/" + stem;
+  }
+
+  // Hash routing pode ignorar center/zoom do constructor; revalida contra maxBounds.
+  function clampViewToCentroBounds(mapInstance) {
+    if (!mapInstance || typeof maplibregl === "undefined") return;
+    var bounds = maplibregl.LngLatBounds.convert(CENTRO_MAX_BOUNDS);
+    var center = mapInstance.getCenter();
+    var zoom = mapInstance.getZoom();
+    var outOfBounds = !bounds.contains(center);
+    var clampedZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom));
+    if (outOfBounds || clampedZoom !== zoom) {
+      mapInstance.jumpTo({
+        center: outOfBounds ? CENTRO_CENTER : center,
+        zoom: outOfBounds ? 14 : clampedZoom,
+      });
     }
   }
 
@@ -682,10 +730,10 @@
     });
 
     map.on("load", async function () {
+      clampViewToCentroBounds(map);
       console.log("[CENTRO] Mapa carregado com layout original");
 
       var poi = window.CENTRO && window.CENTRO.poiIcons;
-      var iconsRegistry = window.MAPA_SP_ICONS;
       if (poi) {
         var poiConfigs = [
           { id: "memoria-paulistana", file: "centro_memoria_paulistana__point", sourceId: poi.MEMORIA_PAULISTANA_LAYERS.sourceId, iconLayerId: poi.MEMORIA_PAULISTANA_LAYERS.iconLayerId, titleProp: "nm_titulo_placa", descProp: "dc_enunciado_placa", addrProp: "nm_endereco_placa" },
@@ -695,10 +743,7 @@
         ];
         for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
           var poiCfg = poiConfigs[poiIndex];
-          var iconPath =
-            iconsRegistry && typeof iconsRegistry.resolvePatrimonio === "function"
-              ? iconsRegistry.resolvePatrimonio(poiCfg.id)
-              : "/centro/assets/icons/icon-memoria.svg";
+          var iconPath = resolvePatrimonioIconPath(poiCfg.id);
           try {
             await addPOILayer(map, {
               sourceId: poiCfg.sourceId,
@@ -976,7 +1021,8 @@
           paint: getMapIconHaloPaint(),
         },
         cfg
-      )
+      ),
+      getCatalogInsertBeforeId()
     );
     return true;
   }
@@ -1012,7 +1058,8 @@
                   : { "fill-color": color, "fill-opacity": 0.25 },
             },
             cfg
-          )
+          ),
+          getCatalogInsertBeforeId()
         );
       } else if (geom === "point") {
         var usedIcon = await addPointLayerWithIcon(cfg, sid);
@@ -1030,7 +1077,8 @@
                     : { "circle-radius": 6, "circle-color": color },
               },
               cfg
-            )
+            ),
+            getCatalogInsertBeforeId()
           );
         }
       } else if (geom === "line") {
@@ -1047,7 +1095,8 @@
                   : { "line-color": color, "line-width": 2 },
             },
             cfg
-          )
+          ),
+          getCatalogInsertBeforeId()
         );
       }
 

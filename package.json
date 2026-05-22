@@ -11,6 +11,7 @@
     "sync:maplibre": "node scripts/sync-maplibre.mjs",
     "sync:lucide-icons": "node scripts/sync-lucide-icons.mjs",
     "sync:icons": "node scripts/sync-lucide-icons.mjs",
+    "healthcheck:centro": "node scripts/centro-healthcheck.mjs",
     "postinstall": "node scripts/sync-maplibre.mjs --silent || true; node scripts/sync-lucide-icons.mjs --silent || true"
   },
   "engines": {

@@ -82,6 +82,7 @@ OpenFreeMap não é "CDN de bundle" — é **fonte de dados cartográficos** ser
 
 - `http.test.js`: runtime aponta para OpenFreeMap; `osm-style.json` e tiles locais retornam ≠ 200.
 - `sanity.test.js`: `BASEMAP_STYLE`, ícones, filtro temático POI.
-- `npm test` — suíte completa (84 testes).
+- `npm test` — suíte completa (88 testes).
+- `npm run healthcheck:centro` — validação offline do catálogo (opcional).
 
 Smoke browser: [testing/smoke-centro.md](./testing/smoke-centro.md).

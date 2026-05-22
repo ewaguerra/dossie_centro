@@ -296,6 +296,8 @@ cache forte fora de `vendor/` é regressão.
 - `icon-image` precisa do mesmo `id` usado em `addImage`.
 - Ordem de `addLayer` importa: layers depois cobrem layers antes. Para
   inserir abaixo de uma referência, use o segundo argumento (`beforeId`).
+  Camadas temáticas da sidebar usam `getCatalogInsertBeforeId()` para ficar
+  **abaixo** dos símbolos POI/pistas.
 
 ### 7.5 Popup duplicado ou "engole" clique
 - Use `bindLayerEventOnce`. Handlers duplicados disparam dois popups e o
@@ -307,8 +309,9 @@ cache forte fora de `vendor/` é regressão.
 ### 7.6 `hash: true` "pula" o `center` inicial
 - Quando há fragmento `#zoom/lat/lng/bearing/pitch` na URL, MapLibre **usa o
   hash** e ignora `center/zoom/pitch/bearing` do construtor. Por design.
-- Para compartilhar links com hash inválido, valide com
-  `LngLatBounds.contains()` antes de aplicar.
+- Para compartilhar links com hash inválido ou fora de `CENTRO_MAX_BOUNDS`,
+  o runtime chama `clampViewToCentroBounds()` no evento `load` (revalida com
+  `LngLatBounds.contains()` e corrige zoom para `MIN_ZOOM`/`MAX_ZOOM`).
 
 ### 7.7 Filtro/expressão silenciosamente não filtra
 - MapLibre é estrito com tipos. `["==", ["get", "ano"], "2020"]` falha se
@@ -438,7 +441,7 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
    estabilidade visual sobre refactor.
 6. **Atualizar catálogo / fixtures.** Se adicionar layer, post, comando CLI
    ou rota narrativa, registre no índice apropriado.
-7. **Rodar `npm run ci`** (ou `npm test`). **84 testes** devem permanecer verdes.
+7. **Rodar `npm run ci`** (ou `npm test`). **88 testes** devem permanecer verdes.
 8. **Atualizar `AGENT.md`** se mudar uma convenção transversal.
 
 ---
