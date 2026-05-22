@@ -188,6 +188,8 @@ describe('projeto_centro — sanity checks', () => {
 
   it('centro/index.html expoe legenda poi-legend com filtro por tematica', () => {
     const html = read('centro/index.html');
+    assert.ok(html.includes('poi-legend-details'), 'filtro tematico deve ser recolhivel (details)');
+    assert.ok(html.includes('poi-legend__summary'), 'summary do filtro tematico ausente');
     assert.ok(html.includes('poi-legend__list'), 'lista poi-legend ausente');
     assert.ok(html.includes('poi-legend__kicker'), 'kicker poi-legend ausente');
     assert.ok(html.includes('Filtro por temática'), 'titulo de filtro ausente');

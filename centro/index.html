@@ -84,12 +84,19 @@
         <div class="buildings-legend__grid" id="buildings-legend-grid"></div>
       </div>
       <div id="poi-legend" class="poi-legend">
-        <div class="poi-legend__header">
-          <span class="poi-legend__kicker">Filtro por temática</span>
-          <div class="poi-legend__title">Evidências no mapa</div>
-          <p class="poi-legend__hint">Marque só as categorias que deseja ver no mapa.</p>
-        </div>
-        <div class="poi-legend__list" id="poi-legend-grid" role="group" aria-label="Filtrar evidências por temática"></div>
+        <details id="poi-legend-details" class="poi-legend__details">
+          <summary class="poi-legend__summary" aria-controls="poi-legend-panel">
+            <span class="poi-legend__summary-text">
+              <span class="poi-legend__kicker">Filtro por temática</span>
+              <span class="poi-legend__title">Evidências no mapa</span>
+            </span>
+            <span class="poi-legend__summary-hint">abrir / fechar</span>
+          </summary>
+          <div id="poi-legend-panel" class="poi-legend__panel">
+            <p class="poi-legend__hint">Marque só as categorias que deseja ver no mapa.</p>
+            <div class="poi-legend__list" id="poi-legend-grid" role="group" aria-label="Filtrar evidências por temática"></div>
+          </div>
+        </details>
       </div>
     </div>
     <div id="layers-panel" class="layers-list"></div>

@@ -22,7 +22,7 @@ Abrir: **http://127.0.0.1:8080/centro/**
 | 2 | Network: runtime, GeoJSON, ícones SVG → **200** | ☐ |
 | 3 | Basemap vector visível **com internet** | ☐ |
 | 4 | **4 ícones POI** patrimoniais visíveis | ☐ |
-| 5 | Filtro temático `#poi-legend`: marcar/desmarcar oculta camadas | ☐ |
+| 5 | Filtro temático `#poi-legend`: abrir/fechar bloco; marcar/desmarcar oculta camadas | ☐ |
 | 6 | Clique em POI abre popup | ☐ |
 | 7 | Botões OP:* fazem flyTo | ☐ |
 | 8 | `#sidebar-toggle` e tecla `S` alternam sidebar | ☐ |

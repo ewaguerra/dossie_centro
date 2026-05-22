@@ -222,16 +222,82 @@
 /* ─── Legenda de evidências (ícones do mapa) ───────────── */
 
 .poi-legend {
-  margin: 8px 15px 12px;
-  padding: 10px 12px;
+  margin: 8px 15px 10px;
   background: var(--centro-paper);
   border: 1px solid var(--centro-paper-border);
   border-left: 2px solid var(--color-brand-dim);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  border-radius: 2px;
+  overflow: hidden;
 }
 
-.poi-legend__header {
-  margin-bottom: 8px;
+.poi-legend__details {
+  display: block;
+}
+
+.poi-legend__summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  user-select: none;
+  background: rgba(10, 10, 10, 0.35);
+  border-bottom: 1px solid transparent;
+  transition: background 0.15s ease;
+}
+
+.poi-legend__summary:hover {
+  background: var(--centro-paper-hover);
+}
+
+.poi-legend__summary:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.poi-legend__details[open] > .poi-legend__summary {
+  border-bottom-color: var(--centro-paper-border);
+}
+
+.poi-legend__summary::-webkit-details-marker {
+  display: none;
+}
+
+.poi-legend__summary::before {
+  content: "▸";
+  font-size: 11px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.poi-legend__details[open] > .poi-legend__summary::before {
+  transform: rotate(90deg);
+  color: var(--color-brand-dim);
+}
+
+.poi-legend__summary-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.poi-legend__summary-hint {
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--centro-ink-faint);
+  font-family: var(--font-code);
+  flex-shrink: 0;
+}
+
+.poi-legend__panel {
+  padding: 8px 12px 10px;
 }
 
 .poi-legend__kicker {
@@ -265,6 +331,20 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  max-height: min(36vh, 220px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+  padding-right: 2px;
+}
+
+.poi-legend__list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.poi-legend__list::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
 }
 
 .poi-legend__item {

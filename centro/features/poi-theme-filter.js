@@ -5,6 +5,30 @@
   "use strict";
 
   var STORAGE_KEY = "centroPoiThemeFilter";
+  var OPEN_STORAGE_KEY = "centroPoiLegendOpen";
+
+  function setupCollapsible() {
+    var details = document.getElementById("poi-legend-details");
+    if (!details) return;
+
+    try {
+      var stored = window.localStorage && window.localStorage.getItem(OPEN_STORAGE_KEY);
+      if (stored === "1") details.open = true;
+      if (stored === "0") details.open = false;
+    } catch (_e) {
+      // ignora
+    }
+
+    details.addEventListener("toggle", function () {
+      try {
+        if (window.localStorage) {
+          window.localStorage.setItem(OPEN_STORAGE_KEY, details.open ? "1" : "0");
+        }
+      } catch (_e) {
+        // ignora
+      }
+    });
+  }
 
   function create(ctx) {
     var getMap = ctx.getMap;
@@ -63,6 +87,7 @@
     }
 
     function setup() {
+      setupCollapsible();
       var grid = document.getElementById("poi-legend-grid");
       var icons = window.MAPA_SP_ICONS;
       if (!grid || !icons || typeof icons.getThemeFilters !== "function") return;
