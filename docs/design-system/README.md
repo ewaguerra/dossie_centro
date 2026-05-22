@@ -42,7 +42,8 @@ Centro adicionalmente:
 
 ## Decisões documentadas
 
-- [Baseline visual](./baseline-visual.md) — estado pré-DS
+- [Baseline visual](./baseline-visual.md) — snapshot pré-DS + estado pós-DS
+- [Centro sem inline](./centro-markup.md) — migração dos 23 `style=` do HTML
 - [Tipografia / Fira Code](./typography.md)
 - [Acessibilidade global](./a11y.md)
 - [Decisão âmbar vs vermelho](./brand-decision.md) — identidade vs alerta vs HUD
