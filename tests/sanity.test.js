@@ -150,6 +150,30 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('centro/index.html'), 'deve referenciar entry de producao');
   });
 
+  it('design system: tokens.css contem tokens MVP completos', () => {
+    const css = read('vendor/app/styles/tokens.css');
+    const required = [
+      '--color-accent:',
+      '--color-accent-soft',
+      '--color-warning',
+      '--fs-2xl',
+      '--space-12',
+      '--shadow-lg',
+      '--z-modal',
+      '--dur-base',
+    ];
+    for (const token of required) {
+      assert.ok(css.includes(token), `tokens.css deve conter ${token}`);
+    }
+  });
+
+  it('design system: todas paginas principais carregam tokens.css', () => {
+    for (const page of ['landing/index.html', 'centro/index.html', 'arquivo-morto/index.html', 'arquivista/index.html']) {
+      const html = read(page);
+      assert.ok(html.includes('/app/styles/tokens.css'), `${page} deve carregar tokens.css`);
+    }
+  });
+
   it('design system: centro/index.html sem style inline', () => {
     const html = read('centro/index.html');
     assert.ok(!html.includes('style="'), 'centro nao deve ter style= inline');

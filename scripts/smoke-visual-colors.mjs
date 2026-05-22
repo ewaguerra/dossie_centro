@@ -57,7 +57,11 @@ async function main() {
 
     const tokens = await fetchBody('/app/styles/tokens.css');
     assert(tokens.status === 200, 'tokens.css 404', fails);
-    assert(tokens.body.includes('--color-brand: #f59e0b'), 'tokens brand', fails);
+    assert(tokens.body.includes('--color-accent: #f59e0b'), 'tokens accent', fails);
+    assert(tokens.body.includes('--color-accent-soft'), 'tokens accent-soft', fails);
+    assert(tokens.body.includes('--color-warning'), 'tokens warning', fails);
+    assert(tokens.body.includes('--fs-2xl'), 'tokens fs-2xl', fails);
+    assert(tokens.body.includes('--color-brand'), 'tokens brand alias', fails);
     assert(tokens.body.includes('--color-danger: #ef4444'), 'tokens danger', fails);
     assert(tokens.body.includes('--color-accent-strong: #dc2626'), 'tokens hud', fails);
 
