@@ -43,4 +43,7 @@
   --centro-ink-mid: #3d3830;
   --centro-ink-muted: #5c564c;
   --centro-ink-faint: #7a7368;
+
+  /* Solo do basemap (OpenFreeMap bright/liberty) — evita void preto enquanto tiles carregam */
+  --map-ground-bg: #f8f4f0;
 }

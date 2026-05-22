@@ -14,10 +14,10 @@
   var MAX_ZOOM = U.MAX_ZOOM || 17;
 
   // OpenFreeMap (https://openfreemap.org) — vector tiles + glyphs + sprite
-  // gratuitos, sem chave de API. Trocas possíveis: liberty | positron |
-  // bright | dark-matter. O style URL já vem com sources, glyphs e sprite
-  // configurados pela OpenFreeMap — não precisamos manter osm-style.json.
+  // gratuitos, sem chave de API. liberty = basemap claro + layer building-3d
+  // (maquete estrutural). Alternativas: bright | positron | dark-matter.
   var BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
+  var BASEMAP_GROUND_COLOR = "#f8f4f0";
 
   // Fonte para labels POI: precisa existir no fontstack do basemap. Noto
   // Sans Regular é o default da OpenFreeMap.
@@ -68,7 +68,7 @@
   var catalogPromise = null;
   var catalogIndex = null;
 
-  // Maquete 3D — layer fill-extrusion nativa do estilo OpenFreeMap liberty.
+  // Maquete 3D — fill-extrusion nativa do estilo OpenFreeMap liberty.
   var BUILDINGS_3D_LAYER_ID = "building-3d";
   var BUILDINGS_3D_STORAGE_KEY = "centroBuildings3D";
   var POI_THEME_STORAGE_KEY = "centroPoiThemeFilter";
@@ -504,7 +504,7 @@
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return false;
     }
-    return false;
+    return true;
   }
 
   function loadPoiThemeFilterState() {
@@ -706,6 +706,25 @@
     return true;
   }
 
+  function ensureMapGroundReadable() {
+    if (!map || !map.getLayer) return;
+    try {
+      if (map.getLayer("background")) {
+        map.setPaintProperty("background", "background-color", BASEMAP_GROUND_COLOR);
+      }
+    } catch (_e) {
+      // Estilo ainda carregando ou layer ausente — ignora.
+    }
+    if (typeof map.setLight === "function") {
+      map.setLight({
+        anchor: "viewport",
+        color: "#ffffff",
+        intensity: 0.45,
+        position: [1.15, 210, 30],
+      });
+    }
+  }
+
   function initBuildings3DState() {
     var enabled = getBuildings3DInitialEnabled();
     var ok = setBuildings3DEnabled(enabled, { persist: false, silent: true });
@@ -762,6 +781,7 @@
 
     map.on("load", async function () {
       clampViewToCentroBounds(map);
+      ensureMapGroundReadable();
       console.log("[CENTRO] Mapa carregado com layout original");
 
       var poi = window.CENTRO && window.CENTRO.poiIcons;
