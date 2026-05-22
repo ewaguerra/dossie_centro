@@ -1,0 +1,116 @@
+/** Centro — media queries, map fix, toast, reduced-motion */
+/* Breakpoints: docs/design-system/breakpoints.md (--bp-lg: 768px) */
+
+/* --bp-lg: 768px — moldura jesuíta compacta + sidebar full-width */
+@media (max-width: 768px) {
+  :root {
+    --jesuit-frame-size-top: 32px;
+    --jesuit-frame-size-side: 24px;
+    --jesuit-frame-top: 32px;
+    --jesuit-frame-bottom: 28px;
+    --jesuit-frame-left: 0;
+  }
+
+  .jesuit-frame--bottom {
+    height: 28px;
+  }
+
+  .jesuit-frame-corner {
+    width: 24px;
+    height: 32px;
+  }
+
+  .jesuit-frame-corner--br,
+  .jesuit-frame-corner--bl {
+    height: 28px;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: calc(var(--jesuit-frame-top) + var(--centro-sidebar-gap));
+    bottom: calc(var(--jesuit-frame-bottom) + var(--centro-sidebar-gap));
+    width: 100%;
+    height: auto;
+    max-height: calc(
+      100vh
+      - var(--jesuit-frame-top)
+      - var(--jesuit-frame-bottom)
+      - var(--centro-sidebar-gap) * 2
+    );
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .sidebar.sidebar--collapsed {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-open-btn {
+    left: calc(var(--jesuit-frame-left) + 8px);
+    top: calc(var(--jesuit-frame-top) + var(--centro-sidebar-gap));
+    width: 36px;
+    height: 36px;
+  }
+
+  .feature-inspector {
+    right: calc(var(--centro-sidebar-gap) + 4px);
+    left: calc(var(--centro-sidebar-gap) + 4px);
+    width: auto;
+    bottom: calc(var(--jesuit-frame-bottom) + var(--centro-sidebar-gap) + 4px);
+    max-height: calc(
+      100vh
+      - var(--jesuit-frame-top)
+      - var(--jesuit-frame-bottom)
+      - var(--centro-sidebar-gap) * 3
+    );
+  }
+}
+
+/* FIX: garantir que o mapa tenha tamanho e fique visível */
+#map { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 1 !important; }
+
+/* foco global → vendor/app/styles/a11y.css */
+
+/* Toast de feedback */
+#centro-toast {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  font-weight: 500;
+}
+
+/* --bp-md: 640px */
+@media (max-width: 640px) {
+  #centro-toast {
+    bottom: calc(var(--jesuit-frame-bottom, 28px) + 4.5rem) !important;
+    font-size: 11px !important;
+    max-width: 85vw;
+    padding: 6px 14px !important;
+  }
+}
+
+/* --bp-sm: 480px */
+@media (max-width: 480px) {
+  .hamburger-nav {
+    top: 8px;
+    right: 8px;
+  }
+
+  .hamburger-btn.btn--icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    max-height: 70vh !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-codigo-erro--shake,
+  .as-recompensa--revelada {
+    animation: none !important;
+  }
+}

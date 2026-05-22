@@ -11,10 +11,17 @@
   <link href="/vendor/maplibre/maplibre-gl.css" rel="stylesheet" />
   <link href="/pages/centro/styles/centro-vars.css" rel="stylesheet" />
   <link href="/pages/centro/styles/centro-chrome.css" rel="stylesheet" />
-  <link href="/pages/centro/centro-sidebar.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/layout.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/sidebar.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/narrative-nav.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/feature-inspector.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/profile-card.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/jesuit-frame.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/map-popups.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/responsive.css" rel="stylesheet" />
 </head>
 <body class="has-jesuit-frame">
-  <button id="sidebar-toggle" aria-label="Abrir/fechar sidebar" title="Alternar painel">
+  <button id="sidebar-toggle" class="btn btn--ghost btn--icon" type="button" aria-label="Abrir/fechar sidebar" title="Alternar painel">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
 
@@ -41,7 +48,7 @@
     <div class="protocol-alpha-banner"></div>
   </div>
 
-  <button id="sidebar-open-btn" class="sidebar-open-btn" type="button" title="Abrir painel" aria-label="Abrir painel de camadas" hidden>
+  <button id="sidebar-open-btn" class="sidebar-open-btn btn btn--icon" type="button" title="Abrir painel" aria-label="Abrir painel de camadas" hidden>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
 
@@ -51,7 +58,7 @@
         <p class="sidebar-header__eyebrow sidebar-header__eyebrow--chrome">PROTOCOLO 13 ALMAS</p>
         <div class="sidebar-header__actions">
           <span class="badge">CONFIDENCIAL</span>
-          <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-close-btn--inline" type="button" title="Fechar painel" aria-label="Fechar painel">✕</button>
+          <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-close-btn--inline btn btn--bare btn--icon-sm" type="button" title="Fechar painel" aria-label="Fechar painel">✕</button>
         </div>
       </div>
       <h1 class="sidebar-header__title--chrome"><span class="sidebar-header__title-accent">#</span> Dossiê: Centro</h1>

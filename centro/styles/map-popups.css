@@ -1,0 +1,674 @@
+/** Centro — inspector cards, parceiros, arquivo superficie, tooltips */
+/* ── Bem Tombado — card do inspector ─────────────────────────────────── */
+.bem-tombado-card {
+  padding: 0.25rem 0;
+}
+
+.bem-tombado-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.bem-tombado-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+.bem-tombado-badge--situacao {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #15803d;
+}
+
+.bem-tombado-badge--uso {
+  background: rgba(100, 116, 139, 0.08);
+  border-color: rgba(100, 116, 139, 0.35);
+  color: #475569;
+}
+
+.bem-tombado-card__endereco {
+  font-size: 0.82rem;
+  color: #475569;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.bem-tombado-card__dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  font-size: 0.8rem;
+}
+
+.bem-tombado-card__dl dt {
+  color: #64748b;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.bem-tombado-card__dl dd {
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Memória Paulistana — texto da placa ────────────────────────────── */
+.memoria-enunciado {
+  margin: 0.5rem 0 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-left: 3px solid #2563eb;
+  border-radius: 0 4px 4px 0;
+  background: rgba(37, 99, 235, 0.05);
+  font-size: 0.85rem;
+  color: #1e293b;
+  line-height: 1.65;
+  font-style: italic;
+}
+
+/* ── Rio / Rua — card de hidrografia e vias OSM ────────────────────── */
+.rio-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rio-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.rio-card__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #0369a1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.rio-card__dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.75rem;
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+.rio-card__dl dt {
+  color: #64748b;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rio-card__dl dd {
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.4;
+}
+/* ── Seção Parceiros — botão de ativação rápida ─────────────────────── */
+.parceiros-section {
+  padding: 0.75rem 1rem 0.9rem;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: 0.25rem;
+}
+
+.parceiros-section__header {
+  margin-bottom: 0.55rem;
+}
+
+.parceiros-section__eyebrow {
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.parceiros-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(220, 38, 38, 0.06);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: 4px;
+  padding: 0.75rem 0.9rem;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  text-align: left;
+  transition: background 0.2s, border-color 0.2s;
+  position: relative;
+}
+.parceiros-btn:hover {
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.5);
+}
+.parceiros-btn--ativo {
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.55);
+}
+
+.parceiros-btn__icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.parceiros-btn__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+.parceiros-btn__texto strong {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+.parceiros-btn__sub {
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.parceiros-btn__indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+  flex-shrink: 0;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.parceiros-btn__indicator--on {
+  background: #dc2626;
+  box-shadow: 0 0 6px rgba(220, 38, 38, 0.7);
+}
+
+/* ── Arquivo de Superfície — Card de Ponto Patrocinado ──────────────── */
+.arquivo-superficial-card {
+  font-family: var(--font-mono);
+  color: #1a1a1a;
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+.as-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+}
+
+.as-badge {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.as-badge--bloqueado {
+  background: rgba(220, 38, 38, 0.10);
+  border-color: rgba(220, 38, 38, 0.45);
+  color: var(--color-danger);
+}
+
+.as-badge--aberto {
+  background: rgba(22, 163, 74, 0.10);
+  border-color: rgba(22, 163, 74, 0.45);
+  color: #22c55e;
+}
+
+.as-badge--tipo {
+  background: var(--color-brand-soft);
+  border-color: rgba(245, 158, 11, 0.35);
+  color: var(--color-brand);
+}
+
+.as-badge--camada {
+  background: rgba(124, 58, 237, 0.10);
+  border-color: rgba(124, 58, 237, 0.45);
+  color: #6d28d9;
+}
+
+.as-nome {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #111111;
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.as-endereco {
+  font-size: 0.72rem;
+  color: #404040;
+  margin: 0 0 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.as-fragmento {
+  font-size: 0.8rem;
+  color: #2a2a2a;
+  border-left: 2px solid rgba(220, 38, 38, 0.5);
+  padding-left: 0.75rem;
+  margin: 0 0 1.1rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Seção de desbloqueio */
+.as-desbloqueio {
+  border: 1px solid rgba(220, 38, 38, 0.20);
+  border-radius: 2px;
+  padding: 0.85rem;
+  margin-bottom: 0.9rem;
+  background: rgba(220, 38, 38, 0.04);
+}
+
+.as-desbloqueio__titulo {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #737373;
+  margin: 0 0 0.75rem;
+}
+
+.as-desbloqueio__opcao {
+  display: flex;
+  gap: 0.65rem;
+  margin-bottom: 0.7rem;
+}
+
+.as-desbloqueio__opcao:last-child {
+  margin-bottom: 0;
+}
+
+.as-desbloqueio__num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(220, 38, 38, 0.7);
+  flex-shrink: 0;
+  width: 1.5rem;
+  line-height: 1.6;
+}
+
+.as-desbloqueio__label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--color-danger);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.as-desbloqueio__texto {
+  font-size: 0.75rem;
+  color: #404040;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Recompensa */
+.as-recompensa {
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 2px;
+  padding: 0.85rem;
+  margin-bottom: 0.9rem;
+  background: rgba(245, 158, 11, 0.04);
+}
+
+.as-recompensa--preview .as-recompensa__titulo {
+  color: #737373;
+}
+
+.as-recompensa__titulo {
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+  margin: 0 0 0.4rem;
+}
+
+.as-recompensa__texto {
+  font-size: 0.78rem;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.as-recompensa__texto--blur {
+  filter: blur(3.5px);
+  user-select: none;
+  color: #737373;
+  font-style: normal;
+}
+
+/* Sponsor */
+.as-sponsor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 0.25rem;
+}
+
+.as-sponsor__label {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #737373;
+  flex-shrink: 0;
+}
+
+.as-sponsor__nome {
+  font-size: 0.72rem;
+  color: var(--color-brand);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+a.as-sponsor__nome:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Arquivo de Superfície — telas de desbloqueio ───────────────────── */
+.as-voltar {
+  background: none;
+  border: none;
+  color: #737373;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.15s;
+}
+.as-voltar:hover { color: var(--color-danger); }
+
+.as-rota-titulo {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-danger);
+  margin: 0 0 0.85rem;
+  font-weight: 700;
+}
+
+.as-instrucoes {
+  margin: 0 0 1.1rem;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.as-instrucoes li {
+  font-size: 0.78rem;
+  color: #1a1a1a;
+  line-height: 1.5;
+}
+.as-instrucoes li strong {
+  color: #111111;
+}
+
+/* Grid de escolha A / B */
+.as-escolha-titulo {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.45rem;
+}
+
+.as-escolha-descricao {
+  font-size: 0.72rem;
+  color: #404040;
+  line-height: 1.6;
+  margin: 0 0 0.9rem;
+  font-style: italic;
+  border-left: 2px solid rgba(220, 38, 38, 0.3);
+  padding-left: 0.65rem;
+}
+
+.as-escolha-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.as-escolha-btn {
+  background: rgba(220, 38, 38, 0.06);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: 2px;
+  padding: 0.85rem 0.7rem;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  transition: background 0.15s, border-color 0.15s;
+}
+.as-escolha-btn:hover {
+  background: rgba(220, 38, 38, 0.14);
+  border-color: rgba(220, 38, 38, 0.55);
+}
+
+.as-escolha-btn__letra {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-danger);
+  line-height: 1;
+}
+.as-escolha-btn__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+.as-escolha-btn__sub {
+  font-size: 0.58rem;
+  color: #737373;
+  line-height: 1.3;
+}
+
+.as-camada-narrativa {
+  font-size: 0.65rem;
+  color: #737373;
+  margin: 0 0 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+/* Campo de código */
+.as-codigo-form {
+  margin-bottom: 1rem;
+}
+.as-codigo-label {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #737373;
+  margin-bottom: 0.45rem;
+}
+.as-codigo-row {
+  display: flex;
+  gap: 0.4rem;
+}
+.as-codigo-input {
+  flex: 1;
+  background: #f9f9f9;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  padding: 0.5rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: #111111;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.as-codigo-input:focus {
+  border-color: rgba(220, 38, 38, 0.6);
+}
+.as-codigo-input::placeholder {
+  color: #a0a0a0;
+  opacity: 1;
+}
+.as-codigo-btn {
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.45);
+  border-radius: 2px;
+  padding: 0.5rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-danger);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+.as-codigo-btn:hover {
+  background: rgba(220, 38, 38, 0.28);
+  border-color: rgba(220, 38, 38, 0.7);
+}
+.as-codigo-erro {
+  font-size: 0.65rem;
+  color: var(--color-danger);
+  margin: 0.4rem 0 0;
+  min-height: 1em;
+  letter-spacing: 0.04em;
+}
+@keyframes as-shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+.as-codigo-erro--shake {
+  animation: as-shake 0.35s ease;
+}
+
+/* Aviso tela digital */
+.as-digital-aviso {
+  font-size: 0.75rem;
+  color: #404040;
+  border-left: 2px solid rgba(124, 58, 237, 0.5);
+  padding-left: 0.75rem;
+  margin: 0 0 1rem;
+  line-height: 1.55;
+}
+.as-digital-aviso strong { color: #a78bfa; }
+
+/* Recompensa revelada */
+.as-recompensa--revelada {
+  border-color: rgba(22, 163, 74, 0.35);
+  background: rgba(22, 163, 74, 0.05);
+  animation: as-reveal 0.5s ease;
+}
+.as-recompensa--revelada .as-recompensa__titulo { color: #22c55e; }
+@keyframes as-reveal {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Arquivo de Superfície — tela de sucesso ────────────────────────── */
+.as-sucesso-linha {
+  font-size: 0.78rem;
+  color: #1a1a1a;
+  margin: 0 0 0.4rem;
+  line-height: 1.5;
+  font-family: var(--font-mono);
+}
+.as-sucesso-linha:first-of-type::before {
+  content: '> ';
+  color: #22c55e;
+}
+.as-sucesso-linha--destaque {
+  margin-top: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  background: rgba(22, 163, 74, 0.08);
+  border-left: 2px solid #22c55e;
+  color: #111111;
+  font-size: 0.8rem;
+}
+.as-sucesso-linha--destaque strong {
+  color: #22c55e;
+  letter-spacing: 0.04em;
+}
+
+/* ── Arquivo de Superfície — Tooltip hover/touch ────────────────────── */
+.as-tooltip-popup .maplibregl-popup-content {
+  background: #0f0f0f;
+  border: 1px solid rgba(220, 38, 38, 0.45);
+  border-radius: 3px;
+  padding: 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+.as-tooltip-popup .maplibregl-popup-tip {
+  border-top-color: #0f0f0f;
+}
+
+.as-tooltip {
+  font-family: var(--font-mono);
+  padding: 0.65rem 0.85rem;
+  min-width: 180px;
+}
+.as-tooltip__badge {
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-danger);
+  margin-bottom: 0.35rem;
+}
+.as-tooltip__nome {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f5f5f5;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.02em;
+}
+.as-tooltip__endereco {
+  font-size: 0.68rem;
+  color: #a3a3a3;
+  margin-bottom: 0.4rem;
+}
+.as-tooltip__hint {
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(220, 38, 38, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.35rem;
+  margin-top: 0.1rem;
+}
