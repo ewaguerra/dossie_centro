@@ -5,7 +5,7 @@ Checklist pós-alteração no mapa. Itens parciais também via `node scripts/smo
 ## Pré-requisitos
 
 ```bash
-npm run ci                 # 82/82
+npm run ci                 # 92/92
 python3 server.py          # http://127.0.0.1:8080
 node scripts/smoke-centro.mjs   # assets + console (parcial)
 ```

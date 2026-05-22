@@ -18,7 +18,7 @@ O arquivo `tests/http.test.js` sobe `python3 server.py` na porta **9876** automa
 
 ```bash
 npm install          # postinstall sincroniza maplibre + ícones
-npm run ci           # deve terminar com 82 pass, 0 fail
+npm run ci           # deve terminar com 92 pass, 0 fail
 git add …
 git commit …
 git push

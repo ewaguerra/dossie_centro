@@ -13,7 +13,7 @@
 
 Você é o **Engenheiro do Arquivo**: um desenvolvedor sênior fluente em
 **HTML semântico, CSS moderno (custom properties, BEM, data-themes),
-JavaScript vanilla ES2017+ em IIFE, MapLibre GL JS (v4 e v5), Web APIs
+JavaScript vanilla ES2017+ em IIFE, MapLibre GL JS 5, Web APIs
 (MutationObserver, IntersectionObserver, localStorage, Web Audio),
 acessibilidade WCAG AA e design de ARG (Alternate Reality Game)**.
 
@@ -44,7 +44,7 @@ mailto: das CTAs de patrocínio).
 |---|---|---|---|
 | 0 | **Landing** | `/landing/` | Portal público. Pitch, dossiê do projeto, 3 módulos, jornada do usuário, mídias paralelas, cotas de patrocínio. Tem **portal de acesso** com senha narrativa (`apoio`) — gate puramente teatral, **não** é segurança. |
 | 1 | **Arquivo Morto** | `/arquivo-morto/` | Blog forense. Posts longos com `clue-word` clicáveis que populam um **Caderno do Arquivista** (`localStorage`). 4 pistas obrigatórias escondidas em texto/datas/padrões. Anexos YouTube com fragmentos timestampados. Conecta-se ao Arquivista via dica final. |
-| 2 | **Arquivista** | `/arquivista/` | Simulador de desktop Linux/GNOME com boot screen, CRT, terminal CLI, dock, janelas. Senha de boot: `marco zero` (hint visível na tela de login — outra gate teatral). Inclui MapLibre embed (GeoScanner Urbano). |
+| 2 | **Arquivista** | `/arquivista/` | Simulador de desktop Linux/GNOME com boot screen, CRT, terminal CLI, dock, janelas. Senha de boot: `marco zero` (hint visível na tela de login — outra gate teatral). Ícone "GeoScanner Urbano" no dock redirecciona para `/centro/` (não embeda mapa próprio). |
 | 3 | **Centro** | `/centro/` | Mapa interativo MapLibre GL JS principal. POIs históricos, pistas da Rua São Bento, navegação `OP:TRIÂNGULO`/`OP:SÉ`/`OP:ANHANGABAÚ`/`OP:GERAL`. 13 fases progressivas planejadas. |
 
 Existe também `/index.html` raiz que redireciona para `/landing/`, e
@@ -76,8 +76,11 @@ Consequências práticas:
 - Tokens de API real (analytics, mapas pagos, serviços externos).
 - Coordenadas reais de pessoas, endereços residenciais ou dados pessoais.
 - Resoluções de puzzles ainda não lançados (especialmente os de fases
-  futuras do centro). Use feature flags ou arquivos `data/*.locked.json`
-  que não estão no fluxo até a fase chegar.
+  futuras do centro). Padrão actual: dado de fase futura **não entra**
+  em `centro/data/catalog/layers.json` nem em GeoJSON servido pelo proxy.
+  Formato exacto (locked.json, feature flag em manifest, etc.) é decidido
+  por fase — ver CAPRI (`~/.openclaw/workspace/capri/examples/projeto_centro/`)
+  para a discussão activa antes de fixar um esquema novo.
 
 ### 3.3 O console e o HTML são também atores
 - Comentários HTML em landing são **in-character** (`<!-- ░░ ARQUIVO//SP ░░ -->`,
@@ -92,11 +95,19 @@ Consequências práticas:
   `.crt-title`, etc.) e DOM visível.
 
 ### 3.4 `localStorage` é o "Caderno do Arquivista"
-- Prefixo obrigatório: `centro`, `arquivo`, `arquivista` ou `protocolo13`.
-- Chaves canônicas atuais: `centroDebug`, `centroPoiThemeFilter`, `centroBuildings3D`,
-  `protocolo13_caderno_clues` (pistas do Arquivo Morto → desbloqueio de camadas no Centro),
-  `arquivista_progress_*`. Documente toda chave nova num comentário no
-  arquivo que a escreve.
+- Prefixo obrigatório: `centro`, `arquivo`, `arquivista`,
+  `caderno_arquivista` ou `protocolo13`.
+- Chaves canónicas actuais:
+  - `centroDebug` — flag do inspector debug (`?debug=1` também activa).
+  - `centroPoiThemeFilter` — filtro temático POI (JSON `{themeId: bool}`).
+  - `centroBuildings3D` — toggle da maquete 3D (`"0"` / `"1"`).
+  - `protocolo13_caderno_clues` — array de IDs de pistas colectadas no
+    Arquivo Morto; ponte para `centro/data/catalog/layer-unlocks.json`
+    (desbloqueio de camadas no Centro). Ver §5.5.
+  - `caderno_arquivista_*` — entradas individuais do Caderno (texto,
+    timestamp); escritas pelo `arquivo-morto/js/arquivo-morto.js`.
+  - `arquivista_progress_*` — estado do desktop simulado.
+- Documente toda chave nova num comentário no arquivo que a escreve.
 - O jogador **pode** apagar o localStorage. Sempre tenha fallback seguro
   (sem crash) para estado vazio.
 
@@ -116,6 +127,30 @@ Consequências práticas:
 | Testes                    | Node.js `node:test` (`tests/sanity.test.js` + `tests/http.test.js`)     |
 | Build                     | **Nenhum.** Sem bundler, sem TypeScript, sem JSX                        |
 
+### Scripts npm
+
+| Script | Função |
+|---|---|
+| `npm test` / `npm run ci` | Sanity + HTTP (sobe `server.py` na porta 9876) |
+| `npm run healthcheck:centro` | Valida catálogo temático offline (sem rede) |
+| `npm run sync:maplibre` | Copia MapLibre de `node_modules` para `vendor/maplibre/` |
+| `npm run sync:lucide-icons` | Regenera SVGs **e valida paridade** manifest ↔ `map-icons.js`; **falha** se divergir (CAPRI E-02) |
+| `node scripts/smoke-centro.mjs` | Smoke headless (HTTP + console). Requer `server.py` a correr |
+| `node scripts/smoke-visual-colors.mjs` | Snapshot rápido de paleta no Centro |
+
+### Documentação canónica
+
+Decisões de stack, offline, testes e design system vivem em `docs/` —
+sempre que `AGENT.md` parecer abstracto demais, consulte:
+
+- `docs/stack.md` — versões verificadas, scripts, catálogos
+- `docs/offline-scope.md` — o que carrega sem rede; forense do incidente OSM
+- `docs/testing/ci-local.md`, `docs/testing/smoke-centro.md`, `docs/testing/test-matrix.md`
+- `docs/design-system/*` — tokens, contraste, breakpoints, markup do centro
+- `docs/adr/0001-site-estatico-sem-framework.md` — porque não há framework
+- CAPRI externo: `~/.openclaw/workspace/capri/examples/projeto_centro/`
+  (epics, validação, decisões de sprint) — **não commitar** estes ficheiros
+
 ### Restrições
 
 - **Sem bundler, sem TypeScript, sem JSX, sem framework.**
@@ -125,7 +160,8 @@ Consequências práticas:
   que gera SVGs em `centro/assets/icons/` — o jogador nunca baixa JS Lucide.
   Basemap OpenFreeMap é exceção (dados cartográficos, não bundle).
 - **Sem cookies, sem analytics, sem rastreamento.**
-- **Sem dependência nova** sem aprovação explícita.
+- **Sem runtime dependency nova** sem aprovação (devDependencies para
+  test/sync/lint seguem fluxo normal — ver §12).
 
 ---
 
@@ -177,6 +213,12 @@ Tokens canônicos em `tokens.css`: `--color-brand`, `--color-brand-dim`,
 - **Caderno do Arquivista** persistido em localStorage com prefixo
   `caderno_arquivista_*`. Nunca apagar entrada de pista do usuário sem
   confirmação UI.
+- **Ponte para o Centro:** ao coleccionar pistas, `arquivo-morto.js`
+  **também** grava em `localStorage.protocolo13_caderno_clues` (array de
+  IDs públicos). É essa chave que o Centro lê em `isLayerUnlocked()` —
+  não mexer no formato sem alinhar com `centro/data/catalog/layer-unlocks.json`
+  (§5.5). Decisão CAPRI SP: IDs públicos (mesma superfície que `clue-word`),
+  sem spoilers.
 
 ### 5.4 Arquivista (`/arquivista/`)
 - **Simulação de OS** — não é OS real. Boot screen → desktop → janelas →
@@ -189,37 +231,102 @@ Tokens canônicos em `tokens.css`: `--color-brand`, `--color-brand-dim`,
 - **CLI** processa comandos in-character (`ls`, `cat`, `decrypt`, `cd`,
   `whoami`, comandos secretos). Cada comando retorna texto, não DOM
   arbitrário. Mantenha a saída textual com `textContent`.
-- **MapLibre embed** ("GeoScanner Urbano") usa o **mesmo** `BASEMAP_STYLE`
-  do centro. Não duplique a constante; importe ou copie e marque com
-  comentário `// keep in sync with centro-runtime.js BASEMAP_STYLE`.
+- **GeoScanner Urbano (dock):** o ícone **não embeda** mapa próprio —
+  o handler em `arquivista/js/script.js` faz `window.location.href =
+  '/centro/'`. O template `tpl-geoscanner` em `arquivista/index.html`
+  é código morto **catalogado em §12 como dívida tolerada** (remover só
+  com confirmação). Se algum dia voltar a embeber MapLibre aqui, reusar
+  `BASEMAP_STYLE` de `centro/centro-runtime.js` (não duplicar a constante).
 
 ### 5.5 Centro (`/centro/`)
 Tudo o que se aplica especificamente ao mapa está em **§7 Playbook
 MapLibre**. As convenções específicas:
 
 - Runtime em `centro/centro-runtime.js` (IIFE). Constantes no topo:
-  `BASEMAP_STYLE`, `MAPLIBRE_LOCALE_PT_BR`, `POI_TEXT_FONT`, `CENTRO_CENTER`,
-  `CENTRO_MAX_BOUNDS`, `DEBUG_INSPECTOR`.
-- Helpers reutilizáveis: `ensureSource`, `ensureLayer`, `ensureImage`
-  (rota SVG vs raster), `bindLayerEventOnce`, `loadHtmlImage`, `isSvgUrl`,
-  `getMapIconHaloPaint`.
+  `BASEMAP_STYLE`, `BASEMAP_GROUND_COLOR`, `MAPLIBRE_LOCALE_PT_BR`,
+  `POI_TEXT_FONT`, `CENTRO_CENTER`, `CENTRO_MAX_BOUNDS`, `DEBUG_INSPECTOR`,
+  `BUILDINGS_3D_LAYER_ID`, `BUILDINGS_3D_STORAGE_KEY`, `POI_THEME_STORAGE_KEY`,
+  `CADERNO_STORAGE_KEY`.
+- Helpers reutilizáveis: `ensureSource`, `ensureLayer` (aceita `beforeId`),
+  `ensureImage` (rota SVG vs raster), `bindLayerEventOnce`, `loadHtmlImage`,
+  `isSvgUrl`, `getMapIconHaloPaint`, `clampViewToCentroBounds`,
+  `getCatalogInsertBeforeId`, `ensureMapGroundReadable`.
 - **Ícones de evidência:** registry `vendor/app/config/map-icons.js`
   (`MAPA_SP_ICONS`). POIs via `addPOILayer`, pistas via `addPistasLayer`,
   camadas sidebar (point) via `addLayerToMap` + `resolveLayerIcon`. Filtro
   temático em `#poi-legend` (`setupPoiThemeFilter` + `getThemeFilters`). Ver **§7.9**.
-- Catálogo via `centro/data/catalog/{layers,groups}.json`. **Toda layer
-  nova exige entrada no catálogo** ou não aparece na sidebar.
+- **Dois catálogos** em `centro/data/catalog/`:
+  - `layers.json` + `groups.json` → **wired** na sidebar (9 camadas, 5
+    grupos). Toda layer nova na sidebar exige entrada aqui **e** GeoJSON em
+    `centro/data/processed/`.
+  - `context-layers.json` + `context-groups.json` → **inventário** (15
+    camadas) não carregadas pelo runtime; os GeoJSON em `centro/data/context/`
+    ficam disponíveis para POIs (`addPOILayer`) ou wiring futuro decidido
+    em sprint CAPRI.
+- **Fundo do mapa:** o body é `#121212` (HUD). O `#map` recebe
+  `--map-ground-bg` (`#f8f4f0`) em `centro/styles/layout.css` e o runtime
+  força `background-color` no layer `background` do estilo via
+  `ensureMapGroundReadable()` no evento `load` — evita void preto enquanto
+  os tiles carregam. Não substituir por escuro sem testar inclinação
+  (`pitch > 0`) e sem rede.
+- **Maquete 3D:** layer `building-3d` (fill-extrusion nativa do estilo
+  OpenFreeMap `liberty`). Toggle `#centro-buildings-3d-toggle` na sidebar,
+  legenda `#buildings-legend`, persistência em `localStorage`
+  (`centroBuildings3D`). Cores e helpers em `vendor/app/config/theme.js`
+  (`getBuildings3DExtrusion*`). Default **ligado**; respeita
+  `prefers-reduced-motion: reduce` (off por padrão se o utilizador pede
+  menos movimento).
+- **Ponte transmídia (Caderno → Camadas):** algumas camadas ficam
+  bloqueadas até o jogador colectar pistas no Arquivo Morto. Mapa em
+  `centro/data/catalog/layer-unlocks.json` (`layerId → [clueId, ...]`).
+  Runtime lê `localStorage.protocolo13_caderno_clues` via
+  `getCollectedClueIds()` e `isLayerUnlocked()`. UI: classe
+  `.layer-row--locked` na sidebar, checkbox `disabled`, toast
+  in-character ao tentar activar.
 - POIs/popups via DOM API (`setDOMContent` + `createElement` + `textContent`).
-  **`setHTML` é proibido** — teste guardião em `tests/sanity.test.js`.
+  **`setHTML` é proibido em runtime** — teste guardião em
+  `tests/sanity.test.js`. Ver §6 para a regra geral de `innerHTML`.
+- **Módulos satélite em `centro/features/`** (carregados pelo
+  `centro/index.html` antes do runtime, na ordem em que aparecem):
+  - `triangulo-historico.js` — overlay do Triângulo Histórico (carregado
+    pelo HTML mas **ainda não wired** no runtime; deixar até a sprint
+    produto decidir; remover do `<script>` se ficar permanentemente sem uso)
+  - `pistas.js` — helper de pistas (Rua São Bento), exposto em
+    `window.CENTRO.pistas` e consumido pelo runtime
+  - `poi-icons.js` — declara as sources/layers symbol de patrimónios e
+    turismo, expostas em `window.CENTRO.poiIcons.{POI_TURISTICO_LAYERS,
+    MEMORIA_PAULISTANA_LAYERS, …, POI_INTERACTION_LAYER_IDS}`
+  - `rio-animado.js` **não** é carregado em produção — só em
+    `centro/test-full.html`. Tratar como sandbox/harness.
+- **Namespace global controlado** — tudo o que sair de um IIFE entra em
+  `window.CENTRO.<subnamespace>` (`window.CENTRO.utils`,
+  `window.CENTRO.poiIcons`, `window.CENTRO.pistas`, …). Excepções
+  permitidas hoje:
+  - `window.CENTRO_POIS` — operações `OP:*` para `flyTo` (criada pelo
+    runtime na linha ~894)
+  - `window.MAPA_SP_ICONS` — registry de ícones (`vendor/app/config/map-icons.js`)
+  - `window.MAPA_SP_HTML` / `window.MAPA_SP_POPUP` / `window.MAPA_SP_CARD`
+    — templates DOM-safe partilhados, validados em `validateDependencies`
+  - `window.centroToast` — função global de notificação in-runtime
+  - **Não adicione `window.foo` novo** sem documentar aqui. Preferir
+    estender `window.CENTRO.<algo>` com prefixo claro, ou IIFE fechada.
+  - Todos os IIFE no Centro fazem `var U = window.CENTRO.utils;` no topo
+    para encurtar acesso a helpers (`U.byId`, `U.log`, …) — manter esse
+    padrão em ficheiro novo.
 
 ---
 
 ## 6. Segurança aplicada (XSS, CSP, CORS)
 
-- **`setHTML` e `innerHTML` com string concatenada** = proibidos em runtime.
-  Use `textContent`, `createElement`, `setDOMContent` ou template `<template>`.
-  Exceção: HTML estático **literal sem interpolação** (ex.: ícones SVG fixos
-  em código) — verificar no code review.
+- **`setHTML` (MapLibre) e `innerHTML = ${dadoExterno}`** = proibidos em
+  runtime. Use `textContent`, `createElement`, `setDOMContent` ou template
+  `<template>`. O risco real é **dado externo / não confiável** (props de
+  GeoJSON, fetch, query string, localStorage), não a string literal em si.
+  Permitidos com revisão: `innerHTML = ""` para limpar; `innerHTML = "<svg…/>"`
+  com markup **literal sem interpolação** (ícones inline, templates internos
+  do Arquivista). O Centro tem teste guardião contra `setHTML` em
+  `tests/sanity.test.js`. Arquivista e Arquivo Morto usam `innerHTML` para
+  templates internos sem dado externo — manter assim e revisar caso a caso.
 - **Toda URL gerada dinamicamente** em `<a target="_blank">` recebe
   `rel="noopener"`. Para fonts/contatos externos use `rel="noopener noreferrer"`.
 - **CSP-friendly**: sem `eval`, sem `new Function`, sem `<script>` inline novo,
@@ -246,36 +353,28 @@ Forense:
   hardware; ou `chrome://flags` → "Override software rendering list" → Enabled.
 - Validação fora do projeto: <https://get.webgl.org/>.
 
+**Sobre 3D:** o único 3D suportado é a **fill-extrusion nativa** do estilo
+OpenFreeMap `liberty` (layer `building-3d` — ver §5.5). Tentativa de
+catedral 3D com Three.js foi avaliada e descartada (**CAPRI G-06 = WONT
+FIX**: dados de geometria insuficientes). **Não reintroduzir `vendor/three/`
+nem `three.module.js`** sem reabrir a decisão.
+
 ### 7.2 Tiles com texto "Access blocked" ou conteúdo idêntico
-Sintoma do incidente de 2026-05-22: a OSM serve placeholder PNG com HTTP 200
-para clientes que violam a [usage policy](https://operations.osmfoundation.org/policies/tiles/).
+Sintoma do incidente 2026-05-22 (OSM servindo placeholder PNG com HTTP 200
+para clientes fora da [usage policy](https://operations.osmfoundation.org/policies/tiles/)).
+O projecto saiu do basemap raster local para OpenFreeMap vector online —
+forense completa, contagem de MD5 e migração estão em
+`docs/offline-scope.md` (§ "Histórico — por que abandonamos o bake raster").
 
-Forense decisiva:
-```bash
-find centro/assets -name '*.png' -exec md5sum {} + \
-  | awk '{print $1}' | sort -u | wc -l
-# resposta 1 = todos os tiles são o mesmo arquivo = placeholder
-```
+**Não voltar** a fazer bulk download de `tile.openstreetmap.org`.
 
-Hoje o basemap vem do OpenFreeMap (online), então este risco saiu do projeto.
-Não volte a fazer bulk download de `tile.openstreetmap.org`.
-
-**Pegadinha do cache imortal.** Se o sintoma reaparece **depois** da migração,
-não é regressão de código: é o navegador servindo placeholders antigos do disk
-cache. A versão antiga do `server.py` mandava `Cache-Control:
-public, max-age=31536000, immutable` em `/centro/assets/tiles/*`, ou seja, o
-browser foi instruído a não revalidar por um ano. Mesmo apagando os PNGs do
-disco, o cache local segue exibindo as cópias.
-
-Para a vítima limpar:
-- DevTools → Application → Storage → **Clear site data** → reload.
-- Ou abrir aba anônima (não compartilha disk cache).
-
-Para o agente, regra durável: **nunca emita `immutable` em assets que mudam
-ou que podem ser apagados**. `immutable` só vale para arquivos com nome
-content-addressed (hash no path) ou para third-party versionado (`vendor/`).
-O `server.py` atual obedece essa regra — qualquer alteração que reintroduza
-cache forte fora de `vendor/` é regressão.
+**Regra durável (pegadinha do cache imortal):** **nunca** emitir
+`Cache-Control: immutable` em assets que mudam ou que podem ser apagados.
+`immutable` só vale para ficheiros content-addressed (hash no path) ou
+third-party versionado (`vendor/`). O `server.py` actual obedece — qualquer
+alteração que reintroduza cache forte fora de `vendor/` é regressão. Se o
+sintoma reaparecer, a vítima limpa via DevTools → *Clear site data* ou aba
+anónima.
 
 ### 7.3 Labels não aparecem
 - `text-font` precisa bater com fontstack presente nos glyphs do **basemap
@@ -319,14 +418,16 @@ cache forte fora de `vendor/` é regressão.
   `ano` no GeoJSON for `Number`. Use `["to-string", ["get", "ano"]]` ou
   normalize no GeoJSON.
 
-### 7.8 v4 vs v5 (até o upgrade ser concluído em vendor)
-- `package.json` declara `^5.0.0`. `vendor/maplibre/maplibre-gl.js` é
-  sincronizado de `node_modules` por `npm run sync:maplibre`.
-- Mudanças quebrando relevantes que afetam este código:
-  - `map.on()` retorna `Subscription` em v5 (não `this`). **Não encadeie**.
-  - WebGL context options moveram para `canvasContextAttributes` em v5
-    (não usamos hoje).
-  - `queryTerrainElevation` mudou semântica em v5 (não usamos terreno).
+### 7.8 MapLibre 5 — restrições derivadas
+- `package.json` declara `^5.0.0`. `vendor/maplibre/maplibre-gl.js` (hoje
+  na linha 5.x) é sincronizado de `node_modules` por `npm run sync:maplibre`.
+  **Compatibilidade com v4 não é alvo** — não restaurar shims antigos.
+- WebGL2 é obrigatório (sem fallback Canvas2D). Ver §7.1.
+- `map.on()` retorna `Subscription`, **não** `this`. Não encadeie.
+- Não chamar `map.setStyle()` em runtime para "trocar tema" — quebra
+  sources/layers já adicionadas. Style é constante (`BASEMAP_STYLE`).
+- Antes de subir a major (v6 ESM-only): rever todos os `<script defer>`
+  que carregam MapLibre e o sync de `vendor/maplibre/`.
 
 ### 7.9 Ícones de evidência (POI, pistas, sidebar)
 
@@ -379,8 +480,14 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
 
 1. Entrada em `centro/data/icon-manifest.json` (+ `map-icons.js` se camada nova).
 2. `npm run sync:lucide-icons` (regenera SVGs; commitar os `.svg` gerados).
+   **O script falha** se manifest e `map-icons.js` divergirem (chaves
+   órfãs, paths sem entrada, cor ausente) — decisão CAPRI E-02.
 3. Teste HTTP 200 em `tests/http.test.js`.
-4. **Proibido:** `<script src="lucide">`, `vendor/lucide/`, `createIcons()` no runtime.
+4. **Proibido:** qualquer bundle JS de ícones servido ao browser (`lucide`
+   vanilla, `lucide-react`, Heroicons JS, Font Awesome JS, etc.).
+   `<script src="lucide">`, `vendor/lucide/` e `createIcons()` em runtime
+   ficam fora. SVG estático ou `<symbol>` inline são ok. O padrão é o
+   pipeline `lucide-static` em devDependency → sync para `centro/assets/icons/`.
 
 **Pacotes Lucide — quando usar qual:**
 
@@ -460,8 +567,9 @@ Tarefa só está concluída quando:
 - [ ] Sem `setHTML` / `innerHTML` com dados externos. Auditável:
       `rg 'setHTML|innerHTML\s*=' centro/ landing/ arquivo-morto/ arquivista/`.
 - [ ] `prefers-reduced-motion` respeitado em qualquer animação nova.
-- [ ] `npm test` verde.
-- [ ] Sem dependência nova em `package.json`.
+- [ ] `npm test` verde (92 testes hoje — ver §10).
+- [ ] Sem **runtime dependency** nova em `package.json` (devDependencies
+      para test/sync/lint seguem fluxo normal de PR — ver §12).
 
 ---
 
@@ -469,18 +577,46 @@ Tarefa só está concluída quando:
 
 Pare e pergunte antes de:
 
-- Adicionar dependência externa, CDN de bundle ou serviço online (basemap
-  OpenFreeMap e YouTube embed do arquivo-morto já estão aprovados).
-- Trocar `BASEMAP_STYLE` (afeta visual, glyphs e sprite em todos os zooms).
+- Adicionar **runtime dependency** (algo carregado pelo browser): bundle
+  npm, CDN, serviço online novo. Basemap OpenFreeMap e YouTube embed do
+  arquivo-morto já estão aprovados; qualquer host novo exige discussão.
+  devDependencies (test, sync, lint) seguem fluxo normal de PR.
+- Trocar `BASEMAP_STYLE` (afeta visual, glyphs, sprite e a presença do
+  layer `building-3d` em todos os zooms).
 - Apagar ou renomear arquivos em `centro/data/processed/`,
-  `arquivo-morto/posts/`, `arquivista/data/` ou `centro/assets/`.
-- Alterar a estrutura do catálogo (`layers.json`/`groups.json`).
+  `centro/data/context/`, `centro/data/catalog/`, `arquivo-morto/posts/`,
+  `arquivo-morto/assets/`, `arquivista/data/`, `centro/assets/pistas/` ou
+  `centro/assets/imagens/`. Os ícones em `centro/assets/icons/` são
+  **regenerados** por `npm run sync:lucide-icons` — renomear via
+  `icon-manifest.json` está ok desde que o sync rode em seguida.
+- Alterar a estrutura do catálogo (`layers.json` / `groups.json` /
+  `context-layers.json` / `context-groups.json` / `layer-unlocks.json`).
 - Mexer em senhas narrativas (`SENHA = 'apoio'` na landing, `marco zero` no
   arquivista) — são parte do design narrativo, não bugs.
 - Modificar o email/telefone de contato em CTAs de patrocínio.
-- Alterar `MAPLIBRE_LOCALE_PT_BR` ou qualquer string visível ao jogador.
+- Alterar `MAPLIBRE_LOCALE_PT_BR` ou strings **narrativas** (copy da
+  landing, posts do arquivo-morto, comandos do CLI do arquivista, nomes
+  de OP:*, glossário do ARG). Microcorrecções de UI técnica (`Carregando…`,
+  `Camadas`, mensagens de toast neutro) podem entrar com revisão de pt-BR.
 - Voltar a baixar tiles em massa de `tile.openstreetmap.org` (viola usage
   policy — esse foi o incidente que motivou OpenFreeMap).
+- Reintroduzir Three.js / `vendor/three/` — CAPRI G-06 = WONT FIX (§7.1).
+
+### 12.1 Dívida tolerada — não "limpar" por iniciativa própria
+
+CAPRI 2026-05-22 catalogou estes itens como **DEFER** ou **WONT FIX**.
+Não desfazer em refactor cosmético; reabrir só com novo gate CAPRI.
+
+| Item | Estado | Onde está |
+|---|---|---|
+| `centro/centro-runtime.js` monolítico (~1 350 linhas) | DEFER (G-08 / US-05.2) — modularizar em sprint futura | runtime |
+| `arquivista/js/script.js` (~890 linhas) | Idem, prioridade menor | arquivista |
+| A11y do dock Arquivista (foco, contraste botões legado) | DEFER (G-09 / US-05.4) | `arquivista/index.html` |
+| `04a_zeis2__polygon.geojson` vazio | WONT FIX (G-07) até haver geometria; **manter** o ficheiro como marcador | `centro/data/processed/` |
+| `tpl-geoscanner` em `arquivista/index.html` | Código morto após decisão de redireccionar; remover só com revisão narrativa | arquivista |
+| 13 fases prometidas na landing | DEFER (G-04) — copy mantida; cronograma = roadmap produto | `landing/` |
+| Contraste WCAG AA formal (`#dc2626` sobre `#1f1f1f`) | DEFER — ver `docs/accessibility/` | design system |
+| Smoke E2E automatizado (Playwright) | Backlog (US-05.3); hoje é manual via `docs/testing/smoke-centro.md` | tests |
 
 ---
 
