@@ -22,7 +22,7 @@
 | Accent vermelho (`--centro-accent`) | `#dc2626` | `#1a1a1a` | 3.6:1 | **FAIL** | OK |
 | Status verde (inline) | `#4ade80` | `#1a1a1a` | 10.0:1 | OK | OK |
 | Aviso digital (`.as-digital-aviso`) | `#404040` | `#1a1a1a` | 1.7:1 | **FAIL** | **FAIL** |
-| Nav link muted (`.nav-retorno-link`) | `rgba(220,38,38,0.55)` | `#050505` | ~2.0:1* | **FAIL** | **FAIL** |
+| Nav link muted (`.nav-retorno__link`, tema terminal) | `rgba(0,255,0,0.55)` | `#050505` | ~* | **FAIL** | **FAIL** |
 
 \* estimativa com opacidade sobre fundo escuro.
 
@@ -37,7 +37,7 @@
 1. **Meta footer `#666`** — legível apenas como texto grande; revisar se usado em `<span>` pequeno.
 2. **Accent `#dc2626` em texto pequeno** — chrome HUD forense; falha AA normal. Regra: usar `--color-danger` (`#ef4444`) para alertas em texto pequeno; reservar `--color-accent-strong` para bordas/indicadores. Ver `docs/design-system/brand-decision.md`.
 3. **`.as-digital-aviso` `#404040`** — contraste insuficiente; módulo arquivista/digital, fora do runtime centro ativo.
-4. **Links `.nav-retorno-link` com opacidade 0.55** — falha AA; não alterados (restrição: sem redesenho UI).
+4. **Links `.nav-retorno__link` (tema terminal) com opacidade 0.55** — falha AA; não alterados (restrição: sem redesenho UI).
 5. **Animações CSS** (`as-shake`, `as-reveal`) — `prefers-reduced-motion` adicionado em `centro-sidebar.css` para o módulo arquivista; landing tem regra própria.
 
 ## Animação do rio

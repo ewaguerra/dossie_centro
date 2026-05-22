@@ -39,8 +39,15 @@
 
 | URL | Arquivo |
 |---|---|
-| `transparenttextures.com` | `centro-sidebar.css` |
-| `images.unsplash.com` | `arquivista/css/*.css`, `index.html` |
+## Dependências externas removidas (pós-DS)
+
+| CDN | Substituto |
+|---|---|
+| `transparenttextures.com` | SVG pontilhado + gradiente em `sidebar.css` |
+| `images.unsplash.com` | Gradientes `--bg-image` no Arquivista |
+| `static.wixstatic.com` | `.prova-hidrica-evidence` (CSS) |
+
+Ver [offline-textures.md](./offline-textures.md).
 
 ---
 
