@@ -206,6 +206,20 @@ describe('projeto_centro — HTTP integration', () => {
     }
   });
 
+  it('deve responder 200 em cada geojson referenciado pelo catalogo layers.json', async () => {
+    const res = await fetchPath('/centro/data/catalog/layers.json');
+    assert.strictEqual(res.status, 200);
+    const catalog = JSON.parse(res.body);
+    const layers = catalog.layers || [];
+
+    for (const ly of layers) {
+      assert.ok(ly.file, ly.id + ' sem campo file');
+      const geoPath = '/centro/' + ly.file.replace(/^\//, '');
+      const geo = await fetchPath(geoPath);
+      assert.strictEqual(geo.status, 200, geoPath + ' (layer ' + ly.id + ') deve retornar 200');
+    }
+  });
+
   it('deve responder 200 em geojson e icones SVG dos POIs', async () => {
     const paths = [
       '/centro/data/context/centro_memoria_paulistana__point.geojson',

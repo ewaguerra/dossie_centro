@@ -10,7 +10,7 @@ Toda verificação roda **na sua máquina**, antes de `git push`.
 npm run ci
 ```
 
-Equivalente a `npm test` (82 testes: sanity + HTTP).
+Equivalente a `npm test` (84 testes: sanity + HTTP).
 
 O arquivo `tests/http.test.js` sobe `python3 server.py` na porta **9876** automaticamente — não precisa iniciar o servidor manualmente para a suíte.
 

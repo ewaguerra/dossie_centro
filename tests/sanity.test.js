@@ -592,6 +592,42 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('poiInteractionLayerIds'), 'lista de layers POI para escopar a query ausente');
   });
 
+  // ── Integridade catálogo (layers.json ↔ groups.json ↔ disco) ───
+  it('catalogo: cada layer aponta para geojson existente e grupo valido', () => {
+    const catalog = JSON.parse(read('centro/data/catalog/layers.json'));
+    const groups = JSON.parse(read('centro/data/catalog/groups.json'));
+    const layers = catalog.layers || [];
+    const groupIds = new Set(groups.map(function (g) { return g.id; }));
+    const layerIds = new Set();
+
+    for (var i = 0; i < layers.length; i++) {
+      var ly = layers[i];
+      assert.ok(ly.id, 'layer sem id');
+      assert.ok(!layerIds.has(ly.id), 'id duplicado: ' + ly.id);
+      layerIds.add(ly.id);
+      assert.ok(ly.file, ly.id + ' sem campo file');
+      assert.ok(
+        exists('centro/' + ly.file),
+        ly.id + ' aponta para arquivo inexistente: ' + ly.file
+      );
+      assert.ok(groupIds.has(ly.group), ly.id + ' referencia grupo ausente: ' + ly.group);
+    }
+
+    for (var g = 0; g < groups.length; g++) {
+      var group = groups[g];
+      var listed = group.layers || [];
+      for (var j = 0; j < listed.length; j++) {
+        assert.ok(layerIds.has(listed[j]), 'groups.json lista layer ausente de layers.json: ' + listed[j]);
+      }
+      var inGroup = layers.filter(function (l) { return l.group === group.id; }).map(function (l) { return l.id; });
+      assert.deepStrictEqual(
+        listed.slice().sort(),
+        inGroup.slice().sort(),
+        'groups.json layers[] diverge de layers.json para grupo ' + group.id
+      );
+    }
+  });
+
   // ── Catalog cache ───────────────────────────────────────────────
   it('centro-runtime.js: catalogo carregado uma unica vez e indexado por id', () => {
     const runtime = read('centro/centro-runtime.js');

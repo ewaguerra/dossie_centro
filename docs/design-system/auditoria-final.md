@@ -21,7 +21,7 @@ Este documento reflecte o **estado actual do código**, não o snapshot intermé
 | Centro CSS modular | monólito ~1818 linhas | **10 módulos** + agregador | ☑ |
 | `centroToast()` | inline JS | classes `.toast` DS | ☑ |
 | Tokens âmbar landing/arquivo-morto | locais (`--amber`) | `var(--color-brand)` + aliases | ☑ |
-| Mapa Centro offline | tiles/glyphs CDN | **1378 tiles + 32 PBF locais** | ☑ |
+| Mapa Centro basemap | tiles/glyphs CDN | **OpenFreeMap online** (MapLibre 5.24 self-host) | ☑ |
 | Breakpoints | divergentes | tokens documentados; MQ literais | ◐ |
 | Adopção `.btn` cross-módulo | Centro only | Centro + **Landing** (hero/tier/portal); Arquivista legado | ◐ |
 | Arquivista mobile | desktop-only | MQ mínimas 768/640/480 | ◐ |
@@ -53,13 +53,12 @@ Carregados explicitamente em `centro/index.html` (ordem de cascata):
 ## Testes automatizados
 
 ```bash
-npm test   # 58/58 (41 sanity + 17 HTTP + suites)
+npm run ci   # 84 testes (66 sanity + 18 HTTP)
 node scripts/smoke-visual-colors.mjs
-node scripts/bake-centro-tiles.mjs   # regenerar tiles/glyphs offline
 node scripts/smoke-centro.mjs
 ```
 
-Cobertura DS relevante: tokens/components/a11y carregados, 0 inline HTML Centro, narrative-nav mobile, migração âmbar, toast sem `style.cssText`, módulos CSS HTTP 200, **mapa offline** (style local + tile + glyph HTTP 200).
+Cobertura DS relevante: tokens/components/a11y carregados, 0 inline HTML Centro, narrative-nav mobile, migração âmbar, toast sem `style.cssText`, módulos CSS HTTP 200, **filtro temático POI** (`setupPoiThemeFilter`), **integridade catálogo** (layers.json ↔ groups.json ↔ geojson no disco).
 
 ---
 
@@ -69,9 +68,9 @@ Cobertura DS relevante: tokens/components/a11y carregados, 0 inline HTML Centro,
 |---|---|
 | “Modularização parcial — só vars + chrome” | **10 módulos** extraídos; monólito reduzido a agregador |
 | “~1700 linhas restantes em centro-sidebar” | Conteúdo movido para `centro/styles/*.css` |
-| “44/44 testes” | **58/58** (sanity + HTTP offline mapa) |
+| “44/44 testes” | **84 testes** (`npm run ci`: sanity + HTTP) |
 | “centroToast inline” | Migrado para `.toast` / `.toast--warn` |
-| “tiles OSM externos” | **Self-hosted** — `centro/assets/tiles/` + glyphs locais |
+| “tiles OSM externos / self-hosted offline” | **OpenFreeMap** online; sem bake local de tiles |
 
 ---
 
@@ -92,7 +91,7 @@ Cobertura DS relevante: tokens/components/a11y carregados, 0 inline HTML Centro,
 | Coesão tokens / DS | ~25/100 | ~78/100 |
 | Adopção real nos módulos | ~20/100 | ~68/100 |
 | A11y visual MVP | ~30/100 | ~76/100 |
-| Offline mapa + decorativo | ~40/100 | ~92/100 |
+| Offline mapa + decorativo | ~40/100 | ~75/100 |
 | **Média composta** | **~29/100** | **~79/100** |
 
 Não representa conformidade WCAG nem qualidade estética subjetiva.

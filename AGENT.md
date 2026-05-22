@@ -204,8 +204,8 @@ MapLibre**. As convenções específicas:
   `getMapIconHaloPaint`.
 - **Ícones de evidência:** registry `vendor/app/config/map-icons.js`
   (`MAPA_SP_ICONS`). POIs via `addPOILayer`, pistas via `addPistasLayer`,
-  camadas sidebar (point) via `addLayerToMap` + `resolveLayerIcon`. Legenda
-  visual em `#poi-legend` (`renderPoiIconLegend`). Ver **§7.9**.
+  camadas sidebar (point) via `addLayerToMap` + `resolveLayerIcon`. Filtro
+  temático em `#poi-legend` (`setupPoiThemeFilter` + `getThemeFilters`). Ver **§7.9**.
 - Catálogo via `centro/data/catalog/{layers,groups}.json`. **Toda layer
   nova exige entrada no catálogo** ou não aparece na sidebar.
 - POIs/popups via DOM API (`setDOMContent` + `createElement` + `textContent`).
@@ -364,7 +364,12 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
 
 **Paleta de anéis (2026-05):** ver `centro/data/icon-manifest.json`.
 
-**Legenda UI:** `#poi-legend` — `renderPoiIconLegend()` + `getLegendItems()`.
+**Filtro temático UI:** `#poi-legend` / `#poi-legend-grid` —
+`setupPoiThemeFilter()` monta checkboxes a partir de `getThemeFilters()`
+(`map-icons.js`: `id`, `label`, `iconPath`, `layerIds`). Estado persistido em
+`localStorage` (`centroPoiThemeFilter`). No `load` do mapa,
+`applyAllPoiThemeFilters()` aplica visibilidade via `setLayoutProperty`.
+`getLegendItems()` permanece disponível para listagens estáticas.
 
 **Checklist ao adicionar ícone:**
 
@@ -433,7 +438,7 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
    estabilidade visual sobre refactor.
 6. **Atualizar catálogo / fixtures.** Se adicionar layer, post, comando CLI
    ou rota narrativa, registre no índice apropriado.
-7. **Rodar `npm test`.** ≥69 testes devem permanecer verdes.
+7. **Rodar `npm run ci`** (ou `npm test`). **84 testes** devem permanecer verdes.
 8. **Atualizar `AGENT.md`** se mudar uma convenção transversal.
 
 ---
