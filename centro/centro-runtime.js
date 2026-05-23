@@ -107,30 +107,20 @@
     });
   }
 
+  function getCentroMapHelper(name) {
+    return window.CENTRO && window.CENTRO.map && window.CENTRO.map[name];
+  }
+
   function ensureSource(mapInstance, id, sourceConfig) {
-    if (!mapInstance.getSource(id)) {
-      mapInstance.addSource(id, sourceConfig);
-    }
+    var fn = getCentroMapHelper("ensureSource");
+    if (typeof fn === "function") return fn(mapInstance, id, sourceConfig);
+    console.warn("[CENTRO] map-safe.js ausente — ensureSource indisponível");
   }
 
   function ensureLayer(mapInstance, layerConfig, beforeId) {
-    // Um layer sem id ou sem source cria estado corrompido no MapLibre e
-    // provoca TypeError em mousemove. Descarta silenciosamente com aviso.
-    if (!layerConfig || !layerConfig.id) {
-      console.warn("[CENTRO] ensureLayer: id ausente — layer ignorado", layerConfig);
-      return;
-    }
-    if (layerConfig.type !== "background" && !layerConfig.source) {
-      console.warn("[CENTRO] ensureLayer: source ausente para layer", layerConfig.id, "— ignorado");
-      return;
-    }
-    if (!mapInstance.getLayer(layerConfig.id)) {
-      if (beforeId && mapInstance.getLayer(beforeId)) {
-        mapInstance.addLayer(layerConfig, beforeId);
-      } else {
-        mapInstance.addLayer(layerConfig);
-      }
-    }
+    var fn = getCentroMapHelper("ensureLayer");
+    if (typeof fn === "function") return fn(mapInstance, layerConfig, beforeId);
+    console.warn("[CENTRO] map-safe.js ausente — ensureLayer indisponível");
   }
 
   // Camadas temáticas da sidebar ficam abaixo dos símbolos POI/pistas.
@@ -211,44 +201,15 @@
   }
 
   function bindLayerEventOnce(mapInstance, eventName, layerId, handler) {
-    mapInstance.__centroPoiHandlers = mapInstance.__centroPoiHandlers || {};
-    var handlerKey = eventName + ":" + layerId;
-    if (mapInstance.__centroPoiHandlers[handlerKey]) return;
-    mapInstance.on(eventName, layerId, handler);
-    mapInstance.__centroPoiHandlers[handlerKey] = handler;
-  }
-
-  // SVG não é suportado por createImageBitmap no Chromium (usado por
-  // map.loadImage em v4), então rotamos SVG via HTMLImageElement direto.
-  // Raster (png/jpg/webp) passa por map.loadImage para se beneficiar do
-  // pipeline de transformRequest e do tratamento de erro via on('error').
-  function isSvgUrl(url) {
-    return /\.svg(\?.*)?$/i.test(url);
-  }
-
-  function loadHtmlImage(url) {
-    return new Promise(function (resolve, reject) {
-      var image = new Image();
-      image.onload = function () { resolve(image); };
-      image.onerror = function () {
-        reject(new Error("Falha ao carregar imagem: " + url));
-      };
-      image.src = url;
-    });
+    var fn = getCentroMapHelper("bindLayerEventOnce");
+    if (typeof fn === "function") return fn(mapInstance, eventName, layerId, handler);
+    console.warn("[CENTRO] map-safe.js ausente — bindLayerEventOnce indisponível");
   }
 
   async function ensureImage(mapInstance, imageId, imagePath) {
-    if (mapInstance.hasImage(imageId)) return;
-    var imageData;
-    if (!isSvgUrl(imagePath) && typeof mapInstance.loadImage === "function") {
-      var response = await mapInstance.loadImage(imagePath);
-      imageData = response && response.data ? response.data : response;
-    } else {
-      imageData = await loadHtmlImage(imagePath);
-    }
-    if (!mapInstance.hasImage(imageId)) {
-      mapInstance.addImage(imageId, imageData);
-    }
+    var fn = getCentroMapHelper("ensureImage");
+    if (typeof fn === "function") return fn(mapInstance, imageId, imagePath);
+    console.warn("[CENTRO] map-safe.js ausente — ensureImage indisponível");
   }
 
   function getMapPopupNode(factoryKey, args) {

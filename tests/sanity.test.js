@@ -1,5 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
+import vm from 'node:vm';
 import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -13,6 +14,14 @@ function read(path) {
 
 function exists(path) {
   return existsSync(join(ROOT, path));
+}
+
+function loadCentroMapSafe() {
+  const src = read('centro/map/map-safe.js');
+  const sandbox = { window: { CENTRO: {} }, console };
+  vm.createContext(sandbox);
+  vm.runInContext(src, sandbox);
+  return sandbox.window.CENTRO.map;
 }
 
 describe('projeto_centro — sanity checks', () => {
@@ -628,6 +637,74 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!/innerHTML\s*=\s*"<[a-z]/i.test(runtime) || runtime.includes('panel.innerHTML = ""'), 'runtime evita injecao via innerHTML literal');
   });
 
+  // ── MapLibre safe helpers ───────────────────────────────────────
+  it('centro: map-safe.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const mapSafeIdx = html.indexOf('map/map-safe.js');
+    const popupsIdx = html.indexOf('ui/map-popups.js');
+    assert.ok(mapSafeIdx > -1, 'map/map-safe.js ausente no HTML');
+    assert.ok(popupsIdx < mapSafeIdx && mapSafeIdx < runtimeIdx, 'map-safe.js deve preceder centro-runtime.js');
+
+    const mapSafe = read('centro/map/map-safe.js');
+    assert.doesNotThrow(() => new Function(mapSafe));
+    assert.ok(mapSafe.includes('CENTRO.map.ensureSource'), 'export ensureSource ausente');
+    assert.ok(mapSafe.includes('CENTRO.map.ensureLayer'), 'export ensureLayer ausente');
+    assert.ok(mapSafe.includes('CENTRO.map.ensureImage'), 'export ensureImage ausente');
+    assert.ok(mapSafe.includes('CENTRO.map.bindLayerEventOnce'), 'export bindLayerEventOnce ausente');
+    assert.ok(mapSafe.includes('__centroPoiHandlers'), 'bindLayerEventOnce usa registry idempotente');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('getCentroMapHelper'), 'runtime delega via getCentroMapHelper');
+    assert.ok(runtime.includes('ensureSource'), 'runtime referencia ensureSource');
+    assert.ok(runtime.includes('ensureLayer'), 'runtime referencia ensureLayer');
+    assert.ok(runtime.includes('ensureImage'), 'runtime referencia ensureImage');
+    assert.ok(runtime.includes('bindLayerEventOnce'), 'runtime referencia bindLayerEventOnce');
+    assert.ok(!runtime.includes('mapInstance.addSource'), 'addSource so no modulo map-safe');
+    assert.ok(!runtime.includes('__centroPoiHandlers'), 'handler registry so no modulo map-safe');
+    assert.ok(!runtime.includes('function isSvgUrl'), 'isSvgUrl so no modulo map-safe');
+  });
+
+  it('map-safe.js: helpers idempotentes com mock map', () => {
+    const map = loadCentroMapSafe();
+    var sources = { 'existing-source': true };
+    var layers = { 'existing-layer': true };
+    var addSourceCalls = 0;
+    var addLayerCalls = 0;
+    var mockMap = {
+      getSource: function (id) { return sources[id] ? {} : null; },
+      addSource: function (id) { sources[id] = true; addSourceCalls++; },
+      getLayer: function (id) { return layers[id] ? {} : null; },
+      addLayer: function (cfg) { layers[cfg.id] = true; addLayerCalls++; },
+    };
+
+    map.ensureSource(mockMap, 'existing-source', { type: 'geojson', data: {} });
+    map.ensureSource(mockMap, 'existing-source', { type: 'geojson', data: {} });
+    assert.strictEqual(addSourceCalls, 0, 'ensureSource nao duplica source existente');
+
+    map.ensureSource(mockMap, 'new-source', { type: 'geojson', data: {} });
+    map.ensureSource(mockMap, 'new-source', { type: 'geojson', data: {} });
+    assert.strictEqual(addSourceCalls, 1, 'ensureSource adiciona source uma vez');
+
+    map.ensureLayer(mockMap, { id: 'existing-layer', type: 'fill', source: 's' });
+    map.ensureLayer(mockMap, { id: 'existing-layer', type: 'fill', source: 's' });
+    assert.strictEqual(addLayerCalls, 0, 'ensureLayer nao duplica layer existente');
+
+    map.ensureLayer(mockMap, { id: 'new-layer', type: 'fill', source: 's' });
+    map.ensureLayer(mockMap, { id: 'new-layer', type: 'fill', source: 's' });
+    assert.strictEqual(addLayerCalls, 1, 'ensureLayer adiciona layer uma vez');
+
+    var onCalls = 0;
+    var eventMap = {
+      __centroPoiHandlers: {},
+      on: function () { onCalls++; },
+    };
+    var handler = function () {};
+    map.bindLayerEventOnce(eventMap, 'click', 'poi-layer', handler);
+    map.bindLayerEventOnce(eventMap, 'click', 'poi-layer', handler);
+    assert.strictEqual(onCalls, 1, 'bindLayerEventOnce nao registra handler duplicado');
+  });
+
   // ── Click handler escopado e debug-gated ────────────────────────
   it('centro-runtime.js: click inspector e debug-gated e queryRenderedFeatures e escopado', () => {
     const runtime = read('centro/centro-runtime.js');
@@ -687,13 +764,15 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── map.loadImage canonico para raster, Image() para SVG ────────
-  it('centro-runtime.js: ensureImage roteia SVG via Image() e raster via map.loadImage', () => {
+  it('map-safe.js: ensureImage roteia SVG via Image() e raster via map.loadImage', () => {
+    const mapSafe = read('centro/map/map-safe.js');
+    assert.ok(mapSafe.includes('mapInstance.loadImage'), 'deve usar map.loadImage para raster');
+    assert.ok(mapSafe.includes('response.data'), 'deve usar response.data do loadImage');
+    assert.ok(mapSafe.includes('isSvgUrl'), 'detector de SVG ausente');
+    assert.ok(mapSafe.includes('loadHtmlImage'), 'fallback Image() ausente');
+    assert.ok(/!isSvgUrl\([^)]+\)\s*&&/.test(mapSafe), 'SVG deve evitar createImageBitmap pipeline');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('mapInstance.loadImage'), 'deve usar map.loadImage para raster');
-    assert.ok(runtime.includes('response.data'), 'deve usar response.data do loadImage');
-    assert.ok(runtime.includes('isSvgUrl'), 'detector de SVG ausente');
-    assert.ok(runtime.includes('loadHtmlImage'), 'fallback Image() ausente');
-    assert.ok(/!isSvgUrl\([^)]+\)\s*&&/.test(runtime), 'SVG deve evitar createImageBitmap pipeline');
+    assert.ok(runtime.includes('getCentroMapHelper("ensureImage")'), 'runtime delega ensureImage');
   });
 
   // ── MapOptions PT-BR e attribution compacto ─────────────────────
@@ -828,8 +907,9 @@ describe('projeto_centro — sanity checks', () => {
 
   it('centro-runtime.js insere camadas do catalogo abaixo dos POIs (beforeId)', () => {
     const runtime = read('centro/centro-runtime.js');
+    const mapSafe = read('centro/map/map-safe.js');
     assert.ok(runtime.includes('getCatalogInsertBeforeId'), 'getCatalogInsertBeforeId ausente');
-    assert.ok(runtime.includes('addLayer(layerConfig, beforeId)'), 'ensureLayer deve aceitar beforeId');
+    assert.ok(mapSafe.includes('addLayer(layerConfig, beforeId)'), 'ensureLayer deve aceitar beforeId');
     assert.ok(runtime.includes('getCatalogInsertBeforeId()'), 'addLayerToMap deve usar beforeId');
   });
 
