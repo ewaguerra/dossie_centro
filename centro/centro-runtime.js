@@ -251,22 +251,11 @@
     }
   }
 
-  // Constrói o conteúdo do popup POI como nó DOM, evitando setHTML
-  // (que não sanitiza). Valores vêm de GeoJSON e podem conter caracteres
-  // que quebrariam HTML interpolado por concatenação de strings.
-  function createPoiPopupNode(name, secondary) {
-    var root = document.createElement("div");
-    root.className = "poi-popup";
-    var title = document.createElement("b");
-    title.textContent = name || "POI";
-    root.appendChild(title);
-    if (secondary) {
-      root.appendChild(document.createElement("br"));
-      var small = document.createElement("small");
-      small.textContent = secondary;
-      root.appendChild(small);
-    }
-    return root;
+  function getMapPopupNode(factoryKey, args) {
+    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui[factoryKey];
+    if (typeof fn === "function") return fn.apply(null, args);
+    console.warn("[CENTRO] map-popups.js ausente — " + factoryKey + " indisponível");
+    return document.createElement("div");
   }
 
   function getMapIconHaloPaint() {
@@ -344,7 +333,7 @@
           : "";
       new maplibregl.Popup()
         .setLngLat(e.lngLat)
-        .setDOMContent(createPoiPopupNode(name, secondary))
+        .setDOMContent(getMapPopupNode("createPoiPopupNode", [name, secondary]))
         .addTo(mapInstance);
     });
 
@@ -423,7 +412,7 @@
       if (!pistaItem) return;
       new maplibregl.Popup({ offset: 25, maxWidth: "300px" })
         .setLngLat(e.lngLat)
-        .setDOMContent(createPistaPopupNode(pistaItem))
+        .setDOMContent(getMapPopupNode("createPistaPopupNode", [pistaItem]))
         .addTo(mapInstance);
     });
 
@@ -464,56 +453,6 @@
     body.textContent = JSON.stringify(props, null, 2);
     panel.appendChild(closeBtn);
     panel.appendChild(body);
-  }
-
-  // Constrói o conteúdo do popup de pista como nó DOM. Os campos vêm
-  // de assets/pistas/rua-sao-bento-pistas.json (trusted), mas usar
-  // textContent evita XSS caso a fonte mude e mantém aderência ao
-  // pattern recomendado pela doc do MapLibre (setHTML não sanitiza).
-  function createPistaPopupNode(item) {
-    var root = document.createElement("div");
-    root.className = "pista-popup";
-
-    var h3 = document.createElement("h3");
-    h3.className = "pista-popup__title";
-    h3.textContent = item.title || "Pista";
-    root.appendChild(h3);
-
-    if (item.description) {
-      var p = document.createElement("p");
-      p.className = "pista-popup__desc";
-      p.textContent = item.description;
-      root.appendChild(p);
-    }
-
-    if (item.image) {
-      var img = document.createElement("img");
-      img.className = "pista-popup__img";
-      img.alt = item.title || "";
-      img.loading = "lazy";
-      img.src = "/centro/" + String(item.image).replace(/^\.?\//, "");
-      root.appendChild(img);
-    }
-
-    if (item.sourceUrl) {
-      var pSrc = document.createElement("p");
-      pSrc.className = "pista-popup__source";
-      var label = document.createElement("span");
-      label.textContent = "Fonte: ";
-      pSrc.appendChild(label);
-
-      var a = document.createElement("a");
-      a.href = item.sourceUrl;
-      a.target = "_blank";
-      a.rel = "noopener";
-      var clean = String(item.sourceUrl).replace(/^https?:\/\//, "").substring(0, 40);
-      a.textContent = clean + "\u2026";
-      pSrc.appendChild(a);
-
-      root.appendChild(pSrc);
-    }
-
-    return root;
   }
 
   var buildings3dApi = null;

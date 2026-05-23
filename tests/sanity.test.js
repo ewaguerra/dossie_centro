@@ -581,11 +581,33 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── XSS-safety — popups via DOM API ─────────────────────────────
-  it('centro-runtime.js: popups POI e Pista nao usam setHTML com strings concatenadas', () => {
+  it('centro: map-popups.js carregado antes do runtime, sem innerHTML', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const popupsIdx = html.indexOf('ui/map-popups.js');
+    assert.ok(popupsIdx > -1, 'ui/map-popups.js ausente no HTML');
+    assert.ok(popupsIdx < runtimeIdx, 'map-popups.js deve preceder centro-runtime.js');
+
+    const popups = read('centro/ui/map-popups.js');
+    assert.doesNotThrow(() => new Function(popups));
+    assert.ok(popups.includes('CENTRO.ui.createPoiPopupNode'), 'export createPoiPopupNode ausente');
+    assert.ok(popups.includes('CENTRO.ui.createPistaPopupNode'), 'export createPistaPopupNode ausente');
+    assert.ok(popups.includes('createElement'), 'factories devem usar createElement');
+    assert.ok(popups.includes('textContent'), 'factories devem usar textContent');
+    assert.ok(!popups.includes('innerHTML'), 'map-popups.js nao deve usar innerHTML');
+    assert.ok(!popups.includes('.setHTML('), 'map-popups.js nao deve usar setHTML');
+    assert.ok(popups.includes('poi-popup'), 'factory POI usa classe poi-popup');
+    assert.ok(popups.includes('pista-popup__desc'), 'factory pista monta descricao');
+
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('setDOMContent'), 'popups devem usar setDOMContent');
-    assert.ok(runtime.includes('createPoiPopupNode'), 'POI popup builder DOM ausente');
-    assert.ok(runtime.includes('createPistaPopupNode'), 'Pista popup builder DOM ausente');
+    assert.ok(runtime.includes('getMapPopupNode'), 'runtime delega via getMapPopupNode');
+    assert.ok(runtime.includes('createPoiPopupNode'), 'runtime referencia export createPoiPopupNode');
+    assert.ok(runtime.includes('createPistaPopupNode'), 'runtime referencia export createPistaPopupNode');
+    assert.ok(!runtime.includes('function createPoiPopupNode'), 'runtime nao duplica factory POI');
+    assert.ok(!runtime.includes('function createPistaPopupNode'), 'runtime nao duplica factory pista');
+    assert.ok(!runtime.includes('pista-popup__desc'), 'markup pista-popup so no modulo');
+    assert.ok(!runtime.includes('pista-popup__img'), 'markup pista-popup so no modulo');
     assert.ok(!/Popup\([^)]*\)[\s\S]{0,300}\.setHTML\(/.test(runtime), 'runtime nao deve usar setHTML em Popup');
     assert.ok(!/innerHTML\s*=\s*"<[a-z]/i.test(runtime) || runtime.includes('panel.innerHTML = ""'), 'runtime evita injecao via innerHTML literal');
   });
