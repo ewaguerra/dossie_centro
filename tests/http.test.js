@@ -91,6 +91,13 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.headers['cache-control'], 'public, max-age=31536000, immutable');
   });
 
+  it('deve responder 200 em /vendor/three/three.core.min.js', async () => {
+    const res = await fetchPath('/vendor/three/three.core.min.js');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.body.length > 1000, 'three.core.min.js deve existir e ter conteudo');
+    assert.strictEqual(res.headers['cache-control'], 'public, max-age=31536000, immutable');
+  });
+
   it('deve responder 200 em /pages/centro/centro-runtime.js (proxy route)', async () => {
     const res = await fetchPath('/pages/centro/centro-runtime.js');
     assert.strictEqual(res.status, 200);

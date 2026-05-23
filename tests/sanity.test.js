@@ -1538,6 +1538,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(pkg.scripts && pkg.scripts['sync:three'], 'sync:three ausente');
     assert.ok(exists('scripts/sync-three.mjs'), 'sync-three.mjs ausente');
     assert.ok(exists('vendor/three/three.module.min.js'), 'three.module.min.js vendorizado ausente');
+    assert.ok(exists('vendor/three/three.core.min.js'), 'three.core.min.js vendorizado ausente (dep de three.module.min.js)');
     assert.strictEqual(gates.phaseTitles['7'], 'Rasgue o Asfalto');
     assert.ok(css.includes('subterranean-active'), 'estado visual subterrâneo ausente');
   });
