@@ -64,17 +64,30 @@ ARG e validar coverage.
 Dossiê (eixos, ZEIS, hidrografia, alagamentos, contorno do centro).
 Toda entrada tem 1:1 em `layers.json`.
 
-### 2.3 `centro/data/context/` — runtime contextual (GeoJSON only)
+### 2.3 `centro/data/context/` — runtime contextual leve (GeoJSON only)
 
-Camadas expandíveis na sidebar (OSM, patrimônio, geotécnica, declividade).
+Camadas expandíveis na sidebar (patrimônio leve, geotécnica, declividade).
 Após **DATA-ORG-B2**, contém **somente `.geojson`** — relatórios foram para
-`centro/data/reports/`.
+`centro/data/reports/`. Os 3 heavy (~83% do peso) foram para `geojson/heavy/`
+(DATA-ORG-B3B).
 
 | Categoria | Padrão de nome | Exemplo |
 |---|---|---|
-| Camada wired (sidebar) | `*.geojson` | `centro_bem_tombado__polygon.geojson` |
+| Camada wired (sidebar) | `*.geojson` | `centro_rios_geosampa__line.geojson` |
 | Camada não wired | `centro_pois_turisticos__point.geojson` | exceção oficial — §4 |
 | Órfão conhecido | (ver §4) | `centro_pistas_rua_sao_bento__point.geojson` |
+
+### 2.3.1 `centro/data/geojson/heavy/` — runtime heavy (manual load)
+
+3 GeoJSON wired na sidebar com `weightClass: heavy`, `loadPolicy: manual`,
+`visible: false`. Resolver: `buildLayerDataUrl` prefixo `data/geojson/heavy/`.
+Regeneração OSM: `sync:geojson-from-salto` escreve aqui.
+
+| ID | Arquivo |
+|---|---|
+| `15_osm_ruas__line` | `15_osm_ruas__line.geojson` |
+| `15_osm_enderecos__point` | `15_osm_enderecos__point.geojson` |
+| `centro_bem_tombado__polygon` | `centro_bem_tombado__polygon.geojson` |
 
 ### 2.4 `centro/data/reports/` — relatórios e legacy (não runtime)
 
@@ -269,8 +282,8 @@ Regenera **apenas 3 arquivos**:
 | ID | Destino | Origem (mapa_sp_salto) |
 |---|---|---|
 | `04a_zeis2__polygon` | `centro/data/processed/04a_zeis2__polygon.geojson` | `data/processed/03_zoneamento/04a_zeis2__polygon.geojson` |
-| `15_osm_ruas__line` | `centro/data/context/15_osm_ruas__line.geojson` | `data/osm/processed/15_osm_ruas__line.geojson` |
-| `15_osm_enderecos__point` | `centro/data/context/15_osm_enderecos__point.geojson` | `data/osm/processed/15_osm_enderecos__point.geojson` |
+| `15_osm_ruas__line` | `centro/data/geojson/heavy/15_osm_ruas__line.geojson` | `data/osm/processed/15_osm_ruas__line.geojson` |
+| `15_osm_enderecos__point` | `centro/data/geojson/heavy/15_osm_enderecos__point.geojson` | `data/osm/processed/15_osm_enderecos__point.geojson` |
 
 Implementação: `scripts/sync-geojson-from-salto.py`. Requer `shapely` e
 o repo `mapa_sp_salto` clonado lado a lado.
@@ -312,9 +325,13 @@ Por isso **`rebuild:all` não existe** neste repo. Apagar todo
 
 | Arquivo | Tamanho | Features | Status atual |
 |---|---:|---:|---|
-| `15_osm_enderecos__point` | 7,44 MiB | 23.932 | `visible: false` (decisão MAP-DATA-GOV-A — §6.2) |
-| `15_osm_ruas__line` | 4,12 MiB | 10.108 | `visible: false` (DATA-PERF-D1 — heavy/default-off) |
-| `centro_bem_tombado__polygon` | 3,10 MiB | 2.974 | `visible: false` |
+| `15_osm_enderecos__point` | 7,44 MiB | 23.932 | `visible: false`, `weightClass: heavy`, `loadPolicy: manual` |
+| `15_osm_ruas__line` | 4,12 MiB | 10.108 | `visible: false`, `weightClass: heavy`, `loadPolicy: manual` |
+| `centro_bem_tombado__polygon` | 3,10 MiB | 2.974 | `visible: false`, `weightClass: heavy`, `loadPolicy: manual` |
+
+Metadados `weightClass` / `loadPolicy` registrados em `context-layers.json` (gate
+DATA-ORG-B3B-metadata). Runtime ainda não consome esses campos — `visible: false`
+continua sendo o mecanismo operacional de default-off.
 
 Total: 27 GeoJSON, 38.720 features, 17,66 MiB.
 
@@ -349,9 +366,10 @@ arquitetura — `mapa_sp_salto` é upstream oficial.
 ### 6.5 Pasta `context/` — relatórios separados (DATA-ORG-B2)
 
 Relatórios de build, match, audit e legacy foram movidos para
-`centro/data/reports/`. `context/` contém somente GeoJSON runtime (+ 1
-órfão documentado). Próximo passo: `geojson/heavy/` e `geojson/special/`
-(gates DATA-ORG-B3/B4).
+`centro/data/reports/`. `context/` contém somente GeoJSON runtime leve (+ 1
+órfão documentado). Os 3 heavy (~83% do peso) foram movidos para
+`centro/data/geojson/heavy/` (DATA-ORG-B3B). Próximo passo: `geojson/special/`
+(gate DATA-ORG-B4).
 
 ---
 

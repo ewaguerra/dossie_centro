@@ -42,13 +42,13 @@ JOBS = [
     {
         "id": "15_osm_ruas__line",
         "src": SALTO / "data/osm/processed/15_osm_ruas__line.geojson",
-        "dst": REPO / "centro/data/context/15_osm_ruas__line.geojson",
+        "dst": REPO / "centro/data/geojson/heavy/15_osm_ruas__line.geojson",
         "geom_filter": ("LineString", "MultiLineString"),
     },
     {
         "id": "15_osm_enderecos__point",
         "src": SALTO / "data/osm/processed/15_osm_enderecos__point.geojson",
-        "dst": REPO / "centro/data/context/15_osm_enderecos__point.geojson",
+        "dst": REPO / "centro/data/geojson/heavy/15_osm_enderecos__point.geojson",
         "geom_filter": ("Point", "MultiPoint"),
     },
 ]

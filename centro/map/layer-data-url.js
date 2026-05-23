@@ -12,6 +12,9 @@
     if (filePath.indexOf("data/processed/") === 0) {
       return "/centro/" + filePath;
     }
+    if (filePath.indexOf("data/geojson/heavy/") === 0) {
+      return "/centro/" + filePath;
+    }
     return "/centro/data/processed/" + filePath.replace(/^.*processed\//, "");
   }
 

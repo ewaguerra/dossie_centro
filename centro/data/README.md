@@ -105,10 +105,10 @@ centro/data/
 │   ├── layer-unlocks.json
 │   └── phase-gates.json
 │
-├── geojson/                  ← pendente DATA-ORG-B3/B4
-│   ├── processed/            ← hoje: processed/
+├── geojson/                  ← heavy/ ✓ (B3B); special/ pendente B4
+│   ├── processed/            ← hoje: processed/ (raiz)
 │   ├── context/              ← hoje: context/ (sem reports) ✓
-│   ├── heavy/
+│   ├── heavy/                ← 3 GeoJSON heavy ✓ (B3B)
 │   └── special/
 │       ├── pois/
 │       └── arg/
@@ -132,13 +132,13 @@ Nada em heavy/ deve carregar no boot.
 Tudo em heavy/ deve ser manual, gated, lazy ou tileado no futuro.
 ```
 
-Camadas na política heavy/default-off (fisicamente ainda em `context/`):
+Camadas na política heavy/default-off (em `geojson/heavy/` desde DATA-ORG-B3B-move):
 
-| ID | Arquivo | Tamanho | Features | Boot hoje |
+| ID | Arquivo | Tamanho | Features | Catálogo |
 |---|---|---:|---:|---|
-| `15_osm_ruas__line` | `15_osm_ruas__line.geojson` | ~4,2 MB | 10.108 | não (`visible: false`) — DATA-PERF-D1 concluído |
-| `15_osm_enderecos__point` | `15_osm_enderecos__point.geojson` | ~7,5 MB | 23.932 | não (`visible: false`) |
-| `centro_bem_tombado__polygon` | `centro_bem_tombado__polygon.geojson` | ~3,2 MB | 2.974 | não (`visible: false`) |
+| `15_osm_ruas__line` | `geojson/heavy/15_osm_ruas__line.geojson` | ~4,2 MB | 10.108 | `weightClass: heavy`, `loadPolicy: manual`, `visible: false` |
+| `15_osm_enderecos__point` | `geojson/heavy/15_osm_enderecos__point.geojson` | ~7,5 MB | 23.932 | `weightClass: heavy`, `loadPolicy: manual`, `visible: false` |
+| `centro_bem_tombado__polygon` | `geojson/heavy/centro_bem_tombado__polygon.geojson` | ~3,2 MB | 2.974 | `weightClass: heavy`, `loadPolicy: manual`, `visible: false` |
 
 Estes três arquivos representam ~83% do peso total GeoJSON.
 
@@ -168,11 +168,13 @@ Pistas Rua São Bento **não** moram aqui: runtime usa `centro/assets/pistas/rua
 | **DATA-ORG-B1** | Documentar responsabilidades (este README) | **feito** |
 | **DATA-PERF-D1** | `15_osm_ruas`: `visible: true → false` | **feito** (2026-05-23) |
 | **DATA-ORG-B2** | Mover relatórios não-runtime → `reports/` | **feito** (2026-05-23) |
-| **DATA-ORG-B3** | Criar `geojson/heavy/` + resolver de paths | pendente |
+| **DATA-ORG-B3B-metadata** | `weightClass` / `loadPolicy` no catálogo heavy | **feito** (2026-05-23) |
+| **DATA-ORG-B3B-resolver** | `buildLayerDataUrl` + `geojson/heavy/` | **feito** (2026-05-23) |
+| **DATA-ORG-B3B-move** | Mover 3 GeoJSON → `geojson/heavy/` | **feito** (2026-05-23) |
 | **DATA-ORG-B4** | Classificar `special/pois` e `special/arg` | pendente |
 | **DATA-ORG-B5** | Mover fósseis → `archive/fossils/` | pendente |
 
-Próximo passo organizacional: **DATA-ORG-B3** (`geojson/heavy/` + resolver de paths).
+Próximo passo organizacional: **DATA-ORG-B4** (`geojson/special/` — POIs e ARG).
 
 ---
 
@@ -187,8 +189,8 @@ Próximo passo organizacional: **DATA-ORG-B3** (`geojson/heavy/` + resolver de p
 
 | Camada | Arquivo | Default boot | Observação |
 |---|---|---|---|
-| Malha de Circulação | `context/15_osm_ruas__line.geojson` | off (`visible: false`) | wired; activável na sidebar |
-| Endereços e Números | `context/15_osm_enderecos__point.geojson` | off (`visible: false`) | cobertura parcial OSM; labels em `minzoom >= 17` |
+| Malha de Circulação | `geojson/heavy/15_osm_ruas__line.geojson` | off (`visible: false`) | wired; activável na sidebar |
+| Endereços e Números | `geojson/heavy/15_osm_enderecos__point.geojson` | off (`visible: false`) | cobertura parcial OSM; labels em `minzoom >= 17` |
 
 Metadados: `catalog/context-layers.json` (`coverage`, `minzoom`, `style.paint`).
 

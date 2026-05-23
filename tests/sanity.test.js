@@ -854,6 +854,10 @@ describe('projeto_centro — sanity checks', () => {
       '/centro/data/processed/centro_bar.geojson'
     );
     assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: 'data/geojson/heavy/15_osm_ruas__line.geojson' }),
+      '/centro/data/geojson/heavy/15_osm_ruas__line.geojson'
+    );
+    assert.strictEqual(
       mapMod.buildLayerDataUrl({ file: 'legacy/processed/centro_baz.geojson' }),
       '/centro/data/processed/centro_baz.geojson'
     );
@@ -1797,7 +1801,11 @@ describe('projeto_centro — sanity checks', () => {
 
   function resolveGeoJsonPath(layer) {
     const f = layer.file || '';
-    if (f.startsWith('data/context/') || f.startsWith('data/processed/')) {
+    if (
+      f.startsWith('data/context/') ||
+      f.startsWith('data/processed/') ||
+      f.startsWith('data/geojson/heavy/')
+    ) {
       return 'centro/' + f;
     }
     return 'centro/data/processed/' + f.replace(/^.*processed\//, '');
@@ -1997,6 +2005,18 @@ describe('projeto_centro — sanity checks', () => {
       '15_osm_ruas__line deve ser visible:false — ~4,11 MiB / 10.108 features não devem entrar no boot');
     assert.strictEqual(layer.minzoom, 12, 'minzoom:12 preservado');
     assert.ok(exists('centro/' + layer.file), layer.file + ' ausente no disco');
+  });
+
+  it('DATA-ORG-B3B: camadas heavy têm weightClass e loadPolicy no catálogo', () => {
+    const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const HEAVY_IDS = ['15_osm_ruas__line', '15_osm_enderecos__point', 'centro_bem_tombado__polygon'];
+    for (const id of HEAVY_IDS) {
+      const layer = (ctx.layers || []).find(l => l.id === id);
+      assert.ok(layer, id + ' deve existir no catálogo');
+      assert.strictEqual(layer.weightClass, 'heavy', id + ' deve ter weightClass:heavy');
+      assert.strictEqual(layer.loadPolicy, 'manual', id + ' deve ter loadPolicy:manual');
+      assert.strictEqual(layer.visible, false, id + ' heavy deve ser visible:false');
+    }
   });
 
   // ── Popup CSS classes ───────────────────────────────────────────
