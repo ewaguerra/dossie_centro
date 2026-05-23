@@ -94,7 +94,11 @@
 
   function collectClue(el) {
     const clueId = el.dataset.clueId;
-    if (!clueId || !CLUES[clueId]) return;
+    if (!clueId) return;
+    if (!CLUES[clueId]) {
+      console.warn("[ARQUIVO-MORTO] clue inválido:", clueId);
+      return;
+    }
 
     if (state.collectedClues.has(clueId)) return;
 
@@ -114,8 +118,13 @@
     const list = document.querySelector("[data-clue-list]");
     if (!list) return;
 
+    list.replaceChildren();
+
     if (!state.collectedClues.size) {
-      list.innerHTML = '<li class="suma-pistas__empty">Nenhuma pista consolidada.</li>';
+      const empty = document.createElement("li");
+      empty.className = "suma-pistas__empty";
+      empty.textContent = "Nenhuma pista consolidada.";
+      list.appendChild(empty);
       return;
     }
 
@@ -129,18 +138,29 @@
       });
 
     if (filtered.length === 0) {
-      list.innerHTML = '<li class="suma-pistas__empty">Nenhum fragmento encontrado com este filtro.</li>';
+      const empty = document.createElement("li");
+      empty.className = "suma-pistas__empty";
+      empty.textContent = "Nenhum fragmento encontrado com este filtro.";
+      list.appendChild(empty);
       return;
     }
 
-    list.innerHTML = filtered.map((clue) => {
-      return [
-        '<li class="suma-pistas__item fade-in is-visible">',
-        `<strong class="suma-pistas__item-title">${clue.titulo} [${clue.categoria.toUpperCase()}]</strong>`,
-        `<p class="suma-pistas__item-summary">${clue.descricao}</p>`,
-        "</li>"
-      ].join("\n");
-    }).join("\n");
+    filtered.forEach(function (clue) {
+      const item = document.createElement("li");
+      item.className = "suma-pistas__item fade-in is-visible";
+
+      const title = document.createElement("strong");
+      title.className = "suma-pistas__item-title";
+      title.textContent = clue.titulo + " [" + clue.categoria.toUpperCase() + "]";
+
+      const summary = document.createElement("p");
+      summary.className = "suma-pistas__item-summary";
+      summary.textContent = clue.descricao;
+
+      item.appendChild(title);
+      item.appendChild(summary);
+      list.appendChild(item);
+    });
   }
 
   function setupFiltros() {
@@ -169,7 +189,7 @@
 
     const requiredCount = REQUIRED_CLUES.filter((id) => state.collectedClues.has(id)).length;
 
-    if (requiredCount >= 4 && requiredCount < REQUIRED_CLUES.length) {
+    if (requiredCount >= 3 && requiredCount < REQUIRED_CLUES.length) {
       conclusion.hidden = false;
       conclusion.innerHTML = [
         '<h3 class="conclusao-titulo">A soma começa a ranger.</h3>',
