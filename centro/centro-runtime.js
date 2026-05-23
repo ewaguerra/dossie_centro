@@ -262,6 +262,7 @@
     var descProp = cfg.descProp;
     var addrProp = cfg.addrProp;
     var iconPath = cfg.iconPath;
+    var layerFile = cfg.layerFile;
 
     var addSymbol = getCentroMapHelper("addSymbolPopupLayer");
     if (typeof addSymbol !== "function") {
@@ -290,10 +291,21 @@
       };
     }
 
+    var sourceData = dataPath;
+    if (layerFile) {
+      var fetchLayer = getCentroMapHelper("fetchLayerGeojson");
+      if (typeof fetchLayer !== "function") {
+        throw new Error(
+          "[CENTRO] fetchLayerGeojson ausente — não é possível carregar " + layerFile
+        );
+      }
+      sourceData = await fetchLayer(layerFile);
+    }
+
     return addSymbol(mapInstance, {
       sourceId: sourceId,
       iconLayerId: iconLayerId,
-      source: { type: "geojson", data: dataPath },
+      source: { type: "geojson", data: sourceData },
       imageId: imageId,
       iconPath: iconPath,
       iconLayout: {
@@ -678,18 +690,23 @@
         for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
           var poiCfg = poiConfigs[poiIndex];
           var iconPath = resolvePatrimonioIconPath(poiCfg.id);
+          var poiLayerArgs = {
+            sourceId: poiCfg.sourceId,
+            iconLayerId: poiCfg.iconLayerId,
+            labelLayerId: poiCfg.id + "-label",
+            imageId: poiCfg.id + "-pin",
+            iconPath: iconPath,
+            titleProp: poiCfg.titleProp,
+            descProp: poiCfg.descProp,
+            addrProp: poiCfg.addrProp,
+          };
+          if (poiCfg.id === "poi-turistico") {
+            poiLayerArgs.layerFile = poiCfg.layerFile;
+          } else {
+            poiLayerArgs.dataPath = buildLayerDataUrl({ file: poiCfg.layerFile });
+          }
           try {
-            await addPOILayer(map, {
-              sourceId: poiCfg.sourceId,
-              iconLayerId: poiCfg.iconLayerId,
-              labelLayerId: poiCfg.id + "-label",
-              imageId: poiCfg.id + "-pin",
-              dataPath: buildLayerDataUrl({ file: poiCfg.layerFile }),
-              iconPath: iconPath,
-              titleProp: poiCfg.titleProp,
-              descProp: poiCfg.descProp,
-              addrProp: poiCfg.addrProp,
-            });
+            await addPOILayer(map, poiLayerArgs);
           } catch (e) {
             console.warn("[CENTRO] Erro POI layer", poiCfg.iconLayerId, e.message);
             if (typeof window.centroToast === "function") {

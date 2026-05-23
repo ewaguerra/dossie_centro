@@ -27,15 +27,32 @@
     return layerConfig;
   }
 
+  /** @type {Record<string, Promise<object>>} */
+  var layerGeojsonCache = Object.create(null);
+
   async function fetchLayerGeojson(filePath) {
-    var url = buildLayerDataUrl({ file: filePath });
-    var response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(
-        "Falha ao carregar " + filePath + ": " + response.status + " " + url
-      );
+    var key = filePath || "";
+    if (!key) {
+      throw new Error("fetchLayerGeojson: filePath obrigatório");
     }
-    return response.json();
+    if (layerGeojsonCache[key]) {
+      return layerGeojsonCache[key];
+    }
+
+    var url = buildLayerDataUrl({ file: key });
+    var promise = fetch(url).then(function (response) {
+      if (!response.ok) {
+        throw new Error(
+          "Falha ao carregar " + key + ": " + response.status + " " + url
+        );
+      }
+      return response.json();
+    });
+    layerGeojsonCache[key] = promise;
+    promise.catch(function () {
+      delete layerGeojsonCache[key];
+    });
+    return promise;
   }
 
   window.CENTRO = window.CENTRO || {};

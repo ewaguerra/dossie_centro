@@ -832,6 +832,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.doesNotThrow(() => new Function(mod));
     assert.ok(mod.includes('buildLayerDataUrl'), 'export buildLayerDataUrl ausente');
     assert.ok(mod.includes('fetchLayerGeojson'), 'export fetchLayerGeojson ausente');
+    assert.ok(mod.includes('layerGeojsonCache'), 'cache fetchLayerGeojson ausente');
     assert.ok(mod.includes('applyLayerZoomBounds'), 'export applyLayerZoomBounds ausente');
     assert.ok(!mod.includes('document.'), 'layer-data-url sem DOM');
     assert.ok(!mod.includes('localStorage'), 'layer-data-url sem localStorage');
@@ -2074,7 +2075,7 @@ describe('projeto_centro — sanity checks', () => {
       'POI_TURISTICO_LAYER_FILE deve apontar para special/pois'
     );
     assert.ok(runtime.includes('layerFile: poi.POI_TURISTICO_LAYER_FILE'), 'runtime usa POI_TURISTICO_LAYER_FILE');
-    assert.ok(runtime.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'addPOILayer via buildLayerDataUrl');
+    assert.ok(runtime.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'demais POIs via buildLayerDataUrl');
     assert.ok(!runtime.includes('"/centro/data/context/" + poiCfg'), 'sem hardcode /centro/data/context/ no runtime');
     assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
     assert.ok(triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo referencia POI_TURISTICO_LAYER_FILE');
@@ -2083,6 +2084,40 @@ describe('projeto_centro — sanity checks', () => {
 
     const mapMod = loadLayerDataUrlModule();
     assert.strictEqual(mapMod.buildLayerDataUrl({ file: layerFile }), canonicalUrl);
+  });
+
+  it('DATA-PERF-POI-DEDUP: POI turístico compartilha fetchLayerGeojson no boot', async () => {
+    const runtime = read('centro/centro-runtime.js');
+    const triangulo = read('centro/features/triangulo-historico.js');
+    const layerFile = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
+
+    assert.ok(runtime.includes('getCentroMapHelper("fetchLayerGeojson")'), 'addPOILayer delega fetchLayerGeojson');
+    assert.ok(runtime.includes('poiCfg.id === "poi-turistico"'), 'poi-turistico usa fluxo dedicado');
+    assert.ok(runtime.includes('poiLayerArgs.layerFile = poiCfg.layerFile'), 'poi-turistico passa layerFile');
+    assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
+    assert.ok(triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo usa POI_TURISTICO_LAYER_FILE');
+    assert.ok(!triangulo.includes('fetchCentroJson'), 'triangulo sem fetchCentroJson');
+
+    let fetchCount = 0;
+    const sandbox = {
+      window: { CENTRO: { map: {} } },
+      console,
+      fetch: async function () {
+        fetchCount += 1;
+        return {
+          ok: true,
+          json: async () => ({ type: 'FeatureCollection', features: [] }),
+        };
+      },
+    };
+    vm.createContext(sandbox);
+    vm.runInContext(read('centro/map/layer-data-url.js'), sandbox);
+    const mapMod = sandbox.window.CENTRO.map;
+    await Promise.all([
+      mapMod.fetchLayerGeojson(layerFile),
+      mapMod.fetchLayerGeojson(layerFile),
+    ]);
+    assert.strictEqual(fetchCount, 1, 'duas chamadas ao mesmo filePath = um fetch HTTP');
   });
 
   it('DATA-ORG-B4B-2: centro_pois_turisticos em geojson/special/pois', () => {
