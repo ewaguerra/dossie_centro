@@ -858,6 +858,10 @@ describe('projeto_centro — sanity checks', () => {
       '/centro/data/geojson/heavy/15_osm_ruas__line.geojson'
     );
     assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: 'data/geojson/special/arg/centro_arquivo_superficial__point.geojson' }),
+      '/centro/data/geojson/special/arg/centro_arquivo_superficial__point.geojson'
+    );
+    assert.strictEqual(
       mapMod.buildLayerDataUrl({ file: 'legacy/processed/centro_baz.geojson' }),
       '/centro/data/processed/centro_baz.geojson'
     );
@@ -1804,7 +1808,8 @@ describe('projeto_centro — sanity checks', () => {
     if (
       f.startsWith('data/context/') ||
       f.startsWith('data/processed/') ||
-      f.startsWith('data/geojson/heavy/')
+      f.startsWith('data/geojson/heavy/') ||
+      f.startsWith('data/geojson/special/')
     ) {
       return 'centro/' + f;
     }
@@ -2017,6 +2022,34 @@ describe('projeto_centro — sanity checks', () => {
       assert.strictEqual(layer.loadPolicy, 'manual', id + ' deve ter loadPolicy:manual');
       assert.strictEqual(layer.visible, false, id + ' heavy deve ser visible:false');
     }
+  });
+
+  it('DATA-ORG-B4B-1: centro_arquivo_superficial em geojson/special/arg', () => {
+    const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const phaseGates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    const layerUnlocks = JSON.parse(read('centro/data/catalog/layer-unlocks.json'));
+    const id = 'centro_arquivo_superficial__point';
+    const layer = (ctx.layers || []).find(l => l.id === id);
+    const newPath = 'data/geojson/special/arg/centro_arquivo_superficial__point.geojson';
+    const oldPath = 'centro/data/context/centro_arquivo_superficial__point.geojson';
+
+    assert.ok(layer, id + ' deve existir no catálogo');
+    assert.strictEqual(layer.file, newPath, 'file deve apontar para special/arg');
+    assert.ok(wired.layerIds.includes(id), id + ' continua em context-wired');
+    assert.strictEqual(phaseGates.layerMinPhase[id], 6, 'phase gate fase 6 preservado');
+    assert.deepStrictEqual(layerUnlocks.layers[id], ['guardiao-tampa'], 'layer-unlocks exige guardiao-tampa');
+    assert.strictEqual(layer.visible, true, 'visible:true preservado');
+    assert.strictEqual(layer.weightClass, 'light', 'weightClass:light');
+    assert.strictEqual(layer.loadPolicy, 'special', 'loadPolicy:special');
+    assert.ok(exists('centro/' + newPath), newPath + ' ausente no disco');
+    assert.ok(!exists(oldPath), oldPath + ' não deve existir após B4B-1');
+
+    const mapMod = loadLayerDataUrlModule();
+    assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: layer.file }),
+      '/centro/' + newPath
+    );
   });
 
   // ── Popup CSS classes ───────────────────────────────────────────

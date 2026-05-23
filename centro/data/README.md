@@ -105,13 +105,13 @@ centro/data/
 │   ├── layer-unlocks.json
 │   └── phase-gates.json
 │
-├── geojson/                  ← heavy/ ✓ (B3B); special/ pendente B4
+├── geojson/                  ← heavy/ ✓ (B3B); special/arg ✓ (B4B-1)
 │   ├── processed/            ← hoje: processed/ (raiz)
 │   ├── context/              ← hoje: context/ (sem reports) ✓
 │   ├── heavy/                ← 3 GeoJSON heavy ✓ (B3B)
 │   └── special/
-│       ├── pois/
-│       └── arg/
+│       ├── pois/             ← pendente B4B-2
+│       └── arg/              ← centro_arquivo_superficial ✓ (B4B-1)
 │
 ├── raw/                      ← fontes brutas preserváveis ✓
 │
@@ -146,8 +146,11 @@ Estes três arquivos representam ~83% do peso total GeoJSON.
 
 Dados runtime com fluxo especial fora do checkbox padrão:
 
-- `pois/centro_pois_turisticos__point.geojson` — `addPOILayer`, fora de `context-wired`
-- `arg/centro_arquivo_superficial__point.geojson` — camada ARG wired
+- `pois/centro_pois_turisticos__point.geojson` — `addPOILayer`, fora de `context-wired` (pendente B4B-2; ainda em `context/`)
+- `arg/centro_arquivo_superficial__point.geojson` — camada ARG wired (**B4B-1**)
+
+`centro_arquivo_superficial__point` é **on-after-unlock**: `visible: true` no catálogo,
+mas phase gate fase 6 + `layer-unlocks` (`guardiao-tampa`) impedem fetch antes do desbloqueio.
 
 Pistas Rua São Bento **não** moram aqui: runtime usa `centro/assets/pistas/rua-sao-bento-pistas.json`.
 
@@ -171,10 +174,11 @@ Pistas Rua São Bento **não** moram aqui: runtime usa `centro/assets/pistas/rua
 | **DATA-ORG-B3B-metadata** | `weightClass` / `loadPolicy` no catálogo heavy | **feito** (2026-05-23) |
 | **DATA-ORG-B3B-resolver** | `buildLayerDataUrl` + `geojson/heavy/` | **feito** (2026-05-23) |
 | **DATA-ORG-B3B-move** | Mover 3 GeoJSON → `geojson/heavy/` | **feito** (2026-05-23) |
-| **DATA-ORG-B4** | Classificar `special/pois` e `special/arg` | pendente |
+| **DATA-ORG-B4B-1** | Mover ARG → `geojson/special/arg/` | **feito** (2026-05-23) |
+| **DATA-ORG-B4B-2** | Mover POI turístico → `geojson/special/pois/` | pendente |
 | **DATA-ORG-B5** | Mover fósseis → `archive/fossils/` | pendente |
 
-Próximo passo organizacional: **DATA-ORG-B4** (`geojson/special/` — POIs e ARG).
+Próximo passo organizacional: **DATA-ORG-B4B-2** (POI turístico — alto risco, dois consumidores de boot).
 
 ---
 

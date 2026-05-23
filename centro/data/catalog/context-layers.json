@@ -753,13 +753,15 @@
       "coverage": "partial",
       "coverageCheck": "skip-bbox",
       "coverageNote": "Pontos patrocinados com fragmentos do Arquivo dos Soterrados.",
-      "file": "data/context/centro_arquivo_superficial__point.geojson",
+      "file": "data/geojson/special/arg/centro_arquivo_superficial__point.geojson",
       "feature_count": 1,
       "geometry": "point",
       "type": "circle",
       "minzoom": 11,
       "maxzoom": 22,
       "visible": true,
+      "weightClass": "light",
+      "loadPolicy": "special",
       "style": {
         "paint": {
           "circle-radius": [

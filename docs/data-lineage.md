@@ -69,7 +69,8 @@ Toda entrada tem 1:1 em `layers.json`.
 Camadas expandíveis na sidebar (patrimônio leve, geotécnica, declividade).
 Após **DATA-ORG-B2**, contém **somente `.geojson`** — relatórios foram para
 `centro/data/reports/`. Os 3 heavy (~83% do peso) foram para `geojson/heavy/`
-(DATA-ORG-B3B).
+(DATA-ORG-B3B). A camada ARG (`centro_arquivo_superficial__point`) foi para
+`geojson/special/arg/` (DATA-ORG-B4B-1).
 
 | Categoria | Padrão de nome | Exemplo |
 |---|---|---|
@@ -88,6 +89,18 @@ Regeneração OSM: `sync:geojson-from-salto` escreve aqui.
 | `15_osm_ruas__line` | `15_osm_ruas__line.geojson` |
 | `15_osm_enderecos__point` | `15_osm_enderecos__point.geojson` |
 | `centro_bem_tombado__polygon` | `centro_bem_tombado__polygon.geojson` |
+
+### 2.3.2 `centro/data/geojson/special/arg/` — runtime ARG (on-after-unlock)
+
+1 GeoJSON wired na sidebar, narrativa ARG. Resolver: `buildLayerDataUrl` prefixo
+`data/geojson/special/`.
+
+| ID | Arquivo | Catálogo | Gates |
+|---|---|---|---|
+| `centro_arquivo_superficial__point` | `centro_arquivo_superficial__point.geojson` | `weightClass: light`, `loadPolicy: special`, `visible: true` | phase 6 + `guardiao-tampa` |
+
+`visible: true` no catálogo, mas fetch bloqueado até desbloqueio (phase gate +
+`layer-unlocks`). POI turístico permanece em `context/` até B4B-2.
 
 ### 2.4 `centro/data/reports/` — relatórios e legacy (não runtime)
 
@@ -368,8 +381,9 @@ arquitetura — `mapa_sp_salto` é upstream oficial.
 Relatórios de build, match, audit e legacy foram movidos para
 `centro/data/reports/`. `context/` contém somente GeoJSON runtime leve (+ 1
 órfão documentado). Os 3 heavy (~83% do peso) foram movidos para
-`centro/data/geojson/heavy/` (DATA-ORG-B3B). Próximo passo: `geojson/special/`
-(gate DATA-ORG-B4).
+`centro/data/geojson/heavy/` (DATA-ORG-B3B). ARG (`centro_arquivo_superficial__point`)
+foi para `geojson/special/arg/` (DATA-ORG-B4B-1). Próximo passo: POI turístico
+em `geojson/special/pois/` (gate DATA-ORG-B4B-2).
 
 ---
 
