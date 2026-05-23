@@ -1015,46 +1015,43 @@
     activeLayers.delete(id);
   }
 
+  function getLockToastMessage(layerId) {
+    var lockMsgFn = getSidebarLayerStateHelper("getLockMessage");
+    var state = resolveSidebarLockState(layerId);
+    if (typeof lockMsgFn === "function") return lockMsgFn(state, "toast");
+    return !isLayerUnlocked(layerId)
+      ? "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto)."
+      : "Camada bloqueada. Avance de fase no ARG (fase mínima " + getMinPhaseLabel(layerId) + ").";
+  }
+
   // Conecta os checkboxes ao mapa. Substitui o polling com setInterval
   // anterior: agora é chamado uma única vez logo após o render da sidebar,
   // e cada mudança consulta o catálogo já indexado em memória.
   function wireLayerCheckboxes(panel) {
-    var checkboxes = panel.querySelectorAll("input[type=\"checkbox\"][data-layer-id]");
-    checkboxes.forEach(function (cb) {
-      cb.addEventListener("change", function () {
-        var lid = cb.dataset.layerId;
-        if (!lid || !catalogIndex) return;
-        if (!isLayerAccessible(lid)) {
-          cb.checked = false;
-          if (typeof window.centroToast === "function") {
-            var msg = !isLayerUnlocked(lid)
-              ? "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto)."
-              : "Camada bloqueada. Avance de fase no ARG (fase mínima " + getMinPhaseLabel(lid) + ").";
-            window.centroToast(msg, "warn");
-          }
-          return;
+    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.wireLayerCheckboxes;
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] sidebar-events.js ausente — wireLayerCheckboxes indisponível");
+      return;
+    }
+    fn(panel, {
+      hasCatalog: function () {
+        return !!catalogIndex;
+      },
+      getLayerConfig: function (layerId) {
+        return catalogIndex ? catalogIndex.get(layerId) : null;
+      },
+      isLayerAccessible: isLayerAccessible,
+      getLockToastMessage: getLockToastMessage,
+      whenMapReady: function (cb) {
+        return mapReadyPromise.then(cb);
+      },
+      addLayerToMap: addLayerToMap,
+      removeLayerFromMap: removeLayerFromMap,
+      toast: function (msg, level) {
+        if (typeof window.centroToast === "function") {
+          window.centroToast(msg, level);
         }
-        var cfg = catalogIndex.get(lid);
-        if (!cfg) return;
-        mapReadyPromise.then(function () {
-          if (cb.checked) {
-            addLayerToMap(cfg).catch(function (err) {
-              console.warn("[CENTRO] Erro ao adicionar camada", lid, err);
-            });
-          } else {
-            removeLayerFromMap(lid);
-          }
-        });
-      });
-    });
-
-    // Ativa as camadas marcadas por padrão assim que o mapa estiver pronto.
-    mapReadyPromise.then(function () {
-      panel
-        .querySelectorAll("input[type=\"checkbox\"][data-layer-id]:checked:not(:disabled)")
-        .forEach(function (cb) {
-          cb.dispatchEvent(new Event("change"));
-        });
+      },
     });
   }
 

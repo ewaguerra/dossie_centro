@@ -62,6 +62,53 @@ function loadSidebarLayerStateModule() {
   return sandbox.window.CENTRO.sidebarLayerState;
 }
 
+function loadSidebarEventsModule() {
+  const sandbox = {
+    window: { CENTRO: { ui: {} } },
+    console,
+    Event: class Event {
+      constructor(type) {
+        this.type = type;
+      }
+    },
+  };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/ui/sidebar-events.js'), sandbox);
+  return sandbox.window.CENTRO.ui.wireLayerCheckboxes;
+}
+
+function makeMockCheckbox(layerId, opts) {
+  opts = opts || {};
+  const cb = {
+    type: 'checkbox',
+    checked: opts.checked !== undefined ? opts.checked : false,
+    disabled: !!opts.disabled,
+    dataset: { layerId: layerId },
+    _handler: null,
+    addEventListener: function (_ev, fn) {
+      this._handler = fn;
+    },
+    dispatchEvent: function () {
+      if (this._handler) this._handler();
+    },
+  };
+  return cb;
+}
+
+function makeMockPanel(checkboxes) {
+  return {
+    _boxes: checkboxes,
+    querySelectorAll: function (sel) {
+      if (sel.indexOf(':checked') !== -1) {
+        return this._boxes.filter(function (b) {
+          return b.checked && !b.disabled;
+        });
+      }
+      return this._boxes;
+    },
+  };
+}
+
 describe('projeto_centro — sanity checks', () => {
 
   // ── Páginas principais existem ──────────────────────────────────
@@ -882,6 +929,117 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(htmlDump.includes('layer-row--phase-locked'), 'phase-locked renderizado');
     assert.ok(htmlDump.includes('fase 2'), 'meta fase preservada');
     assert.ok(htmlDump.includes('ly-open'), 'camada aberta presente');
+  });
+
+  // ── Gate 4.5D-B: sidebar-events wiring ───────────────────────────
+  it('centro: sidebar-events.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const eventsIdx = html.indexOf('ui/sidebar-events.js');
+    const panelIdx = html.indexOf('ui/sidebar-panel.js');
+    assert.ok(eventsIdx > -1, 'sidebar-events.js ausente no HTML');
+    assert.ok(panelIdx < eventsIdx && eventsIdx < runtimeIdx, 'sidebar-events deve preceder centro-runtime.js');
+
+    const events = read('centro/ui/sidebar-events.js');
+    assert.doesNotThrow(() => new Function(events));
+    assert.ok(events.includes('CENTRO.ui.wireLayerCheckboxes'), 'export wireLayerCheckboxes ausente');
+    assert.ok(events.includes('data-layer-id'), 'contrato data-layer-id');
+    assert.ok(!events.includes('localStorage'), 'sidebar-events sem localStorage');
+    assert.ok(!events.includes('catalogIndex'), 'sidebar-events sem catalogIndex');
+    assert.ok(!events.includes('protocoloPhase'), 'sidebar-events sem protocoloPhase');
+    assert.ok(!events.includes('layerUnlocks'), 'sidebar-events sem layerUnlocks');
+    assert.ok(!events.includes('getSource'), 'sidebar-events sem MapLibre getSource');
+    assert.ok(!/[^.]addLayer\s*\(/.test(events), 'sidebar-events sem addLayer MapLibre');
+    assert.ok(!events.includes('maplibregl'), 'sidebar-events sem maplibregl');
+    assert.ok(!events.includes('fetch('), 'sidebar-events sem fetch');
+    assert.ok(!events.includes('data-centro-wired'), 'sem guard panel-level');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('CENTRO.ui.wireLayerCheckboxes'), 'runtime delega wireLayerCheckboxes');
+    assert.ok(runtime.includes('getLockToastMessage'), 'runtime expoe toast lock via wrapper');
+    assert.ok(!runtime.includes('querySelectorAll("input[type=\\"checkbox\\"][data-layer-id]")'), 'query wire nao duplicado no runtime');
+    assert.ok(runtime.includes('function addLayerToMap'), 'addLayerToMap permanece no runtime');
+    assert.ok(runtime.includes('function removeLayerFromMap'), 'removeLayerFromMap permanece no runtime');
+    assert.strictEqual((runtime.match(/function wireLayerCheckboxes/g) || []).length, 1, 'wrapper wireLayerCheckboxes');
+  });
+
+  it('sidebar-events.js: wiring mock checkbox unlocked/checked chama addLayerToMap', () => {
+    const wire = loadSidebarEventsModule();
+    const cb = makeMockCheckbox('ly-poly', { checked: false });
+    const panel = makeMockPanel([cb]);
+    let addCalls = 0;
+    wire(panel, {
+      hasCatalog: function () { return true; },
+      getLayerConfig: function (id) { return id === 'ly-poly' ? { id: 'ly-poly', geom: 'polygon' } : null; },
+      isLayerAccessible: function () { return true; },
+      getLockToastMessage: function () { return 'lock'; },
+      whenMapReady: function (fn) { fn(); return Promise.resolve(); },
+      addLayerToMap: function () { addCalls++; return Promise.resolve(); },
+      removeLayerFromMap: function () {},
+      toast: function () {},
+    });
+    cb.checked = true;
+    cb.dispatchEvent();
+    assert.strictEqual(addCalls, 1, 'addLayerToMap uma vez');
+  });
+
+  it('sidebar-events.js: wiring mock unchecked chama removeLayerFromMap', () => {
+    const wire = loadSidebarEventsModule();
+    const cb = makeMockCheckbox('ly-line', { checked: false });
+    const panel = makeMockPanel([cb]);
+    let removeCalls = 0;
+    wire(panel, {
+      hasCatalog: function () { return true; },
+      getLayerConfig: function (id) { return { id: id, geom: 'line' }; },
+      isLayerAccessible: function () { return true; },
+      getLockToastMessage: function () { return ''; },
+      whenMapReady: function (fn) { fn(); return Promise.resolve(); },
+      addLayerToMap: function () {},
+      removeLayerFromMap: function (id) { removeCalls++; assert.strictEqual(id, 'ly-line'); },
+      toast: function () {},
+    });
+    cb.dispatchEvent();
+    assert.strictEqual(removeCalls, 1, 'removeLayerFromMap uma vez');
+  });
+
+  it('sidebar-events.js: wiring mock locked reverte checked e chama toast', () => {
+    const wire = loadSidebarEventsModule();
+    const cb = makeMockCheckbox('ly-lock', { checked: true });
+    const panel = makeMockPanel([cb]);
+    let addCalls = 0;
+    let toastMsg = '';
+    wire(panel, {
+      hasCatalog: function () { return true; },
+      getLayerConfig: function () { return { id: 'ly-lock' }; },
+      isLayerAccessible: function () { return false; },
+      getLockToastMessage: function () { return 'Camada bloqueada. TESTE'; },
+      whenMapReady: function (fn) { fn(); return Promise.resolve(); },
+      addLayerToMap: function () { addCalls++; },
+      removeLayerFromMap: function () {},
+      toast: function (msg) { toastMsg = msg; },
+    });
+    cb.dispatchEvent();
+    assert.strictEqual(cb.checked, false, 'checkbox revertido');
+    assert.ok(toastMsg.includes('TESTE'), 'toast lock chamado');
+    assert.strictEqual(addCalls, 0, 'addLayerToMap nao chamado');
+  });
+
+  it('sidebar-events.js: bootstrap checked:not(:disabled) dispara change', () => {
+    const wire = loadSidebarEventsModule();
+    const cb = makeMockCheckbox('ly-boot', { checked: true });
+    const panel = makeMockPanel([cb]);
+    let addCalls = 0;
+    wire(panel, {
+      hasCatalog: function () { return true; },
+      getLayerConfig: function (id) { return { id: id, geom: 'point' }; },
+      isLayerAccessible: function () { return true; },
+      getLockToastMessage: function () { return ''; },
+      whenMapReady: function (fn) { fn(); return Promise.resolve(); },
+      addLayerToMap: function () { addCalls++; return Promise.resolve(); },
+      removeLayerFromMap: function () {},
+      toast: function () {},
+    });
+    assert.strictEqual(addCalls, 1, 'bootstrap dispara addLayerToMap');
   });
 
   // ── Symbol popup layer factory ──────────────────────────────────
