@@ -1,6 +1,8 @@
 # Documentação do projeto
 
-Tudo que descreve **este repositório** — stack, testes, offline, design system, decisões (ADR).
+Tudo que descreve **este repositório (Centro/mapa)** — stack, testes, offline, design system, decisões (ADR).
+
+Documentação do ARG completo (superfícies, pistas, fluxo do jogador, contratos) vive no repositório privado **`dossie_arg_contracts`**.
 
 ## CAPRI (inteligência externa)
 
@@ -8,10 +10,10 @@ Tudo que descreve **este repositório** — stack, testes, offline, design syste
 
 | CAPRI (fora) | Este repo (aqui) |
 |---|---|
-| Método, rubricas, análises, épicos | Código, `AGENT.md`, `docs/` |
-| “Como avaliar / priorizar” | “O que ficou decidido e como rodar” |
+| Método, rubricas, análises, épicos | Código do Centro, `AGENT.md`, `docs/` |
+| “Como avaliar / priorizar” | “O que ficou decidido e como rodar o mapa” |
 
-Quando uma análise CAPRI gera uma decisão, ela vira **ADR**, entrada em `docs/stack.md`, teste em `docs/testing/`, ou regra em `AGENT.md` — nunca uma cópia de artefatos CAPRI em `docs/capri/`.
+Quando uma análise CAPRI gera uma decisão, ela vira **ADR**, entrada em `docs/stack.md`, teste em `docs/testing/`, ou regra em `AGENT.md`.
 
 ## Índice
 
@@ -27,6 +29,16 @@ Quando uma análise CAPRI gera uma decisão, ela vira **ADR**, entrada em `docs/
 | [accessibility/contrast-notes.md](./accessibility/contrast-notes.md) | Contraste WCAG (amostragem) |
 | [adr/0001-site-estatico-sem-framework.md](./adr/0001-site-estatico-sem-framework.md) | Decisão: site estático |
 | [design-system/README.md](./design-system/README.md) | Tokens, componentes, a11y |
+| [architecture/map-init-flow.md](./architecture/map-init-flow.md) | Fluxo de init do mapa |
+
+## Repositórios irmãos (ARG)
+
+| Repo | Superfície |
+|---|---|
+| `dossie_landing_portal` | Landing `/landing/` |
+| `dossie_arquivo_morto` | Arquivo Morto `/arquivo-morto/` |
+| `dossie_arquivista` | Arquivista `/arquivista/` |
+| `dossie_arg_contracts` | Contratos ARG, glossário, smoke manual |
 
 ## Guia do agente / contribuidor
 
