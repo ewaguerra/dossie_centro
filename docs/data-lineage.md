@@ -70,12 +70,12 @@ Camadas expandíveis na sidebar (patrimônio leve, geotécnica, declividade).
 Após **DATA-ORG-B2**, contém **somente `.geojson`** — relatórios foram para
 `centro/data/reports/`. Os 3 heavy (~83% do peso) foram para `geojson/heavy/`
 (DATA-ORG-B3B). A camada ARG (`centro_arquivo_superficial__point`) foi para
-`geojson/special/arg/` (DATA-ORG-B4B-1).
+`geojson/special/arg/` (DATA-ORG-B4B-1). POI turístico (`centro_pois_turisticos__point`)
+foi para `geojson/special/pois/` (DATA-ORG-B4B-2).
 
 | Categoria | Padrão de nome | Exemplo |
 |---|---|---|
 | Camada wired (sidebar) | `*.geojson` | `centro_rios_geosampa__line.geojson` |
-| Camada não wired | `centro_pois_turisticos__point.geojson` | exceção oficial — §4 |
 | Órfão conhecido | (ver §4) | `centro_pistas_rua_sao_bento__point.geojson` |
 
 ### 2.3.1 `centro/data/geojson/heavy/` — runtime heavy (manual load)
@@ -100,7 +100,20 @@ Regeneração OSM: `sync:geojson-from-salto` escreve aqui.
 | `centro_arquivo_superficial__point` | `centro_arquivo_superficial__point.geojson` | `weightClass: light`, `loadPolicy: special`, `visible: true` | phase 6 + `guardiao-tampa` |
 
 `visible: true` no catálogo, mas fetch bloqueado até desbloqueio (phase gate +
-`layer-unlocks`). POI turístico permanece em `context/` até B4B-2.
+`layer-unlocks`).
+
+### 2.3.3 `centro/data/geojson/special/pois/` — runtime POI turístico (boot load)
+
+1 GeoJSON fora da sidebar, fluxo especial. Resolver: `buildLayerDataUrl` prefixo
+`data/geojson/special/`. Consumidores: `addPOILayer` (boot) e `triangulo-historico.js`
+(via `POI_TURISTICO_LAYER_FILE` → `fetchLayerGeojson`).
+
+| ID | Arquivo | Catálogo | Gates |
+|---|---|---|---|
+| `centro_pois_turisticos__point` | `centro_pois_turisticos__point.geojson` | `weightClass: light`, `loadPolicy: special`, `visible: true`, `feature_count: 64` | fora de `context-wired` — §4.1 |
+
+Em `context-layers.json` para o catálogo conhecer props; **não** wired na sidebar.
+Deduplicação de fetch entre `addPOILayer` e Triângulo Histórico fica fora deste gate.
 
 ### 2.4 `centro/data/reports/` — relatórios e legacy (não runtime)
 
@@ -382,8 +395,9 @@ Relatórios de build, match, audit e legacy foram movidos para
 `centro/data/reports/`. `context/` contém somente GeoJSON runtime leve (+ 1
 órfão documentado). Os 3 heavy (~83% do peso) foram movidos para
 `centro/data/geojson/heavy/` (DATA-ORG-B3B). ARG (`centro_arquivo_superficial__point`)
-foi para `geojson/special/arg/` (DATA-ORG-B4B-1). Próximo passo: POI turístico
-em `geojson/special/pois/` (gate DATA-ORG-B4B-2).
+foi para `geojson/special/arg/` (DATA-ORG-B4B-1). POI turístico
+(`centro_pois_turisticos__point`) foi para `geojson/special/pois/` (DATA-ORG-B4B-2).
+Próximo passo: fósseis em `archive/fossils/` (gate DATA-ORG-B5).
 
 ---
 

@@ -56,8 +56,9 @@ Somente `.geojson` — relatórios foram para `reports/` (DATA-ORG-B2).
 | Categoria | Padrão | Exemplo |
 |---|---|---|
 | Camada wired (sidebar) | `*.geojson` | `centro_rios_geosampa__line.geojson` |
-| Camada não wired (POI) | `centro_pois_turisticos__point.geojson` | carregada por `addPOILayer`, não sidebar |
 | Fóssil conhecido | (fora do catálogo) | `centro_pistas_rua_sao_bento__point.geojson` |
+
+POI turístico (`centro_pois_turisticos__point`) foi para `geojson/special/pois/` (B4B-2).
 
 Catálogo: `catalog/context-layers.json` + filtro `catalog/context-wired.json`.
 
@@ -105,12 +106,12 @@ centro/data/
 │   ├── layer-unlocks.json
 │   └── phase-gates.json
 │
-├── geojson/                  ← heavy/ ✓ (B3B); special/arg ✓ (B4B-1)
+├── geojson/                  ← heavy/ ✓ (B3B); special/ ✓ (B4B-1, B4B-2)
 │   ├── processed/            ← hoje: processed/ (raiz)
 │   ├── context/              ← hoje: context/ (sem reports) ✓
 │   ├── heavy/                ← 3 GeoJSON heavy ✓ (B3B)
 │   └── special/
-│       ├── pois/             ← pendente B4B-2
+│       ├── pois/             ← centro_pois_turisticos ✓ (B4B-2)
 │       └── arg/              ← centro_arquivo_superficial ✓ (B4B-1)
 │
 ├── raw/                      ← fontes brutas preserváveis ✓
@@ -146,8 +147,14 @@ Estes três arquivos representam ~83% do peso total GeoJSON.
 
 Dados runtime com fluxo especial fora do checkbox padrão:
 
-- `pois/centro_pois_turisticos__point.geojson` — `addPOILayer`, fora de `context-wired` (pendente B4B-2; ainda em `context/`)
+- `pois/centro_pois_turisticos__point.geojson` — `addPOILayer` + Triângulo Histórico, fora de `context-wired` (**B4B-2**)
 - `arg/centro_arquivo_superficial__point.geojson` — camada ARG wired (**B4B-1**)
+
+`centro_pois_turisticos__point` é carregado no boot por `addPOILayer` e consumido
+por `triangulo-historico.js` via `POI_TURISTICO_LAYER_FILE` → `buildLayerDataUrl()`.
+Permanece em `context-layers.json` (catálogo conhece props) mas **fora** de
+`context-wired.json`. Deduplicação de fetch entre os dois consumidores fica
+fora deste gate.
 
 `centro_arquivo_superficial__point` é **on-after-unlock**: `visible: true` no catálogo,
 mas phase gate fase 6 + `layer-unlocks` (`guardiao-tampa`) impedem fetch antes do desbloqueio.
@@ -175,10 +182,10 @@ Pistas Rua São Bento **não** moram aqui: runtime usa `centro/assets/pistas/rua
 | **DATA-ORG-B3B-resolver** | `buildLayerDataUrl` + `geojson/heavy/` | **feito** (2026-05-23) |
 | **DATA-ORG-B3B-move** | Mover 3 GeoJSON → `geojson/heavy/` | **feito** (2026-05-23) |
 | **DATA-ORG-B4B-1** | Mover ARG → `geojson/special/arg/` | **feito** (2026-05-23) |
-| **DATA-ORG-B4B-2** | Mover POI turístico → `geojson/special/pois/` | pendente |
+| **DATA-ORG-B4B-2** | Mover POI turístico → `geojson/special/pois/` | **feito** (2026-05-23) |
 | **DATA-ORG-B5** | Mover fósseis → `archive/fossils/` | pendente |
 
-Próximo passo organizacional: **DATA-ORG-B4B-2** (POI turístico — alto risco, dois consumidores de boot).
+Próximo passo organizacional: **DATA-ORG-B5** (fósseis → `archive/fossils/`).
 
 ---
 

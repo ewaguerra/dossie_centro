@@ -5,7 +5,7 @@
   "use strict";
 
   var POI_TURISTICO_LAYER_FILE =
-    "data/context/centro_pois_turisticos__point.geojson";
+    "data/geojson/special/pois/centro_pois_turisticos__point.geojson";
 
   var POI_TURISTICO_LAYERS = Object.freeze({
     sourceId: "poi-turistico-source",

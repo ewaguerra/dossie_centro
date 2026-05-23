@@ -1634,7 +1634,7 @@ describe('projeto_centro — sanity checks', () => {
     const runtime = read('centro/centro-runtime.js');
     const icons = read('vendor/app/config/map-icons.js');
     const poiIcons = read('centro/features/poi-icons.js');
-    const layerFile = 'data/context/centro_pois_turisticos__point.geojson';
+    const layerFile = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
     assert.ok(runtime.includes('poi-turistico'), 'runtime deve carregar POI turistico');
     assert.ok(runtime.includes('POI_TURISTICO_LAYER_FILE'), 'runtime referencia POI_TURISTICO_LAYER_FILE');
     assert.ok(runtime.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'addPOILayer via buildLayerDataUrl');
@@ -1643,10 +1643,10 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(icons.includes('icon-turismo'), 'icone turismo ausente no registry');
     assert.ok(poiIcons.includes('poi-turistico-source'), 'poi-icons source turistico ausente');
     assert.ok(poiIcons.includes('POI_TURISTICO_LAYER_FILE'), 'POI_TURISTICO_LAYER_FILE ausente em poi-icons');
-    assert.ok(poiIcons.includes(layerFile), 'POI_TURISTICO_LAYER_FILE aponta para context/');
-    assert.ok(exists('centro/' + layerFile), 'geojson turistico ausente em context/');
-    assert.ok(!exists('centro/data/geojson/special/pois/centro_pois_turisticos__point.geojson'),
-      'POI turistico ainda nao foi movido para special/pois');
+    assert.ok(poiIcons.includes(layerFile), 'POI_TURISTICO_LAYER_FILE aponta para special/pois');
+    assert.ok(exists('centro/' + layerFile), 'geojson turistico ausente em special/pois');
+    assert.ok(!exists('centro/data/context/centro_pois_turisticos__point.geojson'),
+      'POI turistico nao deve permanecer em context/');
   });
 
   it('ponte transmidia: caderno localStorage e layer-unlocks no centro', () => {
@@ -2064,14 +2064,14 @@ describe('projeto_centro — sanity checks', () => {
     const runtime = read('centro/centro-runtime.js');
     const triangulo = read('centro/features/triangulo-historico.js');
     const poiIcons = read('centro/features/poi-icons.js');
-    const layerFile = 'data/context/centro_pois_turisticos__point.geojson';
-    const canonicalUrl = '/centro/data/context/centro_pois_turisticos__point.geojson';
+    const layerFile = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
+    const canonicalUrl = '/centro/data/geojson/special/pois/centro_pois_turisticos__point.geojson';
 
     assert.ok(poiIcons.includes('POI_TURISTICO_LAYER_FILE'), 'constante canônica em poi-icons');
     assert.strictEqual(
       poiIcons.match(/POI_TURISTICO_LAYER_FILE\s*=\s*\n?\s*"([^"]+)"/)?.[1],
       layerFile,
-      'POI_TURISTICO_LAYER_FILE deve apontar para context/'
+      'POI_TURISTICO_LAYER_FILE deve apontar para special/pois'
     );
     assert.ok(runtime.includes('layerFile: poi.POI_TURISTICO_LAYER_FILE'), 'runtime usa POI_TURISTICO_LAYER_FILE');
     assert.ok(runtime.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'addPOILayer via buildLayerDataUrl');
@@ -2083,9 +2083,31 @@ describe('projeto_centro — sanity checks', () => {
 
     const mapMod = loadLayerDataUrlModule();
     assert.strictEqual(mapMod.buildLayerDataUrl({ file: layerFile }), canonicalUrl);
-    assert.ok(exists('centro/' + layerFile), layerFile + ' permanece em context/');
-    assert.ok(!exists('centro/data/geojson/special/pois/centro_pois_turisticos__point.geojson'),
-      'GeoJSON não foi movido para special/pois');
+  });
+
+  it('DATA-ORG-B4B-2: centro_pois_turisticos em geojson/special/pois', () => {
+    const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const id = 'centro_pois_turisticos__point';
+    const layer = (ctx.layers || []).find(l => l.id === id);
+    const newPath = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
+    const oldPath = 'centro/data/context/centro_pois_turisticos__point.geojson';
+
+    assert.ok(layer, id + ' deve existir no catálogo');
+    assert.strictEqual(layer.file, newPath, 'file deve apontar para special/pois');
+    assert.ok(!wired.layerIds.includes(id), id + ' continua fora de context-wired');
+    assert.strictEqual(layer.feature_count, 64, 'feature_count:64 preservado');
+    assert.strictEqual(layer.visible, true, 'visible:true preservado');
+    assert.strictEqual(layer.weightClass, 'light', 'weightClass:light');
+    assert.strictEqual(layer.loadPolicy, 'special', 'loadPolicy:special');
+    assert.ok(exists('centro/' + newPath), newPath + ' ausente no disco');
+    assert.ok(!exists(oldPath), oldPath + ' não deve existir após B4B-2');
+
+    const mapMod = loadLayerDataUrlModule();
+    assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: layer.file }),
+      '/centro/' + newPath
+    );
   });
 
   // ── Popup CSS classes ───────────────────────────────────────────

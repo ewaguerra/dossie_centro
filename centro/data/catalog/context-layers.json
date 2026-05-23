@@ -204,7 +204,7 @@
       "coverage": "partial",
       "coverageCheck": "skip-bbox",
       "coverageNote": "Fragmentos recuperados de dossiês históricos.",
-      "file": "data/context/centro_pois_turisticos__point.geojson",
+      "file": "data/geojson/special/pois/centro_pois_turisticos__point.geojson",
       "feature_count": 64,
       "expected_count": 79,
       "missing_count": 15,
@@ -213,6 +213,8 @@
       "minzoom": 12,
       "maxzoom": 22,
       "visible": true,
+      "weightClass": "light",
+      "loadPolicy": "special",
       "style": {
         "paint": {
           "circle-radius": [

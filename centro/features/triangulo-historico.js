@@ -231,7 +231,7 @@
         var poi = window.CENTRO && window.CENTRO.poiIcons;
         var layerFile =
           (poi && poi.POI_TURISTICO_LAYER_FILE) ||
-          "data/context/centro_pois_turisticos__point.geojson";
+          "data/geojson/special/pois/centro_pois_turisticos__point.geojson";
         var fetchLayer =
           window.CENTRO &&
           window.CENTRO.map &&

@@ -329,7 +329,7 @@ describe('projeto_centro — HTTP integration', () => {
       '/centro/assets/icons/icon-pista.svg',
       '/centro/assets/icons/icon-droplets.svg',
       '/centro/assets/icons/icon-turismo.svg',
-      '/centro/data/context/centro_pois_turisticos__point.geojson',
+      '/centro/data/geojson/special/pois/centro_pois_turisticos__point.geojson',
       '/centro/data/catalog/layer-unlocks.json',
     ];
 
@@ -337,5 +337,9 @@ describe('projeto_centro — HTTP integration', () => {
       const res = await fetchPath(path);
       assert.strictEqual(res.status, 200, path + ' deve retornar 200');
     }
+
+    const oldPoiPath = '/centro/data/context/centro_pois_turisticos__point.geojson';
+    const oldRes = await fetchPath(oldPoiPath);
+    assert.strictEqual(oldRes.status, 404, oldPoiPath + ' deve retornar 404 após B4B-2');
   });
 });
