@@ -1151,64 +1151,14 @@
     });
   }
 
-  function setupLazyImageObserver() {
-    var observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (m) {
-        m.addedNodes.forEach(function (n) {
-          if (n.nodeName === "IMG" && !n.loading) {
-            n.setAttribute("loading", "lazy");
-          }
-          if (n.querySelectorAll) {
-            n.querySelectorAll("img:not([loading])").forEach(function (img) {
-              img.setAttribute("loading", "lazy");
-            });
-          }
-        });
-      });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-    console.log("[CENTRO] Lazy loading observer ativo");
-  }
-
-  function setupToast() {
-    var toastEl = null;
-    var msgEl = null;
-
-    function hideToast() {
-      if (toastEl) toastEl.classList.add("is-hidden");
+  function setupCentroUiFromModules() {
+    var ui = window.CENTRO && window.CENTRO.ui;
+    if (ui && typeof ui.setupToast === "function") {
+      ui.setupToast();
     }
-
-    window.centroToast = function (msg, type) {
-      if (!toastEl) {
-        toastEl = document.createElement("div");
-        toastEl.id = "centro-toast";
-        toastEl.className = "toast is-hidden";
-        toastEl.setAttribute("role", "status");
-        toastEl.setAttribute("aria-live", "polite");
-
-        msgEl = document.createElement("span");
-        msgEl.className = "toast__message";
-
-        var closeBtn = document.createElement("button");
-        closeBtn.type = "button";
-        closeBtn.className = "toast__close";
-        closeBtn.setAttribute("aria-label", "Fechar");
-        closeBtn.textContent = "\u00d7";
-        closeBtn.addEventListener("click", hideToast);
-
-        toastEl.appendChild(msgEl);
-        toastEl.appendChild(closeBtn);
-        document.body.appendChild(toastEl);
-      }
-
-      msgEl.textContent = msg;
-      toastEl.classList.toggle("toast--warn", type === "warn");
-      toastEl.classList.remove("is-hidden");
-
-      if (window.centroToastTimer) clearTimeout(window.centroToastTimer);
-      window.centroToastTimer = setTimeout(hideToast, 4000);
-    };
-    console.log("[CENTRO] Toast system ready");
+    if (ui && typeof ui.setupLazyImageObserver === "function") {
+      ui.setupLazyImageObserver();
+    }
   }
 
   function toggleSidebar() {
@@ -1300,8 +1250,7 @@
     setupSubterraneanFlyButtons();
     setupPoiThemeFilter();
     setupNarrativeNav();
-    setupToast();
-    setupLazyImageObserver();
+    setupCentroUiFromModules();
     setupKeyboardShortcuts();
     setupSubterraneanGuide();
     loadSidebarData();

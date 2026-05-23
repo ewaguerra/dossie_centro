@@ -256,8 +256,7 @@ describe('projeto_centro — sanity checks', () => {
       'function initMap',
       'function addPOILayer',
       'function loadSidebarData',
-      'function setupLazyImageObserver',
-      'function setupToast',
+      'setupCentroUiFromModules',
       'window.centroNavigate',
       'window.centroGoTo',
     ];
@@ -532,21 +531,37 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── Performance — Lazy loading ──────────────────────────────────
-  it('centro/index.html deve conter lazy loading observer', () => {
-    const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('loading", "lazy"') || runtime.includes('loading="lazy"'), 'loading=lazy ausente');
-    assert.ok(runtime.includes('MutationObserver'), 'MutationObserver ausente');
+  it('centro: ui toast e lazy-assets carregados antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const toastIdx = html.indexOf('ui/toast.js');
+    const lazyIdx = html.indexOf('ui/lazy-assets.js');
+    assert.ok(toastIdx > -1 && lazyIdx > -1, 'scripts ui/toast e ui/lazy-assets ausentes');
+    assert.ok(toastIdx < runtimeIdx && lazyIdx < runtimeIdx, 'ui scripts devem preceder centro-runtime.js');
+    assert.ok(toastIdx < lazyIdx, 'toast.js deve preceder lazy-assets.js');
+
+    const toast = read('centro/ui/toast.js');
+    const lazy = read('centro/ui/lazy-assets.js');
+    assert.doesNotThrow(() => new Function(toast));
+    assert.doesNotThrow(() => new Function(lazy));
+    assert.ok(toast.includes('window.centroToast'), 'toast.js deve expor centroToast');
+    assert.ok(toast.includes('CENTRO.ui.setupToast'), 'toast.js registra CENTRO.ui.setupToast');
+    assert.ok(lazy.includes('MutationObserver'), 'lazy-assets.js usa MutationObserver');
+    assert.ok(lazy.includes('loading", "lazy"'), 'lazy-assets.js aplica loading lazy');
+    assert.ok(lazy.includes('CENTRO.ui.setupLazyImageObserver'), 'lazy-assets registra setupLazyImageObserver');
   });
 
   // ── UX — Toast feedback ─────────────────────────────────────────
   it('centro/index.html deve conter centroToast', () => {
+    const toast = read('centro/ui/toast.js');
+    assert.ok(toast.includes('centroToast'), 'centroToast ausente em ui/toast.js');
+    assert.ok(toast.includes('centro-toast'), 'centro-toast element ausente');
+    assert.ok(toast.includes('toast is-hidden'), 'toast usa classe DS');
+    assert.ok(toast.includes('toast__close'), 'toast usa BEM close');
+    assert.ok(!toast.includes('toastEl.style.cssText'), 'toast sem style.cssText');
+    assert.ok(!toast.includes('toastEl.style.background'), 'toast sem cor inline');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('centroToast'), 'centroToast ausente');
-    assert.ok(runtime.includes('centro-toast'), 'centro-toast element ausente');
-    assert.ok(runtime.includes('toast is-hidden'), 'toast usa classe DS');
-    assert.ok(runtime.includes('toast__close'), 'toast usa BEM close');
-    assert.ok(!runtime.includes('toastEl.style.cssText'), 'toast sem style.cssText');
-    assert.ok(!runtime.includes('toastEl.style.background'), 'toast sem cor inline');
+    assert.ok(runtime.includes('setupCentroUiFromModules'), 'runtime delega UI via setupCentroUiFromModules');
   });
 
   it('centro-runtime.js: showInspector debug usa card--inspector sem inline', () => {
@@ -585,8 +600,9 @@ describe('projeto_centro — sanity checks', () => {
     const html = read('centro/index.html');
     const runtimeIdx = html.indexOf('centro-runtime.js');
     const popupsIdx = html.indexOf('ui/map-popups.js');
+    const lazyIdx = html.indexOf('ui/lazy-assets.js');
     assert.ok(popupsIdx > -1, 'ui/map-popups.js ausente no HTML');
-    assert.ok(popupsIdx < runtimeIdx, 'map-popups.js deve preceder centro-runtime.js');
+    assert.ok(lazyIdx < popupsIdx && popupsIdx < runtimeIdx, 'map-popups.js deve preceder centro-runtime.js');
 
     const popups = read('centro/ui/map-popups.js');
     assert.doesNotThrow(() => new Function(popups));
