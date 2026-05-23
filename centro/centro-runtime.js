@@ -291,7 +291,7 @@
     var iconPath = cfg.iconPath;
 
     if (!sourceId || !iconLayerId) {
-      console.warn("[CENTRO] addPOILayer: sourceId ou iconLayerId ausente — cfg:", JSON.stringify({ sourceId: sourceId, iconLayerId: iconLayerId, dataPath: dataPath }));
+      console.warn("[CENTRO] addPOILayer: sourceId ou iconLayerId ausente (cache stale?) — sourceId=" + sourceId + " iconLayerId=" + iconLayerId + " dataPath=" + dataPath);
       return;
     }
 
@@ -710,6 +710,15 @@
       console.warn("[CENTRO] MapLibre error:", err || e);
     });
 
+    // Ícones do sprite do OpenFreeMap (recycling, office, bicycle_parking …)
+    // que não estão carregados no contexto do projecto. Substitui por pixel
+    // transparente para silenciar o flood de avisos no console.
+    map.on("styleimagemissing", function (e) {
+      if (!map.hasImage(e.id)) {
+        map.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) });
+      }
+    });
+
     map.on("load", async function () {
       clampViewToCentroBounds(map);
       ensureMapGroundReadable();
@@ -719,12 +728,38 @@
 
       var poi = window.CENTRO && window.CENTRO.poiIcons;
       if (poi) {
+        // IDs explícitos para não depender da estrutura cacheada do poi-icons.js.
+        // Fallback para os valores definidos em poi-icons.js se o objeto estiver disponível.
         var poiConfigs = [
-          { id: "memoria-paulistana", file: "centro_memoria_paulistana__point", sourceId: poi.MEMORIA_PAULISTANA_LAYERS.sourceId, iconLayerId: poi.MEMORIA_PAULISTANA_LAYERS.iconLayerId, titleProp: "nm_titulo_placa", descProp: "dc_enunciado_placa", addrProp: "nm_endereco_placa" },
-          { id: "acervo-tombado", file: "centro_acervo_tombado__point", sourceId: poi.ACERVO_TOMBADO_LAYERS.sourceId, iconLayerId: poi.ACERVO_TOMBADO_LAYERS.iconLayerId, titleProp: "nm_acervo" },
-          { id: "bem-arqueologico", file: "centro_bem_arqueologico__point", sourceId: poi.BEM_ARQUEOLOGICO_LAYERS.sourceId, iconLayerId: poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId },
-          { id: "monumentos", file: "centro_monumentos__point", sourceId: poi.MONUMENTOS_LAYERS.sourceId, iconLayerId: poi.MONUMENTOS_LAYERS.iconLayerId, titleProp: "nm_obra" },
-          { id: "poi-turistico", file: "centro_pois_turisticos__point", sourceId: poi.POI_TURISTICO_LAYERS.sourceId, iconLayerId: poi.POI_TURISTICO_LAYERS.iconLayerId, titleProp: "name", descProp: "category" },
+          {
+            id: "memoria-paulistana", file: "centro_memoria_paulistana__point",
+            sourceId:    (poi.MEMORIA_PAULISTANA_LAYERS && poi.MEMORIA_PAULISTANA_LAYERS.sourceId)    || "memoria-paulistana-source",
+            iconLayerId: (poi.MEMORIA_PAULISTANA_LAYERS && poi.MEMORIA_PAULISTANA_LAYERS.iconLayerId) || "memoria-paulistana-icon",
+            titleProp: "nm_titulo_placa", descProp: "dc_enunciado_placa", addrProp: "nm_endereco_placa",
+          },
+          {
+            id: "acervo-tombado", file: "centro_acervo_tombado__point",
+            sourceId:    (poi.ACERVO_TOMBADO_LAYERS && poi.ACERVO_TOMBADO_LAYERS.sourceId)    || "acervo-tombado-source",
+            iconLayerId: (poi.ACERVO_TOMBADO_LAYERS && poi.ACERVO_TOMBADO_LAYERS.iconLayerId) || "acervo-tombado-icon",
+            titleProp: "nm_acervo",
+          },
+          {
+            id: "bem-arqueologico", file: "centro_bem_arqueologico__point",
+            sourceId:    (poi.BEM_ARQUEOLOGICO_LAYERS && poi.BEM_ARQUEOLOGICO_LAYERS.sourceId)    || "bem-arqueologico-source",
+            iconLayerId: (poi.BEM_ARQUEOLOGICO_LAYERS && poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId) || "bem-arqueologico-icon",
+          },
+          {
+            id: "monumentos", file: "centro_monumentos__point",
+            sourceId:    (poi.MONUMENTOS_LAYERS && poi.MONUMENTOS_LAYERS.sourceId)    || "monumentos-source",
+            iconLayerId: (poi.MONUMENTOS_LAYERS && poi.MONUMENTOS_LAYERS.iconLayerId) || "monumentos-icon",
+            titleProp: "nm_obra",
+          },
+          {
+            id: "poi-turistico", file: "centro_pois_turisticos__point",
+            sourceId:    (poi.POI_TURISTICO_LAYERS && poi.POI_TURISTICO_LAYERS.sourceId)    || "poi-turistico-source",
+            iconLayerId: (poi.POI_TURISTICO_LAYERS && poi.POI_TURISTICO_LAYERS.iconLayerId) || "poi-turistico-icon",
+            titleProp: "name", descProp: "category",
+          },
         ];
         for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
           var poiCfg = poiConfigs[poiIndex];

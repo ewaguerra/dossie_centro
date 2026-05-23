@@ -587,7 +587,7 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
    estabilidade visual sobre refactor.
 6. **Atualizar catálogo / fixtures.** Se adicionar layer, post, comando CLI
    ou rota narrativa, registre no índice apropriado.
-7. **Rodar `npm run ci`** (ou `npm test`). **106 testes** devem permanecer verdes.
+7. **Rodar `npm run ci`** (ou `npm test`). **108 testes** devem permanecer verdes.
 8. **Atualizar `AGENT.md`** se mudar uma convenção transversal.
 
 ---
@@ -605,7 +605,7 @@ Tarefa só está concluída quando:
 - [ ] Sem `setHTML` / `innerHTML` com dados externos. Auditável:
       `rg 'setHTML|innerHTML\s*=' centro/ landing/ arquivo-morto/ arquivista/`.
 - [ ] `prefers-reduced-motion` respeitado em qualquer animação nova.
-- [ ] `npm test` verde (106 testes hoje — ver §10).
+- [ ] `npm test` verde (108 testes hoje — ver §10).
 - [ ] Sem **runtime dependency** nova em `package.json` salvo exceções
       aprovadas neste documento (hoje: `three` para a Visão subterrânea).
       DevDependencies para test/sync/lint seguem fluxo normal de PR — ver §12.
