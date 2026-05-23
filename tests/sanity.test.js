@@ -1987,6 +1987,18 @@ describe('projeto_centro — sanity checks', () => {
       '15_osm_enderecos__point deve manter minzoom>=16 (renderização só em escala de endereço)');
   });
 
+  it('DATA-PERF-D1: 15_osm_ruas__line default off + minzoom:12 (heavy manual §6.1)', () => {
+    const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const layer = (ctx.layers || []).find(l => l.id === '15_osm_ruas__line');
+    assert.ok(layer, '15_osm_ruas__line deve existir no catálogo');
+    assert.ok(wired.layerIds.includes('15_osm_ruas__line'), 'continua wired na sidebar');
+    assert.strictEqual(layer.visible, false,
+      '15_osm_ruas__line deve ser visible:false — ~4,11 MiB / 10.108 features não devem entrar no boot');
+    assert.strictEqual(layer.minzoom, 12, 'minzoom:12 preservado');
+    assert.ok(exists('centro/' + layer.file), layer.file + ' ausente no disco');
+  });
+
   // ── Popup CSS classes ───────────────────────────────────────────
   it('map-popups.css contem classes para poi-popup e pista-popup', () => {
     const css = read('centro/styles/map-popups.css');
