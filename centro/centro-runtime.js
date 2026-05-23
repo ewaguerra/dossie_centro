@@ -212,13 +212,6 @@
     console.warn("[CENTRO] map-safe.js ausente — ensureImage indisponível");
   }
 
-  function getMapPopupNode(factoryKey, args) {
-    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui[factoryKey];
-    if (typeof fn === "function") return fn.apply(null, args);
-    console.warn("[CENTRO] map-popups.js ausente — " + factoryKey + " indisponível");
-    return document.createElement("div");
-  }
-
   function getMapIconHaloPaint() {
     var iconsRegistry = window.MAPA_SP_ICONS;
     var paper = (iconsRegistry && iconsRegistry.settings && iconsRegistry.settings.paper) || "#fdfbf7";
@@ -240,32 +233,17 @@
     var addrProp = cfg.addrProp;
     var iconPath = cfg.iconPath;
 
-    if (!sourceId || !iconLayerId) {
-      console.warn("[CENTRO] addPOILayer: sourceId ou iconLayerId ausente (cache stale?) — sourceId=" + sourceId + " iconLayerId=" + iconLayerId + " dataPath=" + dataPath);
+    var addSymbol = getCentroMapHelper("addSymbolPopupLayer");
+    if (typeof addSymbol !== "function") {
+      console.warn("[CENTRO] symbol-popup-layer.js ausente — addPOILayer abortado");
       return;
     }
 
-    ensureSource(mapInstance, sourceId, { type: "geojson", data: dataPath });
-    await ensureImage(mapInstance, imageId, iconPath);
-
-    ensureLayer(mapInstance, {
-      id: iconLayerId,
-      type: "symbol",
-      source: sourceId,
-      layout: {
-        "icon-image": imageId,
-        "icon-size": 0.82,
-        "icon-allow-overlap": true,
-        "icon-anchor": "center",
-      },
-      paint: getMapIconHaloPaint(),
-    });
-
+    var labelConfig = null;
     if (titleProp && styleSupportsTextLabels(mapInstance)) {
-      ensureLayer(mapInstance, {
-        id: labelLayerId,
-        type: "symbol",
-        source: sourceId,
+      labelConfig = {
+        layerId: labelLayerId,
+        enabled: true,
         layout: {
           "text-field": ["get", titleProp],
           "text-font": POI_TEXT_FONT,
@@ -274,40 +252,46 @@
           "text-anchor": "top",
         },
         paint: {
-          // Texto escuro com halo branco oferece contraste WCAG melhor
-          // sobre raster OSM claro do que o branco-com-halo-preto anterior.
           "text-color": "#1a1a1a",
           "text-halo-color": "#ffffff",
           "text-halo-width": 1.5,
           "text-halo-blur": 0.5,
         },
-      });
+      };
     }
 
-    bindLayerEventOnce(mapInstance, "click", iconLayerId, function (e) {
-      var properties = (e.features && e.features[0] && e.features[0].properties) || {};
-      var name = titleProp ? properties[titleProp] || "POI" : "POI";
-      var secondary = descProp
-        ? properties[descProp] || ""
-        : addrProp
-          ? properties[addrProp] || ""
-          : "";
-      new maplibregl.Popup()
-        .setLngLat(e.lngLat)
-        .setDOMContent(getMapPopupNode("createPoiPopupNode", [name, secondary]))
-        .addTo(mapInstance);
+    return addSymbol(mapInstance, {
+      sourceId: sourceId,
+      iconLayerId: iconLayerId,
+      source: { type: "geojson", data: dataPath },
+      imageId: imageId,
+      iconPath: iconPath,
+      iconLayout: {
+        "icon-image": imageId,
+        "icon-size": 0.82,
+        "icon-allow-overlap": true,
+        "icon-anchor": "center",
+      },
+      iconPaint: getMapIconHaloPaint(),
+      label: labelConfig,
+      popup: {
+        factoryKey: "createPoiPopupNode",
+        buildArgs: function (properties) {
+          var name = titleProp ? properties[titleProp] || "POI" : "POI";
+          var secondary = descProp
+            ? properties[descProp] || ""
+            : addrProp
+              ? properties[addrProp] || ""
+              : "";
+          return [name, secondary];
+        },
+        popupOptions: {},
+      },
+      interactionLayerIds: poiInteractionLayerIds,
+      onGuardFail: function () {
+        console.warn("[CENTRO] addPOILayer: sourceId ou iconLayerId ausente (cache stale?) — sourceId=" + sourceId + " iconLayerId=" + iconLayerId + " dataPath=" + dataPath);
+      },
     });
-
-    bindLayerEventOnce(mapInstance, "mouseenter", iconLayerId, function () {
-      mapInstance.getCanvas().style.cursor = "pointer";
-    });
-    bindLayerEventOnce(mapInstance, "mouseleave", iconLayerId, function () {
-      mapInstance.getCanvas().style.cursor = "";
-    });
-
-    if (poiInteractionLayerIds.indexOf(iconLayerId) === -1) {
-      poiInteractionLayerIds.push(iconLayerId);
-    }
   }
 
   function pistaItemFromProperties(properties) {
@@ -348,47 +332,42 @@
       });
     }
 
-    ensureSource(mapInstance, sourceId, {
-      type: "geojson",
-      data: { type: "FeatureCollection", features: features },
-    });
-    await ensureImage(mapInstance, imageId, iconPath);
+    var addSymbol = getCentroMapHelper("addSymbolPopupLayer");
+    if (typeof addSymbol !== "function") {
+      console.warn("[CENTRO] symbol-popup-layer.js ausente — addPistasLayer abortado");
+      return 0;
+    }
 
-    ensureLayer(mapInstance, {
-      id: iconLayerId,
-      type: "symbol",
-      source: sourceId,
-      layout: {
+    return addSymbol(mapInstance, {
+      sourceId: sourceId,
+      iconLayerId: iconLayerId,
+      source: {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: features },
+      },
+      imageId: imageId,
+      iconPath: iconPath,
+      iconLayout: {
         "icon-image": imageId,
         "icon-size": 0.82,
         "icon-allow-overlap": true,
         "icon-anchor": "center",
       },
-      paint: getMapIconHaloPaint(),
+      iconPaint: getMapIconHaloPaint(),
+      label: null,
+      popup: {
+        factoryKey: "createPistaPopupNode",
+        buildArgs: function (properties) {
+          return [pistaItemFromProperties(properties)];
+        },
+        guard: function (properties) {
+          return pistaItemFromProperties(properties) !== null;
+        },
+        popupOptions: { offset: 25, maxWidth: "300px" },
+      },
+      interactionLayerIds: poiInteractionLayerIds,
+      returnFeatureCount: true,
     });
-
-    bindLayerEventOnce(mapInstance, "click", iconLayerId, function (e) {
-      var properties = (e.features && e.features[0] && e.features[0].properties) || {};
-      var pistaItem = pistaItemFromProperties(properties);
-      if (!pistaItem) return;
-      new maplibregl.Popup({ offset: 25, maxWidth: "300px" })
-        .setLngLat(e.lngLat)
-        .setDOMContent(getMapPopupNode("createPistaPopupNode", [pistaItem]))
-        .addTo(mapInstance);
-    });
-
-    bindLayerEventOnce(mapInstance, "mouseenter", iconLayerId, function () {
-      mapInstance.getCanvas().style.cursor = "pointer";
-    });
-    bindLayerEventOnce(mapInstance, "mouseleave", iconLayerId, function () {
-      mapInstance.getCanvas().style.cursor = "";
-    });
-
-    if (poiInteractionLayerIds.indexOf(iconLayerId) === -1) {
-      poiInteractionLayerIds.push(iconLayerId);
-    }
-
-    return features.length;
   }
 
   function showInspector(feature) {

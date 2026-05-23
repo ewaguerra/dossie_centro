@@ -24,6 +24,30 @@ function loadCentroMapSafe() {
   return sandbox.window.CENTRO.map;
 }
 
+function loadSymbolPopupLayerModule() {
+  const sandbox = {
+    window: { CENTRO: {} },
+    console,
+    document: {
+      createElement: function () {
+        return {};
+      },
+    },
+    maplibregl: {
+      Popup: function (opts) {
+        this._opts = opts;
+        this.setLngLat = function () { return this; };
+        this.setDOMContent = function () { return this; };
+        this.addTo = function () { return this; };
+      },
+    },
+  };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/map/map-safe.js'), sandbox);
+  vm.runInContext(read('centro/map/symbol-popup-layer.js'), sandbox);
+  return sandbox.window.CENTRO.map;
+}
+
 describe('projeto_centro — sanity checks', () => {
 
   // ── Páginas principais existem ──────────────────────────────────
@@ -625,8 +649,8 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(popups.includes('pista-popup__desc'), 'factory pista monta descricao');
 
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('setDOMContent'), 'popups devem usar setDOMContent');
-    assert.ok(runtime.includes('getMapPopupNode'), 'runtime delega via getMapPopupNode');
+    assert.ok(runtime.includes('setDOMContent') || read('centro/map/symbol-popup-layer.js').includes('setDOMContent'), 'popups devem usar setDOMContent');
+    assert.ok(runtime.includes('addSymbolPopupLayer'), 'runtime delega via addSymbolPopupLayer');
     assert.ok(runtime.includes('createPoiPopupNode'), 'runtime referencia export createPoiPopupNode');
     assert.ok(runtime.includes('createPistaPopupNode'), 'runtime referencia export createPistaPopupNode');
     assert.ok(!runtime.includes('function createPoiPopupNode'), 'runtime nao duplica factory POI');
@@ -635,6 +659,109 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!runtime.includes('pista-popup__img'), 'markup pista-popup so no modulo');
     assert.ok(!/Popup\([^)]*\)[\s\S]{0,300}\.setHTML\(/.test(runtime), 'runtime nao deve usar setHTML em Popup');
     assert.ok(!/innerHTML\s*=\s*"<[a-z]/i.test(runtime) || runtime.includes('panel.innerHTML = ""'), 'runtime evita injecao via innerHTML literal');
+  });
+
+  // ── Symbol popup layer factory ──────────────────────────────────
+  it('centro: symbol-popup-layer.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const symbolIdx = html.indexOf('symbol-popup-layer.js');
+    const mapSafeIdx = html.indexOf('map/map-safe.js');
+    assert.ok(symbolIdx > -1, 'symbol-popup-layer.js ausente no HTML');
+    assert.ok(mapSafeIdx < symbolIdx && symbolIdx < runtimeIdx, 'symbol-popup-layer deve preceder centro-runtime.js');
+
+    const symbol = read('centro/map/symbol-popup-layer.js');
+    assert.doesNotThrow(() => new Function(symbol));
+    assert.ok(symbol.includes('CENTRO.map.addSymbolPopupLayer'), 'export addSymbolPopupLayer ausente');
+    assert.ok(symbol.includes('setDOMContent'), 'factory usa setDOMContent');
+    assert.ok(!symbol.includes('innerHTML'), 'symbol-popup-layer sem innerHTML');
+    assert.ok(!symbol.includes('.setHTML('), 'symbol-popup-layer sem setHTML');
+    assert.ok(!symbol.includes('POI_TEXT_FONT'), 'factory nao conhece POI_TEXT_FONT');
+    assert.ok(!symbol.includes('styleSupportsTextLabels'), 'factory nao conhece styleSupportsTextLabels');
+    assert.ok(!symbol.includes('getMapIconHaloPaint'), 'factory nao conhece getMapIconHaloPaint');
+    assert.ok(!symbol.includes('pistaItemFromProperties'), 'factory nao conhece pistaItemFromProperties');
+    assert.ok(symbol.includes('getMapFn("ensureSource")'), 'factory delega ensureSource');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.strictEqual((runtime.match(/function addPOILayer/g) || []).length, 1, 'uma addPOILayer');
+    assert.strictEqual((runtime.match(/function addPistasLayer/g) || []).length, 1, 'uma addPistasLayer');
+    assert.ok(runtime.includes('getCentroMapHelper("addSymbolPopupLayer")'), 'wrappers delegam factory');
+    assert.ok(!runtime.includes('bindLayerEventOnce(mapInstance, "click", iconLayerId'), 'click handler so na factory');
+
+    const criticalIds = [
+      'memoria-paulistana-source', 'memoria-paulistana-icon',
+      'acervo-tombado-source', 'acervo-tombado-icon',
+      'bem-arqueologico-source', 'bem-arqueologico-icon',
+      'monumentos-source', 'monumentos-icon',
+      'poi-turistico-source', 'poi-turistico-icon',
+      'rsb-pistas-source', 'rsb-pistas-icon', 'rsb-pista-icon',
+    ];
+    criticalIds.forEach(function (id) {
+      assert.ok(runtime.includes(id), id + ' ausente no runtime');
+    });
+    assert.ok(runtime.includes('labelLayerId: poiCfg.id + "-label"'), 'pattern label layer POI');
+  });
+
+  it('symbol-popup-layer.js: factory idempotente com mock map', async () => {
+    const mapApi = loadSymbolPopupLayerModule();
+    var ensureSourceCalls = 0;
+    var ensureImageCalls = 0;
+    var ensureLayerCalls = 0;
+    var bindCalls = 0;
+    var mockMap = {
+      getCanvas: function () { return { style: {} }; },
+    };
+    mapApi.ensureSource = function () { ensureSourceCalls++; };
+    mapApi.ensureImage = async function () { ensureImageCalls++; };
+    mapApi.ensureLayer = function () { ensureLayerCalls++; };
+    mapApi.bindLayerEventOnce = function () { bindCalls++; };
+
+    var interactionIds = [];
+    await mapApi.addSymbolPopupLayer(mockMap, {
+      sourceId: 'test-source',
+      iconLayerId: 'test-icon',
+      source: { type: 'geojson', data: { type: 'FeatureCollection', features: [{ type: 'Feature' }] } },
+      imageId: 'test-img',
+      iconPath: '/icon.svg',
+      iconLayout: { 'icon-image': 'test-img' },
+      iconPaint: {},
+      label: null,
+      popup: {
+        factoryKey: 'createPoiPopupNode',
+        buildArgs: function () { return ['A', 'B']; },
+      },
+      interactionLayerIds: interactionIds,
+      returnFeatureCount: true,
+    });
+
+    assert.strictEqual(ensureSourceCalls, 1);
+    assert.strictEqual(ensureImageCalls, 1);
+    assert.strictEqual(ensureLayerCalls, 1, 'sem label quando label null');
+    assert.strictEqual(bindCalls, 3, 'click + mouseenter + mouseleave');
+    assert.deepStrictEqual(interactionIds, ['test-icon']);
+
+    ensureLayerCalls = 0;
+    await mapApi.addSymbolPopupLayer(mockMap, {
+      sourceId: 'test-source',
+      iconLayerId: 'test-icon',
+      source: { type: 'geojson', data: '/data.geojson' },
+      imageId: 'test-img',
+      iconPath: '/icon.svg',
+      iconLayout: { 'icon-image': 'test-img' },
+      iconPaint: {},
+      label: {
+        layerId: 'test-label',
+        enabled: true,
+        layout: { 'text-field': ['get', 'name'] },
+        paint: {},
+      },
+      popup: {
+        factoryKey: 'createPoiPopupNode',
+        buildArgs: function () { return ['A', '']; },
+      },
+      interactionLayerIds: interactionIds,
+    });
+    assert.strictEqual(ensureLayerCalls, 2, 'icon + label quando label.enabled');
   });
 
   // ── MapLibre safe helpers ───────────────────────────────────────
