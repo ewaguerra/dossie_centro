@@ -16,6 +16,7 @@ const PKG_PATH = join(ROOT, "node_modules", "three", "package.json");
 const SILENT = process.argv.includes("--silent");
 
 const FILES = [
+  { src: "three.core.min.js", dest: "three.core.min.js" },
   { src: "three.module.min.js", dest: "three.module.min.js" },
 ];
 
