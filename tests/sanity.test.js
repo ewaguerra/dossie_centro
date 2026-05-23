@@ -783,6 +783,107 @@ describe('projeto_centro — sanity checks', () => {
     assert.strictEqual(mapMod.applyLayerZoomBounds({ id: 'x' }, {}).minzoom, undefined);
   });
 
+  // ── Gate 4.5C: sidebar-panel render ─────────────────────────────
+  it('centro: sidebar-panel.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const panelIdx = html.indexOf('ui/sidebar-panel.js');
+    const popupsIdx = html.indexOf('ui/map-popups.js');
+    assert.ok(panelIdx > -1, 'sidebar-panel.js ausente no HTML');
+    assert.ok(popupsIdx < panelIdx && panelIdx < runtimeIdx, 'sidebar-panel deve preceder centro-runtime.js');
+
+    const panel = read('centro/ui/sidebar-panel.js');
+    assert.doesNotThrow(() => new Function(panel));
+    assert.ok(panel.includes('CENTRO.ui.renderSidebarPanel'), 'export renderSidebarPanel ausente');
+    assert.ok(panel.includes('createElement'), 'sidebar-panel usa createElement');
+    assert.ok(panel.includes('textContent'), 'sidebar-panel usa textContent');
+    const lockStateMod = read('centro/features/sidebar-layer-state.js');
+    assert.ok(lockStateMod.includes('layer-row--locked'), 'classe locked em sidebar-layer-state');
+    assert.ok(lockStateMod.includes('layer-row--phase-locked'), 'classe phase-locked em sidebar-layer-state');
+    assert.ok(panel.includes('getLayerRowClass'), 'sidebar-panel delega row class');
+    assert.ok(panel.includes('data-layer-id') || panel.includes('layerId'), 'data-layer-id via dataset');
+    assert.ok(!panel.includes('localStorage'), 'sidebar-panel sem localStorage');
+    assert.ok(!panel.includes('getSource'), 'sidebar-panel sem MapLibre');
+    assert.ok(!panel.includes('addLayer'), 'sidebar-panel sem addLayer');
+    assert.ok(!panel.includes('fetch('), 'sidebar-panel sem fetch');
+    assert.ok(!panel.includes('layerUnlocks'), 'sidebar-panel nao le ARG runtime');
+    assert.ok(!panel.includes('protocoloPhase'), 'sidebar-panel nao le protocoloPhase');
+    assert.ok(!/innerHTML\s*=\s*[`'"][^`'"]+\$\{/.test(panel), 'sem innerHTML com interpolacao de catalogo');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('CENTRO.ui.renderSidebarPanel'), 'runtime delega renderSidebarPanel');
+    assert.ok(!runtime.includes('details.className = "group"'), 'render DOM nao duplicado no runtime');
+    assert.strictEqual((runtime.match(/function wireLayerCheckboxes/g) || []).length, 1, 'wireLayerCheckboxes intacto');
+    assert.strictEqual((runtime.match(/function renderSidebarPanel/g) || []).length, 1, 'wrapper renderSidebarPanel no runtime');
+  });
+
+  it('sidebar-panel.js: render basico com deps injetadas', () => {
+    const sandbox = {
+      window: { CENTRO: { ui: {} } },
+      document: {
+        createElement: function (tag) {
+          const node = {
+            tagName: tag.toUpperCase(),
+            className: '',
+            textContent: '',
+            open: false,
+            disabled: false,
+            checked: false,
+            dataset: {},
+            children: [],
+            appendChild: function (child) {
+              this.children.push(child);
+            },
+            setAttribute: function () {},
+          };
+          return node;
+        },
+        createTextNode: function (text) {
+          return { nodeType: 3, textContent: text };
+        },
+      },
+      console,
+    };
+    vm.createContext(sandbox);
+    vm.runInContext(read('centro/ui/sidebar-panel.js'), sandbox);
+    const render = sandbox.window.CENTRO.ui.renderSidebarPanel;
+    const panel = sandbox.document.createElement('div');
+    render({
+      panel: panel,
+      groups: [{ id: 'g1', title: 'Grupo Teste' }],
+      layers: [
+        { id: 'ly-open', group: 'g1', title: 'Aberta', visible: true, feature_count: 3 },
+        { id: 'ly-lock', group: 'g1', title: 'Fase', visible: true },
+      ],
+      resolveSidebarLockState: function (id) {
+        if (id === 'ly-lock') {
+          return {
+            locked: true,
+            clueLocked: false,
+            phaseLocked: true,
+            minPhaseLabel: '2',
+          };
+        }
+        return { locked: false, clueLocked: false, phaseLocked: false };
+      },
+      getLayerRowClass: function (state) {
+        return state.locked ? 'layer-row layer-row--locked layer-row--phase-locked' : 'layer-row';
+      },
+      getLockMessage: function (state, kind) {
+        if (kind === 'sidebar-meta') return 'fase 2';
+        return ' (bloqueada — avance de fase no ARG)';
+      },
+      getMinPhaseLabel: function () {
+        return '2';
+      },
+    });
+    assert.ok(panel.children.length >= 1, 'panel recebeu grupos');
+    const htmlDump = JSON.stringify(panel);
+    assert.ok(htmlDump.includes('layer-row--phase-locked'), 'phase-locked renderizado');
+    assert.ok(htmlDump.includes('fase 2'), 'meta fase preservada');
+    assert.ok(htmlDump.includes('ly-open'), 'camada aberta presente');
+  });
+
   // ── Symbol popup layer factory ──────────────────────────────────
   it('centro: symbol-popup-layer.js carregado antes do runtime', () => {
     const html = read('centro/index.html');

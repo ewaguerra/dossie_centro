@@ -813,92 +813,22 @@
   // Constrói o DOM da sidebar a partir do catálogo. Usa createElement +
   // textContent para evitar interpolação de strings em innerHTML.
   function renderSidebarPanel(panel, groupsList, layersList) {
-    panel.innerHTML = "";
-    var hasAny = false;
-
-    for (var g = 0; g < groupsList.length; g++) {
-      var group = groupsList[g];
-      var groupLayers = layersList.filter(function (l) {
-        return l.group === group.id;
-      });
-      if (groupLayers.length === 0) continue;
-      hasAny = true;
-
-      var details = document.createElement("details");
-      details.className = "group";
-      details.open = true;
-
-      var summary = document.createElement("summary");
-      summary.textContent = (group.title || group.id) + " ";
-      var count = document.createElement("span");
-      count.className = "group__count";
-      count.textContent = "(" + groupLayers.length + ")";
-      summary.appendChild(count);
-      details.appendChild(summary);
-
-      for (var i = 0; i < groupLayers.length; i++) {
-        var ly = groupLayers[i];
-        var lockState = resolveSidebarLockState(ly.id);
-        var locked = lockState.locked;
-        var clueLocked = lockState.clueLocked;
-        var phaseLocked = lockState.phaseLocked;
-        var label = document.createElement("label");
-        var rowClassFn = getSidebarLayerStateHelper("getLayerRowClass");
-        label.className =
-          typeof rowClassFn === "function" ? rowClassFn(lockState) : "layer-row";
-
-        var cb = document.createElement("input");
-        cb.type = "checkbox";
-        cb.dataset.layerId = ly.id;
-        if (locked) {
-          cb.disabled = true;
-          cb.checked = false;
-          var msgFn = getSidebarLayerStateHelper("getLockMessage");
-          var lockHint =
-            typeof msgFn === "function"
-              ? msgFn(lockState, "sidebar-hint")
-              : clueLocked
-                ? " (bloqueada — registre pistas no Caderno)"
-                : " (bloqueada — avance de fase no ARG)";
-          cb.setAttribute("aria-label", (ly.title || ly.id) + lockHint);
-        } else if (ly.visible !== false) {
-          cb.checked = true;
-        }
-
-        var span = document.createElement("span");
-        span.textContent = ly.title || ly.id;
-
-        label.appendChild(cb);
-        label.appendChild(document.createTextNode(" "));
-        label.appendChild(span);
-
-        if (locked) {
-          var lockMeta = document.createElement("span");
-          lockMeta.className = "layer-meta layer-meta--lock";
-          lockMeta.textContent =
-            typeof msgFn === "function"
-              ? msgFn(lockState, "sidebar-meta")
-              : phaseLocked
-                ? "fase " + getMinPhaseLabel(ly.id)
-                : "bloqueada";
-          label.appendChild(lockMeta);
-        } else if (ly.feature_count !== undefined) {
-          var meta = document.createElement("span");
-          meta.className = "layer-meta";
-          meta.textContent = ly.feature_count + " feats";
-          label.appendChild(meta);
-        }
-        details.appendChild(label);
-      }
-      panel.appendChild(details);
+    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.renderSidebarPanel;
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] sidebar-panel.js ausente — renderSidebarPanel indisponível");
+      return;
     }
-
-    if (!hasAny) {
-      var empty = document.createElement("p");
-      empty.className = "sidebar-empty";
-      empty.textContent = "Nenhuma camada disponível";
-      panel.appendChild(empty);
-    }
+    var rowClassFn = getSidebarLayerStateHelper("getLayerRowClass");
+    var lockMsgFn = getSidebarLayerStateHelper("getLockMessage");
+    fn({
+      panel: panel,
+      groups: groupsList,
+      layers: layersList,
+      resolveSidebarLockState: resolveSidebarLockState,
+      getLayerRowClass: typeof rowClassFn === "function" ? rowClassFn : null,
+      getLockMessage: typeof lockMsgFn === "function" ? lockMsgFn : null,
+      getMinPhaseLabel: getMinPhaseLabel,
+    });
   }
 
   function loadSidebarData() {
