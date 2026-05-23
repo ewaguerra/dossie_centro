@@ -48,6 +48,20 @@ function loadSymbolPopupLayerModule() {
   return sandbox.window.CENTRO.map;
 }
 
+function loadLayerDataUrlModule() {
+  const sandbox = { window: { CENTRO: { map: {} } }, console };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/map/layer-data-url.js'), sandbox);
+  return sandbox.window.CENTRO.map;
+}
+
+function loadSidebarLayerStateModule() {
+  const sandbox = { window: { CENTRO: {} }, console };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/features/sidebar-layer-state.js'), sandbox);
+  return sandbox.window.CENTRO.sidebarLayerState;
+}
+
 describe('projeto_centro — sanity checks', () => {
 
   // ── Páginas principais existem ──────────────────────────────────
@@ -661,6 +675,114 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!/innerHTML\s*=\s*"<[a-z]/i.test(runtime) || runtime.includes('panel.innerHTML = ""'), 'runtime evita injecao via innerHTML literal');
   });
 
+  // ── PR A: pure sidebar/catalog helpers ───────────────────────────
+  it('centro: sidebar-layer-state.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const stateIdx = html.indexOf('sidebar-layer-state.js');
+    const phaseIdx = html.indexOf('protocolo-phase.js');
+    assert.ok(stateIdx > -1, 'sidebar-layer-state.js ausente no HTML');
+    assert.ok(phaseIdx < stateIdx && stateIdx < runtimeIdx, 'sidebar-layer-state deve preceder centro-runtime.js');
+
+    const mod = read('centro/features/sidebar-layer-state.js');
+    assert.doesNotThrow(() => new Function(mod));
+    assert.ok(mod.includes('CENTRO.sidebarLayerState'), 'export sidebarLayerState ausente');
+    assert.ok(!mod.includes('document.'), 'sidebar-layer-state sem DOM');
+    assert.ok(!mod.includes('localStorage'), 'sidebar-layer-state sem localStorage');
+    assert.ok(!mod.includes('getSource'), 'sidebar-layer-state sem MapLibre');
+    assert.ok(!mod.includes('addLayer'), 'sidebar-layer-state sem MapLibre addLayer');
+    assert.ok(!mod.includes('layerUnlocks'), 'sidebar-layer-state nao le ARG runtime');
+    assert.ok(!mod.includes('protocoloPhase'), 'sidebar-layer-state nao le protocoloPhase');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('getSidebarLayerStateHelper'), 'runtime delega sidebarLayerState');
+    assert.ok(!runtime.includes('filePath.indexOf("data/context/")'), 'buildLayerDataUrl nao duplicado no runtime');
+  });
+
+  it('sidebar-layer-state.js: lock state e mensagens preservam texto atual', () => {
+    const state = loadSidebarLayerStateModule();
+    assert.strictEqual(state.getMinPhaseLabel(3), '3');
+    assert.strictEqual(state.getMinPhaseLabel(null), '?');
+
+    const clueLocked = state.getLayerLockState({
+      isClueUnlocked: false,
+      isPhaseUnlocked: true,
+      minPhase: 5,
+    });
+    assert.strictEqual(clueLocked.locked, true);
+    assert.strictEqual(clueLocked.clueLocked, true);
+    assert.strictEqual(clueLocked.phaseLocked, false);
+    assert.strictEqual(state.getLayerRowClass(clueLocked), 'layer-row layer-row--locked');
+    assert.strictEqual(
+      state.getLockMessage(clueLocked, 'sidebar-hint'),
+      ' (bloqueada — registre pistas no Caderno)'
+    );
+    assert.strictEqual(state.getLockMessage(clueLocked, 'sidebar-meta'), 'bloqueada');
+    assert.ok(
+      state.getLockMessage(clueLocked, 'toast').includes('Caderno do Arquivista'),
+      'toast clue lock'
+    );
+
+    const phaseLocked = state.getLayerLockState({
+      isClueUnlocked: true,
+      isPhaseUnlocked: false,
+      minPhase: 7,
+    });
+    assert.strictEqual(phaseLocked.phaseLocked, true);
+    assert.strictEqual(state.getLayerRowClass(phaseLocked), 'layer-row layer-row--locked layer-row--phase-locked');
+    assert.strictEqual(
+      state.getLockMessage(phaseLocked, 'sidebar-hint'),
+      ' (bloqueada — avance de fase no ARG)'
+    );
+    assert.strictEqual(state.getLockMessage(phaseLocked, 'sidebar-meta'), 'fase 7');
+    assert.ok(state.getLockMessage(phaseLocked, 'toast').includes('fase mínima 7'), 'toast phase lock');
+  });
+
+  it('centro: layer-data-url.js carregado apos map-safe e antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const urlIdx = html.indexOf('layer-data-url.js');
+    const mapSafeIdx = html.indexOf('map/map-safe.js');
+    assert.ok(urlIdx > -1, 'layer-data-url.js ausente no HTML');
+    assert.ok(mapSafeIdx < urlIdx && urlIdx < runtimeIdx, 'layer-data-url deve ficar entre map-safe e runtime');
+
+    const mod = read('centro/map/layer-data-url.js');
+    assert.doesNotThrow(() => new Function(mod));
+    assert.ok(mod.includes('buildLayerDataUrl'), 'export buildLayerDataUrl ausente');
+    assert.ok(mod.includes('applyLayerZoomBounds'), 'export applyLayerZoomBounds ausente');
+    assert.ok(!mod.includes('document.'), 'layer-data-url sem DOM');
+    assert.ok(!mod.includes('localStorage'), 'layer-data-url sem localStorage');
+    assert.ok(!mod.includes('getSource'), 'layer-data-url sem MapLibre');
+    assert.ok(!mod.includes('addLayer'), 'layer-data-url sem MapLibre addLayer');
+    assert.ok(!mod.includes('ensureSource'), 'layer-data-url sem ensureSource');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('getCentroMapHelper("buildLayerDataUrl")'), 'runtime delega buildLayerDataUrl');
+    assert.ok(runtime.includes('getCentroMapHelper("applyLayerZoomBounds")'), 'runtime delega applyLayerZoomBounds');
+  });
+
+  it('layer-data-url.js: URLs e zoom bounds preservam comportamento', () => {
+    const mapMod = loadLayerDataUrlModule();
+    assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: 'data/context/centro_foo.geojson' }),
+      '/centro/data/context/centro_foo.geojson'
+    );
+    assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: 'data/processed/centro_bar.geojson' }),
+      '/centro/data/processed/centro_bar.geojson'
+    );
+    assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: 'legacy/processed/centro_baz.geojson' }),
+      '/centro/data/processed/centro_baz.geojson'
+    );
+
+    const layerDef = { id: 'test-fill', type: 'fill' };
+    const withZoom = mapMod.applyLayerZoomBounds(layerDef, { minzoom: 14, maxzoom: 17 });
+    assert.strictEqual(withZoom.minzoom, 14);
+    assert.strictEqual(withZoom.maxzoom, 17);
+    assert.strictEqual(mapMod.applyLayerZoomBounds({ id: 'x' }, {}).minzoom, undefined);
+  });
+
   // ── Symbol popup layer factory ──────────────────────────────────
   it('centro: symbol-popup-layer.js carregado antes do runtime', () => {
     const html = read('centro/index.html');
@@ -1073,7 +1195,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('protocolo13_caderno_clues'), 'chave caderno ausente no centro');
     assert.ok(runtime.includes('layer-unlocks.json'), 'fetch layer-unlocks ausente');
     assert.ok(runtime.includes('isLayerUnlocked'), 'isLayerUnlocked ausente');
-    assert.ok(runtime.includes('layer-row--locked'), 'UI locked ausente');
+    const lockStateMod = read('centro/features/sidebar-layer-state.js');
+    assert.ok(
+      lockStateMod.includes('layer-row--locked'),
+      'UI locked ausente em sidebar-layer-state'
+    );
+    assert.ok(runtime.includes('resolveSidebarLockState'), 'runtime usa lock state module');
     assert.ok(arquivo.includes('protocolo13_caderno_clues'), 'persistencia caderno ausente no arquivo-morto');
     assert.ok(exists('centro/data/catalog/layer-unlocks.json'), 'layer-unlocks.json ausente');
   });
@@ -1116,7 +1243,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('centro-phase-badge'), 'badge de fase no centro ausente');
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('isLayerPhaseUnlocked'), 'gate de fase ausente no runtime');
-    assert.ok(runtime.includes('layer-row--phase-locked'), 'UI phase-locked ausente');
+    const lockStateMod = read('centro/features/sidebar-layer-state.js');
+    assert.ok(
+      lockStateMod.includes('layer-row--phase-locked'),
+      'UI phase-locked ausente em sidebar-layer-state'
+    );
+    assert.ok(runtime.includes('getLayerRowClass') || runtime.includes('resolveSidebarLockState'), 'runtime delega row class lock');
     const phase = read('centro/features/protocolo-phase.js');
     assert.ok(phase.includes('phase-gates.json'), 'protocolo-phase deve carregar gates');
     assert.ok(phase.includes('isLayerPhaseUnlocked'), 'API isLayerPhaseUnlocked ausente');

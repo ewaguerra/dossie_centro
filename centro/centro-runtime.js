@@ -111,6 +111,10 @@
     return window.CENTRO && window.CENTRO.map && window.CENTRO.map[name];
   }
 
+  function getSidebarLayerStateHelper(name) {
+    return window.CENTRO && window.CENTRO.sidebarLayerState && window.CENTRO.sidebarLayerState[name];
+  }
+
   function ensureSource(mapInstance, id, sourceConfig) {
     var fn = getCentroMapHelper("ensureSource");
     if (typeof fn === "function") return fn(mapInstance, id, sourceConfig);
@@ -172,11 +176,37 @@
   }
 
   function getMinPhaseLabel(layerId) {
+    var format = getSidebarLayerStateHelper("getMinPhaseLabel");
+    var minPhase = null;
     var ph = window.CENTRO && window.CENTRO.protocoloPhase;
     if (ph && typeof ph.getMinPhaseForLayer === "function") {
-      return String(ph.getMinPhaseForLayer(layerId));
+      minPhase = ph.getMinPhaseForLayer(layerId);
     }
-    return "?";
+    if (typeof format === "function") return format(minPhase);
+    return minPhase != null ? String(minPhase) : "?";
+  }
+
+  function resolveSidebarLockState(layerId) {
+    var compute = getSidebarLayerStateHelper("getLayerLockState");
+    var minPhase = null;
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.getMinPhaseForLayer === "function") {
+      minPhase = ph.getMinPhaseForLayer(layerId);
+    }
+    var opts = {
+      isClueUnlocked: isLayerUnlocked(layerId),
+      isPhaseUnlocked: isLayerPhaseUnlocked(layerId),
+      minPhase: minPhase,
+    };
+    if (typeof compute === "function") return compute(opts);
+    var clueLocked = !opts.isClueUnlocked;
+    var phaseLocked = !clueLocked && !opts.isPhaseUnlocked;
+    return {
+      clueLocked: clueLocked,
+      phaseLocked: phaseLocked,
+      locked: clueLocked || phaseLocked,
+      minPhaseLabel: getMinPhaseLabel(layerId),
+    };
   }
 
   // Hash routing pode ignorar center/zoom do constructor; revalida contra maxBounds.
@@ -808,14 +838,14 @@
 
       for (var i = 0; i < groupLayers.length; i++) {
         var ly = groupLayers[i];
-        var clueLocked = !isLayerUnlocked(ly.id);
-        var phaseLocked = !clueLocked && !isLayerPhaseUnlocked(ly.id);
-        var locked = clueLocked || phaseLocked;
+        var lockState = resolveSidebarLockState(ly.id);
+        var locked = lockState.locked;
+        var clueLocked = lockState.clueLocked;
+        var phaseLocked = lockState.phaseLocked;
         var label = document.createElement("label");
-        var rowClass = "layer-row";
-        if (locked) rowClass += " layer-row--locked";
-        if (phaseLocked) rowClass += " layer-row--phase-locked";
-        label.className = rowClass;
+        var rowClassFn = getSidebarLayerStateHelper("getLayerRowClass");
+        label.className =
+          typeof rowClassFn === "function" ? rowClassFn(lockState) : "layer-row";
 
         var cb = document.createElement("input");
         cb.type = "checkbox";
@@ -823,9 +853,13 @@
         if (locked) {
           cb.disabled = true;
           cb.checked = false;
-          var lockHint = clueLocked
-            ? " (bloqueada — registre pistas no Caderno)"
-            : " (bloqueada — avance de fase no ARG)";
+          var msgFn = getSidebarLayerStateHelper("getLockMessage");
+          var lockHint =
+            typeof msgFn === "function"
+              ? msgFn(lockState, "sidebar-hint")
+              : clueLocked
+                ? " (bloqueada — registre pistas no Caderno)"
+                : " (bloqueada — avance de fase no ARG)";
           cb.setAttribute("aria-label", (ly.title || ly.id) + lockHint);
         } else if (ly.visible !== false) {
           cb.checked = true;
@@ -841,7 +875,12 @@
         if (locked) {
           var lockMeta = document.createElement("span");
           lockMeta.className = "layer-meta layer-meta--lock";
-          lockMeta.textContent = phaseLocked ? "fase " + getMinPhaseLabel(ly.id) : "bloqueada";
+          lockMeta.textContent =
+            typeof msgFn === "function"
+              ? msgFn(lockState, "sidebar-meta")
+              : phaseLocked
+                ? "fase " + getMinPhaseLabel(ly.id)
+                : "bloqueada";
           label.appendChild(lockMeta);
         } else if (ly.feature_count !== undefined) {
           var meta = document.createElement("span");
@@ -902,17 +941,15 @@
   }
 
   function buildLayerDataUrl(cfg) {
-    var filePath = cfg.file || "";
-    if (filePath.indexOf("data/context/") === 0) {
-      return "/centro/" + filePath;
-    }
-    if (filePath.indexOf("data/processed/") === 0) {
-      return "/centro/" + filePath;
-    }
-    return "/centro/data/processed/" + filePath.replace(/^.*processed\//, "");
+    var fn = getCentroMapHelper("buildLayerDataUrl");
+    if (typeof fn === "function") return fn(cfg);
+    console.warn("[CENTRO] layer-data-url.js ausente — buildLayerDataUrl indisponível");
+    return "/centro/data/processed/";
   }
 
   function applyLayerZoomBounds(layerConfig, cfg) {
+    var fn = getCentroMapHelper("applyLayerZoomBounds");
+    if (typeof fn === "function") return fn(layerConfig, cfg);
     if (cfg.minzoom != null) layerConfig.minzoom = cfg.minzoom;
     if (cfg.maxzoom != null) layerConfig.maxzoom = cfg.maxzoom;
     return layerConfig;
