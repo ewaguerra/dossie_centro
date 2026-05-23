@@ -71,12 +71,12 @@ Após **DATA-ORG-B2**, contém **somente `.geojson`** — relatórios foram para
 `centro/data/reports/`. Os 3 heavy (~83% do peso) foram para `geojson/heavy/`
 (DATA-ORG-B3B). A camada ARG (`centro_arquivo_superficial__point`) foi para
 `geojson/special/arg/` (DATA-ORG-B4B-1). POI turístico (`centro_pois_turisticos__point`)
-foi para `geojson/special/pois/` (DATA-ORG-B4B-2).
+foi para `geojson/special/pois/` (DATA-ORG-B4B-2). Fóssil Rua São Bento foi para
+`archive/fossils/` (DATA-ORG-B5).
 
 | Categoria | Padrão de nome | Exemplo |
 |---|---|---|
 | Camada wired (sidebar) | `*.geojson` | `centro_rios_geosampa__line.geojson` |
-| Órfão conhecido | (ver §4) | `centro_pistas_rua_sao_bento__point.geojson` |
 
 ### 2.3.1 `centro/data/geojson/heavy/` — runtime heavy (manual load)
 
@@ -135,6 +135,17 @@ em `reports/build/` (path atualizado em DATA-ORG-B2).
 É o **insumo bruto** do GeoSampa antes do recorte/normalização que gera
 `centro/data/context/centro_rios_geosampa__line.geojson`. Permanece no
 repo como audit trail. Nunca é servido ao browser.
+
+### 2.5.1 `centro/data/archive/fossils/` — fósseis históricos (não runtime)
+
+Artefatos preservados por audit trail, **fora** de catálogos e runtime.
+
+| Arquivo | Função |
+|---|---|
+| `centro_pistas_rua_sao_bento__point.geojson` | placeholder 390 B, 1 feature; resíduo de migração |
+
+Runtime das pistas Rua São Bento usa `centro/assets/pistas/rua-sao-bento-pistas.json`
+(ver §2.6), não este GeoJSON. Preservado, não deletado (DATA-ORG-B5).
 
 ### 2.6 `centro/assets/pistas/` — fonte operacional das pistas
 
@@ -245,14 +256,14 @@ Status: arquiteturalmente redundante, funcionalmente correto.
 NÃO remover de wired sem reabrir a decisão.
 ```
 
-### 4.3 Órfãos conhecidos (no disco, fora do catálogo)
+### 4.3 Órfãos e fósseis conhecidos (no disco, fora do catálogo)
 
 ```text
-centro/data/context/centro_pistas_rua_sao_bento__point.geojson
+centro/data/archive/fossils/centro_pistas_rua_sao_bento__point.geojson
   - 1 feature, 390 bytes
   - resíduo de migração; pistas reais vivem em centro/assets/pistas/
-  - 0 referências em código
-  - mantido por governança (audit trail), removível em gate próprio
+  - 0 referências em código de runtime
+  - movido de context/ para archive/fossils/ (DATA-ORG-B5)
 
 centro/data/raw/geosampa_rios_centro_raw.geojson
   - 180 features, 0,27 MiB
@@ -262,12 +273,12 @@ centro/data/raw/geosampa_rios_centro_raw.geojson
 
 ```text
 Teste: tests/sanity.test.js — "GEO-B: órfãos conhecidos documentados
-       (raw e pistas ARG)" — verifica que ambos existem no disco.
+       (raw e fóssil RSB)" — verifica que ambos existem no disco.
 
-Se algum dia algum órfão for removido, atualize:
+Se algum dia algum órfão/fóssil for removido, atualize:
   - tests/sanity.test.js (constante KNOWN_ORPHANS)
   - este documento (§4.3)
-  - centro/data/raw/README.md (se for o caso)
+  - centro/data/README.md
 ```
 
 ### 4.4 Relatórios legados em `centro/data/reports/legacy/`
@@ -392,12 +403,13 @@ arquitetura — `mapa_sp_salto` é upstream oficial.
 ### 6.5 Pasta `context/` — relatórios separados (DATA-ORG-B2)
 
 Relatórios de build, match, audit e legacy foram movidos para
-`centro/data/reports/`. `context/` contém somente GeoJSON runtime leve (+ 1
-órfão documentado). Os 3 heavy (~83% do peso) foram movidos para
+`centro/data/reports/`. `context/` contém somente GeoJSON runtime contextual
+normal. Os 3 heavy (~83% do peso) foram movidos para
 `centro/data/geojson/heavy/` (DATA-ORG-B3B). ARG (`centro_arquivo_superficial__point`)
 foi para `geojson/special/arg/` (DATA-ORG-B4B-1). POI turístico
 (`centro_pois_turisticos__point`) foi para `geojson/special/pois/` (DATA-ORG-B4B-2).
-Próximo passo: fósseis em `archive/fossils/` (gate DATA-ORG-B5).
+Fóssil Rua São Bento foi para `archive/fossils/` (DATA-ORG-B5). Ciclo
+organizacional principal de `centro/data/` concluído — ver DATA-ORG-SUMMARY-C.
 
 ---
 
@@ -409,7 +421,7 @@ mover para "decidido".
 | Pergunta | Status | Notas |
 |---|---|---|
 | POIs patrimoniais: sidebar + addPOILayer ou só addPOILayer? | Aberta | gate GEO-POI-DEDUP |
-| `centro_pistas_rua_sao_bento` órfão: remover? | Aberta | governança primeiro; remoção em gate próprio |
+| `centro_pistas_rua_sao_bento` órfão: remover? | **Decidido (B5)** | movido para `archive/fossils/`, não removido |
 | `knowledge.generated` / `data_freshness`: mover para `reports/legacy/`? | **Decidido (B2)** | movidos em DATA-ORG-B2 |
 | PMTiles para OSM endereços? | Aberta | depende de tooling de build |
 

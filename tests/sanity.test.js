@@ -1967,14 +1967,14 @@ describe('projeto_centro — sanity checks', () => {
     );
   });
 
-  it('GEO-B: órfãos conhecidos documentados (raw e pistas ARG)', () => {
+  it('GEO-B: órfãos conhecidos documentados (raw e fóssil RSB)', () => {
     // Estes arquivos existem no disco mas NÃO estão no catálogo.
     // São órfãos conhecidos e aceitos — não devem virar alertas falsos.
     // geosampa_rios_centro_raw.geojson: artefato de pipeline (fonte → derivado context/centro_rios_geosampa__line.geojson)
-    // centro_pistas_rua_sao_bento__point.geojson: ponto ARG manual, carregado via pistas.json não catálogo
+    // centro_pistas_rua_sao_bento__point.geojson: fóssil em archive/fossils/; pistas reais em assets/pistas/
     const KNOWN_ORPHANS = [
       'centro/data/raw/geosampa_rios_centro_raw.geojson',
-      'centro/data/context/centro_pistas_rua_sao_bento__point.geojson',
+      'centro/data/archive/fossils/centro_pistas_rua_sao_bento__point.geojson',
     ];
     for (const path of KNOWN_ORPHANS) {
       assert.ok(existsSync(join(ROOT, path)), `Órfão esperado ausente: ${path} — remover da lista se deletado`);
@@ -2108,6 +2108,27 @@ describe('projeto_centro — sanity checks', () => {
       mapMod.buildLayerDataUrl({ file: layer.file }),
       '/centro/' + newPath
     );
+  });
+
+  it('DATA-ORG-B5: fóssil Rua São Bento em archive/fossils', () => {
+    const fossilId = 'centro_pistas_rua_sao_bento__point';
+    const newPath = 'centro/data/archive/fossils/centro_pistas_rua_sao_bento__point.geojson';
+    const oldPath = 'centro/data/context/centro_pistas_rua_sao_bento__point.geojson';
+    const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const processed = JSON.parse(read('centro/data/catalog/layers.json'));
+
+    assert.ok(exists(newPath), newPath + ' ausente no disco');
+    assert.ok(!exists(oldPath), oldPath + ' não deve existir após B5');
+    assert.ok(exists('centro/assets/pistas/rua-sao-bento-pistas.json'),
+      'pistas reais continuam em assets/pistas/');
+
+    const ctxIds = new Set((ctx.layers || []).map(l => l.id));
+    const wiredIds = new Set(wired.layerIds || []);
+    const processedIds = new Set((processed.layers || []).map(l => l.id));
+    assert.ok(!ctxIds.has(fossilId), fossilId + ' fora de context-layers');
+    assert.ok(!wiredIds.has(fossilId), fossilId + ' fora de context-wired');
+    assert.ok(!processedIds.has(fossilId), fossilId + ' fora de layers.json');
   });
 
   // ── Popup CSS classes ───────────────────────────────────────────

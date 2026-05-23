@@ -56,9 +56,9 @@ Somente `.geojson` — relatórios foram para `reports/` (DATA-ORG-B2).
 | Categoria | Padrão | Exemplo |
 |---|---|---|
 | Camada wired (sidebar) | `*.geojson` | `centro_rios_geosampa__line.geojson` |
-| Fóssil conhecido | (fora do catálogo) | `centro_pistas_rua_sao_bento__point.geojson` |
 
 POI turístico (`centro_pois_turisticos__point`) foi para `geojson/special/pois/` (B4B-2).
+Fóssil Rua São Bento foi para `archive/fossils/` (B5) — runtime usa `assets/pistas/`.
 
 Catálogo: `catalog/context-layers.json` + filtro `catalog/context-wired.json`.
 
@@ -123,7 +123,7 @@ centro/data/
 │   └── legacy/
 │
 └── archive/
-    └── fossils/              ← pendente DATA-ORG-B5
+    └── fossils/              ← centro_pistas_rua_sao_bento ✓ (B5)
 ```
 
 ### Regra de `geojson/heavy/`
@@ -163,11 +163,13 @@ Pistas Rua São Bento **não** moram aqui: runtime usa `centro/assets/pistas/rua
 
 ---
 
-## Fósseis conhecidos (pendente DATA-ORG-B5)
+## Fósseis em `archive/fossils/` (DATA-ORG-B5)
+
+Artefatos históricos **não-runtime**, preservados por audit trail:
 
 | Arquivo | Motivo |
 |---|---|
-| `context/centro_pistas_rua_sao_bento__point.geojson` | 390 B, 1 feature, fora do catálogo; pistas reais em `centro/assets/pistas/` |
+| `archive/fossils/centro_pistas_rua_sao_bento__point.geojson` | 390 B, 1 feature, placeholder; pistas reais em `centro/assets/pistas/rua-sao-bento-pistas.json` |
 
 ---
 
@@ -183,9 +185,9 @@ Pistas Rua São Bento **não** moram aqui: runtime usa `centro/assets/pistas/rua
 | **DATA-ORG-B3B-move** | Mover 3 GeoJSON → `geojson/heavy/` | **feito** (2026-05-23) |
 | **DATA-ORG-B4B-1** | Mover ARG → `geojson/special/arg/` | **feito** (2026-05-23) |
 | **DATA-ORG-B4B-2** | Mover POI turístico → `geojson/special/pois/` | **feito** (2026-05-23) |
-| **DATA-ORG-B5** | Mover fósseis → `archive/fossils/` | pendente |
+| **DATA-ORG-B5** | Mover fósseis → `archive/fossils/` | **feito** (2026-05-23) |
 
-Próximo passo organizacional: **DATA-ORG-B5** (fósseis → `archive/fossils/`).
+Próximo passo organizacional: **DATA-ORG-SUMMARY-C** (síntese do estado final de `centro/data/`).
 
 ---
 
