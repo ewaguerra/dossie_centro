@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { readFileSync, existsSync } from 'fs';
+import vm from 'node:vm';
+import { readFileSync, existsSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -13,6 +14,141 @@ function read(path) {
 
 function exists(path) {
   return existsSync(join(ROOT, path));
+}
+
+function loadCentroMapSafe() {
+  const src = read('centro/map/map-safe.js');
+  const sandbox = { window: { CENTRO: {} }, console };
+  vm.createContext(sandbox);
+  vm.runInContext(src, sandbox);
+  return sandbox.window.CENTRO.map;
+}
+
+function loadSymbolPopupLayerModule() {
+  const sandbox = {
+    window: { CENTRO: {} },
+    console,
+    document: {
+      createElement: function () {
+        return {};
+      },
+    },
+    maplibregl: {
+      Popup: function (opts) {
+        this._opts = opts;
+        this.setLngLat = function () { return this; };
+        this.setDOMContent = function () { return this; };
+        this.addTo = function () { return this; };
+      },
+    },
+  };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/map/map-safe.js'), sandbox);
+  vm.runInContext(read('centro/map/symbol-popup-layer.js'), sandbox);
+  return sandbox.window.CENTRO.map;
+}
+
+function loadLayerDataUrlModule() {
+  const sandbox = { window: { CENTRO: { map: {} } }, console };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/map/layer-data-url.js'), sandbox);
+  return sandbox.window.CENTRO.map;
+}
+
+function loadCatalogLayerControllerModule() {
+  const sandbox = { window: { CENTRO: { map: {} } }, console };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/map/layer-data-url.js'), sandbox);
+  vm.runInContext(read('centro/map/catalog-layer-controller.js'), sandbox);
+  return sandbox.window.CENTRO.map;
+}
+
+function makeMockMap(existingSources, existingLayers) {
+  existingSources = existingSources || {};
+  existingLayers = existingLayers || {};
+  const map = {
+    _sources: Object.assign({}, existingSources),
+    _layers: Object.assign({}, existingLayers),
+    getSource: function (id) { return this._sources[id] || null; },
+    getLayer: function (id) { return this._layers[id] || null; },
+    removeSource: function (id) { delete this._sources[id]; },
+    removeLayer: function (id) { delete this._layers[id]; },
+  };
+  return map;
+}
+
+function makeCatalogDeps(map, overrides) {
+  const activeLayers = new Set();
+  const calls = { ensureSource: [], ensureLayer: [], ensureImage: [], warns: [], toasts: [] };
+  const base = {
+    map: map,
+    activeLayers: activeLayers,
+    ensureSource: function (m, id, cfg) { calls.ensureSource.push({ id, cfg }); m._sources[id] = cfg; },
+    ensureLayer: function (m, lcfg, beforeId) { calls.ensureLayer.push({ id: lcfg.id, type: lcfg.type, paint: lcfg.paint, beforeId }); m._layers[lcfg.id] = lcfg; },
+    ensureImage: function () { return Promise.resolve(); },
+    buildLayerDataUrl: function (cfg) { return '/centro/data/processed/' + (cfg.file || cfg.id + '.geojson'); },
+    applyLayerZoomBounds: function (layerDef) { return layerDef; },
+    getInsertBeforeId: function () { return 'before-id'; },
+    getMapIconHaloPaint: function () { return { 'icon-halo-color': '#fff', 'icon-halo-width': 2 }; },
+    resolveLayerIcon: null,
+    toast: function (msg, level) { calls.toasts.push({ msg, level }); },
+    warn: function (...args) { calls.warns.push(args); },
+  };
+  return { deps: Object.assign({}, base, overrides), calls, activeLayers };
+}
+
+function loadSidebarLayerStateModule() {
+  const sandbox = { window: { CENTRO: {} }, console };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/features/sidebar-layer-state.js'), sandbox);
+  return sandbox.window.CENTRO.sidebarLayerState;
+}
+
+function loadSidebarEventsModule() {
+  const sandbox = {
+    window: { CENTRO: { ui: {} } },
+    console,
+    Event: class Event {
+      constructor(type) {
+        this.type = type;
+      }
+    },
+  };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/ui/sidebar-events.js'), sandbox);
+  return sandbox.window.CENTRO.ui.wireLayerCheckboxes;
+}
+
+function makeMockCheckbox(layerId, opts) {
+  opts = opts || {};
+  const cb = {
+    type: 'checkbox',
+    checked: opts.checked !== undefined ? opts.checked : false,
+    disabled: !!opts.disabled,
+    dataset: { layerId: layerId },
+    _handler: null,
+    addEventListener: function (_ev, fn) {
+      this._handler = fn;
+    },
+    dispatchEvent: function () {
+      if (this._handler) this._handler();
+    },
+  };
+  return cb;
+}
+
+function makeMockPanel(checkboxes) {
+  return {
+    _boxes: checkboxes,
+    querySelectorAll: function (sel) {
+      if (sel.indexOf(':checked') !== -1) {
+        return this._boxes.filter(function (b) {
+          return b.checked && !b.disabled;
+        });
+      }
+      return this._boxes;
+    },
+  };
 }
 
 describe('projeto_centro — sanity checks', () => {
@@ -142,9 +278,11 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('centro-runtime.js: addLayerToMap usa resolveLayerIcon para pontos da sidebar', () => {
-    const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('resolveLayerIcon'), 'resolveLayerIcon ausente');
-    assert.ok(runtime.includes('addPointLayerWithIcon'), 'addPointLayerWithIcon ausente');
+    const runtime = read('centro/centro-runtime.js');    const ctrl = read('centro/map/catalog-layer-controller.js');
+    // resolveLayerIcon é injetado pelo runtime via buildCatalogLayerDeps
+    assert.ok(runtime.includes('resolveLayerIcon'), 'resolveLayerIcon ausente no runtime');
+    // addPointLayerWithIcon migrou para o controller (Gate 4.5E-B)
+    assert.ok(ctrl.includes('addPointLayerWithIcon'), 'addPointLayerWithIcon ausente no controller');
     assert.ok(runtime.includes('getMapIconHaloPaint'), 'halo de icones ausente');
     assert.ok(runtime.includes('icon-halo-color'), 'icon-halo-color ausente');
   });
@@ -225,7 +363,10 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(scriptTags.length > 0, 'deve carregar scripts externos');
     scriptTags.forEach(function(tag) {
       assert.ok(/\bsrc=/.test(tag), 'cada script deve ter src: ' + tag);
-      assert.ok(/\bdefer\b/.test(tag), 'cada script deve usar defer: ' + tag);
+      assert.ok(
+        /\bdefer\b/.test(tag) || /\btype="module"/.test(tag),
+        'cada script deve usar defer ou type=module: ' + tag
+      );
     });
     assert.ok(html.includes('/pages/centro/centro-runtime.js'), 'deve carregar centro-runtime.js');
   });
@@ -253,8 +394,7 @@ describe('projeto_centro — sanity checks', () => {
       'function initMap',
       'function addPOILayer',
       'function loadSidebarData',
-      'function setupLazyImageObserver',
-      'function setupToast',
+      'setupCentroUiFromModules',
       'window.centroNavigate',
       'window.centroGoTo',
     ];
@@ -529,21 +669,37 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── Performance — Lazy loading ──────────────────────────────────
-  it('centro/index.html deve conter lazy loading observer', () => {
-    const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('loading", "lazy"') || runtime.includes('loading="lazy"'), 'loading=lazy ausente');
-    assert.ok(runtime.includes('MutationObserver'), 'MutationObserver ausente');
+  it('centro: ui toast e lazy-assets carregados antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const toastIdx = html.indexOf('ui/toast.js');
+    const lazyIdx = html.indexOf('ui/lazy-assets.js');
+    assert.ok(toastIdx > -1 && lazyIdx > -1, 'scripts ui/toast e ui/lazy-assets ausentes');
+    assert.ok(toastIdx < runtimeIdx && lazyIdx < runtimeIdx, 'ui scripts devem preceder centro-runtime.js');
+    assert.ok(toastIdx < lazyIdx, 'toast.js deve preceder lazy-assets.js');
+
+    const toast = read('centro/ui/toast.js');
+    const lazy = read('centro/ui/lazy-assets.js');
+    assert.doesNotThrow(() => new Function(toast));
+    assert.doesNotThrow(() => new Function(lazy));
+    assert.ok(toast.includes('window.centroToast'), 'toast.js deve expor centroToast');
+    assert.ok(toast.includes('CENTRO.ui.setupToast'), 'toast.js registra CENTRO.ui.setupToast');
+    assert.ok(lazy.includes('MutationObserver'), 'lazy-assets.js usa MutationObserver');
+    assert.ok(lazy.includes('loading", "lazy"'), 'lazy-assets.js aplica loading lazy');
+    assert.ok(lazy.includes('CENTRO.ui.setupLazyImageObserver'), 'lazy-assets registra setupLazyImageObserver');
   });
 
   // ── UX — Toast feedback ─────────────────────────────────────────
   it('centro/index.html deve conter centroToast', () => {
+    const toast = read('centro/ui/toast.js');
+    assert.ok(toast.includes('centroToast'), 'centroToast ausente em ui/toast.js');
+    assert.ok(toast.includes('centro-toast'), 'centro-toast element ausente');
+    assert.ok(toast.includes('toast is-hidden'), 'toast usa classe DS');
+    assert.ok(toast.includes('toast__close'), 'toast usa BEM close');
+    assert.ok(!toast.includes('toastEl.style.cssText'), 'toast sem style.cssText');
+    assert.ok(!toast.includes('toastEl.style.background'), 'toast sem cor inline');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('centroToast'), 'centroToast ausente');
-    assert.ok(runtime.includes('centro-toast'), 'centro-toast element ausente');
-    assert.ok(runtime.includes('toast is-hidden'), 'toast usa classe DS');
-    assert.ok(runtime.includes('toast__close'), 'toast usa BEM close');
-    assert.ok(!runtime.includes('toastEl.style.cssText'), 'toast sem style.cssText');
-    assert.ok(!runtime.includes('toastEl.style.background'), 'toast sem cor inline');
+    assert.ok(runtime.includes('setupCentroUiFromModules'), 'runtime delega UI via setupCentroUiFromModules');
   });
 
   it('centro-runtime.js: showInspector debug usa card--inspector sem inline', () => {
@@ -578,13 +734,676 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── XSS-safety — popups via DOM API ─────────────────────────────
-  it('centro-runtime.js: popups POI e Pista nao usam setHTML com strings concatenadas', () => {
+  it('centro: map-popups.js carregado antes do runtime, sem innerHTML', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const popupsIdx = html.indexOf('ui/map-popups.js');
+    const lazyIdx = html.indexOf('ui/lazy-assets.js');
+    assert.ok(popupsIdx > -1, 'ui/map-popups.js ausente no HTML');
+    assert.ok(lazyIdx < popupsIdx && popupsIdx < runtimeIdx, 'map-popups.js deve preceder centro-runtime.js');
+
+    const popups = read('centro/ui/map-popups.js');
+    assert.doesNotThrow(() => new Function(popups));
+    assert.ok(popups.includes('CENTRO.ui.createPoiPopupNode'), 'export createPoiPopupNode ausente');
+    assert.ok(popups.includes('CENTRO.ui.createPistaPopupNode'), 'export createPistaPopupNode ausente');
+    assert.ok(popups.includes('createElement'), 'factories devem usar createElement');
+    assert.ok(popups.includes('textContent'), 'factories devem usar textContent');
+    assert.ok(!popups.includes('innerHTML'), 'map-popups.js nao deve usar innerHTML');
+    assert.ok(!popups.includes('.setHTML('), 'map-popups.js nao deve usar setHTML');
+    assert.ok(popups.includes('poi-popup'), 'factory POI usa classe poi-popup');
+    assert.ok(popups.includes('pista-popup__desc'), 'factory pista monta descricao');
+
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('setDOMContent'), 'popups devem usar setDOMContent');
-    assert.ok(runtime.includes('createPoiPopupNode'), 'POI popup builder DOM ausente');
-    assert.ok(runtime.includes('createPistaPopupNode'), 'Pista popup builder DOM ausente');
+    assert.ok(runtime.includes('setDOMContent') || read('centro/map/symbol-popup-layer.js').includes('setDOMContent'), 'popups devem usar setDOMContent');
+    assert.ok(runtime.includes('addSymbolPopupLayer'), 'runtime delega via addSymbolPopupLayer');
+    assert.ok(runtime.includes('createPoiPopupNode'), 'runtime referencia export createPoiPopupNode');
+    assert.ok(runtime.includes('createPistaPopupNode'), 'runtime referencia export createPistaPopupNode');
+    assert.ok(!runtime.includes('function createPoiPopupNode'), 'runtime nao duplica factory POI');
+    assert.ok(!runtime.includes('function createPistaPopupNode'), 'runtime nao duplica factory pista');
+    assert.ok(!runtime.includes('pista-popup__desc'), 'markup pista-popup so no modulo');
+    assert.ok(!runtime.includes('pista-popup__img'), 'markup pista-popup so no modulo');
     assert.ok(!/Popup\([^)]*\)[\s\S]{0,300}\.setHTML\(/.test(runtime), 'runtime nao deve usar setHTML em Popup');
     assert.ok(!/innerHTML\s*=\s*"<[a-z]/i.test(runtime) || runtime.includes('panel.innerHTML = ""'), 'runtime evita injecao via innerHTML literal');
+  });
+
+  // ── PR A: pure sidebar/catalog helpers ───────────────────────────
+  it('centro: sidebar-layer-state.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const stateIdx = html.indexOf('sidebar-layer-state.js');
+    const phaseIdx = html.indexOf('protocolo-phase.js');
+    assert.ok(stateIdx > -1, 'sidebar-layer-state.js ausente no HTML');
+    assert.ok(phaseIdx < stateIdx && stateIdx < runtimeIdx, 'sidebar-layer-state deve preceder centro-runtime.js');
+
+    const mod = read('centro/features/sidebar-layer-state.js');
+    assert.doesNotThrow(() => new Function(mod));
+    assert.ok(mod.includes('CENTRO.sidebarLayerState'), 'export sidebarLayerState ausente');
+    assert.ok(!mod.includes('document.'), 'sidebar-layer-state sem DOM');
+    assert.ok(!mod.includes('localStorage'), 'sidebar-layer-state sem localStorage');
+    assert.ok(!mod.includes('getSource'), 'sidebar-layer-state sem MapLibre');
+    assert.ok(!mod.includes('addLayer'), 'sidebar-layer-state sem MapLibre addLayer');
+    assert.ok(!mod.includes('layerUnlocks'), 'sidebar-layer-state nao le ARG runtime');
+    assert.ok(!mod.includes('protocoloPhase'), 'sidebar-layer-state nao le protocoloPhase');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('getSidebarLayerStateHelper'), 'runtime delega sidebarLayerState');
+    assert.ok(!runtime.includes('filePath.indexOf("data/context/")'), 'buildLayerDataUrl nao duplicado no runtime');
+  });
+
+  it('sidebar-layer-state.js: lock state e mensagens preservam texto atual', () => {
+    const state = loadSidebarLayerStateModule();
+    assert.strictEqual(state.getMinPhaseLabel(3), '3');
+    assert.strictEqual(state.getMinPhaseLabel(null), '?');
+
+    const clueLocked = state.getLayerLockState({
+      isClueUnlocked: false,
+      isPhaseUnlocked: true,
+      minPhase: 5,
+    });
+    assert.strictEqual(clueLocked.locked, true);
+    assert.strictEqual(clueLocked.clueLocked, true);
+    assert.strictEqual(clueLocked.phaseLocked, false);
+    assert.strictEqual(state.getLayerRowClass(clueLocked), 'layer-row layer-row--locked');
+    assert.strictEqual(
+      state.getLockMessage(clueLocked, 'sidebar-hint'),
+      ' (bloqueada — registre pistas no Caderno)'
+    );
+    assert.strictEqual(state.getLockMessage(clueLocked, 'sidebar-meta'), 'bloqueada');
+    assert.ok(
+      state.getLockMessage(clueLocked, 'toast').includes('Caderno do Arquivista'),
+      'toast clue lock'
+    );
+
+    const phaseLocked = state.getLayerLockState({
+      isClueUnlocked: true,
+      isPhaseUnlocked: false,
+      minPhase: 7,
+    });
+    assert.strictEqual(phaseLocked.phaseLocked, true);
+    assert.strictEqual(state.getLayerRowClass(phaseLocked), 'layer-row layer-row--locked layer-row--phase-locked');
+    assert.strictEqual(
+      state.getLockMessage(phaseLocked, 'sidebar-hint'),
+      ' (bloqueada — avance de fase no ARG)'
+    );
+    assert.strictEqual(state.getLockMessage(phaseLocked, 'sidebar-meta'), 'fase 7');
+    assert.ok(state.getLockMessage(phaseLocked, 'toast').includes('fase mínima 7'), 'toast phase lock');
+  });
+
+  it('centro: layer-data-url.js carregado apos map-safe e antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const urlIdx = html.indexOf('layer-data-url.js');
+    const mapSafeIdx = html.indexOf('map/map-safe.js');
+    assert.ok(urlIdx > -1, 'layer-data-url.js ausente no HTML');
+    assert.ok(mapSafeIdx < urlIdx && urlIdx < runtimeIdx, 'layer-data-url deve ficar entre map-safe e runtime');
+
+    const mod = read('centro/map/layer-data-url.js');
+    assert.doesNotThrow(() => new Function(mod));
+    assert.ok(mod.includes('buildLayerDataUrl'), 'export buildLayerDataUrl ausente');
+    assert.ok(mod.includes('applyLayerZoomBounds'), 'export applyLayerZoomBounds ausente');
+    assert.ok(!mod.includes('document.'), 'layer-data-url sem DOM');
+    assert.ok(!mod.includes('localStorage'), 'layer-data-url sem localStorage');
+    assert.ok(!mod.includes('getSource'), 'layer-data-url sem MapLibre');
+    assert.ok(!mod.includes('addLayer'), 'layer-data-url sem MapLibre addLayer');
+    assert.ok(!mod.includes('ensureSource'), 'layer-data-url sem ensureSource');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('getCentroMapHelper("buildLayerDataUrl")'), 'runtime delega buildLayerDataUrl');
+    assert.ok(runtime.includes('getCentroMapHelper("applyLayerZoomBounds")'), 'runtime delega applyLayerZoomBounds');
+  });
+
+  it('layer-data-url.js: URLs e zoom bounds preservam comportamento', () => {
+    const mapMod = loadLayerDataUrlModule();
+    assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: 'data/context/centro_foo.geojson' }),
+      '/centro/data/context/centro_foo.geojson'
+    );
+    assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: 'data/processed/centro_bar.geojson' }),
+      '/centro/data/processed/centro_bar.geojson'
+    );
+    assert.strictEqual(
+      mapMod.buildLayerDataUrl({ file: 'legacy/processed/centro_baz.geojson' }),
+      '/centro/data/processed/centro_baz.geojson'
+    );
+
+    const layerDef = { id: 'test-fill', type: 'fill' };
+    const withZoom = mapMod.applyLayerZoomBounds(layerDef, { minzoom: 14, maxzoom: 17 });
+    assert.strictEqual(withZoom.minzoom, 14);
+    assert.strictEqual(withZoom.maxzoom, 17);
+    assert.strictEqual(mapMod.applyLayerZoomBounds({ id: 'x' }, {}).minzoom, undefined);
+  });
+
+  // ── Gate 4.5C: sidebar-panel render ─────────────────────────────
+  it('centro: sidebar-panel.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const panelIdx = html.indexOf('ui/sidebar-panel.js');
+    const popupsIdx = html.indexOf('ui/map-popups.js');
+    assert.ok(panelIdx > -1, 'sidebar-panel.js ausente no HTML');
+    assert.ok(popupsIdx < panelIdx && panelIdx < runtimeIdx, 'sidebar-panel deve preceder centro-runtime.js');
+
+    const panel = read('centro/ui/sidebar-panel.js');
+    assert.doesNotThrow(() => new Function(panel));
+    assert.ok(panel.includes('CENTRO.ui.renderSidebarPanel'), 'export renderSidebarPanel ausente');
+    assert.ok(panel.includes('createElement'), 'sidebar-panel usa createElement');
+    assert.ok(panel.includes('textContent'), 'sidebar-panel usa textContent');
+    const lockStateMod = read('centro/features/sidebar-layer-state.js');
+    assert.ok(lockStateMod.includes('layer-row--locked'), 'classe locked em sidebar-layer-state');
+    assert.ok(lockStateMod.includes('layer-row--phase-locked'), 'classe phase-locked em sidebar-layer-state');
+    assert.ok(panel.includes('getLayerRowClass'), 'sidebar-panel delega row class');
+    assert.ok(panel.includes('data-layer-id') || panel.includes('layerId'), 'data-layer-id via dataset');
+    assert.ok(!panel.includes('localStorage'), 'sidebar-panel sem localStorage');
+    assert.ok(!panel.includes('getSource'), 'sidebar-panel sem MapLibre');
+    assert.ok(!panel.includes('addLayer'), 'sidebar-panel sem addLayer');
+    assert.ok(!panel.includes('fetch('), 'sidebar-panel sem fetch');
+    assert.ok(!panel.includes('layerUnlocks'), 'sidebar-panel nao le ARG runtime');
+    assert.ok(!panel.includes('protocoloPhase'), 'sidebar-panel nao le protocoloPhase');
+    assert.ok(!/innerHTML\s*=\s*[`'"][^`'"]+\$\{/.test(panel), 'sem innerHTML com interpolacao de catalogo');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('CENTRO.ui.renderSidebarPanel'), 'runtime delega renderSidebarPanel');
+    assert.ok(!runtime.includes('details.className = "group"'), 'render DOM nao duplicado no runtime');
+    assert.strictEqual((runtime.match(/function wireLayerCheckboxes/g) || []).length, 1, 'wireLayerCheckboxes intacto');
+    assert.strictEqual((runtime.match(/function renderSidebarPanel/g) || []).length, 1, 'wrapper renderSidebarPanel no runtime');
+  });
+
+  it('sidebar-panel.js: render basico com deps injetadas', () => {
+    const sandbox = {
+      window: { CENTRO: { ui: {} } },
+      document: {
+        createElement: function (tag) {
+          const node = {
+            tagName: tag.toUpperCase(),
+            className: '',
+            textContent: '',
+            open: false,
+            disabled: false,
+            checked: false,
+            dataset: {},
+            children: [],
+            appendChild: function (child) {
+              this.children.push(child);
+            },
+            setAttribute: function () {},
+          };
+          return node;
+        },
+        createTextNode: function (text) {
+          return { nodeType: 3, textContent: text };
+        },
+      },
+      console,
+    };
+    vm.createContext(sandbox);
+    vm.runInContext(read('centro/ui/sidebar-panel.js'), sandbox);
+    const render = sandbox.window.CENTRO.ui.renderSidebarPanel;
+    const panel = sandbox.document.createElement('div');
+    render({
+      panel: panel,
+      groups: [{ id: 'g1', title: 'Grupo Teste' }],
+      layers: [
+        { id: 'ly-open', group: 'g1', title: 'Aberta', visible: true, feature_count: 3 },
+        { id: 'ly-lock', group: 'g1', title: 'Fase', visible: true },
+      ],
+      resolveSidebarLockState: function (id) {
+        if (id === 'ly-lock') {
+          return {
+            locked: true,
+            clueLocked: false,
+            phaseLocked: true,
+            minPhaseLabel: '2',
+          };
+        }
+        return { locked: false, clueLocked: false, phaseLocked: false };
+      },
+      getLayerRowClass: function (state) {
+        return state.locked ? 'layer-row layer-row--locked layer-row--phase-locked' : 'layer-row';
+      },
+      getLockMessage: function (state, kind) {
+        if (kind === 'sidebar-meta') return 'fase 2';
+        return ' (bloqueada — avance de fase no ARG)';
+      },
+      getMinPhaseLabel: function () {
+        return '2';
+      },
+    });
+    assert.ok(panel.children.length >= 1, 'panel recebeu grupos');
+    const htmlDump = JSON.stringify(panel);
+    assert.ok(htmlDump.includes('layer-row--phase-locked'), 'phase-locked renderizado');
+    assert.ok(htmlDump.includes('fase 2'), 'meta fase preservada');
+    assert.ok(htmlDump.includes('ly-open'), 'camada aberta presente');
+  });
+
+  // ── Gate 4.5D-B: sidebar-events wiring ───────────────────────────
+  it('centro: sidebar-events.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const eventsIdx = html.indexOf('ui/sidebar-events.js');
+    const panelIdx = html.indexOf('ui/sidebar-panel.js');
+    assert.ok(eventsIdx > -1, 'sidebar-events.js ausente no HTML');
+    assert.ok(panelIdx < eventsIdx && eventsIdx < runtimeIdx, 'sidebar-events deve preceder centro-runtime.js');
+
+    const events = read('centro/ui/sidebar-events.js');
+    assert.doesNotThrow(() => new Function(events));
+    assert.ok(events.includes('CENTRO.ui.wireLayerCheckboxes'), 'export wireLayerCheckboxes ausente');
+    assert.ok(events.includes('data-layer-id'), 'contrato data-layer-id');
+    assert.ok(!events.includes('localStorage'), 'sidebar-events sem localStorage');
+    assert.ok(!events.includes('catalogIndex'), 'sidebar-events sem catalogIndex');
+    assert.ok(!events.includes('protocoloPhase'), 'sidebar-events sem protocoloPhase');
+    assert.ok(!events.includes('layerUnlocks'), 'sidebar-events sem layerUnlocks');
+    assert.ok(!events.includes('getSource'), 'sidebar-events sem MapLibre getSource');
+    assert.ok(!/[^.]addLayer\s*\(/.test(events), 'sidebar-events sem addLayer MapLibre');
+    assert.ok(!events.includes('maplibregl'), 'sidebar-events sem maplibregl');
+    assert.ok(!events.includes('fetch('), 'sidebar-events sem fetch');
+    assert.ok(!events.includes('data-centro-wired'), 'sem guard panel-level');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('CENTRO.ui.wireLayerCheckboxes'), 'runtime delega wireLayerCheckboxes');
+    assert.ok(runtime.includes('getLockToastMessage'), 'runtime expoe toast lock via wrapper');
+    assert.ok(!runtime.includes('querySelectorAll("input[type=\\"checkbox\\"][data-layer-id]")'), 'query wire nao duplicado no runtime');
+    assert.ok(runtime.includes('function addLayerToMap'), 'addLayerToMap permanece no runtime');
+    assert.ok(runtime.includes('function removeLayerFromMap'), 'removeLayerFromMap permanece no runtime');
+    assert.strictEqual((runtime.match(/function wireLayerCheckboxes/g) || []).length, 1, 'wrapper wireLayerCheckboxes');
+  });
+
+  it('sidebar-events.js: wiring mock checkbox unlocked/checked chama addLayerToMap', () => {
+    const wire = loadSidebarEventsModule();
+    const cb = makeMockCheckbox('ly-poly', { checked: false });
+    const panel = makeMockPanel([cb]);
+    let addCalls = 0;
+    wire(panel, {
+      hasCatalog: function () { return true; },
+      getLayerConfig: function (id) { return id === 'ly-poly' ? { id: 'ly-poly', geom: 'polygon' } : null; },
+      isLayerAccessible: function () { return true; },
+      getLockToastMessage: function () { return 'lock'; },
+      whenMapReady: function (fn) { fn(); return Promise.resolve(); },
+      addLayerToMap: function () { addCalls++; return Promise.resolve(); },
+      removeLayerFromMap: function () {},
+      toast: function () {},
+    });
+    cb.checked = true;
+    cb.dispatchEvent();
+    assert.strictEqual(addCalls, 1, 'addLayerToMap uma vez');
+  });
+
+  it('sidebar-events.js: wiring mock unchecked chama removeLayerFromMap', () => {
+    const wire = loadSidebarEventsModule();
+    const cb = makeMockCheckbox('ly-line', { checked: false });
+    const panel = makeMockPanel([cb]);
+    let removeCalls = 0;
+    wire(panel, {
+      hasCatalog: function () { return true; },
+      getLayerConfig: function (id) { return { id: id, geom: 'line' }; },
+      isLayerAccessible: function () { return true; },
+      getLockToastMessage: function () { return ''; },
+      whenMapReady: function (fn) { fn(); return Promise.resolve(); },
+      addLayerToMap: function () {},
+      removeLayerFromMap: function (id) { removeCalls++; assert.strictEqual(id, 'ly-line'); },
+      toast: function () {},
+    });
+    cb.dispatchEvent();
+    assert.strictEqual(removeCalls, 1, 'removeLayerFromMap uma vez');
+  });
+
+  it('sidebar-events.js: wiring mock locked reverte checked e chama toast', () => {
+    const wire = loadSidebarEventsModule();
+    const cb = makeMockCheckbox('ly-lock', { checked: true });
+    const panel = makeMockPanel([cb]);
+    let addCalls = 0;
+    let toastMsg = '';
+    wire(panel, {
+      hasCatalog: function () { return true; },
+      getLayerConfig: function () { return { id: 'ly-lock' }; },
+      isLayerAccessible: function () { return false; },
+      getLockToastMessage: function () { return 'Camada bloqueada. TESTE'; },
+      whenMapReady: function (fn) { fn(); return Promise.resolve(); },
+      addLayerToMap: function () { addCalls++; },
+      removeLayerFromMap: function () {},
+      toast: function (msg) { toastMsg = msg; },
+    });
+    cb.dispatchEvent();
+    assert.strictEqual(cb.checked, false, 'checkbox revertido');
+    assert.ok(toastMsg.includes('TESTE'), 'toast lock chamado');
+    assert.strictEqual(addCalls, 0, 'addLayerToMap nao chamado');
+  });
+
+  it('sidebar-events.js: bootstrap checked:not(:disabled) dispara change', () => {
+    const wire = loadSidebarEventsModule();
+    const cb = makeMockCheckbox('ly-boot', { checked: true });
+    const panel = makeMockPanel([cb]);
+    let addCalls = 0;
+    wire(panel, {
+      hasCatalog: function () { return true; },
+      getLayerConfig: function (id) { return { id: id, geom: 'point' }; },
+      isLayerAccessible: function () { return true; },
+      getLockToastMessage: function () { return ''; },
+      whenMapReady: function (fn) { fn(); return Promise.resolve(); },
+      addLayerToMap: function () { addCalls++; return Promise.resolve(); },
+      removeLayerFromMap: function () {},
+      toast: function () {},
+    });
+    assert.strictEqual(addCalls, 1, 'bootstrap dispara addLayerToMap');
+  });
+
+  // ── Gate 4.5E-B: catalog-layer-controller ───────────────────────
+  it('centro: catalog-layer-controller.js carregado depois de layer-data-url e antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const ctrlIdx = html.indexOf('catalog-layer-controller.js');
+    const urlIdx = html.indexOf('layer-data-url.js');
+    assert.ok(ctrlIdx > -1, 'catalog-layer-controller.js ausente no HTML');
+    assert.ok(urlIdx < ctrlIdx && ctrlIdx < runtimeIdx, 'catalog-layer-controller deve ficar entre layer-data-url e runtime');
+
+    const ctrl = read('centro/map/catalog-layer-controller.js');
+    assert.doesNotThrow(() => new Function(ctrl));
+    assert.ok(ctrl.includes('addCatalogLayerToMap'), 'export addCatalogLayerToMap ausente');
+    assert.ok(ctrl.includes('removeCatalogLayerFromMap'), 'export removeCatalogLayerFromMap ausente');
+    assert.ok(!ctrl.includes('localStorage'), 'controller sem localStorage');
+    assert.ok(!ctrl.includes('document.'), 'controller sem DOM');
+    assert.ok(!ctrl.includes('querySelector'), 'controller sem querySelector');
+    assert.ok(!ctrl.includes('catalogIndex'), 'controller sem catalogIndex');
+    assert.ok(!ctrl.includes('layerUnlocks'), 'controller sem layerUnlocks');
+    assert.ok(!ctrl.includes('protocoloPhase'), 'controller sem protocoloPhase');
+    assert.ok(!ctrl.includes('fetch('), 'controller sem fetch');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('function addLayerToMap'), 'wrapper addLayerToMap no runtime');
+    assert.ok(runtime.includes('function removeLayerFromMap'), 'wrapper removeLayerFromMap no runtime');
+    assert.ok(runtime.includes('addCatalogLayerToMap'), 'runtime delega addCatalogLayerToMap');
+    assert.ok(runtime.includes('removeCatalogLayerFromMap'), 'runtime delega removeCatalogLayerFromMap');
+    assert.ok(!runtime.includes('function addPointLayerWithIcon'), 'addPointLayerWithIcon nao mais no runtime');
+  });
+
+  it('catalog-layer-controller: polygon layer criado com contratos imutáveis', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map);
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-poly', geom: 'polygon', file: 'test.geojson' }, deps);
+    assert.strictEqual(calls.ensureSource.length, 1, 'ensureSource chamado');
+    assert.strictEqual(calls.ensureSource[0].id, 'test-poly-src', 'sourceId preservado');
+    assert.strictEqual(calls.ensureLayer.length, 1, 'ensureLayer chamado');
+    assert.strictEqual(calls.ensureLayer[0].id, 'test-poly-fill', 'layer fill id correto');
+    assert.strictEqual(calls.ensureLayer[0].type, 'fill', 'tipo fill');
+    assert.strictEqual(calls.ensureLayer[0].beforeId, 'before-id', 'beforeId injetado');
+    assert.ok(activeLayers.has('test-poly'), 'activeLayers.add chamado');
+  });
+
+  it('catalog-layer-controller: line layer criado com contratos imutáveis', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map);
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-line', geom: 'line', file: 'test.geojson' }, deps);
+    assert.strictEqual(calls.ensureLayer[0].id, 'test-line', 'layer id sem -fill');
+    assert.strictEqual(calls.ensureLayer[0].type, 'line', 'tipo line');
+    assert.strictEqual(calls.ensureLayer[0].paint['line-width'], 2, 'line-width 2 default');
+    assert.ok(activeLayers.has('test-line'));
+  });
+
+  it('catalog-layer-controller: point com ícone OK cria symbol layer', async () => {
+    const map = makeMockMap();
+    let ensureImageId = null;
+    const { deps, calls, activeLayers } = makeCatalogDeps(map, {
+      resolveLayerIcon: function (id) { return '/icons/' + id + '.svg'; },
+      ensureImage: function (m, id, path) { ensureImageId = id; return Promise.resolve(); },
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-pt', geom: 'point', file: 'test.geojson' }, deps);
+    assert.strictEqual(ensureImageId, 'test-pt-symbol', 'imageId {id}-symbol');
+    assert.strictEqual(calls.ensureLayer[0].type, 'symbol', 'tipo symbol');
+    assert.ok(calls.ensureLayer[0].paint['icon-halo-width'] !== undefined || calls.ensureLayer[0].paint['icon-halo-color'] !== undefined, 'halo paint aplicado');
+    assert.ok(activeLayers.has('test-pt'));
+  });
+
+  it('catalog-layer-controller: point com ícone null faz fallback circle', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map, {
+      resolveLayerIcon: null,
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-pt2', geom: 'point', file: 'test.geojson' }, deps);
+    assert.strictEqual(calls.ensureLayer[0].type, 'circle', 'fallback circle');
+    assert.strictEqual(calls.ensureLayer[0].paint['circle-radius'], 6, 'radius 6');
+    assert.ok(activeLayers.has('test-pt2'));
+  });
+
+  it('catalog-layer-controller: point com ensureImage falha faz fallback circle', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map, {
+      resolveLayerIcon: function () { return '/icon.svg'; },
+      ensureImage: function () { return Promise.reject(new Error('load fail')); },
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-pt3', geom: 'point', file: 'test.geojson' }, deps);
+    assert.strictEqual(calls.ensureLayer[0].type, 'circle', 'circle após icon fail');
+    assert.ok(calls.warns.length >= 1, 'warn chamado');
+    assert.ok(activeLayers.has('test-pt3'));
+  });
+
+  it('catalog-layer-controller: source existente é idempotente', async () => {
+    const map = makeMockMap({ 'test-idem-src': {} });
+    const { deps, calls, activeLayers } = makeCatalogDeps(map);
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-idem', geom: 'polygon' }, deps);
+    assert.strictEqual(calls.ensureLayer.length, 0, 'nenhum ensureLayer se source existe');
+    assert.ok(!activeLayers.has('test-idem'), 'activeLayers nao add em idempotente');
+  });
+
+  it('catalog-layer-controller: remove polygon remove fill + source + activeLayers.delete', () => {
+    const map = makeMockMap(
+      { 'test-rm-src': {} },
+      { 'test-rm-fill': {}, 'test-rm': {} }
+    );
+    const activeLayers = new Set(['test-rm']);
+    const ctrl = loadCatalogLayerControllerModule();
+    ctrl.removeCatalogLayerFromMap('test-rm', {
+      map: map,
+      activeLayers: activeLayers,
+    });
+    assert.ok(!map._layers['test-rm-fill'], 'fill removido');
+    assert.ok(!map._layers['test-rm'], 'layer removido');
+    assert.ok(!map._sources['test-rm-src'], 'source removido');
+    assert.ok(!activeLayers.has('test-rm'), 'activeLayers.delete');
+  });
+
+  it('catalog-layer-controller: erro em ensureSource chama warn e toast, nao add activeLayers', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map, {
+      ensureSource: function () { throw new Error('source fail'); },
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-err', geom: 'polygon' }, deps);
+    assert.ok(calls.warns.length >= 1, 'warn chamado');
+    assert.ok(calls.toasts.length >= 1, 'toast chamado');
+    assert.ok(calls.toasts[0].msg.includes('test-err'), 'toast menciona layer id');
+    assert.ok(!activeLayers.has('test-err'), 'activeLayers nao add em erro');
+  });
+
+  it('catalog-layer-controller: minzoom/maxzoom aplicados via applyLayerZoomBounds', async () => {
+    const map = makeMockMap();
+    const zooms = [];
+    const { deps, calls } = makeCatalogDeps(map, {
+      applyLayerZoomBounds: function (layerDef, cfg) {
+        zooms.push({ minzoom: cfg.minzoom, maxzoom: cfg.maxzoom });
+        return layerDef;
+      },
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-zoom', geom: 'line', minzoom: 14, maxzoom: 17 }, deps);
+    assert.ok(zooms.length >= 1, 'applyLayerZoomBounds chamado');
+    assert.strictEqual(zooms[0].minzoom, 14);
+    assert.strictEqual(zooms[0].maxzoom, 17);
+  });
+
+  // ── Symbol popup layer factory ──────────────────────────────────
+  it('centro: symbol-popup-layer.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const symbolIdx = html.indexOf('symbol-popup-layer.js');
+    const mapSafeIdx = html.indexOf('map/map-safe.js');
+    assert.ok(symbolIdx > -1, 'symbol-popup-layer.js ausente no HTML');
+    assert.ok(mapSafeIdx < symbolIdx && symbolIdx < runtimeIdx, 'symbol-popup-layer deve preceder centro-runtime.js');
+
+    const symbol = read('centro/map/symbol-popup-layer.js');
+    assert.doesNotThrow(() => new Function(symbol));
+    assert.ok(symbol.includes('CENTRO.map.addSymbolPopupLayer'), 'export addSymbolPopupLayer ausente');
+    assert.ok(symbol.includes('setDOMContent'), 'factory usa setDOMContent');
+    assert.ok(!symbol.includes('innerHTML'), 'symbol-popup-layer sem innerHTML');
+    assert.ok(!symbol.includes('.setHTML('), 'symbol-popup-layer sem setHTML');
+    assert.ok(!symbol.includes('POI_TEXT_FONT'), 'factory nao conhece POI_TEXT_FONT');
+    assert.ok(!symbol.includes('styleSupportsTextLabels'), 'factory nao conhece styleSupportsTextLabels');
+    assert.ok(!symbol.includes('getMapIconHaloPaint'), 'factory nao conhece getMapIconHaloPaint');
+    assert.ok(!symbol.includes('pistaItemFromProperties'), 'factory nao conhece pistaItemFromProperties');
+    assert.ok(symbol.includes('getMapFn("ensureSource")'), 'factory delega ensureSource');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.strictEqual((runtime.match(/function addPOILayer/g) || []).length, 1, 'uma addPOILayer');
+    assert.strictEqual((runtime.match(/function addPistasLayer/g) || []).length, 1, 'uma addPistasLayer');
+    assert.ok(runtime.includes('getCentroMapHelper("addSymbolPopupLayer")'), 'wrappers delegam factory');
+    assert.ok(!runtime.includes('bindLayerEventOnce(mapInstance, "click", iconLayerId'), 'click handler so na factory');
+
+    const criticalIds = [
+      'memoria-paulistana-source', 'memoria-paulistana-icon',
+      'acervo-tombado-source', 'acervo-tombado-icon',
+      'bem-arqueologico-source', 'bem-arqueologico-icon',
+      'monumentos-source', 'monumentos-icon',
+      'poi-turistico-source', 'poi-turistico-icon',
+      'rsb-pistas-source', 'rsb-pistas-icon', 'rsb-pista-icon',
+    ];
+    criticalIds.forEach(function (id) {
+      assert.ok(runtime.includes(id), id + ' ausente no runtime');
+    });
+    assert.ok(runtime.includes('labelLayerId: poiCfg.id + "-label"'), 'pattern label layer POI');
+  });
+
+  it('symbol-popup-layer.js: factory idempotente com mock map', async () => {
+    const mapApi = loadSymbolPopupLayerModule();
+    var ensureSourceCalls = 0;
+    var ensureImageCalls = 0;
+    var ensureLayerCalls = 0;
+    var bindCalls = 0;
+    var mockMap = {
+      getCanvas: function () { return { style: {} }; },
+    };
+    mapApi.ensureSource = function () { ensureSourceCalls++; };
+    mapApi.ensureImage = async function () { ensureImageCalls++; };
+    mapApi.ensureLayer = function () { ensureLayerCalls++; };
+    mapApi.bindLayerEventOnce = function () { bindCalls++; };
+
+    var interactionIds = [];
+    await mapApi.addSymbolPopupLayer(mockMap, {
+      sourceId: 'test-source',
+      iconLayerId: 'test-icon',
+      source: { type: 'geojson', data: { type: 'FeatureCollection', features: [{ type: 'Feature' }] } },
+      imageId: 'test-img',
+      iconPath: '/icon.svg',
+      iconLayout: { 'icon-image': 'test-img' },
+      iconPaint: {},
+      label: null,
+      popup: {
+        factoryKey: 'createPoiPopupNode',
+        buildArgs: function () { return ['A', 'B']; },
+      },
+      interactionLayerIds: interactionIds,
+      returnFeatureCount: true,
+    });
+
+    assert.strictEqual(ensureSourceCalls, 1);
+    assert.strictEqual(ensureImageCalls, 1);
+    assert.strictEqual(ensureLayerCalls, 1, 'sem label quando label null');
+    assert.strictEqual(bindCalls, 3, 'click + mouseenter + mouseleave');
+    assert.deepStrictEqual(interactionIds, ['test-icon']);
+
+    ensureLayerCalls = 0;
+    await mapApi.addSymbolPopupLayer(mockMap, {
+      sourceId: 'test-source',
+      iconLayerId: 'test-icon',
+      source: { type: 'geojson', data: '/data.geojson' },
+      imageId: 'test-img',
+      iconPath: '/icon.svg',
+      iconLayout: { 'icon-image': 'test-img' },
+      iconPaint: {},
+      label: {
+        layerId: 'test-label',
+        enabled: true,
+        layout: { 'text-field': ['get', 'name'] },
+        paint: {},
+      },
+      popup: {
+        factoryKey: 'createPoiPopupNode',
+        buildArgs: function () { return ['A', '']; },
+      },
+      interactionLayerIds: interactionIds,
+    });
+    assert.strictEqual(ensureLayerCalls, 2, 'icon + label quando label.enabled');
+  });
+
+  // ── MapLibre safe helpers ───────────────────────────────────────
+  it('centro: map-safe.js carregado antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const mapSafeIdx = html.indexOf('map/map-safe.js');
+    const popupsIdx = html.indexOf('ui/map-popups.js');
+    assert.ok(mapSafeIdx > -1, 'map/map-safe.js ausente no HTML');
+    assert.ok(popupsIdx < mapSafeIdx && mapSafeIdx < runtimeIdx, 'map-safe.js deve preceder centro-runtime.js');
+
+    const mapSafe = read('centro/map/map-safe.js');
+    assert.doesNotThrow(() => new Function(mapSafe));
+    assert.ok(mapSafe.includes('CENTRO.map.ensureSource'), 'export ensureSource ausente');
+    assert.ok(mapSafe.includes('CENTRO.map.ensureLayer'), 'export ensureLayer ausente');
+    assert.ok(mapSafe.includes('CENTRO.map.ensureImage'), 'export ensureImage ausente');
+    assert.ok(mapSafe.includes('CENTRO.map.bindLayerEventOnce'), 'export bindLayerEventOnce ausente');
+    assert.ok(mapSafe.includes('__centroPoiHandlers'), 'bindLayerEventOnce usa registry idempotente');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('getCentroMapHelper'), 'runtime delega via getCentroMapHelper');
+    assert.ok(runtime.includes('ensureSource'), 'runtime referencia ensureSource');
+    assert.ok(runtime.includes('ensureLayer'), 'runtime referencia ensureLayer');
+    assert.ok(runtime.includes('ensureImage'), 'runtime referencia ensureImage');
+    assert.ok(runtime.includes('bindLayerEventOnce'), 'runtime referencia bindLayerEventOnce');
+    assert.ok(!runtime.includes('mapInstance.addSource'), 'addSource so no modulo map-safe');
+    assert.ok(!runtime.includes('__centroPoiHandlers'), 'handler registry so no modulo map-safe');
+    assert.ok(!runtime.includes('function isSvgUrl'), 'isSvgUrl so no modulo map-safe');
+  });
+
+  it('map-safe.js: helpers idempotentes com mock map', () => {
+    const map = loadCentroMapSafe();
+    var sources = { 'existing-source': true };
+    var layers = { 'existing-layer': true };
+    var addSourceCalls = 0;
+    var addLayerCalls = 0;
+    var mockMap = {
+      getSource: function (id) { return sources[id] ? {} : null; },
+      addSource: function (id) { sources[id] = true; addSourceCalls++; },
+      getLayer: function (id) { return layers[id] ? {} : null; },
+      addLayer: function (cfg) { layers[cfg.id] = true; addLayerCalls++; },
+    };
+
+    map.ensureSource(mockMap, 'existing-source', { type: 'geojson', data: {} });
+    map.ensureSource(mockMap, 'existing-source', { type: 'geojson', data: {} });
+    assert.strictEqual(addSourceCalls, 0, 'ensureSource nao duplica source existente');
+
+    map.ensureSource(mockMap, 'new-source', { type: 'geojson', data: {} });
+    map.ensureSource(mockMap, 'new-source', { type: 'geojson', data: {} });
+    assert.strictEqual(addSourceCalls, 1, 'ensureSource adiciona source uma vez');
+
+    map.ensureLayer(mockMap, { id: 'existing-layer', type: 'fill', source: 's' });
+    map.ensureLayer(mockMap, { id: 'existing-layer', type: 'fill', source: 's' });
+    assert.strictEqual(addLayerCalls, 0, 'ensureLayer nao duplica layer existente');
+
+    map.ensureLayer(mockMap, { id: 'new-layer', type: 'fill', source: 's' });
+    map.ensureLayer(mockMap, { id: 'new-layer', type: 'fill', source: 's' });
+    assert.strictEqual(addLayerCalls, 1, 'ensureLayer adiciona layer uma vez');
+
+    var onCalls = 0;
+    var eventMap = {
+      __centroPoiHandlers: {},
+      on: function () { onCalls++; },
+    };
+    var handler = function () {};
+    map.bindLayerEventOnce(eventMap, 'click', 'poi-layer', handler);
+    map.bindLayerEventOnce(eventMap, 'click', 'poi-layer', handler);
+    assert.strictEqual(onCalls, 1, 'bindLayerEventOnce nao registra handler duplicado');
   });
 
   // ── Click handler escopado e debug-gated ────────────────────────
@@ -646,13 +1465,15 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── map.loadImage canonico para raster, Image() para SVG ────────
-  it('centro-runtime.js: ensureImage roteia SVG via Image() e raster via map.loadImage', () => {
+  it('map-safe.js: ensureImage roteia SVG via Image() e raster via map.loadImage', () => {
+    const mapSafe = read('centro/map/map-safe.js');
+    assert.ok(mapSafe.includes('mapInstance.loadImage'), 'deve usar map.loadImage para raster');
+    assert.ok(mapSafe.includes('response.data'), 'deve usar response.data do loadImage');
+    assert.ok(mapSafe.includes('isSvgUrl'), 'detector de SVG ausente');
+    assert.ok(mapSafe.includes('loadHtmlImage'), 'fallback Image() ausente');
+    assert.ok(/!isSvgUrl\([^)]+\)\s*&&/.test(mapSafe), 'SVG deve evitar createImageBitmap pipeline');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('mapInstance.loadImage'), 'deve usar map.loadImage para raster');
-    assert.ok(runtime.includes('response.data'), 'deve usar response.data do loadImage');
-    assert.ok(runtime.includes('isSvgUrl'), 'detector de SVG ausente');
-    assert.ok(runtime.includes('loadHtmlImage'), 'fallback Image() ausente');
-    assert.ok(/!isSvgUrl\([^)]+\)\s*&&/.test(runtime), 'SVG deve evitar createImageBitmap pipeline');
+    assert.ok(runtime.includes('getCentroMapHelper("ensureImage")'), 'runtime delega ensureImage');
   });
 
   // ── MapOptions PT-BR e attribution compacto ─────────────────────
@@ -690,6 +1511,37 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('buildings-3d.js'), 'index deve carregar buildings-3d.js');
   });
 
+  it('centro: visão subterrânea usa Three.js vendorizado em custom layer', () => {
+    const html = read('centro/index.html');
+    const runtime = read('centro/centro-runtime.js');
+    const feature = read('centro/features/subterranean-cutaway.js');
+    const css = read('centro/styles/subterranean-cutaway.css');
+    const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    const pkg = JSON.parse(read('package.json'));
+
+    assert.ok(html.includes('centro-subterranean-toggle'), 'toggle subterrâneo ausente');
+    assert.ok(html.includes('subterranean-cutaway.css'), 'CSS subterrâneo ausente');
+    assert.ok(html.includes('subterranean-cutaway.js'), 'feature subterrânea ausente');
+    assert.ok(html.includes('type="module" src="/pages/centro/features/subterranean-cutaway.js"'), 'feature Three deve carregar como module');
+    assert.ok(runtime.includes('CENTRO.subterraneanCutaway'), 'runtime deve delegar visão subterrânea');
+    assert.ok(runtime.includes('centro:subterranean-ready'), 'runtime deve tolerar carregamento module');
+    assert.ok(feature.includes('type: "custom"'), 'deve usar custom layer MapLibre');
+    assert.ok(feature.includes('import * as THREE'), 'feature deve importar Three.js');
+    assert.ok(feature.includes('/vendor/three/three.module.min.js'), 'Three deve vir de vendor local');
+    assert.ok(feature.includes('new THREE.Scene'), 'scene Three ausente');
+    assert.ok(feature.includes('new THREE.WebGLRenderer'), 'renderer Three ausente');
+    assert.ok(feature.includes('new THREE.Raycaster'), 'Raycaster Three ausente');
+    assert.ok(feature.includes('agua-calada'), 'gate agua-calada ausente');
+    assert.ok(feature.includes('aresta-fria'), 'gate aresta-fria ausente');
+    assert.ok(feature.includes('peso-fundacao'), 'gate peso-fundacao ausente');
+    assert.ok(pkg.dependencies && pkg.dependencies.three, 'three dependency ausente');
+    assert.ok(pkg.scripts && pkg.scripts['sync:three'], 'sync:three ausente');
+    assert.ok(exists('scripts/sync-three.mjs'), 'sync-three.mjs ausente');
+    assert.ok(exists('vendor/three/three.module.min.js'), 'three.module.min.js vendorizado ausente');
+    assert.strictEqual(gates.phaseTitles['7'], 'Rasgue o Asfalto');
+    assert.ok(css.includes('subterranean-active'), 'estado visual subterrâneo ausente');
+  });
+
   it('theme.js expoe helpers de fill-extrusion para buildings3D', () => {
     const theme = read('vendor/app/config/theme.js');
     assert.ok(theme.includes('getBuildings3DExtrusionColorExpression'), 'expressao de cor ausente');
@@ -710,8 +1562,10 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(pkg.dependencies && pkg.dependencies['maplibre-gl'], 'maplibre-gl ausente');
     assert.match(pkg.dependencies['maplibre-gl'], /^\^5\./, 'maplibre-gl deve estar em ^5.x');
     assert.ok(pkg.scripts && pkg.scripts['sync:maplibre'], 'script sync:maplibre ausente');
-    assert.ok(pkg.scripts.postinstall && pkg.scripts.postinstall.includes('sync-maplibre'), 'postinstall sync ausente');
+    assert.ok(pkg.scripts.postinstall && pkg.scripts.postinstall.includes('sync-maplibre'), 'postinstall maplibre sync ausente');
+    assert.ok(pkg.scripts.postinstall && pkg.scripts.postinstall.includes('sync-three'), 'postinstall three sync ausente');
     assert.ok(exists('scripts/sync-maplibre.mjs'), 'sync-maplibre.mjs ausente');
+    assert.ok(exists('scripts/sync-three.mjs'), 'sync-three.mjs ausente');
     const sync = read('scripts/sync-maplibre.mjs');
     assert.ok(sync.includes('vendor/maplibre'), 'sync deve mirar vendor/maplibre');
     assert.ok(sync.includes('node_modules/maplibre-gl/dist'), 'sync deve copiar de node_modules');
@@ -754,8 +1608,9 @@ describe('projeto_centro — sanity checks', () => {
 
   it('centro-runtime.js insere camadas do catalogo abaixo dos POIs (beforeId)', () => {
     const runtime = read('centro/centro-runtime.js');
+    const mapSafe = read('centro/map/map-safe.js');
     assert.ok(runtime.includes('getCatalogInsertBeforeId'), 'getCatalogInsertBeforeId ausente');
-    assert.ok(runtime.includes('addLayer(layerConfig, beforeId)'), 'ensureLayer deve aceitar beforeId');
+    assert.ok(mapSafe.includes('addLayer(layerConfig, beforeId)'), 'ensureLayer deve aceitar beforeId');
     assert.ok(runtime.includes('getCatalogInsertBeforeId()'), 'addLayerToMap deve usar beforeId');
   });
 
@@ -792,7 +1647,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('protocolo13_caderno_clues'), 'chave caderno ausente no centro');
     assert.ok(runtime.includes('layer-unlocks.json'), 'fetch layer-unlocks ausente');
     assert.ok(runtime.includes('isLayerUnlocked'), 'isLayerUnlocked ausente');
-    assert.ok(runtime.includes('layer-row--locked'), 'UI locked ausente');
+    const lockStateMod = read('centro/features/sidebar-layer-state.js');
+    assert.ok(
+      lockStateMod.includes('layer-row--locked'),
+      'UI locked ausente em sidebar-layer-state'
+    );
+    assert.ok(runtime.includes('resolveSidebarLockState'), 'runtime usa lock state module');
     assert.ok(arquivo.includes('protocolo13_caderno_clues'), 'persistencia caderno ausente no arquivo-morto');
     assert.ok(exists('centro/data/catalog/layer-unlocks.json'), 'layer-unlocks.json ausente');
   });
@@ -835,7 +1695,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('centro-phase-badge'), 'badge de fase no centro ausente');
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('isLayerPhaseUnlocked'), 'gate de fase ausente no runtime');
-    assert.ok(runtime.includes('layer-row--phase-locked'), 'UI phase-locked ausente');
+    const lockStateMod = read('centro/features/sidebar-layer-state.js');
+    assert.ok(
+      lockStateMod.includes('layer-row--phase-locked'),
+      'UI phase-locked ausente em sidebar-layer-state'
+    );
+    assert.ok(runtime.includes('getLayerRowClass') || runtime.includes('resolveSidebarLockState'), 'runtime delega row class lock');
     const phase = read('centro/features/protocolo-phase.js');
     assert.ok(phase.includes('phase-gates.json'), 'protocolo-phase deve carregar gates');
     assert.ok(phase.includes('isLayerPhaseUnlocked'), 'API isLayerPhaseUnlocked ausente');
@@ -918,6 +1783,184 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(js.includes('protocolo13_phase'), 'init fase ausente');
     assert.ok(html.includes('protocolo-phase-badge'), 'badge de fase ausente');
     assert.ok(html.includes('fase 1 activa'), 'copy deve indicar fase 1 activa');
+  });
+
+  // ── Gate GEO-B: integridade GeoJSON ─────────────────────────────
+
+  // Helpers locais — read-only, sem acesso a runtime
+  function loadCatalogLayers() {
+    const layersDoc = JSON.parse(read('centro/data/catalog/layers.json'));
+    const ctxDoc    = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const wiredDoc  = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const wiredSet  = new Set((wiredDoc.layerIds || []));
+    const processed = (layersDoc.layers || []);
+    const context   = (ctxDoc.layers || []).filter(l => wiredSet.has(l.id));
+    return { processed, context, wiredSet };
+  }
+
+  function resolveGeoJsonPath(layer) {
+    const f = layer.file || '';
+    if (f.startsWith('data/context/') || f.startsWith('data/processed/')) {
+      return 'centro/' + f;
+    }
+    return 'centro/data/processed/' + f.replace(/^.*processed\//, '');
+  }
+
+  function geomCompatible(cfgGeom, realTypes) {
+    if (cfgGeom === 'polygon' || cfgGeom === 'fill') {
+      return realTypes.some(t => t === 'Polygon' || t === 'MultiPolygon');
+    }
+    if (cfgGeom === 'line') {
+      return realTypes.some(t => t === 'LineString' || t === 'MultiLineString');
+    }
+    if (cfgGeom === 'point') {
+      return realTypes.some(t => t === 'Point' || t === 'MultiPoint');
+    }
+    return true;
+  }
+
+  it('GEO-B: todos os arquivos do catálogo existem no disco', () => {
+    const { processed, context } = loadCatalogLayers();
+    const missing = [];
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) missing.push(`${layer.id} -> ${path}`);
+    }
+    assert.deepStrictEqual(missing, [], 'Arquivos ausentes: ' + missing.join(', '));
+  });
+
+  it('GEO-B: todos os GeoJSON são parseáveis e são FeatureCollection', () => {
+    const { processed, context } = loadCatalogLayers();
+    const errors = [];
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) { errors.push(`${layer.id}: arquivo ausente`); continue; }
+      try {
+        const fc = JSON.parse(read(path));
+        if (fc.type !== 'FeatureCollection') {
+          errors.push(`${layer.id}: type=${fc.type} (esperado FeatureCollection)`);
+        }
+        if (!Array.isArray(fc.features)) {
+          errors.push(`${layer.id}: features ausente ou não array`);
+        }
+      } catch (e) {
+        errors.push(`${layer.id}: parse error — ${e.message}`);
+      }
+    }
+    assert.deepStrictEqual(errors, [], errors.join('\n'));
+  });
+
+  it('GEO-B: nenhuma feature tem geometry nula', () => {
+    const { processed, context } = loadCatalogLayers();
+    const errors = [];
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) continue;
+      const fc = JSON.parse(read(path));
+      const nulls = (fc.features || []).filter(f => !f.geometry).length;
+      if (nulls > 0) errors.push(`${layer.id}: ${nulls} features sem geometry`);
+    }
+    assert.deepStrictEqual(errors, [], errors.join('\n'));
+  });
+
+  it('GEO-B: geometria real compatível com cfg.geom do catálogo', () => {
+    const { processed, context } = loadCatalogLayers();
+    const errors = [];
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) continue;
+      const fc = JSON.parse(read(path));
+      const cfgGeom = layer.geom || layer.geometry;
+      if (!cfgGeom) continue;
+      const realTypes = [...new Set(
+        (fc.features || []).filter(f => f.geometry).map(f => f.geometry.type)
+      )];
+      if (!geomCompatible(cfgGeom, realTypes)) {
+        errors.push(`${layer.id}: cfg=${cfgGeom} real=${realTypes.join(',')}`);
+      }
+    }
+    assert.deepStrictEqual(errors, [], 'Geometria incompatível:\n' + errors.join('\n'));
+  });
+
+  it('GEO-B: sem IDs duplicados entre processed e context wired', () => {
+    const { processed, context } = loadCatalogLayers();
+    const allIds = [...processed, ...context].map(l => l.id);
+    const seen = new Set();
+    const dupes = [];
+    for (const id of allIds) {
+      if (seen.has(id)) dupes.push(id);
+      seen.add(id);
+    }
+    assert.deepStrictEqual(dupes, [], 'IDs duplicados: ' + dupes.join(', '));
+  });
+
+  it('GEO-B: layer-unlocks referencia apenas layers existentes no catálogo', () => {
+    const { processed, context } = loadCatalogLayers();
+    const known = new Set([...processed, ...context].map(l => l.id));
+    const unlocks = JSON.parse(read('centro/data/catalog/layer-unlocks.json'));
+    const unknown = Object.keys(unlocks.layers || {}).filter(id => !known.has(id));
+    assert.deepStrictEqual(unknown, [], 'layer-unlocks referencia IDs desconhecidos: ' + unknown.join(', '));
+  });
+
+  it('GEO-B: phase-gates referencia apenas layers existentes no catálogo', () => {
+    const { processed, context } = loadCatalogLayers();
+    const known = new Set([...processed, ...context].map(l => l.id));
+    const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    const unknown = Object.keys(gates.layerMinPhase || {}).filter(id => !known.has(id));
+    assert.deepStrictEqual(unknown, [], 'phase-gates referencia IDs desconhecidos: ' + unknown.join(', '));
+  });
+
+  it('GEO-B: GeoJSON pesados (>2 MB) têm minzoom adequado ao tipo geométrico', () => {
+    const { processed, context } = loadCatalogLayers();
+    const THRESHOLD = 2 * 1024 * 1024;
+    // Regras: point >2MB → minzoom>=14; line/polygon >2MB → minzoom>=12
+    const MIN_ZOOM_BY_GEOM = { point: 14, line: 12, polygon: 12, fill: 12 };
+    const violations = [];
+    const heavy = [];
+
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) continue;
+      const size = statSync(join(ROOT, path)).size;
+      const geom = layer.geom || layer.geometry || 'polygon';
+      const minzoom = layer.minzoom;
+
+      if (size >= 1024 * 1024) {
+        heavy.push(`  ${(size / 1024 / 1024).toFixed(1)} MB  ${layer.id}  (${geom}, minzoom=${minzoom ?? 'n/d'})`);
+      }
+      if (size >= THRESHOLD) {
+        const required = MIN_ZOOM_BY_GEOM[geom] ?? 12;
+        if (minzoom == null || minzoom < required) {
+          violations.push(
+            `${layer.id}: ${(size / 1024 / 1024).toFixed(1)} MB, geom=${geom}, ` +
+            `minzoom=${minzoom ?? 'ausente'} (mínimo esperado: ${required})`
+          );
+        }
+      }
+    }
+
+    // Sempre imprimir relatório de arquivos >=1 MB (informativo)
+    if (heavy.length > 0) {
+      console.log('[GEO-B] GeoJSON >=1 MB detectados:\n' + heavy.join('\n'));
+    }
+
+    assert.deepStrictEqual(violations, [],
+      'GeoJSON >2 MB sem minzoom adequado:\n' + violations.join('\n')
+    );
+  });
+
+  it('GEO-B: órfãos conhecidos documentados (raw e pistas ARG)', () => {
+    // Estes arquivos existem no disco mas NÃO estão no catálogo.
+    // São órfãos conhecidos e aceitos — não devem virar alertas falsos.
+    // geosampa_rios_centro_raw.geojson: artefato de pipeline (fonte → derivado context/centro_rios_geosampa__line.geojson)
+    // centro_pistas_rua_sao_bento__point.geojson: ponto ARG manual, carregado via pistas.json não catálogo
+    const KNOWN_ORPHANS = [
+      'centro/data/raw/geosampa_rios_centro_raw.geojson',
+      'centro/data/context/centro_pistas_rua_sao_bento__point.geojson',
+    ];
+    for (const path of KNOWN_ORPHANS) {
+      assert.ok(existsSync(join(ROOT, path)), `Órfão esperado ausente: ${path} — remover da lista se deletado`);
+    }
   });
 
   // ── Popup CSS classes ───────────────────────────────────────────

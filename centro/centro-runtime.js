@@ -107,20 +107,24 @@
     });
   }
 
+  function getCentroMapHelper(name) {
+    return window.CENTRO && window.CENTRO.map && window.CENTRO.map[name];
+  }
+
+  function getSidebarLayerStateHelper(name) {
+    return window.CENTRO && window.CENTRO.sidebarLayerState && window.CENTRO.sidebarLayerState[name];
+  }
+
   function ensureSource(mapInstance, id, sourceConfig) {
-    if (!mapInstance.getSource(id)) {
-      mapInstance.addSource(id, sourceConfig);
-    }
+    var fn = getCentroMapHelper("ensureSource");
+    if (typeof fn === "function") return fn(mapInstance, id, sourceConfig);
+    console.warn("[CENTRO] map-safe.js ausente — ensureSource indisponível");
   }
 
   function ensureLayer(mapInstance, layerConfig, beforeId) {
-    if (!mapInstance.getLayer(layerConfig.id)) {
-      if (beforeId && mapInstance.getLayer(beforeId)) {
-        mapInstance.addLayer(layerConfig, beforeId);
-      } else {
-        mapInstance.addLayer(layerConfig);
-      }
-    }
+    var fn = getCentroMapHelper("ensureLayer");
+    if (typeof fn === "function") return fn(mapInstance, layerConfig, beforeId);
+    console.warn("[CENTRO] map-safe.js ausente — ensureLayer indisponível");
   }
 
   // Camadas temáticas da sidebar ficam abaixo dos símbolos POI/pistas.
@@ -172,11 +176,37 @@
   }
 
   function getMinPhaseLabel(layerId) {
+    var format = getSidebarLayerStateHelper("getMinPhaseLabel");
+    var minPhase = null;
     var ph = window.CENTRO && window.CENTRO.protocoloPhase;
     if (ph && typeof ph.getMinPhaseForLayer === "function") {
-      return String(ph.getMinPhaseForLayer(layerId));
+      minPhase = ph.getMinPhaseForLayer(layerId);
     }
-    return "?";
+    if (typeof format === "function") return format(minPhase);
+    return minPhase != null ? String(minPhase) : "?";
+  }
+
+  function resolveSidebarLockState(layerId) {
+    var compute = getSidebarLayerStateHelper("getLayerLockState");
+    var minPhase = null;
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.getMinPhaseForLayer === "function") {
+      minPhase = ph.getMinPhaseForLayer(layerId);
+    }
+    var opts = {
+      isClueUnlocked: isLayerUnlocked(layerId),
+      isPhaseUnlocked: isLayerPhaseUnlocked(layerId),
+      minPhase: minPhase,
+    };
+    if (typeof compute === "function") return compute(opts);
+    var clueLocked = !opts.isClueUnlocked;
+    var phaseLocked = !clueLocked && !opts.isPhaseUnlocked;
+    return {
+      clueLocked: clueLocked,
+      phaseLocked: phaseLocked,
+      locked: clueLocked || phaseLocked,
+      minPhaseLabel: getMinPhaseLabel(layerId),
+    };
   }
 
   // Hash routing pode ignorar center/zoom do constructor; revalida contra maxBounds.
@@ -201,62 +231,15 @@
   }
 
   function bindLayerEventOnce(mapInstance, eventName, layerId, handler) {
-    mapInstance.__centroPoiHandlers = mapInstance.__centroPoiHandlers || {};
-    var handlerKey = eventName + ":" + layerId;
-    if (mapInstance.__centroPoiHandlers[handlerKey]) return;
-    mapInstance.on(eventName, layerId, handler);
-    mapInstance.__centroPoiHandlers[handlerKey] = handler;
-  }
-
-  // SVG não é suportado por createImageBitmap no Chromium (usado por
-  // map.loadImage em v4), então rotamos SVG via HTMLImageElement direto.
-  // Raster (png/jpg/webp) passa por map.loadImage para se beneficiar do
-  // pipeline de transformRequest e do tratamento de erro via on('error').
-  function isSvgUrl(url) {
-    return /\.svg(\?.*)?$/i.test(url);
-  }
-
-  function loadHtmlImage(url) {
-    return new Promise(function (resolve, reject) {
-      var image = new Image();
-      image.onload = function () { resolve(image); };
-      image.onerror = function () {
-        reject(new Error("Falha ao carregar imagem: " + url));
-      };
-      image.src = url;
-    });
+    var fn = getCentroMapHelper("bindLayerEventOnce");
+    if (typeof fn === "function") return fn(mapInstance, eventName, layerId, handler);
+    console.warn("[CENTRO] map-safe.js ausente — bindLayerEventOnce indisponível");
   }
 
   async function ensureImage(mapInstance, imageId, imagePath) {
-    if (mapInstance.hasImage(imageId)) return;
-    var imageData;
-    if (!isSvgUrl(imagePath) && typeof mapInstance.loadImage === "function") {
-      var response = await mapInstance.loadImage(imagePath);
-      imageData = response && response.data ? response.data : response;
-    } else {
-      imageData = await loadHtmlImage(imagePath);
-    }
-    if (!mapInstance.hasImage(imageId)) {
-      mapInstance.addImage(imageId, imageData);
-    }
-  }
-
-  // Constrói o conteúdo do popup POI como nó DOM, evitando setHTML
-  // (que não sanitiza). Valores vêm de GeoJSON e podem conter caracteres
-  // que quebrariam HTML interpolado por concatenação de strings.
-  function createPoiPopupNode(name, secondary) {
-    var root = document.createElement("div");
-    root.className = "poi-popup";
-    var title = document.createElement("b");
-    title.textContent = name || "POI";
-    root.appendChild(title);
-    if (secondary) {
-      root.appendChild(document.createElement("br"));
-      var small = document.createElement("small");
-      small.textContent = secondary;
-      root.appendChild(small);
-    }
-    return root;
+    var fn = getCentroMapHelper("ensureImage");
+    if (typeof fn === "function") return fn(mapInstance, imageId, imagePath);
+    console.warn("[CENTRO] map-safe.js ausente — ensureImage indisponível");
   }
 
   function getMapIconHaloPaint() {
@@ -280,27 +263,17 @@
     var addrProp = cfg.addrProp;
     var iconPath = cfg.iconPath;
 
-    ensureSource(mapInstance, sourceId, { type: "geojson", data: dataPath });
-    await ensureImage(mapInstance, imageId, iconPath);
+    var addSymbol = getCentroMapHelper("addSymbolPopupLayer");
+    if (typeof addSymbol !== "function") {
+      console.warn("[CENTRO] symbol-popup-layer.js ausente — addPOILayer abortado");
+      return;
+    }
 
-    ensureLayer(mapInstance, {
-      id: iconLayerId,
-      type: "symbol",
-      source: sourceId,
-      layout: {
-        "icon-image": imageId,
-        "icon-size": 0.82,
-        "icon-allow-overlap": true,
-        "icon-anchor": "center",
-      },
-      paint: getMapIconHaloPaint(),
-    });
-
+    var labelConfig = null;
     if (titleProp && styleSupportsTextLabels(mapInstance)) {
-      ensureLayer(mapInstance, {
-        id: labelLayerId,
-        type: "symbol",
-        source: sourceId,
+      labelConfig = {
+        layerId: labelLayerId,
+        enabled: true,
         layout: {
           "text-field": ["get", titleProp],
           "text-font": POI_TEXT_FONT,
@@ -309,40 +282,46 @@
           "text-anchor": "top",
         },
         paint: {
-          // Texto escuro com halo branco oferece contraste WCAG melhor
-          // sobre raster OSM claro do que o branco-com-halo-preto anterior.
           "text-color": "#1a1a1a",
           "text-halo-color": "#ffffff",
           "text-halo-width": 1.5,
           "text-halo-blur": 0.5,
         },
-      });
+      };
     }
 
-    bindLayerEventOnce(mapInstance, "click", iconLayerId, function (e) {
-      var properties = (e.features && e.features[0] && e.features[0].properties) || {};
-      var name = titleProp ? properties[titleProp] || "POI" : "POI";
-      var secondary = descProp
-        ? properties[descProp] || ""
-        : addrProp
-          ? properties[addrProp] || ""
-          : "";
-      new maplibregl.Popup()
-        .setLngLat(e.lngLat)
-        .setDOMContent(createPoiPopupNode(name, secondary))
-        .addTo(mapInstance);
+    return addSymbol(mapInstance, {
+      sourceId: sourceId,
+      iconLayerId: iconLayerId,
+      source: { type: "geojson", data: dataPath },
+      imageId: imageId,
+      iconPath: iconPath,
+      iconLayout: {
+        "icon-image": imageId,
+        "icon-size": 0.82,
+        "icon-allow-overlap": true,
+        "icon-anchor": "center",
+      },
+      iconPaint: getMapIconHaloPaint(),
+      label: labelConfig,
+      popup: {
+        factoryKey: "createPoiPopupNode",
+        buildArgs: function (properties) {
+          var name = titleProp ? properties[titleProp] || "POI" : "POI";
+          var secondary = descProp
+            ? properties[descProp] || ""
+            : addrProp
+              ? properties[addrProp] || ""
+              : "";
+          return [name, secondary];
+        },
+        popupOptions: {},
+      },
+      interactionLayerIds: poiInteractionLayerIds,
+      onGuardFail: function () {
+        console.warn("[CENTRO] addPOILayer: sourceId ou iconLayerId ausente (cache stale?) — sourceId=" + sourceId + " iconLayerId=" + iconLayerId + " dataPath=" + dataPath);
+      },
     });
-
-    bindLayerEventOnce(mapInstance, "mouseenter", iconLayerId, function () {
-      mapInstance.getCanvas().style.cursor = "pointer";
-    });
-    bindLayerEventOnce(mapInstance, "mouseleave", iconLayerId, function () {
-      mapInstance.getCanvas().style.cursor = "";
-    });
-
-    if (poiInteractionLayerIds.indexOf(iconLayerId) === -1) {
-      poiInteractionLayerIds.push(iconLayerId);
-    }
   }
 
   function pistaItemFromProperties(properties) {
@@ -383,47 +362,42 @@
       });
     }
 
-    ensureSource(mapInstance, sourceId, {
-      type: "geojson",
-      data: { type: "FeatureCollection", features: features },
-    });
-    await ensureImage(mapInstance, imageId, iconPath);
+    var addSymbol = getCentroMapHelper("addSymbolPopupLayer");
+    if (typeof addSymbol !== "function") {
+      console.warn("[CENTRO] symbol-popup-layer.js ausente — addPistasLayer abortado");
+      return 0;
+    }
 
-    ensureLayer(mapInstance, {
-      id: iconLayerId,
-      type: "symbol",
-      source: sourceId,
-      layout: {
+    return addSymbol(mapInstance, {
+      sourceId: sourceId,
+      iconLayerId: iconLayerId,
+      source: {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: features },
+      },
+      imageId: imageId,
+      iconPath: iconPath,
+      iconLayout: {
         "icon-image": imageId,
         "icon-size": 0.82,
         "icon-allow-overlap": true,
         "icon-anchor": "center",
       },
-      paint: getMapIconHaloPaint(),
+      iconPaint: getMapIconHaloPaint(),
+      label: null,
+      popup: {
+        factoryKey: "createPistaPopupNode",
+        buildArgs: function (properties) {
+          return [pistaItemFromProperties(properties)];
+        },
+        guard: function (properties) {
+          return pistaItemFromProperties(properties) !== null;
+        },
+        popupOptions: { offset: 25, maxWidth: "300px" },
+      },
+      interactionLayerIds: poiInteractionLayerIds,
+      returnFeatureCount: true,
     });
-
-    bindLayerEventOnce(mapInstance, "click", iconLayerId, function (e) {
-      var properties = (e.features && e.features[0] && e.features[0].properties) || {};
-      var pistaItem = pistaItemFromProperties(properties);
-      if (!pistaItem) return;
-      new maplibregl.Popup({ offset: 25, maxWidth: "300px" })
-        .setLngLat(e.lngLat)
-        .setDOMContent(createPistaPopupNode(pistaItem))
-        .addTo(mapInstance);
-    });
-
-    bindLayerEventOnce(mapInstance, "mouseenter", iconLayerId, function () {
-      mapInstance.getCanvas().style.cursor = "pointer";
-    });
-    bindLayerEventOnce(mapInstance, "mouseleave", iconLayerId, function () {
-      mapInstance.getCanvas().style.cursor = "";
-    });
-
-    if (poiInteractionLayerIds.indexOf(iconLayerId) === -1) {
-      poiInteractionLayerIds.push(iconLayerId);
-    }
-
-    return features.length;
   }
 
   function showInspector(feature) {
@@ -451,58 +425,9 @@
     panel.appendChild(body);
   }
 
-  // Constrói o conteúdo do popup de pista como nó DOM. Os campos vêm
-  // de assets/pistas/rua-sao-bento-pistas.json (trusted), mas usar
-  // textContent evita XSS caso a fonte mude e mantém aderência ao
-  // pattern recomendado pela doc do MapLibre (setHTML não sanitiza).
-  function createPistaPopupNode(item) {
-    var root = document.createElement("div");
-    root.className = "pista-popup";
-
-    var h3 = document.createElement("h3");
-    h3.className = "pista-popup__title";
-    h3.textContent = item.title || "Pista";
-    root.appendChild(h3);
-
-    if (item.description) {
-      var p = document.createElement("p");
-      p.className = "pista-popup__desc";
-      p.textContent = item.description;
-      root.appendChild(p);
-    }
-
-    if (item.image) {
-      var img = document.createElement("img");
-      img.className = "pista-popup__img";
-      img.alt = item.title || "";
-      img.loading = "lazy";
-      img.src = "/centro/" + String(item.image).replace(/^\.?\//, "");
-      root.appendChild(img);
-    }
-
-    if (item.sourceUrl) {
-      var pSrc = document.createElement("p");
-      pSrc.className = "pista-popup__source";
-      var label = document.createElement("span");
-      label.textContent = "Fonte: ";
-      pSrc.appendChild(label);
-
-      var a = document.createElement("a");
-      a.href = item.sourceUrl;
-      a.target = "_blank";
-      a.rel = "noopener";
-      var clean = String(item.sourceUrl).replace(/^https?:\/\//, "").substring(0, 40);
-      a.textContent = clean + "\u2026";
-      pSrc.appendChild(a);
-
-      root.appendChild(pSrc);
-    }
-
-    return root;
-  }
-
   var buildings3dApi = null;
   var poiFilterApi = null;
+  var subterraneanApi = null;
 
   function ensureBuildings3dApi() {
     if (!buildings3dApi && window.CENTRO && window.CENTRO.buildings3D) {
@@ -528,6 +453,18 @@
     return poiFilterApi;
   }
 
+  function ensureSubterraneanApi() {
+    if (!subterraneanApi && window.CENTRO && window.CENTRO.subterraneanCutaway) {
+      subterraneanApi = window.CENTRO.subterraneanCutaway.create({
+        getMap: function () {
+          return map;
+        },
+        mapReadyPromise: mapReadyPromise,
+      });
+    }
+    return subterraneanApi;
+  }
+
   function applyAllPoiThemeFilters() {
     var api = ensurePoiFilterApi();
     if (api) api.applyAll();
@@ -541,6 +478,16 @@
   function setBuildings3DEnabled(enabled, options) {
     var api = ensureBuildings3dApi();
     return api ? api.setEnabled(enabled, options) : false;
+  }
+
+  function setSubterraneanEnabled(enabled, options) {
+    var api = ensureSubterraneanApi();
+    return api ? api.setEnabled(enabled, options) : false;
+  }
+
+  function subterraneanFlyToView() {
+    var api = ensureSubterraneanApi();
+    if (api && typeof api.flyToView === "function") api.flyToView();
   }
 
   async function addTrianguloHistoricoOverlay() {
@@ -619,9 +566,35 @@
     if (api) api.initState();
   }
 
+  function initSubterraneanState() {
+    var api = ensureSubterraneanApi();
+    if (api) {
+      api.initState();
+      return;
+    }
+    document.addEventListener("centro:subterranean-ready", function onReady() {
+      document.removeEventListener("centro:subterranean-ready", onReady);
+      var readyApi = ensureSubterraneanApi();
+      if (readyApi) readyApi.initState();
+    });
+  }
+
   function setupBuildings3DToggle() {
     var api = ensureBuildings3dApi();
     if (api) api.setupToggle();
+  }
+
+  function setupSubterraneanToggle() {
+    var api = ensureSubterraneanApi();
+    if (api) {
+      api.setupToggle();
+      return;
+    }
+    document.addEventListener("centro:subterranean-ready", function onReady() {
+      document.removeEventListener("centro:subterranean-ready", onReady);
+      var readyApi = ensureSubterraneanApi();
+      if (readyApi) readyApi.setupToggle();
+    });
   }
 
   function initMap() {
@@ -646,6 +619,15 @@
       console.warn("[CENTRO] MapLibre error:", err || e);
     });
 
+    // Ícones do sprite do OpenFreeMap (recycling, office, bicycle_parking …)
+    // que não estão carregados no contexto do projecto. Substitui por pixel
+    // transparente para silenciar o flood de avisos no console.
+    map.on("styleimagemissing", function (e) {
+      if (!map.hasImage(e.id)) {
+        map.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) });
+      }
+    });
+
     map.on("load", async function () {
       clampViewToCentroBounds(map);
       ensureMapGroundReadable();
@@ -655,12 +637,38 @@
 
       var poi = window.CENTRO && window.CENTRO.poiIcons;
       if (poi) {
+        // IDs explícitos para não depender da estrutura cacheada do poi-icons.js.
+        // Fallback para os valores definidos em poi-icons.js se o objeto estiver disponível.
         var poiConfigs = [
-          { id: "memoria-paulistana", file: "centro_memoria_paulistana__point", sourceId: poi.MEMORIA_PAULISTANA_LAYERS.sourceId, iconLayerId: poi.MEMORIA_PAULISTANA_LAYERS.iconLayerId, titleProp: "nm_titulo_placa", descProp: "dc_enunciado_placa", addrProp: "nm_endereco_placa" },
-          { id: "acervo-tombado", file: "centro_acervo_tombado__point", sourceId: poi.ACERVO_TOMBADO_LAYERS.sourceId, iconLayerId: poi.ACERVO_TOMBADO_LAYERS.iconLayerId, titleProp: "nm_acervo" },
-          { id: "bem-arqueologico", file: "centro_bem_arqueologico__point", sourceId: poi.BEM_ARQUEOLOGICO_LAYERS.sourceId, iconLayerId: poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId },
-          { id: "monumentos", file: "centro_monumentos__point", sourceId: poi.MONUMENTOS_LAYERS.sourceId, iconLayerId: poi.MONUMENTOS_LAYERS.iconLayerId, titleProp: "nm_obra" },
-          { id: "poi-turistico", file: "centro_pois_turisticos__point", sourceId: poi.POI_TURISTICO_LAYERS.sourceId, iconLayerId: poi.POI_TURISTICO_LAYERS.iconLayerId, titleProp: "name", descProp: "category" },
+          {
+            id: "memoria-paulistana", file: "centro_memoria_paulistana__point",
+            sourceId:    (poi.MEMORIA_PAULISTANA_LAYERS && poi.MEMORIA_PAULISTANA_LAYERS.sourceId)    || "memoria-paulistana-source",
+            iconLayerId: (poi.MEMORIA_PAULISTANA_LAYERS && poi.MEMORIA_PAULISTANA_LAYERS.iconLayerId) || "memoria-paulistana-icon",
+            titleProp: "nm_titulo_placa", descProp: "dc_enunciado_placa", addrProp: "nm_endereco_placa",
+          },
+          {
+            id: "acervo-tombado", file: "centro_acervo_tombado__point",
+            sourceId:    (poi.ACERVO_TOMBADO_LAYERS && poi.ACERVO_TOMBADO_LAYERS.sourceId)    || "acervo-tombado-source",
+            iconLayerId: (poi.ACERVO_TOMBADO_LAYERS && poi.ACERVO_TOMBADO_LAYERS.iconLayerId) || "acervo-tombado-icon",
+            titleProp: "nm_acervo",
+          },
+          {
+            id: "bem-arqueologico", file: "centro_bem_arqueologico__point",
+            sourceId:    (poi.BEM_ARQUEOLOGICO_LAYERS && poi.BEM_ARQUEOLOGICO_LAYERS.sourceId)    || "bem-arqueologico-source",
+            iconLayerId: (poi.BEM_ARQUEOLOGICO_LAYERS && poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId) || "bem-arqueologico-icon",
+          },
+          {
+            id: "monumentos", file: "centro_monumentos__point",
+            sourceId:    (poi.MONUMENTOS_LAYERS && poi.MONUMENTOS_LAYERS.sourceId)    || "monumentos-source",
+            iconLayerId: (poi.MONUMENTOS_LAYERS && poi.MONUMENTOS_LAYERS.iconLayerId) || "monumentos-icon",
+            titleProp: "nm_obra",
+          },
+          {
+            id: "poi-turistico", file: "centro_pois_turisticos__point",
+            sourceId:    (poi.POI_TURISTICO_LAYERS && poi.POI_TURISTICO_LAYERS.sourceId)    || "poi-turistico-source",
+            iconLayerId: (poi.POI_TURISTICO_LAYERS && poi.POI_TURISTICO_LAYERS.iconLayerId) || "poi-turistico-icon",
+            titleProp: "name", descProp: "category",
+          },
         ];
         for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
           var poiCfg = poiConfigs[poiIndex];
@@ -745,6 +753,7 @@
       if (mapReadyResolve) mapReadyResolve();
 
       initBuildings3DState();
+      initSubterraneanState();
     });
   }
 
@@ -804,83 +813,22 @@
   // Constrói o DOM da sidebar a partir do catálogo. Usa createElement +
   // textContent para evitar interpolação de strings em innerHTML.
   function renderSidebarPanel(panel, groupsList, layersList) {
-    panel.innerHTML = "";
-    var hasAny = false;
-
-    for (var g = 0; g < groupsList.length; g++) {
-      var group = groupsList[g];
-      var groupLayers = layersList.filter(function (l) {
-        return l.group === group.id;
-      });
-      if (groupLayers.length === 0) continue;
-      hasAny = true;
-
-      var details = document.createElement("details");
-      details.className = "group";
-      details.open = true;
-
-      var summary = document.createElement("summary");
-      summary.textContent = (group.title || group.id) + " ";
-      var count = document.createElement("span");
-      count.className = "group__count";
-      count.textContent = "(" + groupLayers.length + ")";
-      summary.appendChild(count);
-      details.appendChild(summary);
-
-      for (var i = 0; i < groupLayers.length; i++) {
-        var ly = groupLayers[i];
-        var clueLocked = !isLayerUnlocked(ly.id);
-        var phaseLocked = !clueLocked && !isLayerPhaseUnlocked(ly.id);
-        var locked = clueLocked || phaseLocked;
-        var label = document.createElement("label");
-        var rowClass = "layer-row";
-        if (locked) rowClass += " layer-row--locked";
-        if (phaseLocked) rowClass += " layer-row--phase-locked";
-        label.className = rowClass;
-
-        var cb = document.createElement("input");
-        cb.type = "checkbox";
-        cb.dataset.layerId = ly.id;
-        if (locked) {
-          cb.disabled = true;
-          cb.checked = false;
-          var lockHint = clueLocked
-            ? " (bloqueada — registre pistas no Caderno)"
-            : " (bloqueada — avance de fase no ARG)";
-          cb.setAttribute("aria-label", (ly.title || ly.id) + lockHint);
-        } else if (ly.visible !== false) {
-          cb.checked = true;
-        }
-
-        var span = document.createElement("span");
-        span.textContent = ly.title || ly.id;
-
-        label.appendChild(cb);
-        label.appendChild(document.createTextNode(" "));
-        label.appendChild(span);
-
-        if (locked) {
-          var lockMeta = document.createElement("span");
-          lockMeta.className = "layer-meta layer-meta--lock";
-          lockMeta.textContent = phaseLocked ? "fase " + getMinPhaseLabel(ly.id) : "bloqueada";
-          label.appendChild(lockMeta);
-        } else if (ly.feature_count !== undefined) {
-          var meta = document.createElement("span");
-          meta.className = "layer-meta";
-          meta.textContent = ly.feature_count + " feats";
-          label.appendChild(meta);
-        }
-        details.appendChild(label);
-      }
-      panel.appendChild(details);
+    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.renderSidebarPanel;
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] sidebar-panel.js ausente — renderSidebarPanel indisponível");
+      return;
     }
-
-    if (!hasAny) {
-      var empty = document.createElement("p");
-      empty.className = "sidebar-empty";
-      empty.textContent = "Nenhuma camada disponível";
-      panel.appendChild(empty);
-    }
+    var rowClassFn = getSidebarLayerStateHelper("getLayerRowClass");
+    var lockMsgFn = getSidebarLayerStateHelper("getLockMessage");
+    fn({
+      panel: panel,
+      groups: groupsList,
+      layers: layersList,
+      resolveSidebarLockState: resolveSidebarLockState,
+      getLayerRowClass: typeof rowClassFn === "function" ? rowClassFn : null,
+      getLockMessage: typeof lockMsgFn === "function" ? lockMsgFn : null,
+      getMinPhaseLabel: getMinPhaseLabel,
+    });
   }
 
   function loadSidebarData() {
@@ -923,253 +871,109 @@
   }
 
   function buildLayerDataUrl(cfg) {
-    var filePath = cfg.file || "";
-    if (filePath.indexOf("data/context/") === 0) {
-      return "/centro/" + filePath;
-    }
-    if (filePath.indexOf("data/processed/") === 0) {
-      return "/centro/" + filePath;
-    }
-    return "/centro/data/processed/" + filePath.replace(/^.*processed\//, "");
+    var fn = getCentroMapHelper("buildLayerDataUrl");
+    if (typeof fn === "function") return fn(cfg);
+    console.warn("[CENTRO] layer-data-url.js ausente — buildLayerDataUrl indisponível");
+    return "/centro/data/processed/";
   }
 
   function applyLayerZoomBounds(layerConfig, cfg) {
+    var fn = getCentroMapHelper("applyLayerZoomBounds");
+    if (typeof fn === "function") return fn(layerConfig, cfg);
     if (cfg.minzoom != null) layerConfig.minzoom = cfg.minzoom;
     if (cfg.maxzoom != null) layerConfig.maxzoom = cfg.maxzoom;
     return layerConfig;
   }
 
-  async function addPointLayerWithIcon(cfg, sid) {
+  function buildCatalogLayerDeps() {
     var iconsRegistry = window.MAPA_SP_ICONS;
-    var iconPath =
-      iconsRegistry && typeof iconsRegistry.resolveLayerIcon === "function"
-        ? iconsRegistry.resolveLayerIcon(cfg.id)
-        : null;
-    if (!iconPath) return false;
-
-    var imageId = cfg.id + "-symbol";
-    try {
-      await ensureImage(map, imageId, iconPath);
-    } catch (iconErr) {
-      console.warn("[CENTRO] Icone indisponivel, fallback circle:", cfg.id, iconErr.message);
-      return false;
-    }
-
-    ensureLayer(
-      map,
-      applyLayerZoomBounds(
-        {
-          id: cfg.id,
-          type: "symbol",
-          source: sid,
-          layout: {
-            "icon-image": imageId,
-            "icon-size": 0.82,
-            "icon-allow-overlap": true,
-            "icon-anchor": "center",
-          },
-          paint: getMapIconHaloPaint(),
-        },
-        cfg
-      ),
-      getCatalogInsertBeforeId()
-    );
-    return true;
+    return {
+      map: map,
+      activeLayers: activeLayers,
+      ensureSource: ensureSource,
+      ensureLayer: ensureLayer,
+      ensureImage: ensureImage,
+      buildLayerDataUrl: buildLayerDataUrl,
+      applyLayerZoomBounds: applyLayerZoomBounds,
+      getInsertBeforeId: getCatalogInsertBeforeId,
+      getMapIconHaloPaint: getMapIconHaloPaint,
+      resolveLayerIcon:
+        iconsRegistry && typeof iconsRegistry.resolveLayerIcon === "function"
+          ? iconsRegistry.resolveLayerIcon.bind(iconsRegistry)
+          : null,
+      toast: function (msg, level) {
+        if (typeof window.centroToast === "function") window.centroToast(msg, level);
+      },
+      warn: console.warn.bind(console),
+    };
   }
 
   async function addLayerToMap(cfg) {
-    if (!map || !map.getSource) return;
-    var sid = cfg.id + "-src";
-    var geom = cfg.geom || cfg.geometry || "polygon";
-    if (map.getSource(sid)) return;
-
-    var dataUrl = buildLayerDataUrl(cfg);
-
-    try {
-      ensureSource(map, sid, { type: "geojson", data: dataUrl });
-      var paint = (cfg.style && cfg.style.paint) || {};
-      var color =
-        paint["fill-color"] ||
-        paint["circle-color"] ||
-        (cfg.style && cfg.style.color) ||
-        "#3388ff";
-
-      if (geom === "polygon" || geom === "fill") {
-        ensureLayer(
-          map,
-          applyLayerZoomBounds(
-            {
-              id: cfg.id + "-fill",
-              type: "fill",
-              source: sid,
-              paint:
-                Object.keys(paint).length > 0
-                  ? paint
-                  : { "fill-color": color, "fill-opacity": 0.25 },
-            },
-            cfg
-          ),
-          getCatalogInsertBeforeId()
-        );
-      } else if (geom === "point") {
-        var usedIcon = await addPointLayerWithIcon(cfg, sid);
-        if (!usedIcon) {
-          ensureLayer(
-            map,
-            applyLayerZoomBounds(
-              {
-                id: cfg.id,
-                type: "circle",
-                source: sid,
-                paint:
-                  Object.keys(paint).length > 0
-                    ? paint
-                    : { "circle-radius": 6, "circle-color": color },
-              },
-              cfg
-            ),
-            getCatalogInsertBeforeId()
-          );
-        }
-      } else if (geom === "line") {
-        ensureLayer(
-          map,
-          applyLayerZoomBounds(
-            {
-              id: cfg.id,
-              type: "line",
-              source: sid,
-              paint:
-                Object.keys(paint).length > 0
-                  ? paint
-                  : { "line-color": color, "line-width": 2 },
-            },
-            cfg
-          ),
-          getCatalogInsertBeforeId()
-        );
-      }
-
-      activeLayers.add(cfg.id);
-    } catch (e) {
-      console.warn("[CENTRO] Erro ao adicionar camada", cfg.id, e);
-      if (typeof window.centroToast === "function") {
-        window.centroToast("Erro ao carregar camada: " + cfg.id, "warn");
-      }
+    var fn = getCentroMapHelper("addCatalogLayerToMap");
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] catalog-layer-controller.js ausente — addLayerToMap indisponível");
+      return;
     }
+    return fn(cfg, buildCatalogLayerDeps());
   }
 
   function removeLayerFromMap(id) {
-    if (!map || !map.getLayer) return;
-    var fill = id + "-fill";
-    if (map.getLayer(fill)) map.removeLayer(fill);
-    if (map.getLayer(id)) map.removeLayer(id);
-    var src = id + "-src";
-    if (map.getSource(src)) map.removeSource(src);
-    activeLayers.delete(id);
+    var fn = getCentroMapHelper("removeCatalogLayerFromMap");
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] catalog-layer-controller.js ausente — removeLayerFromMap indisponível");
+      return;
+    }
+    return fn(id, buildCatalogLayerDeps());
+  }
+
+  function getLockToastMessage(layerId) {
+    var lockMsgFn = getSidebarLayerStateHelper("getLockMessage");
+    var state = resolveSidebarLockState(layerId);
+    if (typeof lockMsgFn === "function") return lockMsgFn(state, "toast");
+    return !isLayerUnlocked(layerId)
+      ? "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto)."
+      : "Camada bloqueada. Avance de fase no ARG (fase mínima " + getMinPhaseLabel(layerId) + ").";
   }
 
   // Conecta os checkboxes ao mapa. Substitui o polling com setInterval
   // anterior: agora é chamado uma única vez logo após o render da sidebar,
   // e cada mudança consulta o catálogo já indexado em memória.
   function wireLayerCheckboxes(panel) {
-    var checkboxes = panel.querySelectorAll("input[type=\"checkbox\"][data-layer-id]");
-    checkboxes.forEach(function (cb) {
-      cb.addEventListener("change", function () {
-        var lid = cb.dataset.layerId;
-        if (!lid || !catalogIndex) return;
-        if (!isLayerAccessible(lid)) {
-          cb.checked = false;
-          if (typeof window.centroToast === "function") {
-            var msg = !isLayerUnlocked(lid)
-              ? "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto)."
-              : "Camada bloqueada. Avance de fase no ARG (fase mínima " + getMinPhaseLabel(lid) + ").";
-            window.centroToast(msg, "warn");
-          }
-          return;
-        }
-        var cfg = catalogIndex.get(lid);
-        if (!cfg) return;
-        mapReadyPromise.then(function () {
-          if (cb.checked) {
-            addLayerToMap(cfg).catch(function (err) {
-              console.warn("[CENTRO] Erro ao adicionar camada", lid, err);
-            });
-          } else {
-            removeLayerFromMap(lid);
-          }
-        });
-      });
-    });
-
-    // Ativa as camadas marcadas por padrão assim que o mapa estiver pronto.
-    mapReadyPromise.then(function () {
-      panel
-        .querySelectorAll("input[type=\"checkbox\"][data-layer-id]:checked:not(:disabled)")
-        .forEach(function (cb) {
-          cb.dispatchEvent(new Event("change"));
-        });
-    });
-  }
-
-  function setupLazyImageObserver() {
-    var observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (m) {
-        m.addedNodes.forEach(function (n) {
-          if (n.nodeName === "IMG" && !n.loading) {
-            n.setAttribute("loading", "lazy");
-          }
-          if (n.querySelectorAll) {
-            n.querySelectorAll("img:not([loading])").forEach(function (img) {
-              img.setAttribute("loading", "lazy");
-            });
-          }
-        });
-      });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-    console.log("[CENTRO] Lazy loading observer ativo");
-  }
-
-  function setupToast() {
-    var toastEl = null;
-    var msgEl = null;
-
-    function hideToast() {
-      if (toastEl) toastEl.classList.add("is-hidden");
+    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.wireLayerCheckboxes;
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] sidebar-events.js ausente — wireLayerCheckboxes indisponível");
+      return;
     }
+    fn(panel, {
+      hasCatalog: function () {
+        return !!catalogIndex;
+      },
+      getLayerConfig: function (layerId) {
+        return catalogIndex ? catalogIndex.get(layerId) : null;
+      },
+      isLayerAccessible: isLayerAccessible,
+      getLockToastMessage: getLockToastMessage,
+      whenMapReady: function (cb) {
+        return mapReadyPromise.then(cb);
+      },
+      addLayerToMap: addLayerToMap,
+      removeLayerFromMap: removeLayerFromMap,
+      toast: function (msg, level) {
+        if (typeof window.centroToast === "function") {
+          window.centroToast(msg, level);
+        }
+      },
+    });
+  }
 
-    window.centroToast = function (msg, type) {
-      if (!toastEl) {
-        toastEl = document.createElement("div");
-        toastEl.id = "centro-toast";
-        toastEl.className = "toast is-hidden";
-        toastEl.setAttribute("role", "status");
-        toastEl.setAttribute("aria-live", "polite");
-
-        msgEl = document.createElement("span");
-        msgEl.className = "toast__message";
-
-        var closeBtn = document.createElement("button");
-        closeBtn.type = "button";
-        closeBtn.className = "toast__close";
-        closeBtn.setAttribute("aria-label", "Fechar");
-        closeBtn.textContent = "\u00d7";
-        closeBtn.addEventListener("click", hideToast);
-
-        toastEl.appendChild(msgEl);
-        toastEl.appendChild(closeBtn);
-        document.body.appendChild(toastEl);
-      }
-
-      msgEl.textContent = msg;
-      toastEl.classList.toggle("toast--warn", type === "warn");
-      toastEl.classList.remove("is-hidden");
-
-      if (window.centroToastTimer) clearTimeout(window.centroToastTimer);
-      window.centroToastTimer = setTimeout(hideToast, 4000);
-    };
-    console.log("[CENTRO] Toast system ready");
+  function setupCentroUiFromModules() {
+    var ui = window.CENTRO && window.CENTRO.ui;
+    if (ui && typeof ui.setupToast === "function") {
+      ui.setupToast();
+    }
+    if (ui && typeof ui.setupLazyImageObserver === "function") {
+      ui.setupLazyImageObserver();
+    }
   }
 
   function toggleSidebar() {
@@ -1211,15 +1015,59 @@
     });
   }
 
+  function setupSubterraneanFlyButtons() {
+    var FLY_BTN_IDS = ["subterranean-fly-btn", "subterranean-fly-sidebar-btn"];
+    FLY_BTN_IDS.forEach(function (id) {
+      var btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        mapReadyPromise.then(function () { subterraneanFlyToView(); });
+      });
+    });
+
+    // Mostrar/ocultar o botão do sidebar sincronizado com o estado do toggle
+    function syncFlyBtn() {
+      var sidebarBtn = document.getElementById("subterranean-fly-sidebar-btn");
+      if (!sidebarBtn) return;
+      var cb = document.getElementById("centro-subterranean-toggle");
+      sidebarBtn.hidden = !(cb && cb.checked);
+    }
+    syncFlyBtn();
+    document.addEventListener("centro:subterranean-ready", function () {
+      var cb = document.getElementById("centro-subterranean-toggle");
+      if (cb) cb.addEventListener("change", syncFlyBtn);
+    });
+  }
+
+  function setupSubterraneanGuide() {
+    var GUIDE_KEY = "centroSubterraneanGuideDismissed";
+    var guide    = document.getElementById("subterranean-guide");
+    var closeBtn = document.getElementById("subterranean-guide-close");
+    if (!guide || !closeBtn) return;
+    try {
+      if (window.localStorage && window.localStorage.getItem(GUIDE_KEY) === "1") {
+        guide.hidden = true;
+        return;
+      }
+    } catch (_e) { /* ignora */ }
+    guide.hidden = false;
+    closeBtn.addEventListener("click", function () {
+      guide.hidden = true;
+      try { if (window.localStorage) window.localStorage.setItem(GUIDE_KEY, "1"); } catch (_e) { /* ignora */ }
+    });
+  }
+
   function bootstrap() {
     setupHamburgerMenu();
     setupSidebarToggle();
     setupBuildings3DToggle();
+    setupSubterraneanToggle();
+    setupSubterraneanFlyButtons();
     setupPoiThemeFilter();
     setupNarrativeNav();
-    setupToast();
-    setupLazyImageObserver();
+    setupCentroUiFromModules();
     setupKeyboardShortcuts();
+    setupSubterraneanGuide();
     loadSidebarData();
     initMap();
   }

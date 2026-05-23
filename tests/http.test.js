@@ -84,6 +84,13 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.headers['cache-control'], 'public, max-age=31536000, immutable');
   });
 
+  it('deve responder 200 em /vendor/three/three.module.min.js', async () => {
+    const res = await fetchPath('/vendor/three/three.module.min.js');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.body.includes('Vector3'), 'Three.js deve conter exports 3D');
+    assert.strictEqual(res.headers['cache-control'], 'public, max-age=31536000, immutable');
+  });
+
   it('deve responder 200 em /pages/centro/centro-runtime.js (proxy route)', async () => {
     const res = await fetchPath('/pages/centro/centro-runtime.js');
     assert.strictEqual(res.status, 200);
@@ -126,6 +133,7 @@ describe('projeto_centro — HTTP integration', () => {
       'feature-inspector.css',
       'profile-card.css',
       'jesuit-frame.css',
+      'subterranean-cutaway.css',
       'map-popups.css',
       'responsive.css',
     ];
