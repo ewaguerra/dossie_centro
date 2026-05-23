@@ -1731,6 +1731,78 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(exists('centro/data/catalog/layer-unlocks.json'), 'layer-unlocks.json ausente');
   });
 
+  // ── ARG-CLUE-CONTRACT-A: contrato pistas Arquivo Morto ───────────
+  it('ARG-CLUE-CONTRACT-A: data-clue-id do HTML existem em pistas.json', () => {
+    const html = read('arquivo-morto/index.html');
+    const pistas = JSON.parse(read('arquivo-morto/data/pistas.json'));
+    const pistaIds = new Set(pistas.map((p) => p.id));
+    const clueIds = [...html.matchAll(/data-clue-id="([^"]+)"/g)].map((m) => m[1]);
+    const unique = [...new Set(clueIds)];
+    assert.ok(unique.length > 0, 'index.html deve conter data-clue-id');
+    for (const id of unique) {
+      assert.ok(pistaIds.has(id), `data-clue-id "${id}" ausente em pistas.json`);
+    }
+  });
+
+  it('ARG-CLUE-CONTRACT-A: clues exigidos por layer-unlocks existem em pistas.json', () => {
+    const unlocks = JSON.parse(read('centro/data/catalog/layer-unlocks.json'));
+    const pistas = JSON.parse(read('arquivo-morto/data/pistas.json'));
+    const pistaIds = new Set(pistas.map((p) => p.id));
+    for (const [layerId, clues] of Object.entries(unlocks.layers || {})) {
+      for (const clueId of clues) {
+        assert.ok(
+          pistaIds.has(clueId),
+          `layer-unlocks "${layerId}" exige clue "${clueId}" ausente em pistas.json`
+        );
+      }
+    }
+  });
+
+  it('ARG-CLUE-CONTRACT-A: REQUIRED_CLUES e catálogo com 8 IDs canônicos', () => {
+    const js = read('arquivo-morto/js/arquivo-morto.js');
+    const pistas = JSON.parse(read('arquivo-morto/data/pistas.json'));
+    const pistaIds = pistas.map((p) => p.id).sort();
+    const expected = [
+      'agua-calada',
+      'aresta-fria',
+      'aurora-maloca',
+      'comercio-velho',
+      'guardiao-tampa',
+      'nao-olhe-alto',
+      'peso-fundacao',
+      'sob-solas',
+    ].sort();
+    assert.deepStrictEqual(pistaIds, expected, 'pistas.json deve ter exatamente os 8 IDs do gate');
+
+    const requiredMatch = js.match(/REQUIRED_CLUES\s*=\s*\[([\s\S]*?)\]/);
+    assert.ok(requiredMatch, 'REQUIRED_CLUES ausente em arquivo-morto.js');
+    const requiredIds = [...requiredMatch[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]);
+    for (const id of requiredIds) {
+      assert.ok(expected.includes(id), `REQUIRED_CLUES "${id}" ausente em pistas.json`);
+    }
+  });
+
+  it('ARG-CLUE-CONTRACT-A: renderClueLedger usa DOM seguro (sem innerHTML com dados JSON)', () => {
+    const js = read('arquivo-morto/js/arquivo-morto.js');
+    const fnMatch = js.match(/function renderClueLedger\(\)\s*\{([\s\S]*?)\n  \}/);
+    assert.ok(fnMatch, 'renderClueLedger ausente');
+    const body = fnMatch[1];
+    assert.ok(body.includes('replaceChildren'), 'renderClueLedger deve usar replaceChildren');
+    assert.ok(body.includes('createElement'), 'renderClueLedger deve usar createElement');
+    assert.ok(body.includes('textContent'), 'renderClueLedger deve usar textContent');
+    assert.ok(!body.includes('clue.titulo}'), 'renderClueLedger não deve interpolar titulo em template literal');
+    assert.ok(!body.includes('clue.descricao}'), 'renderClueLedger não deve interpolar descricao em template literal');
+    assert.ok(!/list\.innerHTML\s*=.*clue/.test(body), 'renderClueLedger não deve montar innerHTML com dados de clue');
+  });
+
+  it('ARG-CLUE-CONTRACT-A: collectClue emite console.warn para clue inválido', () => {
+    const js = read('arquivo-morto/js/arquivo-morto.js');
+    assert.ok(
+      js.includes('console.warn("[ARQUIVO-MORTO] clue inválido:"'),
+      'collectClue deve warnar clue inválido para dev'
+    );
+  });
+
   it('sync-lucide-icons valida paridade manifest vs map-icons', () => {
     const sync = read('scripts/sync-lucide-icons.mjs');
     assert.ok(sync.includes('validateManifestRegistryParity'), 'validacao de paridade ausente');

@@ -34,5 +34,41 @@
     "localizacao": { "lat": -23.5455, "lng": -46.6333, "zoom": 15 },
     "estado": "fragmento",
     "confiabilidade": 0.90
+  },
+  {
+    "id": "nao-olhe-alto",
+    "categoria": "mecanica",
+    "titulo": "Distração Vertical",
+    "descricao": "Torres, coroas e vitrines foram erguidas para que você nunca perguntasse o que sustenta o peso. O alto é teatro; a instrução aponta para baixo.",
+    "localizacao": { "lat": -23.5451, "lng": -46.6339, "zoom": 16 },
+    "estado": "consolidada",
+    "confiabilidade": 0.92
+  },
+  {
+    "id": "sob-solas",
+    "categoria": "mecanica",
+    "titulo": "Sob Nossas Solas",
+    "descricao": "Calçada não é chão — é tampa. Pedra, asfalto, duto e ossada empilhados sobre o que a cidade recusou nomear.",
+    "localizacao": { "lat": -23.5480, "lng": -46.6350, "zoom": 17 },
+    "estado": "consolidada",
+    "confiabilidade": 0.94
+  },
+  {
+    "id": "comercio-velho",
+    "categoria": "local",
+    "titulo": "Centro Geométrico do Comércio Velho",
+    "descricao": "Não o centro turístico nem o fotografável. O eixo exato onde o comércio resistiu enquanto demoliam tudo ao redor — intacto por indiferença, não por sorte.",
+    "localizacao": { "lat": -23.5444, "lng": -46.6288, "zoom": 17 },
+    "estado": "fragmento",
+    "confiabilidade": 0.88
+  },
+  {
+    "id": "guardiao-tampa",
+    "categoria": "local",
+    "titulo": "Guardião da Tampa",
+    "descricao": "Não rosna, não brilha, não se anuncia. Permanece enquanto tudo muda de nome — antiguidade confundida com decoração para que ninguém pergunte o que ela sela.",
+    "localizacao": { "lat": -23.5453, "lng": -46.6377, "zoom": 18 },
+    "estado": "consolidada",
+    "confiabilidade": 0.91
   }
 ]
