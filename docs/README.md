@@ -19,6 +19,7 @@ Quando uma análise CAPRI gera uma decisão, ela vira **ADR**, entrada em `docs/
 |---|---|
 | [stack.md](./stack.md) | Versões, scripts npm, limitações |
 | [offline-scope.md](./offline-scope.md) | O que funciona sem internet |
+| [data-lineage.md](./data-lineage.md) | Genealogia dos dados, fluxos, exceções, pipeline |
 | [baseline.md](./baseline.md) | Snapshot de testes e greps |
 | [testing/ci-local.md](./testing/ci-local.md) | Verificação antes do push (sem GitHub Actions) |
 | [testing/test-matrix.md](./testing/test-matrix.md) | Casos TC-001 … |
