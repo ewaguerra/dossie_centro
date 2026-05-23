@@ -225,6 +225,79 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('sidebar-close-btn'), 'sidebar-close-btn ausente');
   });
 
+  // ── Gate UI-SIDEBAR-A4: tabs ──────────────────────────────────────
+  it('sidebar.css: tabpanel e a area de scroll da sidebar', () => {
+    const css = read('centro/styles/sidebar.css');
+    assert.ok(css.includes('.sidebar-tabpanel'), 'tabpanel ausente no CSS');
+    assert.match(css, /\.sidebar-tabpanel\s*\{[^}]*overflow-y:\s*auto/s, 'tabpanel precisa overflow-y:auto');
+    assert.match(css, /\.sidebar-tabpanel\s*\{[^}]*flex:\s*1/s, 'tabpanel precisa flex:1');
+    assert.match(css, /\.sidebar-tabpanel\s*\{[^}]*min-height:\s*0/s, 'tabpanel precisa min-height:0');
+    assert.ok(css.includes('.sidebar-tabs'), 'tablist ausente no CSS');
+    assert.ok(css.includes('.sidebar-tab'), 'tab ausente no CSS');
+  });
+
+  it('centro-runtime.js: toggle sidebar usa sidebar--collapsed (nao .collapsed)', () => {
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('setSidebarCollapsed'), 'helper setSidebarCollapsed ausente');
+    assert.ok(runtime.includes('sidebar--collapsed'), 'classe sidebar--collapsed ausente');
+    assert.ok(!runtime.includes('classList.toggle("collapsed")'), 'toggle legado .collapsed ainda presente');
+    assert.ok(!runtime.includes('classList.contains("collapsed")'), 'check legado .collapsed ainda presente');
+  });
+
+  it('responsive.css: sidebar mobile nao limita max-height a 70vh', () => {
+    const css = read('centro/styles/responsive.css');
+    assert.ok(!css.includes('max-height: 70vh'), 'regra 70vh truncava sidebar em mobile');
+  });
+
+  it('sidebar UX A4: tabs ARIA, IDs essenciais e conteudo preservado', () => {
+    const html = read('centro/index.html');
+
+    // Estrutura de tabs
+    assert.ok(html.includes('role="tablist"'), 'tablist ausente');
+    assert.ok(html.includes('id="sidebar-tab-camadas"'), 'tab camadas ausente');
+    assert.ok(html.includes('id="sidebar-tab-opcoes"'), 'tab opcoes ausente');
+    assert.ok(html.includes('id="sidebar-tab-pois"'), 'tab pois ausente');
+    assert.ok(html.includes('aria-selected="true"'), 'aba ativa ausente');
+    assert.ok(html.includes('id="sidebar-panel-camadas"'), 'panel camadas ausente');
+    assert.ok(html.includes('id="sidebar-panel-opcoes"'), 'panel opcoes ausente');
+    assert.ok(html.includes('id="sidebar-panel-pois"'), 'panel pois ausente');
+    assert.ok(html.includes('role="tabpanel"'), 'tabpanel role ausente');
+
+    // Camadas fica no painel correto
+    const panelCamadas = html.indexOf('id="sidebar-panel-camadas"');
+    const layersPanel = html.indexOf('id="layers-panel"');
+    assert.ok(layersPanel > panelCamadas, 'layers-panel deve estar dentro do painel de camadas');
+
+    // Aba Opções tem 3D e subterrâneo
+    const panelOpcoes = html.indexOf('id="sidebar-panel-opcoes"');
+    const b3dIdx = html.indexOf('id="centro-buildings-3d-toggle"');
+    const subIdx = html.indexOf('id="centro-subterranean-toggle"');
+    assert.ok(b3dIdx > panelOpcoes, '3D toggle deve estar no painel opcoes');
+    assert.ok(subIdx > panelOpcoes, 'subterraneo toggle deve estar no painel opcoes');
+
+    // Aba POIs tem filtro
+    const panelPois = html.indexOf('id="sidebar-panel-pois"');
+    const poiIdx = html.indexOf('id="poi-legend-details"');
+    assert.ok(poiIdx > panelPois, 'poi-legend-details deve estar no painel pois');
+
+    // IDs essenciais presentes no HTML
+    for (const id of ['sidebar-close-btn', 'sidebar-open-btn', 'layers-panel',
+                       'centro-buildings-3d-toggle', 'centro-subterranean-toggle',
+                       'poi-legend-details', 'poi-legend-grid', 'subterranean-legend']) {
+      assert.ok(html.includes(`id="${id}"`), 'ID essencial ausente: ' + id);
+    }
+    assert.ok(html.includes('Maquete estrutural 3D'), 'label 3D preservado');
+    assert.ok(html.includes('Visão subterrânea'), 'label subterraneo preservado');
+    assert.ok(html.includes('Evidências no mapa'), 'label filtro POI preservado');
+    assert.ok(!html.includes('class="sidebar-tools"'), 'acordeao A2 nao deve voltar');
+
+    // Runtime tem tabs
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('setupSidebarTabs'), 'setupSidebarTabs ausente');
+    assert.ok(runtime.includes('activateSidebarTab'), 'activateSidebarTab ausente');
+    assert.ok(runtime.includes('sidebar-tab-camadas'), 'tab camadas default ausente');
+  });
+
   // ── Features — POI layers (fluxo único) ─────────────────────────
   it('centro-runtime.js deve ter uma unica implementacao idempotente de addPOILayer', () => {
     const runtime = read('centro/centro-runtime.js');

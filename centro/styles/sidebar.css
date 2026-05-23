@@ -2,18 +2,20 @@
 /* ─── Sidebar shell ────────────────────────────────────── */
 
 .sidebar {
+  --sidebar-frame-inset: calc(
+    var(--jesuit-frame-top)
+    + var(--jesuit-frame-bottom)
+    + var(--centro-sidebar-gap) * 2
+  );
+  --sidebar-body-h: calc(100dvh - var(--sidebar-frame-inset));
+
   position: fixed;
   left: calc(var(--jesuit-frame-left) + 10px);
   top: calc(var(--jesuit-frame-top) + var(--centro-sidebar-gap));
   bottom: calc(var(--jesuit-frame-bottom) + var(--centro-sidebar-gap));
   width: var(--sidebar-width);
   height: auto;
-  max-height: calc(
-    100vh
-    - var(--jesuit-frame-top)
-    - var(--jesuit-frame-bottom)
-    - var(--centro-sidebar-gap) * 2
-  );
+  max-height: var(--sidebar-body-h);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -130,12 +132,71 @@
   text-transform: uppercase;
 }
 
-/* ─── Sidebar extras (maquete 3D) ──────────────────────── */
+/* ─── Sidebar tabs ──────────────────────────────────────── */
+
+.sidebar-tabs {
+  display: flex;
+  flex-shrink: 0;
+  background: rgba(8, 8, 8, 0.98);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.sidebar-tab {
+  flex: 1;
+  padding: 10px 6px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-code);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  user-select: none;
+}
+
+.sidebar-tab:hover {
+  color: #d4d4d4;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-tab:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -2px;
+}
+
+.sidebar-tab[aria-selected="true"] {
+  color: var(--centro-accent);
+  border-bottom-color: var(--centro-accent);
+}
+
+/* ─── Sidebar tabpanels ─────────────────────────────────── */
+
+.sidebar-tabpanel {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar-tabpanel::-webkit-scrollbar { width: 5px; }
+.sidebar-tabpanel::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.sidebar-tabpanel[hidden] { display: none; }
+
+/* ─── Sidebar extras (dentro do tabpanel Opções) ──────── */
 
 .sidebar-extras {
-  padding: 0 0 4px;
-  border-bottom: 1px solid var(--color-border-light);
-  flex-shrink: 0;
+  padding: 0 0 8px;
 }
 
 .sidebar-extras__row {
@@ -399,12 +460,18 @@
 
 /* ─── Layers list ──────────────────────────────────────── */
 
+/* .layers-list herda scroll do .sidebar-tabpanel; regras mantidas por compatibilidade */
 .layers-list {
-  flex: 1;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
   padding-bottom: 20px;
+}
+
+/* POI legend dentro da aba POIs ocupa o painel completo */
+.poi-legend--full {
+  padding: 8px 0;
+}
+
+.poi-legend--full .poi-legend__list {
+  max-height: none;
 }
 
 .layers-list::-webkit-scrollbar { width: 5px; }
@@ -637,3 +704,32 @@
 }
 
 .zoom-layer svg { width: 15px; height: 15px; }
+
+/* ─── Compact header for short viewports ───────────────── */
+
+@media (max-height: 820px) {
+  .sidebar-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .sidebar-header--chrome {
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+  }
+
+  .sidebar-header__intro--chrome {
+    display: none;
+  }
+}
+
+@media (max-height: 720px) {
+  .sidebar-header {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .sidebar-header__meta {
+    display: none;
+  }
+}

@@ -72,30 +72,45 @@
       </div>
     </div>
     <div id="sidebar-status" class="sidebar-status">Carregando…</div>
-    <div class="sidebar-extras">
-      <label class="sidebar-extras__row layer-row" for="centro-buildings-3d-toggle">
-        <input type="checkbox" id="centro-buildings-3d-toggle" />
-        <span class="sidebar-extras__text">
-          Maquete estrutural 3D
-          <span class="sidebar-extras__muted"> — extrusão por altura (OpenFreeMap)</span>
-        </span>
-      </label>
-      <div id="buildings-legend" class="buildings-legend" hidden>
-        <div class="buildings-legend__title">Faixas de altura</div>
-        <div class="buildings-legend__grid" id="buildings-legend-grid"></div>
+    <div class="sidebar-tabs" role="tablist" aria-label="Painéis do dossiê">
+      <button class="sidebar-tab sidebar-tab--active" role="tab" id="sidebar-tab-camadas"
+              aria-controls="sidebar-panel-camadas" aria-selected="true" type="button">Camadas</button>
+      <button class="sidebar-tab" role="tab" id="sidebar-tab-opcoes"
+              aria-controls="sidebar-panel-opcoes" aria-selected="false" type="button">Opções</button>
+      <button class="sidebar-tab" role="tab" id="sidebar-tab-pois"
+              aria-controls="sidebar-panel-pois" aria-selected="false" type="button">POIs</button>
+    </div>
+    <div id="sidebar-panel-camadas" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-camadas">
+      <div id="layers-panel" class="layers-list"></div>
+    </div>
+    <div id="sidebar-panel-opcoes" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-opcoes" hidden>
+      <div class="sidebar-extras">
+        <label class="sidebar-extras__row layer-row" for="centro-buildings-3d-toggle">
+          <input type="checkbox" id="centro-buildings-3d-toggle" />
+          <span class="sidebar-extras__text">
+            Maquete estrutural 3D
+            <span class="sidebar-extras__muted"> — extrusão por altura (OpenFreeMap)</span>
+          </span>
+        </label>
+        <div id="buildings-legend" class="buildings-legend" hidden>
+          <div class="buildings-legend__title">Faixas de altura</div>
+          <div class="buildings-legend__grid" id="buildings-legend-grid"></div>
+        </div>
+        <label class="sidebar-extras__row layer-row subterranean-toggle" for="centro-subterranean-toggle">
+          <input type="checkbox" id="centro-subterranean-toggle" />
+          <span class="sidebar-extras__text">
+            Visão subterrânea
+            <span class="sidebar-extras__muted"> — Fase 7: Rasgue o Asfalto</span>
+          </span>
+        </label>
+        <div id="subterranean-status" class="subterranean-status" aria-live="polite"></div>
+        <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
+        <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
       </div>
-      <label class="sidebar-extras__row layer-row subterranean-toggle" for="centro-subterranean-toggle">
-        <input type="checkbox" id="centro-subterranean-toggle" />
-        <span class="sidebar-extras__text">
-          Visão subterrânea
-          <span class="sidebar-extras__muted"> — Fase 7: Rasgue o Asfalto</span>
-        </span>
-      </label>
-      <div id="subterranean-status" class="subterranean-status" aria-live="polite"></div>
-      <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
-      <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
-      <div id="poi-legend" class="poi-legend">
-        <details id="poi-legend-details" class="poi-legend__details">
+    </div>
+    <div id="sidebar-panel-pois" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-pois" hidden>
+      <div id="poi-legend" class="poi-legend poi-legend--full">
+        <details id="poi-legend-details" class="poi-legend__details" open>
           <summary class="poi-legend__summary" aria-controls="poi-legend-panel">
             <span class="poi-legend__summary-text">
               <span class="poi-legend__kicker">Filtro por temática</span>
@@ -110,7 +125,6 @@
         </details>
       </div>
     </div>
-    <div id="layers-panel" class="layers-list"></div>
   </aside>
 
   <div id="map"></div>
