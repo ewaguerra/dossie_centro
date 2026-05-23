@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import vm from 'node:vm';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -278,8 +278,7 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('centro-runtime.js: addLayerToMap usa resolveLayerIcon para pontos da sidebar', () => {
-    const runtime = read('centro/centro-runtime.js');
-    const ctrl = read('centro/map/catalog-layer-controller.js');
+    const runtime = read('centro/centro-runtime.js');    const ctrl = read('centro/map/catalog-layer-controller.js');
     // resolveLayerIcon é injetado pelo runtime via buildCatalogLayerDeps
     assert.ok(runtime.includes('resolveLayerIcon'), 'resolveLayerIcon ausente no runtime');
     // addPointLayerWithIcon migrou para o controller (Gate 4.5E-B)
@@ -1784,6 +1783,184 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(js.includes('protocolo13_phase'), 'init fase ausente');
     assert.ok(html.includes('protocolo-phase-badge'), 'badge de fase ausente');
     assert.ok(html.includes('fase 1 activa'), 'copy deve indicar fase 1 activa');
+  });
+
+  // ── Gate GEO-B: integridade GeoJSON ─────────────────────────────
+
+  // Helpers locais — read-only, sem acesso a runtime
+  function loadCatalogLayers() {
+    const layersDoc = JSON.parse(read('centro/data/catalog/layers.json'));
+    const ctxDoc    = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const wiredDoc  = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const wiredSet  = new Set((wiredDoc.layerIds || []));
+    const processed = (layersDoc.layers || []);
+    const context   = (ctxDoc.layers || []).filter(l => wiredSet.has(l.id));
+    return { processed, context, wiredSet };
+  }
+
+  function resolveGeoJsonPath(layer) {
+    const f = layer.file || '';
+    if (f.startsWith('data/context/') || f.startsWith('data/processed/')) {
+      return 'centro/' + f;
+    }
+    return 'centro/data/processed/' + f.replace(/^.*processed\//, '');
+  }
+
+  function geomCompatible(cfgGeom, realTypes) {
+    if (cfgGeom === 'polygon' || cfgGeom === 'fill') {
+      return realTypes.some(t => t === 'Polygon' || t === 'MultiPolygon');
+    }
+    if (cfgGeom === 'line') {
+      return realTypes.some(t => t === 'LineString' || t === 'MultiLineString');
+    }
+    if (cfgGeom === 'point') {
+      return realTypes.some(t => t === 'Point' || t === 'MultiPoint');
+    }
+    return true;
+  }
+
+  it('GEO-B: todos os arquivos do catálogo existem no disco', () => {
+    const { processed, context } = loadCatalogLayers();
+    const missing = [];
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) missing.push(`${layer.id} -> ${path}`);
+    }
+    assert.deepStrictEqual(missing, [], 'Arquivos ausentes: ' + missing.join(', '));
+  });
+
+  it('GEO-B: todos os GeoJSON são parseáveis e são FeatureCollection', () => {
+    const { processed, context } = loadCatalogLayers();
+    const errors = [];
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) { errors.push(`${layer.id}: arquivo ausente`); continue; }
+      try {
+        const fc = JSON.parse(read(path));
+        if (fc.type !== 'FeatureCollection') {
+          errors.push(`${layer.id}: type=${fc.type} (esperado FeatureCollection)`);
+        }
+        if (!Array.isArray(fc.features)) {
+          errors.push(`${layer.id}: features ausente ou não array`);
+        }
+      } catch (e) {
+        errors.push(`${layer.id}: parse error — ${e.message}`);
+      }
+    }
+    assert.deepStrictEqual(errors, [], errors.join('\n'));
+  });
+
+  it('GEO-B: nenhuma feature tem geometry nula', () => {
+    const { processed, context } = loadCatalogLayers();
+    const errors = [];
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) continue;
+      const fc = JSON.parse(read(path));
+      const nulls = (fc.features || []).filter(f => !f.geometry).length;
+      if (nulls > 0) errors.push(`${layer.id}: ${nulls} features sem geometry`);
+    }
+    assert.deepStrictEqual(errors, [], errors.join('\n'));
+  });
+
+  it('GEO-B: geometria real compatível com cfg.geom do catálogo', () => {
+    const { processed, context } = loadCatalogLayers();
+    const errors = [];
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) continue;
+      const fc = JSON.parse(read(path));
+      const cfgGeom = layer.geom || layer.geometry;
+      if (!cfgGeom) continue;
+      const realTypes = [...new Set(
+        (fc.features || []).filter(f => f.geometry).map(f => f.geometry.type)
+      )];
+      if (!geomCompatible(cfgGeom, realTypes)) {
+        errors.push(`${layer.id}: cfg=${cfgGeom} real=${realTypes.join(',')}`);
+      }
+    }
+    assert.deepStrictEqual(errors, [], 'Geometria incompatível:\n' + errors.join('\n'));
+  });
+
+  it('GEO-B: sem IDs duplicados entre processed e context wired', () => {
+    const { processed, context } = loadCatalogLayers();
+    const allIds = [...processed, ...context].map(l => l.id);
+    const seen = new Set();
+    const dupes = [];
+    for (const id of allIds) {
+      if (seen.has(id)) dupes.push(id);
+      seen.add(id);
+    }
+    assert.deepStrictEqual(dupes, [], 'IDs duplicados: ' + dupes.join(', '));
+  });
+
+  it('GEO-B: layer-unlocks referencia apenas layers existentes no catálogo', () => {
+    const { processed, context } = loadCatalogLayers();
+    const known = new Set([...processed, ...context].map(l => l.id));
+    const unlocks = JSON.parse(read('centro/data/catalog/layer-unlocks.json'));
+    const unknown = Object.keys(unlocks.layers || {}).filter(id => !known.has(id));
+    assert.deepStrictEqual(unknown, [], 'layer-unlocks referencia IDs desconhecidos: ' + unknown.join(', '));
+  });
+
+  it('GEO-B: phase-gates referencia apenas layers existentes no catálogo', () => {
+    const { processed, context } = loadCatalogLayers();
+    const known = new Set([...processed, ...context].map(l => l.id));
+    const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    const unknown = Object.keys(gates.layerMinPhase || {}).filter(id => !known.has(id));
+    assert.deepStrictEqual(unknown, [], 'phase-gates referencia IDs desconhecidos: ' + unknown.join(', '));
+  });
+
+  it('GEO-B: GeoJSON pesados (>2 MB) têm minzoom adequado ao tipo geométrico', () => {
+    const { processed, context } = loadCatalogLayers();
+    const THRESHOLD = 2 * 1024 * 1024;
+    // Regras: point >2MB → minzoom>=14; line/polygon >2MB → minzoom>=12
+    const MIN_ZOOM_BY_GEOM = { point: 14, line: 12, polygon: 12, fill: 12 };
+    const violations = [];
+    const heavy = [];
+
+    for (const layer of [...processed, ...context]) {
+      const path = resolveGeoJsonPath(layer);
+      if (!existsSync(join(ROOT, path))) continue;
+      const size = statSync(join(ROOT, path)).size;
+      const geom = layer.geom || layer.geometry || 'polygon';
+      const minzoom = layer.minzoom;
+
+      if (size >= 1024 * 1024) {
+        heavy.push(`  ${(size / 1024 / 1024).toFixed(1)} MB  ${layer.id}  (${geom}, minzoom=${minzoom ?? 'n/d'})`);
+      }
+      if (size >= THRESHOLD) {
+        const required = MIN_ZOOM_BY_GEOM[geom] ?? 12;
+        if (minzoom == null || minzoom < required) {
+          violations.push(
+            `${layer.id}: ${(size / 1024 / 1024).toFixed(1)} MB, geom=${geom}, ` +
+            `minzoom=${minzoom ?? 'ausente'} (mínimo esperado: ${required})`
+          );
+        }
+      }
+    }
+
+    // Sempre imprimir relatório de arquivos >=1 MB (informativo)
+    if (heavy.length > 0) {
+      console.log('[GEO-B] GeoJSON >=1 MB detectados:\n' + heavy.join('\n'));
+    }
+
+    assert.deepStrictEqual(violations, [],
+      'GeoJSON >2 MB sem minzoom adequado:\n' + violations.join('\n')
+    );
+  });
+
+  it('GEO-B: órfãos conhecidos documentados (raw e pistas ARG)', () => {
+    // Estes arquivos existem no disco mas NÃO estão no catálogo.
+    // São órfãos conhecidos e aceitos — não devem virar alertas falsos.
+    // geosampa_rios_centro_raw.geojson: artefato de pipeline (fonte → derivado context/centro_rios_geosampa__line.geojson)
+    // centro_pistas_rua_sao_bento__point.geojson: ponto ARG manual, carregado via pistas.json não catálogo
+    const KNOWN_ORPHANS = [
+      'centro/data/raw/geosampa_rios_centro_raw.geojson',
+      'centro/data/context/centro_pistas_rua_sao_bento__point.geojson',
+    ];
+    for (const path of KNOWN_ORPHANS) {
+      assert.ok(existsSync(join(ROOT, path)), `Órfão esperado ausente: ${path} — remover da lista se deletado`);
+    }
   });
 
   // ── Popup CSS classes ───────────────────────────────────────────
