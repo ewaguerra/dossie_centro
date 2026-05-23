@@ -4,6 +4,9 @@
 (function () {
   "use strict";
 
+  var POI_TURISTICO_LAYER_FILE =
+    "data/context/centro_pois_turisticos__point.geojson";
+
   var POI_TURISTICO_LAYERS = Object.freeze({
     sourceId: "poi-turistico-source",
     iconLayerId: "poi-turistico-icon",
@@ -45,6 +48,7 @@
 
   window.CENTRO = window.CENTRO || {};
   window.CENTRO.poiIcons = {
+    POI_TURISTICO_LAYER_FILE: POI_TURISTICO_LAYER_FILE,
     POI_TURISTICO_LAYERS: POI_TURISTICO_LAYERS,
     MEMORIA_PAULISTANA_LAYERS: MEMORIA_PAULISTANA_LAYERS,
     ACERVO_TOMBADO_LAYERS: ACERVO_TOMBADO_LAYERS,

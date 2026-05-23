@@ -27,8 +27,20 @@
     return layerConfig;
   }
 
+  async function fetchLayerGeojson(filePath) {
+    var url = buildLayerDataUrl({ file: filePath });
+    var response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(
+        "Falha ao carregar " + filePath + ": " + response.status + " " + url
+      );
+    }
+    return response.json();
+  }
+
   window.CENTRO = window.CENTRO || {};
   window.CENTRO.map = window.CENTRO.map || {};
   window.CENTRO.map.buildLayerDataUrl = buildLayerDataUrl;
   window.CENTRO.map.applyLayerZoomBounds = applyLayerZoomBounds;
+  window.CENTRO.map.fetchLayerGeojson = fetchLayerGeojson;
 })();

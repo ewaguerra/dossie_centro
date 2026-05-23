@@ -4,8 +4,6 @@
 (function () {
   "use strict";
 
-  var U = window.CENTRO && window.CENTRO.utils;
-
   var TRIANGULO_HISTORICO = Object.freeze({
     sourceId: "centro-triangulo-historico-source",
     fillLayerId: "centro-triangulo-historico-fill",
@@ -230,9 +228,18 @@
 
     trianguloHistoricoGeojsonPromise = (async function () {
       try {
-        var data = await U.fetchCentroJson(
-          "data/context/centro_pois_turisticos__point.geojson"
-        );
+        var poi = window.CENTRO && window.CENTRO.poiIcons;
+        var layerFile =
+          (poi && poi.POI_TURISTICO_LAYER_FILE) ||
+          "data/context/centro_pois_turisticos__point.geojson";
+        var fetchLayer =
+          window.CENTRO &&
+          window.CENTRO.map &&
+          window.CENTRO.map.fetchLayerGeojson;
+        var data =
+          typeof fetchLayer === "function"
+            ? await fetchLayer(layerFile)
+            : null;
         var features = (data && data.features) || [];
         var streetFeats = features.filter(isTargetHistoricStreet);
         if (streetFeats.length >= 3) {

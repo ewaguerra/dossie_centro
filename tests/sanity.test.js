@@ -831,6 +831,7 @@ describe('projeto_centro — sanity checks', () => {
     const mod = read('centro/map/layer-data-url.js');
     assert.doesNotThrow(() => new Function(mod));
     assert.ok(mod.includes('buildLayerDataUrl'), 'export buildLayerDataUrl ausente');
+    assert.ok(mod.includes('fetchLayerGeojson'), 'export fetchLayerGeojson ausente');
     assert.ok(mod.includes('applyLayerZoomBounds'), 'export applyLayerZoomBounds ausente');
     assert.ok(!mod.includes('document.'), 'layer-data-url sem DOM');
     assert.ok(!mod.includes('localStorage'), 'layer-data-url sem localStorage');
@@ -1633,12 +1634,19 @@ describe('projeto_centro — sanity checks', () => {
     const runtime = read('centro/centro-runtime.js');
     const icons = read('vendor/app/config/map-icons.js');
     const poiIcons = read('centro/features/poi-icons.js');
+    const layerFile = 'data/context/centro_pois_turisticos__point.geojson';
     assert.ok(runtime.includes('poi-turistico'), 'runtime deve carregar POI turistico');
-    assert.ok(runtime.includes('centro_pois_turisticos__point'), 'geojson turistico ausente');
+    assert.ok(runtime.includes('POI_TURISTICO_LAYER_FILE'), 'runtime referencia POI_TURISTICO_LAYER_FILE');
+    assert.ok(runtime.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'addPOILayer via buildLayerDataUrl');
+    assert.ok(!runtime.includes('"/centro/data/context/" + poiCfg.file'), 'addPOILayer sem hardcode /centro/data/context/');
     assert.ok(icons.includes('"poi-turistico"'), 'map-icons patrimonio turistico ausente');
     assert.ok(icons.includes('icon-turismo'), 'icone turismo ausente no registry');
     assert.ok(poiIcons.includes('poi-turistico-source'), 'poi-icons source turistico ausente');
-    assert.ok(exists('centro/data/context/centro_pois_turisticos__point.geojson'), 'geojson turistico ausente');
+    assert.ok(poiIcons.includes('POI_TURISTICO_LAYER_FILE'), 'POI_TURISTICO_LAYER_FILE ausente em poi-icons');
+    assert.ok(poiIcons.includes(layerFile), 'POI_TURISTICO_LAYER_FILE aponta para context/');
+    assert.ok(exists('centro/' + layerFile), 'geojson turistico ausente em context/');
+    assert.ok(!exists('centro/data/geojson/special/pois/centro_pois_turisticos__point.geojson'),
+      'POI turistico ainda nao foi movido para special/pois');
   });
 
   it('ponte transmidia: caderno localStorage e layer-unlocks no centro', () => {
@@ -2050,6 +2058,34 @@ describe('projeto_centro — sanity checks', () => {
       mapMod.buildLayerDataUrl({ file: layer.file }),
       '/centro/' + newPath
     );
+  });
+
+  it('DATA-ORG-B4B-2A: POI turístico usa caminho canônico via buildLayerDataUrl', () => {
+    const runtime = read('centro/centro-runtime.js');
+    const triangulo = read('centro/features/triangulo-historico.js');
+    const poiIcons = read('centro/features/poi-icons.js');
+    const layerFile = 'data/context/centro_pois_turisticos__point.geojson';
+    const canonicalUrl = '/centro/data/context/centro_pois_turisticos__point.geojson';
+
+    assert.ok(poiIcons.includes('POI_TURISTICO_LAYER_FILE'), 'constante canônica em poi-icons');
+    assert.strictEqual(
+      poiIcons.match(/POI_TURISTICO_LAYER_FILE\s*=\s*\n?\s*"([^"]+)"/)?.[1],
+      layerFile,
+      'POI_TURISTICO_LAYER_FILE deve apontar para context/'
+    );
+    assert.ok(runtime.includes('layerFile: poi.POI_TURISTICO_LAYER_FILE'), 'runtime usa POI_TURISTICO_LAYER_FILE');
+    assert.ok(runtime.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'addPOILayer via buildLayerDataUrl');
+    assert.ok(!runtime.includes('"/centro/data/context/" + poiCfg'), 'sem hardcode /centro/data/context/ no runtime');
+    assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
+    assert.ok(triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo referencia POI_TURISTICO_LAYER_FILE');
+    assert.ok(!triangulo.includes('fetchCentroJson'), 'triangulo não usa fetchCentroJson');
+    assert.ok(!triangulo.includes('/pages/centro/data/context'), 'triangulo sem path /pages/centro/data/context');
+
+    const mapMod = loadLayerDataUrlModule();
+    assert.strictEqual(mapMod.buildLayerDataUrl({ file: layerFile }), canonicalUrl);
+    assert.ok(exists('centro/' + layerFile), layerFile + ' permanece em context/');
+    assert.ok(!exists('centro/data/geojson/special/pois/centro_pois_turisticos__point.geojson'),
+      'GeoJSON não foi movido para special/pois');
   });
 
   // ── Popup CSS classes ───────────────────────────────────────────
