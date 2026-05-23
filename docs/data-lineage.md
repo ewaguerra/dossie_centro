@@ -4,7 +4,7 @@
 > consumidor de runtime, quem é artefato de pipeline, e por que algumas
 > coisas parecem "fora do lugar" mas estão lá por contrato.
 
-**Atualizado:** 2026-05-23 · gates `MAP-DATA-GOV-A`, `DATA-PERF-D1`, `DATA-DOCS-D1B` ·
+**Atualizado:** 2026-05-23 · gates `MAP-DATA-GOV-A`, `DATA-PERF-D1`, `DATA-DOCS-D1B`, `DATA-ORG-B2` ·
 base de evidência: auditoria empírica (`find -printf`, `jq .features|length`,
 `git log`) + catálogos commitados em `centro/data/catalog/`.
 
@@ -57,8 +57,6 @@ ARG e validar coverage.
 | `context-wired.json` | **subset** de 14 IDs efetivamente wired na sidebar | `catalog-load.js` |
 | `layer-unlocks.json` | mapa `layerId → [clueId, …]` para gates do Caderno do Arquivista | `layer-unlocks.js` |
 | `phase-gates.json` | mapa `layerId → fase mínima` para gates ARG | `protocolo-phase.js` |
-| `data_freshness_report.json` | **legacy/auditoria** (ver §4) | nenhum runtime |
-| `knowledge.generated.json` | **legacy/auditoria** (ver §4) | nenhum runtime |
 
 ### 2.2 `centro/data/processed/` — runtime principal
 
@@ -66,34 +64,40 @@ ARG e validar coverage.
 Dossiê (eixos, ZEIS, hidrografia, alagamentos, contorno do centro).
 Toda entrada tem 1:1 em `layers.json`.
 
-### 2.3 `centro/data/context/` — runtime contextual + relatórios
+### 2.3 `centro/data/context/` — runtime contextual (GeoJSON only)
 
-16 GeoJSON, 38.133 features, 16,62 MiB. Camadas expandíveis na sidebar
-(OSM, patrimônio, geotécnica, declividade) + alguns relatórios e
-artefatos de pipeline que ficaram lado a lado.
+Camadas expandíveis na sidebar (OSM, patrimônio, geotécnica, declividade).
+Após **DATA-ORG-B2**, contém **somente `.geojson`** — relatórios foram para
+`centro/data/reports/`.
 
 | Categoria | Padrão de nome | Exemplo |
 |---|---|---|
 | Camada wired (sidebar) | `*.geojson` | `centro_bem_tombado__polygon.geojson` |
 | Camada não wired | `centro_pois_turisticos__point.geojson` | exceção oficial — §4 |
-| Relatório de build | `*_build_report.json` | `centro_acervo_tombado_build_report.json` |
-| Relatório de match | `*_match_report.json` | `centro_pois_turisticos_match_report.json` |
-| Audit de baixa confiança | `*_low_confidence_audit.json` | `centro_pois_turisticos_low_confidence_audit.json` |
-| Cards (UI) | `*_cards.json` | `centro_pois_turisticos_cards.json` |
 | Órfão conhecido | (ver §4) | `centro_pistas_rua_sao_bento__point.geojson` |
 
-A pasta está **semanticamente inchada**, mas funcional. Mover relatórios
-para subpasta seria refator de pipeline (afeta `sync:geojson-from-salto`)
-— não está no escopo deste gate.
+### 2.4 `centro/data/reports/` — relatórios e legacy (não runtime)
 
-### 2.4 `centro/data/raw/` — intermediário não runtime
+**Não servido ao browser.** Audit trail de pipeline e curadoria.
+
+| Subpasta | Conteúdo |
+|---|---|
+| `build/` | `build_report.json`, `context_build_report.json`, `*_build_report.json` |
+| `poi/` | match, proximity, audit, missing, cards de POIs turísticos |
+| `three-d/` | match/missing da Catedral Sé 3D |
+| `legacy/` | `knowledge.generated.json`, `data_freshness_report.json` |
+
+`context_build_report.json` é escrito por `scripts/sync-geojson-from-salto.py`
+em `reports/build/` (path atualizado em DATA-ORG-B2).
+
+### 2.5 `centro/data/raw/` — intermediário não runtime
 
 1 arquivo: `geosampa_rios_centro_raw.geojson` (180 features, 0,27 MiB).
 É o **insumo bruto** do GeoSampa antes do recorte/normalização que gera
 `centro/data/context/centro_rios_geosampa__line.geojson`. Permanece no
 repo como audit trail. Nunca é servido ao browser.
 
-### 2.5 `centro/assets/pistas/` — fonte operacional das pistas
+### 2.6 `centro/assets/pistas/` — fonte operacional das pistas
 
 Estas pistas (Rua São Bento, ARG) **não** moram em `centro/data/`. Elas
 vivem em `centro/assets/pistas/`:
@@ -108,7 +112,7 @@ vivem em `centro/assets/pistas/`:
 
 Consumidor: `centro/features/pistas.js` → `addPistasLayer`.
 
-### 2.6 `arquivo-morto/data/pistas.json` — pistas do blog (≠ mapa)
+### 2.7 `arquivo-morto/data/pistas.json` — pistas do blog (≠ mapa)
 
 Arquivo separado, com **propósito diferente**: alimenta o Caderno do
 Arquivista no `/arquivo-morto/`, não o mapa. As entradas aqui escrevem em
@@ -227,26 +231,24 @@ Se algum dia algum órfão for removido, atualize:
   - centro/data/raw/README.md (se for o caso)
 ```
 
-### 4.4 Relatórios legados em `centro/data/catalog/`
+### 4.4 Relatórios legados em `centro/data/reports/legacy/`
 
 ```text
-knowledge.generated.json
+knowledge.generated.json  → reports/legacy/
   - 0 referências de código
   - paths internos apontam para data/processed/01_macrozoneamento/...
     e geojson_extraidos/... que NÃO existem neste repo
   - é fóssil de pipeline (mapa_sp_salto-style)
 
-data_freshness_report.json
+data_freshness_report.json  → reports/legacy/
   - 0 referências de código de runtime
-  - 1 menção descritiva em centro/README.md ("optional, for popup
-    enrichment") — não há binding ativo
+  - menção descritiva em centro/README.md — sem binding ativo
   - paths internos no mesmo formato legado
 ```
 
 ```text
-Status: legacy/auditoria — NÃO são fonte de runtime.
-        Manter por enquanto (audit trail e referência histórica).
-        Mover para centro/data/legacy/ é gate próprio.
+Status: legacy/auditoria — NÃO são fonte de runtime (DATA-ORG-B2).
+        Mantidos como audit trail e referência histórica.
 
 NÃO reconciliar paths legados com o repo atual. São fósseis,
 não infraestrutura.
@@ -344,11 +346,12 @@ Ver §4.2. Refator GEO-POI-DEDUP fica para gate próprio.
 Ver §5.2. Repo não regenera todos os GeoJSON sozinho. Aceito como
 arquitetura — `mapa_sp_salto` é upstream oficial.
 
-### 6.5 Pasta `context/` semanticamente inchada
+### 6.5 Pasta `context/` — relatórios separados (DATA-ORG-B2)
 
-Mistura camadas wired, camada não wired (POI turístico), relatórios e
-órfão. Reorganização (subpastas `reports/`, `orphans/`) é gate próprio
-porque toca `sync:geojson-from-salto` e os globs de `tests/sanity.test.js`.
+Relatórios de build, match, audit e legacy foram movidos para
+`centro/data/reports/`. `context/` contém somente GeoJSON runtime (+ 1
+órfão documentado). Próximo passo: `geojson/heavy/` e `geojson/special/`
+(gates DATA-ORG-B3/B4).
 
 ---
 
@@ -361,7 +364,7 @@ mover para "decidido".
 |---|---|---|
 | POIs patrimoniais: sidebar + addPOILayer ou só addPOILayer? | Aberta | gate GEO-POI-DEDUP |
 | `centro_pistas_rua_sao_bento` órfão: remover? | Aberta | governança primeiro; remoção em gate próprio |
-| `knowledge.generated` / `data_freshness`: mover para `legacy/`? | Aberta | gate próprio; sem urgência |
+| `knowledge.generated` / `data_freshness`: mover para `reports/legacy/`? | **Decidido (B2)** | movidos em DATA-ORG-B2 |
 | PMTiles para OSM endereços? | Aberta | depende de tooling de build |
 
 ---

@@ -25,7 +25,7 @@ SALTO = Path("/home/tati_3pontos/Documentos/Projetos/mapa_sp_salto")
 CLIP_POLY = REPO / "centro/data/processed/16_regiao_centro__polygon.geojson"
 CONTEXT_WIRED = REPO / "centro/data/catalog/context-wired.json"
 CONTEXT_LAYERS = REPO / "centro/data/catalog/context-layers.json"
-CONTEXT_BUILD_REPORT = REPO / "centro/data/context_build_report.json"
+CONTEXT_BUILD_REPORT = REPO / "centro/data/reports/build/context_build_report.json"
 
 # Viewport do mapa (CENTRO_MAX_BOUNDS) — ZEIS-2 não intersecta 16_regiao_centro__polygon.
 CENTRO_MAP_BBOX = (-46.67, -23.59, -46.58, -23.52)

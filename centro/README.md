@@ -22,7 +22,7 @@ Provide a focused, standalone interface for viewing and interacting with geograp
 
 ### Groups and Metadata
 - **Groups**: `data/catalog/groups.json` (loaded for title resolution)
-- **Freshness**: `data/catalog/data_freshness_report.json` (optional, for popup enrichment)
+- **Freshness**: `data/reports/legacy/data_freshness_report.json` (legacy/auditoria — sem binding runtime)
 
 ### GeoJSON Files
 All 6 GeoJSON files are pre-processed and available:

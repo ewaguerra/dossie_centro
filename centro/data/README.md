@@ -2,28 +2,30 @@
 
 Snapshots GeoJSON e contratos de catálogo usados pela página `/centro/` (MapLibre), recortados pelo polígono oficial do Centro.
 
-**Gate DATA-ORG-B1** (2026-05-23): documentação de responsabilidades — nenhum arquivo foi movido, renomeado ou deletado neste gate.
+**Gate DATA-ORG-B1** (2026-05-23): documentação de responsabilidades — nenhum arquivo foi movido neste gate.
+
+**Gate DATA-ORG-B2** (2026-05-23): relatórios não-runtime movidos para `reports/` — runtime, catálogos e GeoJSON intocados.
 
 Genealogia detalhada, fluxos de carregamento e exceções oficiais: [`docs/data-lineage.md`](../../docs/data-lineage.md).
 
 ---
 
-## Problema atual
+## Organização atual
 
-`centro/data/` mistura quatro naturezas diferentes:
-
-| Natureza | Onde está hoje | Deveria ser |
+| Pasta | Função | Runtime? |
 |---|---|---|
-| Contrato runtime | `catalog/` (+ 2 fósseis dentro) | só contrato |
-| GeoJSON do mapa | `context/`, `processed/` | `geojson/*` |
-| Fonte bruta | `raw/` | `raw/` (ok) |
-| Relatórios / fósseis | espalhados em `catalog/`, `context/` e raiz | `reports/`, `archive/fossils/` |
+| `catalog/` | 7 contratos JSON (sidebar, gates ARG) | sim |
+| `processed/` | GeoJSON urbanístico principal | sim |
+| `context/` | GeoJSON contextual (OSM, patrimônio, geotécnica) | sim |
+| `raw/` | fontes brutas preserváveis | não |
+| `reports/` | build, match, audit, legacy | **não** |
+| raiz | `icon-manifest.json` | sim |
 
-O cheiro ruim principal: **`context/` mistura GeoJSON runtime com relatórios de build, match, audit e um fóssil de pistas**.
+`reports/` **não é servido ao browser** nem lido pelo runtime — audit trail de pipeline e curadoria.
 
 ---
 
-## Responsabilidades atuais (estado no disco)
+## Responsabilidades (estado no disco)
 
 ### `catalog/` — contratos do runtime
 
@@ -39,11 +41,6 @@ Arquivos que o runtime e os testes usam para montar sidebar, gates ARG e validar
 | `layer-unlocks.json` | `layerId → [clueId, …]` (Caderno do Arquivista) |
 | `phase-gates.json` | `layerId → fase mínima` (gates ARG) |
 
-**Candidatos a sair** (fósseis/relatórios, não contrato runtime — mover em DATA-ORG-B2):
-
-- `knowledge.generated.json` (~385 KB) — 0 referências de código; paths internos legados
-- `data_freshness_report.json` (~110 KB) — 0 binding runtime ativo
-
 ### `processed/` — camadas tratadas (runtime principal)
 
 GeoJSON urbanístico central: subsetores, ZEIS, eixos, hidrografia, alagamentos, contorno do Centro.
@@ -52,22 +49,28 @@ GeoJSON urbanístico central: subsetores, ZEIS, eixos, hidrografia, alagamentos,
 - Toda entrada tem 1:1 em `catalog/layers.json`
 - Fetch **sob demanda** quando checkbox marcada; algumas camadas têm `visible: true` e baixam no boot
 
-### `context/` — camadas contextuais + relatórios misturados
+### `context/` — GeoJSON contextual (runtime)
 
-GeoJSON usado pelo mapa (OSM, patrimônio, geotécnica, declividade) **e** artefatos de pipeline que ficaram lado a lado:
+Somente `.geojson` — relatórios foram para `reports/` (DATA-ORG-B2).
 
 | Categoria | Padrão | Exemplo |
 |---|---|---|
 | Camada wired (sidebar) | `*.geojson` | `centro_rios_geosampa__line.geojson` |
 | Camada não wired (POI) | `centro_pois_turisticos__point.geojson` | carregada por `addPOILayer`, não sidebar |
-| Relatório de build | `*_build_report.json` | `centro_acervo_tombado_build_report.json` |
-| Relatório de match | `*_match_report.json` | `centro_pois_turisticos_match_report.json` |
-| Audit / missing | `*_audit.json`, `*_missing*.json` | `centro_pois_turisticos_low_confidence_audit.json` |
-| Proximity | `*_proximity_report.txt` | `centro_pois_turisticos_proximity_report.txt` |
-| Cards (UI auxiliar) | `*_cards.json` | `centro_pois_turisticos_cards.json` |
 | Fóssil conhecido | (fora do catálogo) | `centro_pistas_rua_sao_bento__point.geojson` |
 
 Catálogo: `catalog/context-layers.json` + filtro `catalog/context-wired.json`.
+
+### `reports/` — relatórios e fósseis de auditoria (não runtime)
+
+| Subpasta | Conteúdo |
+|---|---|
+| `build/` | `build_report.json`, `context_build_report.json`, `*_build_report.json` (12) |
+| `poi/` | match, proximity, audit, missing, cards de POIs turísticos |
+| `three-d/` | match/missing da Catedral Sé 3D |
+| `legacy/` | `knowledge.generated.json`, `data_freshness_report.json` |
+
+`context_build_report.json` é escrito por `npm run sync:geojson-from-salto` em `reports/build/`.
 
 ### `raw/` — fonte bruta preservável
 
@@ -77,17 +80,15 @@ Catálogo: `catalog/context-layers.json` + filtro `catalog/context-wired.json`.
 
 Nunca servido ao browser. Audit trail do pipeline.
 
-### Raiz de `centro/data/` — misc
+### Raiz de `centro/data/`
 
 | Arquivo | Natureza |
 |---|---|
 | `icon-manifest.json` | contrato de ícones (runtime) |
-| `build_report.json` | relatório de build processed |
-| `context_build_report.json` | relatório de build context (escrito por `sync:geojson-from-salto`) |
 
 ---
 
-## Estrutura-alvo (futura)
+## Estrutura-alvo (parcialmente aplicada)
 
 Reorganização **dentro** de `centro/data/` — não outro repositório. Cada gaveta confessa sua função:
 
@@ -95,7 +96,7 @@ Reorganização **dentro** de `centro/data/` — não outro repositório. Cada g
 centro/data/
 ├── README.md                 ← este arquivo
 │
-├── catalog/                  ← só contrato runtime (7 JSON)
+├── catalog/                  ← só contrato runtime (7 JSON) ✓
 │   ├── layers.json
 │   ├── groups.json
 │   ├── context-layers.json
@@ -104,25 +105,24 @@ centro/data/
 │   ├── layer-unlocks.json
 │   └── phase-gates.json
 │
-├── geojson/
-│   ├── processed/            ← camadas tratadas leves/médias (hoje: processed/)
-│   ├── context/              ← camadas contextuais normais (hoje: context/, sem reports)
-│   ├── heavy/                ← monstros sob demanda (ver § Gigantes)
+├── geojson/                  ← pendente DATA-ORG-B3/B4
+│   ├── processed/            ← hoje: processed/
+│   ├── context/              ← hoje: context/ (sem reports) ✓
+│   ├── heavy/
 │   └── special/
-│       ├── pois/             ← centro_pois_turisticos__point.geojson
-│       └── arg/              ← centro_arquivo_superficial__point.geojson
+│       ├── pois/
+│       └── arg/
 │
-├── raw/                      ← fontes brutas preserváveis
+├── raw/                      ← fontes brutas preserváveis ✓
 │
-├── reports/
+├── reports/                  ← build/match/audit/legacy ✓ (DATA-ORG-B2)
 │   ├── build/
 │   ├── poi/
-│   ├── freshness/
-│   ├── match/
+│   ├── three-d/
 │   └── legacy/
 │
 └── archive/
-    └── fossils/              ← sobras históricas documentadas
+    └── fossils/              ← pendente DATA-ORG-B5
 ```
 
 ### Regra de `geojson/heavy/`
@@ -153,31 +153,7 @@ Pistas Rua São Bento **não** moram aqui: runtime usa `centro/assets/pistas/rua
 
 ---
 
-## Relatórios e fósseis conhecidos
-
-### Relatórios (mover para `reports/` em DATA-ORG-B2)
-
-**Raiz:**
-
-- `build_report.json`
-- `context_build_report.json`
-
-**Em `context/`:**
-
-- `*_build_report.json` (12 arquivos)
-- `centro_pois_turisticos_match_report.json`
-- `centro_catedral_se_3d_match_report.json`
-- `centro_pois_turisticos_low_confidence_audit.json`
-- `centro_pois_turisticos_missing_coordinates.json`
-- `centro_catedral_se_3d_missing.json`
-- `centro_pois_turisticos_proximity_report.txt`
-
-**Em `catalog/` (legacy):**
-
-- `knowledge.generated.json`
-- `data_freshness_report.json`
-
-### Fósseis (mover para `archive/fossils/` em DATA-ORG-B5)
+## Fósseis conhecidos (pendente DATA-ORG-B5)
 
 | Arquivo | Motivo |
 |---|---|
@@ -187,20 +163,16 @@ Pistas Rua São Bento **não** moram aqui: runtime usa `centro/assets/pistas/rua
 
 ## Ordem de execução (gates)
 
-Movimentação física só depois que o território está documentado e o runtime sabe resolver caminhos novos.
-
 | Gate | Escopo | Status |
 |---|---|---|
 | **DATA-ORG-B1** | Documentar responsabilidades (este README) | **feito** |
 | **DATA-PERF-D1** | `15_osm_ruas`: `visible: true → false` | **feito** (2026-05-23) |
-| **DATA-ORG-B2** | Mover relatórios não-runtime → `reports/` | pendente |
+| **DATA-ORG-B2** | Mover relatórios não-runtime → `reports/` | **feito** (2026-05-23) |
 | **DATA-ORG-B3** | Criar `geojson/heavy/` + resolver de paths | pendente |
 | **DATA-ORG-B4** | Classificar `special/pois` e `special/arg` | pendente |
 | **DATA-ORG-B5** | Mover fósseis → `archive/fossils/` | pendente |
 
-DATA-PERF-D1 removeu ~4,1 MB / 10.108 features do boot (`15_osm_ruas__line`
-default-off, wired na sidebar, toggle manual intacto). Próximo passo
-organizacional: **DATA-ORG-B2** (mover relatórios).
+Próximo passo organizacional: **DATA-ORG-B3** (`geojson/heavy/` + resolver de paths).
 
 ---
 
