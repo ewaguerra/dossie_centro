@@ -2037,6 +2037,33 @@ describe('projeto_centro — sanity checks', () => {
     }
   });
 
+  // ── Gate MAP-DATA-GOV-A: governança de dados ────────────────────
+  // Documentação: docs/data-lineage.md
+  // Estes testes defendem decisões registradas:
+  //   §4.1 — POI turístico está em context-layers, fora de context-wired (contrato).
+  //   §6.2 — OSM endereços é default off para não baixar 7,44 MiB no boot.
+
+  it('MAP-DATA-GOV-A: centro_pois_turisticos__point em context-layers, FORA de context-wired (contrato §4.1)', () => {
+    const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const ctxIds = new Set((ctx.layers || []).map(l => l.id));
+    const wiredIds = new Set(wired.layerIds || []);
+    assert.ok(ctxIds.has('centro_pois_turisticos__point'),
+      'centro_pois_turisticos__point deve estar em context-layers.json (catálogo conhece props)');
+    assert.ok(!wiredIds.has('centro_pois_turisticos__point'),
+      'centro_pois_turisticos__point NÃO deve estar em context-wired.json — é carregado por addPOILayer (ver docs/data-lineage.md §4.1)');
+  });
+
+  it('MAP-DATA-GOV-A: 15_osm_enderecos__point default off + minzoom>=16 (decisão de performance §6.2)', () => {
+    const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
+    const layer = (ctx.layers || []).find(l => l.id === '15_osm_enderecos__point');
+    assert.ok(layer, '15_osm_enderecos__point deve existir no catálogo');
+    assert.strictEqual(layer.visible, false,
+      '15_osm_enderecos__point deve ser visible:false — 7,44 MiB / 23.932 features não devem entrar no boot (ver docs/data-lineage.md §6.2)');
+    assert.ok(typeof layer.minzoom === 'number' && layer.minzoom >= 16,
+      '15_osm_enderecos__point deve manter minzoom>=16 (renderização só em escala de endereço)');
+  });
+
   // ── Popup CSS classes ───────────────────────────────────────────
   it('map-popups.css contem classes para poi-popup e pista-popup', () => {
     const css = read('centro/styles/map-popups.css');

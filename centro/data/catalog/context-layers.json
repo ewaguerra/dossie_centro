@@ -110,7 +110,7 @@
       "type": "circle",
       "minzoom": 16,
       "maxzoom": 22,
-      "visible": true,
+      "visible": false,
       "style": {
         "paint": {
           "circle-radius": [
