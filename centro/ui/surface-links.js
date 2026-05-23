@@ -1,0 +1,38 @@
+/**
+ * Links para outras superfícies do ARG (Landing, Arquivo Morto, Arquivista).
+ * Defaults: subpaths no mesmo domínio (deploy monodomínio).
+ * Override: window.CENTRO_SURFACE_LINKS ou /config/surface-links.json
+ */
+(function initCentroSurfaceLinks() {
+  "use strict";
+
+  var DEFAULTS = {
+    landing: "/landing/",
+    "arquivo-morto": "/arquivo-morto/",
+    arquivista: "/arquivista/",
+  };
+
+  function apply(overrides) {
+    var links = Object.assign(
+      {},
+      DEFAULTS,
+      window.CENTRO_SURFACE_LINKS || {},
+      overrides || {}
+    );
+    document.querySelectorAll("[data-surface-link]").forEach(function (el) {
+      var key = el.getAttribute("data-surface-link");
+      if (links[key]) el.setAttribute("href", links[key]);
+    });
+  }
+
+  apply();
+
+  fetch("/config/surface-links.json", { cache: "no-store" })
+    .then(function (res) {
+      return res.ok ? res.json() : null;
+    })
+    .then(function (cfg) {
+      if (cfg) apply(cfg);
+    })
+    .catch(function () {});
+})();

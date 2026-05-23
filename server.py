@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""Servidor proxy para projeto_centro — resolve paths sem alterar HTML."""
+"""Servidor proxy para dossie_centro_mapa — resolve paths sem alterar HTML."""
 import http.server
 import os
 import sys
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# Superfícies que migraram para repositórios separados — 404 limpo, sem listagem.
+REMOVED_PREFIXES = ('/landing/', '/arquivo-morto/', '/arquivista/')
+
 
 class ProxyHandler(http.server.SimpleHTTPRequestHandler):
     # Vendor third-party (MapLibre etc.) tem nome estável e nunca muda em dev:
@@ -40,14 +44,14 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('X-Content-Type-Options', 'nosniff')
         super().end_headers()
 
-    def translate_path(self, path):
-        # Legado: mídia da landing costumava apontar para /pages/centro/assets/
-        if path.startswith('/pages/centro/assets/'):
-            rel = path[len('/pages/centro/assets/'):]
-            landing_asset = os.path.join(ROOT, 'landing', 'assets', rel)
-            if os.path.exists(landing_asset):
-                return landing_asset
+    def do_GET(self):
+        request_path = (self.path or '').split('?', 1)[0]
+        if request_path.startswith(REMOVED_PREFIXES):
+            self.send_error(404, 'Superficie removida - ver repositorio dedicado')
+            return
+        super().do_GET()
 
+    def translate_path(self, path):
         # /pages/centro/* → ./centro/* (HTML, JS, CSS, data, ícones do mapa)
         if path.startswith('/pages/centro/'):
             rel = path[len('/pages/centro/'):]
@@ -58,7 +62,6 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
         # /app/vendor/maplibre/* → ./node_modules/maplibre-gl/dist/*
         if path.startswith('/app/vendor/maplibre/'):
             rel = path[len('/app/vendor/maplibre/'):]
-            # Try dist/ first
             translated = os.path.join(ROOT, 'node_modules', 'maplibre-gl', 'dist', rel)
             if os.path.exists(translated):
                 return translated
@@ -91,7 +94,8 @@ if __name__ == '__main__':
     server = http.server.HTTPServer(('127.0.0.1', PORT), ProxyHandler)
     print(f"🚀 Servidor proxy rodando em http://127.0.0.1:{PORT}")
     print(f"   Projeto: {ROOT}")
-    print(f"   Paths /pages/centro/ → /centro/, /pages/centro/assets/ → /landing/assets/, /app/ → /vendor/app/")
+    print(f"   Paths /pages/centro/ → /centro/, /app/ → /vendor/app/")
+    print(f"   /landing/, /arquivo-morto/, /arquivista/ → 404 (repos separados)")
     print(f"   Ctrl+C para parar.")
     try:
         server.serve_forever()

@@ -1,11 +1,13 @@
-# AGENT.md — Engenheiro do Arquivo
+# AGENT.md — Engenheiro do Arquivo (Centro/mapa)
 
-> Perfil de agente para trabalhar no
-> **Anhangabaú: O Arquivo dos Soterrados** — uma experiência transmídia
-> de ficção interativa, cartografia forense e horror urbano sobre o
-> centro soterrado de São Paulo. Quatro superfícies narrativas
-> (Landing, Arquivo Morto, Arquivista e Centro) formam um único ARG.
-> O jogador investiga; você mantém o palco onde a investigação acontece.
+> Perfil de agente para trabalhar no **mapa Centro** do
+> **Anhangabaú: O Arquivo dos Soterrados** — cartografia forense e horror
+> urbano sobre o centro soterrado de São Paulo.
+>
+> **Este repositório (`projeto_centro`) contém apenas `/centro/`.**
+> Landing, Arquivo Morto, Arquivista e contratos ARG vivem em repos privados
+> separados (`dossie_landing_portal`, `dossie_arquivo_morto`,
+> `dossie_arquivista`, `dossie_arg_contracts`).
 
 ---
 
@@ -17,38 +19,41 @@ JavaScript vanilla ES2017+ em IIFE, MapLibre GL JS 5, Web APIs
 (MutationObserver, IntersectionObserver, localStorage, Web Audio),
 acessibilidade WCAG AA e design de ARG (Alternate Reality Game)**.
 
-Você trata cada superfície como **cenografia**: cada `<button class="clue-word">`
-é uma evidência, cada `data-rota` é um corredor narrativo, cada
-`flyTo` no mapa é um corte de cena. Estética: dossiê militar declassificado,
-tipografia mono, paleta âmbar/vermelho-sangue, fundo escuro com glitch/scanlines.
+Você trata o Centro como **cenografia cartográfica**: cada layer da sidebar
+é um dossier, cada `flyTo` é um corte de cena, cada POI é evidência.
+Estética HUD: tipografia mono, paleta vermelho-sangue, fundo escuro.
 
 Você é **cético com diagnósticos** — incluindo os de outros agentes/LLMs.
-Sempre valide com evidência empírica (`md5sum`, `find -printf '%s\n' | sort -u`,
-PerformanceObserver, devtools) antes de aplicar fix sugerido por terceiros.
-Diagnósticos muito confiantes com números específicos costumam ter detalhes
-inventados.
+Sempre valide com evidência empírica antes de aplicar fix sugerido por terceiros.
 
 ---
 
-## 2. O produto
+## 2. O produto (escopo deste repo)
 
-**Nome:** Anhangabaú: O Arquivo dos Soterrados
+**Nome:** Anhangabaú: O Arquivo dos Soterrados — **Dossiê Centro**
 **Subtítulo:** PROTOCOLO 13 ALMAS
-**Gênero:** ARG transmídia, web-only, sem backend, sem login, sem analytics.
-**Autoria/Contato:** Tatiana Barros · `coluninja@gmail.com` (preservar nos
-mailto: das CTAs de patrocínio).
+**Gênero:** ARG transmídia; **neste repo:** mapa web-only, sem backend, sem login.
 
-### Quatro superfícies (ordem narrativa)
+### Superfície servida aqui
 
-| # | Página | Rota | Função no ARG |
-|---|---|---|---|
-| 0 | **Landing** | `/landing/` | Portal público. Pitch, dossiê do projeto, 3 módulos, jornada do usuário, mídias paralelas, cotas de patrocínio. Tem **portal de acesso** com senha narrativa (`apoio`) — gate puramente teatral, **não** é segurança. |
-| 1 | **Arquivo Morto** | `/arquivo-morto/` | Blog forense. Posts longos com `clue-word` clicáveis que populam um **Caderno do Arquivista** (`localStorage`). 4 pistas obrigatórias escondidas em texto/datas/padrões. Anexos YouTube com fragmentos timestampados. Conecta-se ao Arquivista via dica final. |
-| 2 | **Arquivista** | `/arquivista/` | Simulador de desktop Linux/GNOME com boot screen, CRT, terminal CLI, dock, janelas. Senha de boot: `marco zero` (hint visível na tela de login — outra gate teatral). Ícone "GeoScanner Urbano" no dock redirecciona para `/centro/` (não embeda mapa próprio). |
-| 3 | **Centro** | `/centro/` | Mapa interativo MapLibre GL JS principal. POIs históricos, pistas da Rua São Bento, navegação `OP:TRIÂNGULO`/`OP:SÉ`/`OP:ANHANGABAÚ`/`OP:GERAL`. 13 fases progressivas planejadas. |
+| Página | Rota | Função |
+|---|---|---|
+| **Centro** | `/centro/` | Mapa interativo MapLibre GL JS. POIs, pistas Rua São Bento, sidebar 9 grupos / 24 camadas, gates de fase e desbloqueio por pistas. |
 
-Existe também `/index.html` raiz que redireciona para `/landing/`, e
-`arquivo-morto/posts/*.html` para postagens individuais.
+`/index.html` raiz redirecciona para `/centro/`.
+
+Rotas **`/landing/`**, **`/arquivo-morto/`**, **`/arquivista/`** respondem **404**
+neste servidor — implementação nos repos irmãos.
+
+### Ponte transmídia (consumidor)
+
+O Centro **lê** pistas produzidas noutras superfícies:
+
+- `localStorage.protocolo13_caderno_clues` — array de IDs (escrito pelo Arquivo Morto)
+- Query `?clues=id1,id2` — deep-link do Arquivista
+- `centro/data/catalog/layer-unlocks.json` — camadas bloqueadas até colectar pistas
+
+**Cross-domain:** localStorage não atravessa domínios. Contratos: `dossie_arg_contracts`.
 
 ---
 

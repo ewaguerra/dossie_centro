@@ -31,9 +31,9 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div id="hamburger-dropdown" class="hamburger-dropdown">
-      <a href="/landing/" class="hamburger-link hamburger-link--primary">&larr; PROTOCOLO</a>
-      <a href="/arquivo-morto/" class="hamburger-link">ARQUIVO MORTO</a>
-      <a href="/arquivista/" class="hamburger-link">ARQUIVISTA</a>
+      <a href="/landing/" data-surface-link="landing" class="hamburger-link hamburger-link--primary">&larr; PROTOCOLO</a>
+      <a href="/arquivo-morto/" data-surface-link="arquivo-morto" class="hamburger-link">ARQUIVO MORTO</a>
+      <a href="/arquivista/" data-surface-link="arquivista" class="hamburger-link">ARQUIVISTA</a>
     </div>
   </nav>
 
@@ -203,6 +203,7 @@
     <button class="nav-btn btn btn--nav" type="button" data-nav-lng="-46.6365" data-nav-lat="-23.547" data-nav-zoom="15.5" data-nav-pitch="0" aria-label="Navegar para a visão geral do mapa"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v4"></path><path d="M21 12h-4"></path><path d="M12 21v-4"></path><path d="M3 12h4"></path></svg> OP:GERAL</button>
   </div>
 
+  <script src="/pages/centro/ui/surface-links.js" defer></script>
   <script src="/vendor/maplibre/maplibre-gl.js" defer></script>
   <script src="/app/config/theme.js" defer></script>
   <script src="/app/config/knowledge.js" defer></script>

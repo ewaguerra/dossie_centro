@@ -154,25 +154,24 @@ function makeMockPanel(checkboxes) {
 describe('projeto_centro — sanity checks', () => {
 
   // ── Páginas principais existem ──────────────────────────────────
-  it('deve ter index.html raiz que redireciona para landing', () => {
+  it('deve ter index.html raiz que redireciona para centro', () => {
     const html = read('index.html');
-    assert.ok(html.includes('landing'));
-  });
-
-  it('deve ter landing/index.html', () => {
-    assert.ok(exists('landing/index.html'));
+    assert.ok(html.includes('centro'));
+    assert.ok(!html.includes('landing'), 'repo trimado nao redirecciona para landing');
   });
 
   it('deve ter centro/index.html', () => {
     assert.ok(exists('centro/index.html'));
   });
 
-  it('deve ter arquivo-morto/index.html', () => {
-    assert.ok(exists('arquivo-morto/index.html'));
+  it('superficies removidas nao devem existir no disco', () => {
+    assert.ok(!exists('landing/index.html'), 'landing migrada para repo proprio');
+    assert.ok(!exists('arquivo-morto/index.html'), 'arquivo-morto migrado para repo proprio');
+    assert.ok(!exists('arquivista/index.html'), 'arquivista migrado para repo proprio');
   });
 
-  it('deve ter arquivista/index.html', () => {
-    assert.ok(exists('arquivista/index.html'));
+  it('docs/data-lineage.md presente', () => {
+    assert.ok(exists('docs/data-lineage.md'), 'data-lineage ausente');
   });
 
   // ── JS críticos existem e são parseáveis ────────────────────────
@@ -477,14 +476,6 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!runtime.includes('<style'), 'runtime nao deve conter markup HTML inline');
   });
 
-  // ── Arquivista — MapLibre local (sem CDN) ───────────────────────
-  it('arquivista/index.html deve usar maplibre local sem unpkg', () => {
-    const html = read('arquivista/index.html');
-    assert.ok(!/unpkg\.com/i.test(html), 'nao deve referenciar unpkg');
-    assert.ok(html.includes('/vendor/maplibre/maplibre-gl.js'), 'deve carregar maplibre local');
-    assert.ok(html.includes('/vendor/maplibre/maplibre-gl.css'), 'deve carregar css maplibre local');
-  });
-
   it('centro/index.html nao deve carregar rio-animado.js (producao)', () => {
     const html = read('centro/index.html');
     assert.ok(!html.includes('rio-animado.js'), 'producao nao carrega rio-animado');
@@ -513,11 +504,9 @@ describe('projeto_centro — sanity checks', () => {
     }
   });
 
-  it('design system: todas paginas principais carregam a11y.css', () => {
-    for (const page of ['landing/index.html', 'centro/index.html', 'arquivo-morto/index.html', 'arquivista/index.html']) {
-      const html = read(page);
-      assert.ok(html.includes('/app/styles/a11y.css'), `${page} deve carregar a11y.css`);
-    }
+  it('design system: centro carrega a11y.css', () => {
+    const html = read('centro/index.html');
+    assert.ok(html.includes('/app/styles/a11y.css'), 'centro deve carregar a11y.css');
   });
 
   it('design system: a11y.css foco global e reduced-motion', () => {
@@ -529,11 +518,9 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(css.includes('scroll-behavior: auto'), 'reduced-motion deve resetar scroll');
   });
 
-  it('design system: todas paginas principais carregam tokens.css', () => {
-    for (const page of ['landing/index.html', 'centro/index.html', 'arquivo-morto/index.html', 'arquivista/index.html']) {
-      const html = read(page);
-      assert.ok(html.includes('/app/styles/tokens.css'), `${page} deve carregar tokens.css`);
-    }
+  it('design system: centro carrega tokens.css', () => {
+    const html = read('centro/index.html');
+    assert.ok(html.includes('/app/styles/tokens.css'), 'centro deve carregar tokens.css');
   });
 
   it('design system: centro/index.html sem style inline', () => {
@@ -582,16 +569,13 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!css.includes('.nav-retorno-link'), 'classe legada nav-retorno-link ainda presente');
     assert.ok(!css.includes('.linux-desktop .nav-retorno'), 'override linux-desktop duplicado');
 
-    const am = read('arquivo-morto/index.html');
-    assert.ok(am.includes('data-theme="brand"'), 'arquivo-morto deve usar data-theme=brand');
-    assert.ok(am.includes('nav-retorno__link'), 'arquivo-morto deve usar BEM');
-
-    const arq = read('arquivista/index.html');
-    assert.ok(arq.includes('data-theme="terminal"'), 'arquivista deve usar data-theme=terminal');
-    assert.ok(arq.includes('nav-retorno__link--primary'), 'arquivista link primary');
-
-    const linux = read('arquivista/css/linux-desktop.css');
-    assert.ok(!linux.includes('.nav-retorno'), 'linux-desktop nao deve redefinir nav-retorno');
+    const centro = read('centro/index.html');
+    assert.ok(centro.includes('data-surface-link'), 'centro deve ter links configuráveis no menu');
+    assert.ok(centro.includes('hamburger-link'), 'centro usa menu hamburger para navegação externa');
+    assert.ok(exists('centro/ui/surface-links.js'), 'surface-links.js ausente');
+    const surfaceLinks = read('centro/ui/surface-links.js');
+    assert.ok(surfaceLinks.includes('initCentroSurfaceLinks'), 'surface-links deve inicializar hrefs');
+    assert.ok(exists('config/surface-links.json'), 'config/surface-links.json ausente');
   });
 
   it('design system: sem Fira Code, Google Fonts nem texturas externas no runtime', () => {
@@ -605,14 +589,6 @@ describe('projeto_centro — sanity checks', () => {
       'centro/styles/map-popups.css',
       'centro/styles/responsive.css',
       'centro/styles/centro-chrome.css',
-      'landing/landing.css',
-      'arquivo-morto/css/arquivo-morto.css',
-      'arquivista/css/utility.css',
-      'arquivista/css/style.css',
-      'arquivista/css/desktop-layout.css',
-      'arquivista/css/linux-desktop.css',
-      'arquivista/css/window-system.css',
-      'arquivista/css/effects.css',
       'vendor/app/styles/tokens.css',
       'vendor/app/styles/components.css',
     ];
@@ -621,16 +597,8 @@ describe('projeto_centro — sanity checks', () => {
       assert.ok(!/Fira Code|Fira\+Code|fonts\.googleapis/.test(css), `${file} sem Fira/CDN fontes`);
       assert.ok(!/transparenttextures|unsplash|wixstatic/i.test(css), `${file} sem CDN textura`);
     }
-    const runtimeHtml = [
-      'centro/index.html',
-      'landing/index.html',
-      'arquivo-morto/index.html',
-      'arquivista/index.html',
-    ];
-    for (const file of runtimeHtml) {
-      const html = read(file);
-      assert.ok(!/transparenttextures|unsplash|wixstatic/i.test(html), `${file} sem CDN textura/img`);
-    }
+    const html = read('centro/index.html');
+    assert.ok(!/transparenttextures|unsplash|wixstatic/i.test(html), 'centro/index.html sem CDN textura/img');
     assert.ok(exists('vendor/app/styles/tokens.css'), 'tokens.css existe');
     assert.ok(exists('vendor/app/styles/a11y.css'), 'a11y.css existe');
     assert.ok(exists('vendor/app/styles/components.css'), 'components.css existe');
@@ -647,56 +615,6 @@ describe('projeto_centro — sanity checks', () => {
     assert.match(css, /\.narrative-nav\s*\{[^}]*display:\s*flex/s, 'nav sempre flex');
     assert.ok(!responsive.includes('narrative-nav'), 'responsive nao esconde narrative-nav');
     assert.ok(!responsive.includes('700px'), 'centro usa --bp-lg 768px');
-  });
-
-  it('design system: landing migrou tokens amber legados', () => {
-    const css = read('landing/landing.css');
-    assert.ok(!/--amber\s*:/.test(css), 'landing sem --amber local');
-    assert.ok(css.includes('var(--color-brand)'), 'landing usa color-brand');
-    assert.ok(css.includes('--brand-mid'), 'landing opacidades consolidadas');
-    assert.ok(!css.includes('--brand-mid:        var(--brand-mid)'), 'sem alias circular brand-mid');
-    assert.ok(!css.includes('--font-mono: var(--font-mono)'), 'landing sem alias circular de fonte');
-  });
-
-  it('design system: landing CTAs usam btn DS (brand-solid, brand-ghost, subtle)', () => {
-    const html = read('landing/index.html');
-    const css = read('landing/landing.css');
-    assert.ok(html.includes('btn--brand-solid'), 'hero/patrocinio usam btn--brand-solid');
-    assert.ok(html.includes('btn--brand-ghost'), 'hero secundarios usam btn--brand-ghost');
-    assert.ok(html.includes('btn--subtle'), 'tier cards usam btn--subtle');
-    assert.ok(!html.includes('class="btn-primary"'), 'sem btn-primary legado');
-    assert.ok(!html.includes('tier-cta'), 'sem tier-cta legado');
-    assert.ok(!css.includes('.tier-cta'), 'landing.css sem bloco tier-cta');
-    assert.ok(!css.includes('.btn-primary'), 'landing.css sem bloco btn-primary');
-    assert.ok(!html.includes('portal-btn" class="portal-btn'), 'portal usa btn DS');
-    assert.ok(html.includes('id="portal-btn" class="btn btn--primary"'), 'portal btn--primary');
-    assert.ok(!css.includes('.portal-btn'), 'landing.css sem bloco portal-btn');
-  });
-
-  it('design system: arquivo-morto controles youtube usam btn--primary', () => {
-    const html = read('arquivo-morto/index.html');
-    const css = read('arquivo-morto/css/arquivo-morto.css');
-    assert.ok(html.includes('btn btn--primary'), 'botoes youtube usam btn DS');
-    assert.ok(!html.includes('youtube-anexo__btn'), 'sem classe youtube-anexo__btn legada');
-    assert.ok(!css.includes('.youtube-anexo__btn'), 'css sem bloco youtube-anexo__btn');
-    assert.ok(css.includes('.youtube-anexo__controls .btn'), 'overrides finos no anexo');
-  });
-
-  it('design system: arquivo-morto migrou tokens amber legados', () => {
-    const css = read('arquivo-morto/css/arquivo-morto.css');
-    assert.ok(!/--am-amber\s*:/.test(css), 'arquivo-morto sem --am-amber local');
-    assert.ok(css.includes('var(--color-brand)'), 'arquivo-morto usa color-brand');
-    assert.ok(css.includes('var(--color-brand-dim)'), 'arquivo-morto usa color-brand-dim');
-    assert.ok(css.includes('var(--color-danger)'), 'am-red aponta para color-danger');
-    assert.ok(!/border-color: rgba\(245,\s*158,\s*11/.test(css), 'consumidores usam aliases locais');
-  });
-
-  it('design system: arquivista tem media queries criticas', () => {
-    const css = read('arquivista/css/linux-desktop.css');
-    assert.ok(css.includes('max-width: 768px'), 'mq tablet');
-    assert.ok(css.includes('max-width: 640px'), 'mq phone');
-    assert.ok(css.includes('max-width: 480px'), 'mq phone estreito');
-    assert.ok(css.includes('min-width: min(320px'), 'janelas limitadas ao viewport');
   });
 
   it('centro-sidebar.css agregador nao deve referenciar BANNER_SITE.png ausente', () => {
@@ -1717,90 +1635,50 @@ describe('projeto_centro — sanity checks', () => {
 
   it('ponte transmidia: caderno localStorage e layer-unlocks no centro', () => {
     const runtime = read('centro/centro-runtime.js');
-    const arquivo = read('arquivo-morto/js/arquivo-morto.js');
+    const unlocks = read('centro/features/layer-unlocks.js');
     assert.ok(runtime.includes('protocolo13_caderno_clues'), 'chave caderno ausente no centro');
     assert.ok(runtime.includes('layer-unlocks.json'), 'fetch layer-unlocks ausente');
     assert.ok(runtime.includes('isLayerUnlocked'), 'isLayerUnlocked ausente');
+    assert.ok(unlocks.includes('getCollectedClueIds'), 'layer-unlocks le caderno');
     const lockStateMod = read('centro/features/sidebar-layer-state.js');
     assert.ok(
       lockStateMod.includes('layer-row--locked'),
       'UI locked ausente em sidebar-layer-state'
     );
     assert.ok(runtime.includes('resolveSidebarLockState'), 'runtime usa lock state module');
-    assert.ok(arquivo.includes('protocolo13_caderno_clues'), 'persistencia caderno ausente no arquivo-morto');
     assert.ok(exists('centro/data/catalog/layer-unlocks.json'), 'layer-unlocks.json ausente');
   });
 
-  // ── ARG-CLUE-CONTRACT-A: contrato pistas Arquivo Morto ───────────
-  it('ARG-CLUE-CONTRACT-A: data-clue-id do HTML existem em pistas.json', () => {
-    const html = read('arquivo-morto/index.html');
-    const pistas = JSON.parse(read('arquivo-morto/data/pistas.json'));
-    const pistaIds = new Set(pistas.map((p) => p.id));
-    const clueIds = [...html.matchAll(/data-clue-id="([^"]+)"/g)].map((m) => m[1]);
-    const unique = [...new Set(clueIds)];
-    assert.ok(unique.length > 0, 'index.html deve conter data-clue-id');
-    for (const id of unique) {
-      assert.ok(pistaIds.has(id), `data-clue-id "${id}" ausente em pistas.json`);
-    }
-  });
+  // ── ARG clue IDs canônicos (contrato vive em dossie_arg_contracts) ──
+  const CANONICAL_CLUE_IDS = [
+    'agua-calada',
+    'aresta-fria',
+    'aurora-maloca',
+    'comercio-velho',
+    'guardiao-tampa',
+    'nao-olhe-alto',
+    'peso-fundacao',
+    'sob-solas',
+  ];
 
-  it('ARG-CLUE-CONTRACT-A: clues exigidos por layer-unlocks existem em pistas.json', () => {
+  it('layer-unlocks: clue IDs referenciados sao canonicos', () => {
     const unlocks = JSON.parse(read('centro/data/catalog/layer-unlocks.json'));
-    const pistas = JSON.parse(read('arquivo-morto/data/pistas.json'));
-    const pistaIds = new Set(pistas.map((p) => p.id));
+    const canonical = new Set(CANONICAL_CLUE_IDS);
     for (const [layerId, clues] of Object.entries(unlocks.layers || {})) {
       for (const clueId of clues) {
         assert.ok(
-          pistaIds.has(clueId),
-          `layer-unlocks "${layerId}" exige clue "${clueId}" ausente em pistas.json`
+          canonical.has(clueId),
+          `layer-unlocks "${layerId}" exige clue "${clueId}" fora do catalogo canonico`
         );
       }
     }
   });
 
-  it('ARG-CLUE-CONTRACT-A: REQUIRED_CLUES e catálogo com 8 IDs canônicos', () => {
-    const js = read('arquivo-morto/js/arquivo-morto.js');
-    const pistas = JSON.parse(read('arquivo-morto/data/pistas.json'));
-    const pistaIds = pistas.map((p) => p.id).sort();
-    const expected = [
-      'agua-calada',
-      'aresta-fria',
-      'aurora-maloca',
-      'comercio-velho',
-      'guardiao-tampa',
-      'nao-olhe-alto',
-      'peso-fundacao',
-      'sob-solas',
-    ].sort();
-    assert.deepStrictEqual(pistaIds, expected, 'pistas.json deve ter exatamente os 8 IDs do gate');
-
-    const requiredMatch = js.match(/REQUIRED_CLUES\s*=\s*\[([\s\S]*?)\]/);
-    assert.ok(requiredMatch, 'REQUIRED_CLUES ausente em arquivo-morto.js');
-    const requiredIds = [...requiredMatch[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-    for (const id of requiredIds) {
-      assert.ok(expected.includes(id), `REQUIRED_CLUES "${id}" ausente em pistas.json`);
-    }
-  });
-
-  it('ARG-CLUE-CONTRACT-A: renderClueLedger usa DOM seguro (sem innerHTML com dados JSON)', () => {
-    const js = read('arquivo-morto/js/arquivo-morto.js');
-    const fnMatch = js.match(/function renderClueLedger\(\)\s*\{([\s\S]*?)\n  \}/);
-    assert.ok(fnMatch, 'renderClueLedger ausente');
-    const body = fnMatch[1];
-    assert.ok(body.includes('replaceChildren'), 'renderClueLedger deve usar replaceChildren');
-    assert.ok(body.includes('createElement'), 'renderClueLedger deve usar createElement');
-    assert.ok(body.includes('textContent'), 'renderClueLedger deve usar textContent');
-    assert.ok(!body.includes('clue.titulo}'), 'renderClueLedger não deve interpolar titulo em template literal');
-    assert.ok(!body.includes('clue.descricao}'), 'renderClueLedger não deve interpolar descricao em template literal');
-    assert.ok(!/list\.innerHTML\s*=.*clue/.test(body), 'renderClueLedger não deve montar innerHTML com dados de clue');
-  });
-
-  it('ARG-CLUE-CONTRACT-A: collectClue emite console.warn para clue inválido', () => {
-    const js = read('arquivo-morto/js/arquivo-morto.js');
-    assert.ok(
-      js.includes('console.warn("[ARQUIVO-MORTO] clue inválido:"'),
-      'collectClue deve warnar clue inválido para dev'
-    );
+  it('centro-runtime: deep-link ?clues= aceita IDs canonicos', () => {
+    const unlocks = read('centro/features/layer-unlocks.js');
+    assert.ok(unlocks.includes('params.get("clues")'), 'layer-unlocks deve ler query clues');
+    assert.ok(unlocks.includes('getCollectedClueIds'), 'layer-unlocks expoe getCollectedClueIds');
+    assert.ok(unlocks.includes('protocolo13_caderno_clues'), 'layer-unlocks persiste caderno');
   });
 
   it('sync-lucide-icons valida paridade manifest vs map-icons', () => {
@@ -1867,14 +1745,6 @@ describe('projeto_centro — sanity checks', () => {
     );
   });
 
-  it('arquivista: open-application.js extraido do script principal', () => {
-    assert.ok(exists('arquivista/js/open-application.js'), 'open-application.js ausente');
-    const html = read('arquivista/index.html');
-    assert.ok(html.includes('open-application.js'), 'index deve carregar open-application.js');
-    const script = read('arquivista/js/script.js');
-    assert.ok(script.includes('openArquivistaApplication'), 'script deve delegar openApplication');
-  });
-
   it('context-wired.json lista 14 camadas com ficheiro no disco', () => {
     const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
     assert.strictEqual(wired.layerIds.length, 14);
@@ -1894,41 +1764,22 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('CENTRO.catalogLoad'), 'deve delegar catalogo a catalog-load');
   });
 
-  it('arquivista: tpl-geoscanner removido e skip-link presente', () => {
-    const html = read('arquivista/index.html');
-    assert.ok(!html.includes('tpl-geoscanner'), 'template geoscanner morto deve estar removido');
-    assert.ok(html.includes('skip-link'), 'skip-link ausente');
-    assert.ok(html.includes('href="#desktop"'), 'skip-link deve apontar ao desktop');
+  it('sidebar: 9 grupos e 24 camadas wired no catalogo', () => {
+    const processedGroups = JSON.parse(read('centro/data/catalog/groups.json'));
+    const contextGroups = JSON.parse(read('centro/data/catalog/context-groups.json'));
+    const processedLayers = JSON.parse(read('centro/data/catalog/layers.json')).layers || [];
+    const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    assert.strictEqual(processedGroups.length + contextGroups.length, 9, 'sidebar deve ter 9 grupos');
+    assert.strictEqual(processedLayers.length + wired.layerIds.length, 24, 'sidebar deve ter 24 camadas wired');
   });
 
-  it('arquivista geoscanner redirecciona com deep-link clues quando houver caderno', () => {
-    const js = read('arquivista/js/open-application.js');
-    assert.ok(js.includes('case "geoscanner"') || js.includes("case 'geoscanner'"), 'handler geoscanner ausente');
-    assert.ok(js.includes('protocolo13_caderno_clues'), 'deve ler caderno para query clues');
-    assert.ok(js.includes('?clues='), 'deve montar query clues no redirect');
-  });
-
-  it('landing: assets usam /landing/assets/ (nao pages/centro/assets)', () => {
-    const html = read('landing/index.html');
-    const js = read('landing/landing.js');
-    assert.ok(html.includes('/landing/assets/'), 'landing HTML deve usar /landing/assets/');
-    assert.ok(!html.includes('/pages/centro/assets/'), 'nao deve referenciar path legado no HTML');
-    assert.ok(js.includes('/landing/assets/'), 'landing.js deve usar /landing/assets/');
-    assert.ok(exists('landing/assets/README.md'), 'README de assets da landing ausente');
-  });
-
-  it('server.py: alias legado pages/centro/assets para landing/assets', () => {
+  it('server.py: superficies removidas retornam 404', () => {
     const py = read('server.py');
-    assert.ok(py.includes('/pages/centro/assets/'), 'proxy deve tratar assets legados');
-    assert.ok(py.includes("landing', 'assets'"), 'destino deve ser landing/assets');
-  });
-
-  it('landing: fase ARG protocolo13_phase e copy honesta', () => {
-    const js = read('landing/landing.js');
-    const html = read('landing/index.html');
-    assert.ok(js.includes('protocolo13_phase'), 'init fase ausente');
-    assert.ok(html.includes('protocolo-phase-badge'), 'badge de fase ausente');
-    assert.ok(html.includes('fase 1 activa'), 'copy deve indicar fase 1 activa');
+    assert.ok(py.includes('REMOVED_PREFIXES'), 'server deve declarar prefixos removidos');
+    assert.ok(py.includes('/landing/'), 'landing deve estar na lista de removidos');
+    assert.ok(py.includes('/arquivo-morto/'), 'arquivo-morto deve estar na lista de removidos');
+    assert.ok(py.includes('/arquivista/'), 'arquivista deve estar na lista de removidos');
+    assert.ok(!py.includes("landing', 'assets'"), 'alias landing/assets removido pos-trim');
   });
 
   // ── Gate GEO-B: integridade GeoJSON ─────────────────────────────

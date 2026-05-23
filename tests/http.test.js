@@ -54,6 +54,7 @@ describe('projeto_centro — HTTP integration', () => {
     const res = await fetchPath('/centro/index.html');
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('/pages/centro/centro-runtime.js'), 'HTML deve carregar runtime externo do Centro');
+    assert.ok(res.body.includes('data-surface-link'), 'HTML deve ter links configuráveis');
     assert.ok(!/lucide/i.test(res.body), 'HTML nao deve referenciar Lucide');
     assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
   });
@@ -104,6 +105,18 @@ describe('projeto_centro — HTTP integration', () => {
     assert.ok(res.body.includes('function bootstrap'), 'runtime deve conter bootstrap');
     assert.ok(res.body.includes('function initMap'), 'runtime deve conter initMap');
     assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
+  });
+
+  it('deve responder 200 em /pages/centro/ui/surface-links.js', async () => {
+    const res = await fetchPath('/pages/centro/ui/surface-links.js');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.body.includes('initCentroSurfaceLinks'), 'surface-links deve inicializar hrefs');
+  });
+
+  it('deve responder 200 em /config/surface-links.json', async () => {
+    const res = await fetchPath('/config/surface-links.json');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.body.includes('arquivo-morto'), 'config deve listar arquivo-morto');
   });
 
   it('deve responder 200 em /app/styles/a11y.css', async () => {
@@ -272,16 +285,20 @@ describe('projeto_centro — HTTP integration', () => {
     }
   });
 
-  it('rotas e2e: index redirecciona para landing e superficies 200', async () => {
+  it('rotas e2e: index redirecciona para centro; superficies removidas 404', async () => {
     const index = await fetchPath('/index.html');
     assert.strictEqual(index.status, 200);
     assert.ok(
-      index.body.includes('/landing/') || index.body.includes('landing'),
-      'index deve redireccionar para landing'
+      index.body.includes('/centro/') || index.body.includes('centro'),
+      'index deve redireccionar para centro'
     );
-    for (const path of ['/landing/', '/centro/', '/arquivo-morto/', '/arquivista/']) {
+    const centro = await fetchPath('/centro/');
+    assert.strictEqual(centro.status, 200, '/centro/ deve responder 200');
+    for (const path of ['/landing/', '/arquivo-morto/', '/arquivista/']) {
       const res = await fetchPath(path);
-      assert.strictEqual(res.status, 200, path + ' deve responder 200');
+      assert.strictEqual(res.status, 404, path + ' deve responder 404 pos-trim');
+      const cc = res.headers['cache-control'] || '';
+      assert.ok(!cc.includes('immutable'), path + ' 404 nao pode ser immutable');
     }
   });
 

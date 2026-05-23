@@ -1,6 +1,8 @@
-# PROTOCOLO 13 ALMAS — Dossiê Centro
+# PROTOCOLO 13 ALMAS — Dossiê Centro (mapa)
 
-Mapa interativo do centro de São Paulo com camadas urbanas temáticas e navegação narrativa.
+Mapa interativo `/centro/` — cartografia forense do centro de São Paulo.
+
+Landing, Arquivo Morto, Arquivista e contratos ARG vivem em repositórios privados separados (`dossie_landing_portal`, `dossie_arquivo_morto`, `dossie_arquivista`, `dossie_arg_contracts`).
 
 ## Stack
 
@@ -29,17 +31,16 @@ python3 server.py
 python3 server.py 3000
 ```
 
-Acessar: http://127.0.0.1:8080/centro/
+Acessar: http://127.0.0.1:8080/centro/ (`/` redirecciona para `/centro/`)
 
 ## Testes e CI local
 
 Repositório privado — **sem GitHub Actions**. Rodar antes de cada push:
 
 ```bash
-npm run ci    # 106 testes (sanity + HTTP)
-npm run healthcheck:centro   # catálogo offline (opcional)
-# ou
-npm test
+npm run ci
+npm run healthcheck:centro
+node scripts/smoke-centro.mjs   # requer server.py a correr
 ```
 
 Detalhes: [docs/testing/ci-local.md](docs/testing/ci-local.md)
@@ -48,45 +49,67 @@ Detalhes: [docs/testing/ci-local.md](docs/testing/ci-local.md)
 
 ```
 projeto_centro/
-├── centro/              # Página principal do dossiê
-│   ├── index.html       # Mapa + sidebar + navegação
-│   ├── centro-runtime.js # Runtime principal extraído do HTML
-│   ├── centro-sidebar.css
-│   ├── features/        # Módulos de features (triângulo, rio, pistas, POI)
-│   ├── assets/          # Imagens e ícones
-│   └── data/            # GeoJSON e catálogo de camadas
-├── landing/             # Página de entrada
-├── arquivo-morto/       # Módulo narrativo
-├── arquivista/          # Módulo de arquivo
-├── vendor/              # Dependências copiadas (maplibre, app)
-├── server.py            # Servidor proxy com resolução de paths e cache headers
-└── tests/               # Testes de sanidade
+├── centro/              # Mapa + sidebar + runtime
+│   ├── index.html
+│   ├── centro-runtime.js
+│   ├── features/        # catalog-load, layer-unlocks, POI, pistas, …
+│   ├── assets/          # Ícones SVG e pistas Rua São Bento
+│   └── data/            # GeoJSON + catálogo de camadas
+├── vendor/              # maplibre, three, design system (app)
+├── server.py            # Proxy + 404 em rotas removidas
+├── scripts/             # sync vendors, healthcheck, smoke
+└── tests/               # sanity + HTTP integration
 ```
 
 > `centro/features/rio-animado.js` mantém utilitários de hidrografia; animação de fluxo está fora do escopo do runtime (ver `docs/accessibility/contrast-notes.md`).
 
 ## Funcionalidades
 
-- 13 camadas no mapa (9 catálogo + 4 POI contextuais)
-- Sidebar com 5 grupos de camadas (toggle)
-- 4 POI patrimoniais sempre visíveis (selos SVG temáticos)
-- 4 pistas históricas da Rua São Bento (symbol layer + popup)
-- Filtro temático de evidências na sidebar (`#poi-legend`)
-- Navegação flyTo entre pontos de interesse
-- Lazy loading de imagens
-- Toast de feedback para erros
-- CI local (`npm run ci`) — ver [docs/testing/ci-local.md](docs/testing/ci-local.md)
+- 24 camadas wired na sidebar (10 processed + 14 context), 9 grupos
+- 4 POI patrimoniais + POI turístico; 4 pistas Rua São Bento
+- Desbloqueio por pistas (`layer-unlocks.json`) e gates de fase (`phase-gates.json`)
+- Matriz de Endereçamento (`15_osm_enderecos__point`) desligada no boot
+- Maquete 3D + Visão subterrânea (Three.js vendor)
+
+## Ponte transmídia
+
+O Centro **consome** pistas via `localStorage.protocolo13_caderno_clues`, query `?clues=` e `layer-unlocks.json`. **localStorage não atravessa domínios** — ver `dossie_arg_contracts`.
 
 ## Rotas do Servidor
 
-| Path | Origem |
+| Path | Comportamento |
 |---|---|
-| `/pages/centro/*` | `./centro/*` |
-| `/pages/centro/assets/*` | `./landing/assets/*` (legado) |
-| `/landing/assets/*` | `./landing/assets/*` |
+| `/`, `/index.html` | Redirecciona para `/centro/` |
+| `/centro/*`, `/pages/centro/*` | `./centro/*` |
 | `/app/*` | `./vendor/app/*` |
-| `/vendor/maplibre/*` | `./vendor/maplibre/*` |
-| `/centro/*` | `./centro/*` (default handler) |
+| `/vendor/*` | `./vendor/*` |
+| `/landing/`, `/arquivo-morto/`, `/arquivista/` | **404** (repos separados) |
+
+## Links externos configuráveis (hamburger)
+
+O menu hamburger do Centro usa `data-surface-link` e resolve URLs em três camadas:
+
+1. `window.CENTRO_SURFACE_LINKS` (override em runtime, opcional)
+2. `/config/surface-links.json` (config do ambiente/deploy)
+3. defaults locais no script (`/landing/`, `/arquivo-morto/`, `/arquivista/`)
+
+Arquivos do contrato:
+
+- `centro/ui/surface-links.js`
+- `config/surface-links.json`
+- `centro/index.html` (atributos `data-surface-link`)
+
+Exemplo para deploy multi-repo com URLs absolutas:
+
+```html
+<script>
+  window.CENTRO_SURFACE_LINKS = {
+    landing: "https://landing.exemplo.com/",
+    "arquivo-morto": "https://arquivo.exemplo.com/",
+    arquivista: "https://arquivista.exemplo.com/"
+  };
+</script>
+```
 
 ## Basemap
 
@@ -114,7 +137,6 @@ O novo `server.py` usa `Cache-Control: no-cache, must-revalidate` em todo conte�
 ## Licença
 
 Projeto narrativo — PROTOCOLO 13 ALMAS.
-
 ## Arquitetura
 
 ### Fluxo de dados
@@ -147,3 +169,4 @@ Projeto narrativo — PROTOCOLO 13 ALMAS.
 | Inspector debug atrás de `?debug=1` | Ferramenta de dev fora do clique de produção |
 | `locale` PT-BR + `attributionControl: { compact: true }` | UI em português e attribution compacta no mobile |
 | `postinstall: sync-maplibre.mjs` | Mantém `vendor/maplibre/` alinhado com `node_modules/maplibre-gl/dist/` |
+
