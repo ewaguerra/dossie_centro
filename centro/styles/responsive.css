@@ -33,7 +33,7 @@
     width: 100%;
     height: auto;
     max-height: calc(
-      100vh
+      100dvh
       - var(--jesuit-frame-top)
       - var(--jesuit-frame-bottom)
       - var(--centro-sidebar-gap) * 2
@@ -104,7 +104,6 @@
 
   .sidebar {
     width: 100% !important;
-    max-height: 70vh !important;
   }
 }
 

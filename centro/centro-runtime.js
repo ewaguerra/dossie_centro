@@ -736,17 +736,14 @@
 
       var closeBtn = document.getElementById("sidebar-close-btn");
       var openBtn = document.getElementById("sidebar-open-btn");
-      var panel = document.querySelector(".sidebar");
-      if (closeBtn && panel) {
+      if (closeBtn) {
         closeBtn.addEventListener("click", function () {
-          panel.classList.add("sidebar--collapsed");
-          if (openBtn) openBtn.hidden = false;
+          setSidebarCollapsed(true);
         });
       }
-      if (openBtn && panel) {
+      if (openBtn) {
         openBtn.addEventListener("click", function () {
-          panel.classList.remove("sidebar--collapsed");
-          openBtn.hidden = true;
+          setSidebarCollapsed(false);
         });
       }
 
@@ -976,15 +973,59 @@
     }
   }
 
-  function toggleSidebar() {
+  function setSidebarCollapsed(collapsed) {
     var sb = document.getElementById("panel");
     var btn = document.getElementById("sidebar-toggle");
-    if (!sb || !btn) return;
-    sb.classList.toggle("collapsed");
-    btn.classList.toggle("open");
-    btn.innerHTML = sb.classList.contains("collapsed")
-      ? "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"9 18 15 12 9 6\"/></svg>"
-      : "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"15 18 9 12 15 6\"/></svg>";
+    var openBtn = document.getElementById("sidebar-open-btn");
+    if (!sb) return;
+    sb.classList.remove("collapsed");
+    if (collapsed) {
+      sb.classList.add("sidebar--collapsed");
+    } else {
+      sb.classList.remove("sidebar--collapsed");
+    }
+    if (openBtn) openBtn.hidden = !collapsed;
+    if (btn) {
+      btn.classList.toggle("open", collapsed);
+      btn.innerHTML = collapsed
+        ? "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"9 18 15 12 9 6\"/></svg>"
+        : "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"15 18 9 12 15 6\"/></svg>";
+    }
+  }
+
+  function toggleSidebar() {
+    var sb = document.getElementById("panel");
+    if (!sb) return;
+    setSidebarCollapsed(!sb.classList.contains("sidebar--collapsed"));
+  }
+
+  function activateSidebarTab(targetTabId) {
+    var tabs = document.querySelectorAll(".sidebar-tab[role='tab']");
+    tabs.forEach(function (tab) {
+      var active = tab.id === targetTabId;
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+      var panelId = tab.getAttribute("aria-controls");
+      var panel = panelId ? document.getElementById(panelId) : null;
+      if (panel) panel.hidden = !active;
+    });
+  }
+
+  function setupSidebarTabs() {
+    var tabs = document.querySelectorAll(".sidebar-tab[role='tab']");
+    if (!tabs.length) return;
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        activateSidebarTab(tab.id);
+      });
+      tab.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activateSidebarTab(tab.id);
+        }
+      });
+    });
+    var defaultTab = document.getElementById("sidebar-tab-camadas");
+    if (defaultTab) activateSidebarTab(defaultTab.id);
   }
 
   function setupSidebarToggle() {
@@ -1059,6 +1100,7 @@
 
   function bootstrap() {
     setupHamburgerMenu();
+    setupSidebarTabs();
     setupSidebarToggle();
     setupBuildings3DToggle();
     setupSubterraneanToggle();
