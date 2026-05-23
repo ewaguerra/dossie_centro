@@ -4,7 +4,8 @@
 > consumidor de runtime, quem é artefato de pipeline, e por que algumas
 > coisas parecem "fora do lugar" mas estão lá por contrato.
 
-**Atualizado:** 2026-05-23 · gates `MAP-DATA-GOV-A`, `DATA-PERF-D1`, `DATA-DOCS-D1B`, `DATA-ORG-B2` ·
+**Atualizado:** 2026-05-23 · gates DATA-ORG B1–B5 concluídos · síntese final:
+[`data-org-summary-c.md`](data-org-summary-c.md) ·
 base de evidência: auditoria empírica (`find -printf`, `jq .features|length`,
 `git log`) + catálogos commitados em `centro/data/catalog/`.
 
@@ -409,7 +410,8 @@ normal. Os 3 heavy (~83% do peso) foram movidos para
 foi para `geojson/special/arg/` (DATA-ORG-B4B-1). POI turístico
 (`centro_pois_turisticos__point`) foi para `geojson/special/pois/` (DATA-ORG-B4B-2).
 Fóssil Rua São Bento foi para `archive/fossils/` (DATA-ORG-B5). Ciclo
-organizacional principal de `centro/data/` concluído — ver DATA-ORG-SUMMARY-C.
+organizacional principal de `centro/data/` concluído — ver
+[`data-org-summary-c.md`](data-org-summary-c.md).
 
 ---
 

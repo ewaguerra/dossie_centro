@@ -187,7 +187,8 @@ Artefatos históricos **não-runtime**, preservados por audit trail:
 | **DATA-ORG-B4B-2** | Mover POI turístico → `geojson/special/pois/` | **feito** (2026-05-23) |
 | **DATA-ORG-B5** | Mover fósseis → `archive/fossils/` | **feito** (2026-05-23) |
 
-Próximo passo organizacional: **DATA-ORG-SUMMARY-C** (síntese do estado final de `centro/data/`).
+Próximo passo organizacional: ver [`docs/data-org-summary-c.md`](../../docs/data-org-summary-c.md)
+(síntese final B1–B5). Gates sugeridos: **DATA-PERF-POI-DEDUP**, **GEO-POI-DEDUP** / **DATA-META**.
 
 ---
 
