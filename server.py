@@ -14,16 +14,27 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
     # ficam fantasiando o navegador (bug "Access blocked / 403" do OSM, etc.).
     IMMUTABLE_PREFIXES = ('/vendor/', '/app/vendor/')
 
+    def send_response(self, code, message=None):
+        # Captura o status para que end_headers() possa decidir cache em função
+        # dele. Sem isso um 404 em /vendor/ recebia immutable e ficava grudado
+        # no navegador por um ano (foi exatamente o que envenenou three.core).
+        self._response_code = code
+        super().send_response(code, message)
+
     def end_headers(self):
         request_path = (self.path or '').split('?', 1)[0]
+        status = getattr(self, '_response_code', 200)
+        is_vendor = request_path.startswith(self.IMMUTABLE_PREFIXES)
+        is_success = 200 <= status < 300
 
-        if request_path.startswith(self.IMMUTABLE_PREFIXES):
+        if is_vendor and is_success:
             self.send_header('Cache-Control', 'public, max-age=31536000, immutable')
         else:
             # no-cache != no-store: o navegador pode guardar a resposta, mas
             # PRECISA revalidar com o servidor (If-Modified-Since / ETag)
             # antes de usá-la. Em dev isso devolve 304 quase sempre — rápido e
-            # imune a placeholders fantasmas.
+            # imune a placeholders fantasmas. Para 404/5xx em /vendor/ esse
+            # comportamento é obrigatório: cache de erro é veneno.
             self.send_header('Cache-Control', 'no-cache, must-revalidate')
 
         self.send_header('X-Content-Type-Options', 'nosniff')

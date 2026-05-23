@@ -190,6 +190,35 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
   });
 
+  it('cache: 404 em /vendor/ NAO recebe immutable (cache de erro envenena navegador)', async () => {
+    const res = await fetchPath('/vendor/nao-existe-jamais-' + Date.now() + '.js');
+    assert.strictEqual(res.status, 404, '/vendor/ inexistente deve responder 404');
+    const cc = res.headers['cache-control'] || '';
+    assert.ok(
+      !cc.includes('immutable'),
+      '404 em /vendor/ NUNCA pode ser immutable; senao o navegador grava o erro por 1 ano'
+    );
+    assert.match(cc, /no-cache/, '404 em /vendor/ precisa revalidar (no-cache)');
+  });
+
+  it('cache: 404 em /app/vendor/ NAO recebe immutable', async () => {
+    const res = await fetchPath('/app/vendor/sumido-' + Date.now() + '.js');
+    assert.strictEqual(res.status, 404);
+    const cc = res.headers['cache-control'] || '';
+    assert.ok(!cc.includes('immutable'), '404 em /app/vendor/ nao pode ser immutable');
+    assert.match(cc, /no-cache/, '404 em /app/vendor/ precisa revalidar');
+  });
+
+  it('cache: 200 em /vendor/ continua immutable (regressao do happy path)', async () => {
+    const res = await fetchPath('/vendor/maplibre/maplibre-gl.js');
+    assert.strictEqual(res.status, 200);
+    assert.match(
+      res.headers['cache-control'] || '',
+      /immutable/,
+      'sucesso em /vendor/ deve manter immutable'
+    );
+  });
+
   it('headers de cache: somente /vendor/ recebe immutable; assets do projeto sao no-cache', async () => {
     const vendor = await fetchPath('/vendor/maplibre/maplibre-gl.js');
     assert.strictEqual(vendor.status, 200);
