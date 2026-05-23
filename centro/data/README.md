@@ -132,11 +132,11 @@ Nada em heavy/ deve carregar no boot.
 Tudo em heavy/ deve ser manual, gated, lazy ou tileado no futuro.
 ```
 
-Camadas candidatas a `heavy/` (hoje ainda em `context/`):
+Camadas na política heavy/default-off (fisicamente ainda em `context/`):
 
 | ID | Arquivo | Tamanho | Features | Boot hoje |
 |---|---|---:|---:|---|
-| `15_osm_ruas__line` | `15_osm_ruas__line.geojson` | ~4,2 MB | 10.108 | **sim** (`visible: true`) — gargalo DATA-PERF-D1 |
+| `15_osm_ruas__line` | `15_osm_ruas__line.geojson` | ~4,2 MB | 10.108 | não (`visible: false`) — DATA-PERF-D1 concluído |
 | `15_osm_enderecos__point` | `15_osm_enderecos__point.geojson` | ~7,5 MB | 23.932 | não (`visible: false`) |
 | `centro_bem_tombado__polygon` | `centro_bem_tombado__polygon.geojson` | ~3,2 MB | 2.974 | não (`visible: false`) |
 
@@ -192,13 +192,15 @@ Movimentação física só depois que o território está documentado e o runtim
 | Gate | Escopo | Status |
 |---|---|---|
 | **DATA-ORG-B1** | Documentar responsabilidades (este README) | **feito** |
+| **DATA-PERF-D1** | `15_osm_ruas`: `visible: true → false` | **feito** (2026-05-23) |
 | **DATA-ORG-B2** | Mover relatórios não-runtime → `reports/` | pendente |
-| **DATA-PERF-D1** | `15_osm_ruas`: `visible: true → false` | pendente |
 | **DATA-ORG-B3** | Criar `geojson/heavy/` + resolver de paths | pendente |
 | **DATA-ORG-B4** | Classificar `special/pois` e `special/arg` | pendente |
 | **DATA-ORG-B5** | Mover fósseis → `archive/fossils/` | pendente |
 
-O maior ganho imediato de performance não vem de mover pasta — vem de **`15_osm_ruas` com `visible: false`** (DATA-PERF-D1).
+DATA-PERF-D1 removeu ~4,1 MB / 10.108 features do boot (`15_osm_ruas__line`
+default-off, wired na sidebar, toggle manual intacto). Próximo passo
+organizacional: **DATA-ORG-B2** (mover relatórios).
 
 ---
 
@@ -211,10 +213,10 @@ O maior ganho imediato de performance não vem de mover pasta — vem de **`15_o
 
 ## OSM — ruas e endereços
 
-| Camada | Arquivo | Observação |
-|---|---|---|
-| Malha de Circulação | `context/15_osm_ruas__line.geojson` | cobertura completa do bbox do Centro |
-| Endereços e Números | `context/15_osm_enderecos__point.geojson` | cobertura parcial OSM; labels em `minzoom >= 17` |
+| Camada | Arquivo | Default boot | Observação |
+|---|---|---|---|
+| Malha de Circulação | `context/15_osm_ruas__line.geojson` | off (`visible: false`) | wired; activável na sidebar |
+| Endereços e Números | `context/15_osm_enderecos__point.geojson` | off (`visible: false`) | cobertura parcial OSM; labels em `minzoom >= 17` |
 
 Metadados: `catalog/context-layers.json` (`coverage`, `minzoom`, `style.paint`).
 

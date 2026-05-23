@@ -4,9 +4,9 @@
 > consumidor de runtime, quem é artefato de pipeline, e por que algumas
 > coisas parecem "fora do lugar" mas estão lá por contrato.
 
-**Atualizado:** 2026-05-23 · gate `MAP-DATA-GOV-A` · base de evidência:
-auditoria empírica (`find -printf`, `jq .features|length`, `git log`) +
-catálogos commitados em `centro/data/catalog/`.
+**Atualizado:** 2026-05-23 · gates `MAP-DATA-GOV-A`, `DATA-PERF-D1`, `DATA-DOCS-D1B` ·
+base de evidência: auditoria empírica (`find -printf`, `jq .features|length`,
+`git log`) + catálogos commitados em `centro/data/catalog/`.
 
 Este documento é o cartório dos dados. Quando algo no `centro/data/`
 parecer "sobra histórica", consulte aqui antes de apagar.
@@ -311,10 +311,17 @@ Por isso **`rebuild:all` não existe** neste repo. Apagar todo
 | Arquivo | Tamanho | Features | Status atual |
 |---|---:|---:|---|
 | `15_osm_enderecos__point` | 7,44 MiB | 23.932 | `visible: false` (decisão MAP-DATA-GOV-A — §6.2) |
-| `15_osm_ruas__line` | 4,12 MiB | 10.108 | `visible: true` (default mantido — base urbana útil) |
+| `15_osm_ruas__line` | 4,12 MiB | 10.108 | `visible: false` (DATA-PERF-D1 — heavy/default-off) |
 | `centro_bem_tombado__polygon` | 3,10 MiB | 2.974 | `visible: false` |
 
 Total: 27 GeoJSON, 38.720 features, 17,66 MiB.
+
+`15_osm_ruas__line` era a única camada heavy ainda com `visible: true` no boot.
+Decisão `DATA-PERF-D1`: trocar para `visible: false`. Continua wired na sidebar;
+toggle manual intacto (`sidebar-events.js` dispara fetch sob demanda → HTTP 200).
+Ganho no boot: ~4,1 MiB / 10.108 features fora do fetch inicial. `minzoom: 12`
+preservado (decisão de renderização, não de download). Mesma política
+heavy/default-off que `15_osm_enderecos__point` e `centro_bem_tombado__polygon`.
 
 ### 6.2 Default visibility de OSM endereços
 
@@ -352,7 +359,6 @@ mover para "decidido".
 
 | Pergunta | Status | Notas |
 |---|---|---|
-| `15_osm_ruas` continua default on? | Aberta | hoje sim; reavaliar se performance mobile piorar |
 | POIs patrimoniais: sidebar + addPOILayer ou só addPOILayer? | Aberta | gate GEO-POI-DEDUP |
 | `centro_pistas_rua_sao_bento` órfão: remover? | Aberta | governança primeiro; remoção em gate próprio |
 | `knowledge.generated` / `data_freshness`: mover para `legacy/`? | Aberta | gate próprio; sem urgência |
