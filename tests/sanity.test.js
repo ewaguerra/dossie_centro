@@ -55,6 +55,48 @@ function loadLayerDataUrlModule() {
   return sandbox.window.CENTRO.map;
 }
 
+function loadCatalogLayerControllerModule() {
+  const sandbox = { window: { CENTRO: { map: {} } }, console };
+  vm.createContext(sandbox);
+  vm.runInContext(read('centro/map/layer-data-url.js'), sandbox);
+  vm.runInContext(read('centro/map/catalog-layer-controller.js'), sandbox);
+  return sandbox.window.CENTRO.map;
+}
+
+function makeMockMap(existingSources, existingLayers) {
+  existingSources = existingSources || {};
+  existingLayers = existingLayers || {};
+  const map = {
+    _sources: Object.assign({}, existingSources),
+    _layers: Object.assign({}, existingLayers),
+    getSource: function (id) { return this._sources[id] || null; },
+    getLayer: function (id) { return this._layers[id] || null; },
+    removeSource: function (id) { delete this._sources[id]; },
+    removeLayer: function (id) { delete this._layers[id]; },
+  };
+  return map;
+}
+
+function makeCatalogDeps(map, overrides) {
+  const activeLayers = new Set();
+  const calls = { ensureSource: [], ensureLayer: [], ensureImage: [], warns: [], toasts: [] };
+  const base = {
+    map: map,
+    activeLayers: activeLayers,
+    ensureSource: function (m, id, cfg) { calls.ensureSource.push({ id, cfg }); m._sources[id] = cfg; },
+    ensureLayer: function (m, lcfg, beforeId) { calls.ensureLayer.push({ id: lcfg.id, type: lcfg.type, paint: lcfg.paint, beforeId }); m._layers[lcfg.id] = lcfg; },
+    ensureImage: function () { return Promise.resolve(); },
+    buildLayerDataUrl: function (cfg) { return '/centro/data/processed/' + (cfg.file || cfg.id + '.geojson'); },
+    applyLayerZoomBounds: function (layerDef) { return layerDef; },
+    getInsertBeforeId: function () { return 'before-id'; },
+    getMapIconHaloPaint: function () { return { 'icon-halo-color': '#fff', 'icon-halo-width': 2 }; },
+    resolveLayerIcon: null,
+    toast: function (msg, level) { calls.toasts.push({ msg, level }); },
+    warn: function (...args) { calls.warns.push(args); },
+  };
+  return { deps: Object.assign({}, base, overrides), calls, activeLayers };
+}
+
 function loadSidebarLayerStateModule() {
   const sandbox = { window: { CENTRO: {} }, console };
   vm.createContext(sandbox);
@@ -237,8 +279,11 @@ describe('projeto_centro — sanity checks', () => {
 
   it('centro-runtime.js: addLayerToMap usa resolveLayerIcon para pontos da sidebar', () => {
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('resolveLayerIcon'), 'resolveLayerIcon ausente');
-    assert.ok(runtime.includes('addPointLayerWithIcon'), 'addPointLayerWithIcon ausente');
+    const ctrl = read('centro/map/catalog-layer-controller.js');
+    // resolveLayerIcon é injetado pelo runtime via buildCatalogLayerDeps
+    assert.ok(runtime.includes('resolveLayerIcon'), 'resolveLayerIcon ausente no runtime');
+    // addPointLayerWithIcon migrou para o controller (Gate 4.5E-B)
+    assert.ok(ctrl.includes('addPointLayerWithIcon'), 'addPointLayerWithIcon ausente no controller');
     assert.ok(runtime.includes('getMapIconHaloPaint'), 'halo de icones ausente');
     assert.ok(runtime.includes('icon-halo-color'), 'icon-halo-color ausente');
   });
@@ -1040,6 +1085,155 @@ describe('projeto_centro — sanity checks', () => {
       toast: function () {},
     });
     assert.strictEqual(addCalls, 1, 'bootstrap dispara addLayerToMap');
+  });
+
+  // ── Gate 4.5E-B: catalog-layer-controller ───────────────────────
+  it('centro: catalog-layer-controller.js carregado depois de layer-data-url e antes do runtime', () => {
+    const html = read('centro/index.html');
+    const runtimeIdx = html.indexOf('centro-runtime.js');
+    const ctrlIdx = html.indexOf('catalog-layer-controller.js');
+    const urlIdx = html.indexOf('layer-data-url.js');
+    assert.ok(ctrlIdx > -1, 'catalog-layer-controller.js ausente no HTML');
+    assert.ok(urlIdx < ctrlIdx && ctrlIdx < runtimeIdx, 'catalog-layer-controller deve ficar entre layer-data-url e runtime');
+
+    const ctrl = read('centro/map/catalog-layer-controller.js');
+    assert.doesNotThrow(() => new Function(ctrl));
+    assert.ok(ctrl.includes('addCatalogLayerToMap'), 'export addCatalogLayerToMap ausente');
+    assert.ok(ctrl.includes('removeCatalogLayerFromMap'), 'export removeCatalogLayerFromMap ausente');
+    assert.ok(!ctrl.includes('localStorage'), 'controller sem localStorage');
+    assert.ok(!ctrl.includes('document.'), 'controller sem DOM');
+    assert.ok(!ctrl.includes('querySelector'), 'controller sem querySelector');
+    assert.ok(!ctrl.includes('catalogIndex'), 'controller sem catalogIndex');
+    assert.ok(!ctrl.includes('layerUnlocks'), 'controller sem layerUnlocks');
+    assert.ok(!ctrl.includes('protocoloPhase'), 'controller sem protocoloPhase');
+    assert.ok(!ctrl.includes('fetch('), 'controller sem fetch');
+
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('function addLayerToMap'), 'wrapper addLayerToMap no runtime');
+    assert.ok(runtime.includes('function removeLayerFromMap'), 'wrapper removeLayerFromMap no runtime');
+    assert.ok(runtime.includes('addCatalogLayerToMap'), 'runtime delega addCatalogLayerToMap');
+    assert.ok(runtime.includes('removeCatalogLayerFromMap'), 'runtime delega removeCatalogLayerFromMap');
+    assert.ok(!runtime.includes('function addPointLayerWithIcon'), 'addPointLayerWithIcon nao mais no runtime');
+  });
+
+  it('catalog-layer-controller: polygon layer criado com contratos imutáveis', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map);
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-poly', geom: 'polygon', file: 'test.geojson' }, deps);
+    assert.strictEqual(calls.ensureSource.length, 1, 'ensureSource chamado');
+    assert.strictEqual(calls.ensureSource[0].id, 'test-poly-src', 'sourceId preservado');
+    assert.strictEqual(calls.ensureLayer.length, 1, 'ensureLayer chamado');
+    assert.strictEqual(calls.ensureLayer[0].id, 'test-poly-fill', 'layer fill id correto');
+    assert.strictEqual(calls.ensureLayer[0].type, 'fill', 'tipo fill');
+    assert.strictEqual(calls.ensureLayer[0].beforeId, 'before-id', 'beforeId injetado');
+    assert.ok(activeLayers.has('test-poly'), 'activeLayers.add chamado');
+  });
+
+  it('catalog-layer-controller: line layer criado com contratos imutáveis', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map);
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-line', geom: 'line', file: 'test.geojson' }, deps);
+    assert.strictEqual(calls.ensureLayer[0].id, 'test-line', 'layer id sem -fill');
+    assert.strictEqual(calls.ensureLayer[0].type, 'line', 'tipo line');
+    assert.strictEqual(calls.ensureLayer[0].paint['line-width'], 2, 'line-width 2 default');
+    assert.ok(activeLayers.has('test-line'));
+  });
+
+  it('catalog-layer-controller: point com ícone OK cria symbol layer', async () => {
+    const map = makeMockMap();
+    let ensureImageId = null;
+    const { deps, calls, activeLayers } = makeCatalogDeps(map, {
+      resolveLayerIcon: function (id) { return '/icons/' + id + '.svg'; },
+      ensureImage: function (m, id, path) { ensureImageId = id; return Promise.resolve(); },
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-pt', geom: 'point', file: 'test.geojson' }, deps);
+    assert.strictEqual(ensureImageId, 'test-pt-symbol', 'imageId {id}-symbol');
+    assert.strictEqual(calls.ensureLayer[0].type, 'symbol', 'tipo symbol');
+    assert.ok(calls.ensureLayer[0].paint['icon-halo-width'] !== undefined || calls.ensureLayer[0].paint['icon-halo-color'] !== undefined, 'halo paint aplicado');
+    assert.ok(activeLayers.has('test-pt'));
+  });
+
+  it('catalog-layer-controller: point com ícone null faz fallback circle', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map, {
+      resolveLayerIcon: null,
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-pt2', geom: 'point', file: 'test.geojson' }, deps);
+    assert.strictEqual(calls.ensureLayer[0].type, 'circle', 'fallback circle');
+    assert.strictEqual(calls.ensureLayer[0].paint['circle-radius'], 6, 'radius 6');
+    assert.ok(activeLayers.has('test-pt2'));
+  });
+
+  it('catalog-layer-controller: point com ensureImage falha faz fallback circle', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map, {
+      resolveLayerIcon: function () { return '/icon.svg'; },
+      ensureImage: function () { return Promise.reject(new Error('load fail')); },
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-pt3', geom: 'point', file: 'test.geojson' }, deps);
+    assert.strictEqual(calls.ensureLayer[0].type, 'circle', 'circle após icon fail');
+    assert.ok(calls.warns.length >= 1, 'warn chamado');
+    assert.ok(activeLayers.has('test-pt3'));
+  });
+
+  it('catalog-layer-controller: source existente é idempotente', async () => {
+    const map = makeMockMap({ 'test-idem-src': {} });
+    const { deps, calls, activeLayers } = makeCatalogDeps(map);
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-idem', geom: 'polygon' }, deps);
+    assert.strictEqual(calls.ensureLayer.length, 0, 'nenhum ensureLayer se source existe');
+    assert.ok(!activeLayers.has('test-idem'), 'activeLayers nao add em idempotente');
+  });
+
+  it('catalog-layer-controller: remove polygon remove fill + source + activeLayers.delete', () => {
+    const map = makeMockMap(
+      { 'test-rm-src': {} },
+      { 'test-rm-fill': {}, 'test-rm': {} }
+    );
+    const activeLayers = new Set(['test-rm']);
+    const ctrl = loadCatalogLayerControllerModule();
+    ctrl.removeCatalogLayerFromMap('test-rm', {
+      map: map,
+      activeLayers: activeLayers,
+    });
+    assert.ok(!map._layers['test-rm-fill'], 'fill removido');
+    assert.ok(!map._layers['test-rm'], 'layer removido');
+    assert.ok(!map._sources['test-rm-src'], 'source removido');
+    assert.ok(!activeLayers.has('test-rm'), 'activeLayers.delete');
+  });
+
+  it('catalog-layer-controller: erro em ensureSource chama warn e toast, nao add activeLayers', async () => {
+    const map = makeMockMap();
+    const { deps, calls, activeLayers } = makeCatalogDeps(map, {
+      ensureSource: function () { throw new Error('source fail'); },
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-err', geom: 'polygon' }, deps);
+    assert.ok(calls.warns.length >= 1, 'warn chamado');
+    assert.ok(calls.toasts.length >= 1, 'toast chamado');
+    assert.ok(calls.toasts[0].msg.includes('test-err'), 'toast menciona layer id');
+    assert.ok(!activeLayers.has('test-err'), 'activeLayers nao add em erro');
+  });
+
+  it('catalog-layer-controller: minzoom/maxzoom aplicados via applyLayerZoomBounds', async () => {
+    const map = makeMockMap();
+    const zooms = [];
+    const { deps, calls } = makeCatalogDeps(map, {
+      applyLayerZoomBounds: function (layerDef, cfg) {
+        zooms.push({ minzoom: cfg.minzoom, maxzoom: cfg.maxzoom });
+        return layerDef;
+      },
+    });
+    const ctrl = loadCatalogLayerControllerModule();
+    await ctrl.addCatalogLayerToMap({ id: 'test-zoom', geom: 'line', minzoom: 14, maxzoom: 17 }, deps);
+    assert.ok(zooms.length >= 1, 'applyLayerZoomBounds chamado');
+    assert.strictEqual(zooms[0].minzoom, 14);
+    assert.strictEqual(zooms[0].maxzoom, 17);
   });
 
   // ── Symbol popup layer factory ──────────────────────────────────

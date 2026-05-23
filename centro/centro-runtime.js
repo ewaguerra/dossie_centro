@@ -885,134 +885,45 @@
     return layerConfig;
   }
 
-  async function addPointLayerWithIcon(cfg, sid) {
+  function buildCatalogLayerDeps() {
     var iconsRegistry = window.MAPA_SP_ICONS;
-    var iconPath =
-      iconsRegistry && typeof iconsRegistry.resolveLayerIcon === "function"
-        ? iconsRegistry.resolveLayerIcon(cfg.id)
-        : null;
-    if (!iconPath) return false;
-
-    var imageId = cfg.id + "-symbol";
-    try {
-      await ensureImage(map, imageId, iconPath);
-    } catch (iconErr) {
-      console.warn("[CENTRO] Icone indisponivel, fallback circle:", cfg.id, iconErr.message);
-      return false;
-    }
-
-    ensureLayer(
-      map,
-      applyLayerZoomBounds(
-        {
-          id: cfg.id,
-          type: "symbol",
-          source: sid,
-          layout: {
-            "icon-image": imageId,
-            "icon-size": 0.82,
-            "icon-allow-overlap": true,
-            "icon-anchor": "center",
-          },
-          paint: getMapIconHaloPaint(),
-        },
-        cfg
-      ),
-      getCatalogInsertBeforeId()
-    );
-    return true;
+    return {
+      map: map,
+      activeLayers: activeLayers,
+      ensureSource: ensureSource,
+      ensureLayer: ensureLayer,
+      ensureImage: ensureImage,
+      buildLayerDataUrl: buildLayerDataUrl,
+      applyLayerZoomBounds: applyLayerZoomBounds,
+      getInsertBeforeId: getCatalogInsertBeforeId,
+      getMapIconHaloPaint: getMapIconHaloPaint,
+      resolveLayerIcon:
+        iconsRegistry && typeof iconsRegistry.resolveLayerIcon === "function"
+          ? iconsRegistry.resolveLayerIcon.bind(iconsRegistry)
+          : null,
+      toast: function (msg, level) {
+        if (typeof window.centroToast === "function") window.centroToast(msg, level);
+      },
+      warn: console.warn.bind(console),
+    };
   }
 
   async function addLayerToMap(cfg) {
-    if (!map || !map.getSource) return;
-    var sid = cfg.id + "-src";
-    var geom = cfg.geom || cfg.geometry || "polygon";
-    if (map.getSource(sid)) return;
-
-    var dataUrl = buildLayerDataUrl(cfg);
-
-    try {
-      ensureSource(map, sid, { type: "geojson", data: dataUrl });
-      var paint = (cfg.style && cfg.style.paint) || {};
-      var color =
-        paint["fill-color"] ||
-        paint["circle-color"] ||
-        (cfg.style && cfg.style.color) ||
-        "#3388ff";
-
-      if (geom === "polygon" || geom === "fill") {
-        ensureLayer(
-          map,
-          applyLayerZoomBounds(
-            {
-              id: cfg.id + "-fill",
-              type: "fill",
-              source: sid,
-              paint:
-                Object.keys(paint).length > 0
-                  ? paint
-                  : { "fill-color": color, "fill-opacity": 0.25 },
-            },
-            cfg
-          ),
-          getCatalogInsertBeforeId()
-        );
-      } else if (geom === "point") {
-        var usedIcon = await addPointLayerWithIcon(cfg, sid);
-        if (!usedIcon) {
-          ensureLayer(
-            map,
-            applyLayerZoomBounds(
-              {
-                id: cfg.id,
-                type: "circle",
-                source: sid,
-                paint:
-                  Object.keys(paint).length > 0
-                    ? paint
-                    : { "circle-radius": 6, "circle-color": color },
-              },
-              cfg
-            ),
-            getCatalogInsertBeforeId()
-          );
-        }
-      } else if (geom === "line") {
-        ensureLayer(
-          map,
-          applyLayerZoomBounds(
-            {
-              id: cfg.id,
-              type: "line",
-              source: sid,
-              paint:
-                Object.keys(paint).length > 0
-                  ? paint
-                  : { "line-color": color, "line-width": 2 },
-            },
-            cfg
-          ),
-          getCatalogInsertBeforeId()
-        );
-      }
-
-      activeLayers.add(cfg.id);
-    } catch (e) {
-      console.warn("[CENTRO] Erro ao adicionar camada", cfg.id, e);
-      if (typeof window.centroToast === "function") {
-        window.centroToast("Erro ao carregar camada: " + cfg.id, "warn");
-      }
+    var fn = getCentroMapHelper("addCatalogLayerToMap");
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] catalog-layer-controller.js ausente — addLayerToMap indisponível");
+      return;
     }
+    return fn(cfg, buildCatalogLayerDeps());
   }
 
   function removeLayerFromMap(id) {
-    if (!map || !map.getLayer) return;
-    var fill = id + "-fill";
-    if (map.getLayer(fill)) map.removeLayer(fill);
-    if (map.getLayer(id)) map.removeLayer(id);
-    var src = id + "-src";
-    if (map.getSource(src)) map.removeSource(src);
-    activeLayers.delete(id);
+    var fn = getCentroMapHelper("removeCatalogLayerFromMap");
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] catalog-layer-controller.js ausente — removeLayerFromMap indisponível");
+      return;
+    }
+    return fn(id, buildCatalogLayerDeps());
   }
 
   function getLockToastMessage(layerId) {
