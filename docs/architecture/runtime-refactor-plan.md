@@ -1,6 +1,6 @@
 # Plano de refactor — `centro-runtime.js`
 
-> **Estado:** em curso — **R1–R5 ✓** (2026-07-05). R6 opcional pendente.  
+> **Estado:** **R1–R6 ✓** concluídas (2026-07-05).  
 > **Objectivo:** reduzir o monólito (~1 180 linhas) sem bundler, mantendo IIFE + ordem de scripts.  
 > **Referência:** [map-init-flow.md](./map-init-flow.md).
 
@@ -21,7 +21,7 @@ centro-runtime.js
 ├── Delegates map-safe (ensureSource/Layer/Image)
 ├── Lock helpers (clue + fase → resolveSidebarLockState)
 ├── POI boot → `map/poi-bootstrap.js` (R1 ✓)
-├── initMap + map.on("load")                    ← ~170 linhas
+├── init mapa → `map/map-init.js` (R6 ✓)
 ├── Triângulo sync → `map/triangulo-overlay.js` (R2 ✓)
 ├── Sidebar glue → `ui/sidebar-orchestrator.js` (R3 ✓)
 ├── Feature API bridges (ensure*Api, toggles)   ← ~120 linhas
@@ -119,9 +119,9 @@ centro-runtime.js
 
 ---
 
-### Fase R6 — Map init shell (prioridade baixa, opcional)
+### Fase R6 — Map init shell ✅ (concluída)
 
-**Novo:** `centro/map/map-init.js`
+**Novo:** `centro/map/map-init.js` — `window.CENTRO.mapInit.create(deps)` + `init()`.
 
 | Move | De | Para |
 |------|-----|------|

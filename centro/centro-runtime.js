@@ -21,43 +21,7 @@
 
   // Fonte para labels POI: precisa existir no fontstack do basemap. Noto
   // Sans Regular é o default da OpenFreeMap. Implementação em poi-bootstrap.js.
-  // Localização PT-BR para tooltips de controles MapLibre.
-  var MAPLIBRE_LOCALE_PT_BR = {
-    "AttributionControl.ToggleAttribution": "Alternar atribuição",
-    "AttributionControl.MapFeedback": "Comentários sobre o mapa",
-    "FullscreenControl.Enter": "Entrar em tela cheia",
-    "FullscreenControl.Exit": "Sair da tela cheia",
-    "GeolocateControl.FindMyLocation": "Mostrar minha localização",
-    "GeolocateControl.LocationNotAvailable": "Localização indisponível",
-    "LogoControl.Title": "Logotipo MapLibre",
-    "Map.Title": "Mapa",
-    "NavigationControl.ResetBearing": "Recentralizar bússola",
-    "NavigationControl.ZoomIn": "Aproximar zoom",
-    "NavigationControl.ZoomOut": "Afastar zoom",
-    "ScaleControl.Feet": "pés",
-    "ScaleControl.Meters": "m",
-    "ScaleControl.Kilometers": "km",
-    "ScaleControl.Miles": "mi",
-    "ScaleControl.NauticalMiles": "nm",
-    "TerrainControl.Enable": "Ativar terreno",
-    "TerrainControl.Disable": "Desativar terreno",
-    "CooperativeGesturesHandler.WindowsHelpText": "Use Ctrl + rolagem para ampliar o mapa",
-    "CooperativeGesturesHandler.MacHelpText": "Use ⌘ + rolagem para ampliar o mapa",
-    "CooperativeGesturesHandler.MobileHelpText": "Use dois dedos para mover o mapa",
-  };
-
-  // Habilita o debug-inspector apenas quando o usuário pediu explicitamente
-  // (?debug=1 ou localStorage.centroDebug=1). Mantém produção limpa.
-  var DEBUG_INSPECTOR = (function () {
-    try {
-      if (/[?&]debug=1\b/.test(window.location.search)) return true;
-      if (window.localStorage && window.localStorage.getItem("centroDebug") === "1") return true;
-    } catch (_e) {
-      // localStorage indisponível em alguns contextos — ignora.
-    }
-    return false;
-  })();
-
+  // Localização PT-BR para controles MapLibre — implementação em map-init.js.
   var map = null;
   var activeLayers = new Set();
   var poiInteractionLayerIds = [];
@@ -200,22 +164,6 @@
     };
   }
 
-  // Hash routing pode ignorar center/zoom do constructor; revalida contra maxBounds.
-  function clampViewToCentroBounds(mapInstance) {
-    if (!mapInstance || typeof maplibregl === "undefined") return;
-    var bounds = maplibregl.LngLatBounds.convert(CENTRO_MAX_BOUNDS);
-    var center = mapInstance.getCenter();
-    var zoom = mapInstance.getZoom();
-    var outOfBounds = !bounds.contains(center);
-    var clampedZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom));
-    if (outOfBounds || clampedZoom !== zoom) {
-      mapInstance.jumpTo({
-        center: outOfBounds ? CENTRO_CENTER : center,
-        zoom: outOfBounds ? 14 : clampedZoom,
-      });
-    }
-  }
-
   function getMapIconHaloPaint() {
     var iconsRegistry = window.MAPA_SP_ICONS;
     var paper = (iconsRegistry && iconsRegistry.settings && iconsRegistry.settings.paper) || "#fdfbf7";
@@ -226,31 +174,6 @@
     };
   }
 
-  function showInspector(feature) {
-    var panel = document.getElementById("inspector");
-    if (!panel) {
-      panel = document.createElement("div");
-      panel.id = "inspector";
-      panel.className = "card card--inspector card--static debug-inspector";
-      document.body.appendChild(panel);
-    }
-    var props = feature.properties || {};
-    panel.innerHTML = "";
-    var closeBtn = document.createElement("button");
-    closeBtn.type = "button";
-    closeBtn.className = "debug-inspector__close btn btn--bare btn--icon-sm";
-    closeBtn.setAttribute("aria-label", "Fechar inspector de debug");
-    closeBtn.textContent = "\u00d7";
-    closeBtn.addEventListener("click", function () {
-      panel.remove();
-    });
-    var body = document.createElement("pre");
-    body.className = "debug-inspector__body";
-    body.textContent = JSON.stringify(props, null, 2);
-    panel.appendChild(closeBtn);
-    panel.appendChild(body);
-  }
-
   var buildings3dApi = null;
   var poiFilterApi = null;
   var subterraneanApi = null;
@@ -259,6 +182,7 @@
   var sidebarOrchestratorApi = null;
   var argResyncApi = null;
   var centroChromeApi = null;
+  var mapInitApi = null;
 
   function ensurePoiBootstrapApi() {
     if (!poiBootstrapApi && window.CENTRO && window.CENTRO.poiBootstrap) {
@@ -348,25 +272,6 @@
     if (api && typeof api.sync === "function") return api.sync(map);
   }
 
-  function ensureMapGroundReadable() {
-    if (!map || !map.getLayer) return;
-    try {
-      if (map.getLayer("background")) {
-        map.setPaintProperty("background", "background-color", BASEMAP_GROUND_COLOR);
-      }
-    } catch (_e) {
-      // Estilo ainda carregando ou layer ausente — ignora.
-    }
-    if (typeof map.setLight === "function") {
-      map.setLight({
-        anchor: "viewport",
-        color: "#ffffff",
-        intensity: 0.45,
-        position: [1.15, 210, 30],
-      });
-    }
-  }
-
   function initBuildings3DState() {
     var api = ensureBuildings3dApi();
     if (api) api.initState();
@@ -403,94 +308,65 @@
     });
   }
 
+  function ensureMapInitApi() {
+    if (!mapInitApi && window.CENTRO && window.CENTRO.mapInit) {
+      mapInitApi = window.CENTRO.mapInit.create({
+        center: CENTRO_CENTER,
+        maxBounds: CENTRO_MAX_BOUNDS,
+        minZoom: MIN_ZOOM,
+        maxZoom: MAX_ZOOM,
+        basemapStyle: BASEMAP_STYLE,
+        groundColor: BASEMAP_GROUND_COLOR,
+        onMapCreated: function (mapInstance) {
+          map = mapInstance;
+        },
+        getPoiInteractionLayerIds: function () {
+          return poiInteractionLayerIds;
+        },
+        getActiveLayers: function () {
+          return activeLayers;
+        },
+        syncTriangulo: function (mapInstance) {
+          var api = ensureTrianguloOverlayApi();
+          if (api && typeof api.sync === "function") return api.sync(mapInstance);
+        },
+        bootPoiLayers: function (mapInstance, hooks) {
+          var poiBoot = ensurePoiBootstrapApi();
+          if (poiBoot) return poiBoot.bootMapLayers(mapInstance, hooks);
+          console.warn("[CENTRO] poi-bootstrap.js ausente — POI/pistas ignorados");
+          applyAllPoiThemeFilters();
+          return Promise.resolve();
+        },
+        onPistasLoaded: function (mapInstance) {
+          var pistasApi = window.CENTRO && window.CENTRO.pistas;
+          if (pistasApi && typeof pistasApi.setupPistasRsbToggle === "function") {
+            pistasApi.setupPistasRsbToggle(function () {
+              return mapInstance;
+            });
+          }
+          applyAllPoiThemeFilters();
+        },
+        onPistasError: function () {
+          applyAllPoiThemeFilters();
+        },
+        applyAllPoiThemeFilters: applyAllPoiThemeFilters,
+        wireSidebarMobileButtons: function () {
+          var chrome = ensureCentroChromeApi();
+          if (chrome && typeof chrome.wireSidebarMobileButtons === "function") {
+            chrome.wireSidebarMobileButtons();
+          }
+        },
+        initBuildings3DState: initBuildings3DState,
+        initSubterraneanState: initSubterraneanState,
+        mapReadyResolve: mapReadyResolve,
+      });
+    }
+    return mapInitApi;
+  }
+
   function initMap() {
-    map = new maplibregl.Map({
-      container: "map",
-      style: BASEMAP_STYLE,
-      center: CENTRO_CENTER,
-      zoom: 14,
-      hash: true,
-      maxBounds: CENTRO_MAX_BOUNDS,
-      minZoom: MIN_ZOOM,
-      maxZoom: MAX_ZOOM,
-      locale: MAPLIBRE_LOCALE_PT_BR,
-      attributionControl: { compact: true },
-    });
-    map.addControl(new maplibregl.NavigationControl(), "top-right");
-    map.addControl(new maplibregl.ScaleControl(), "bottom-left");
-
-    map.on("error", function (e) {
-      var err = e && e.error;
-      if (err && (err.status === 404 || err.status === 0)) return;
-      console.warn("[CENTRO] MapLibre error:", err || e);
-    });
-
-    // Ícones do sprite do OpenFreeMap (recycling, office, bicycle_parking …)
-    // que não estão carregados no contexto do projecto. Substitui por pixel
-    // transparente para silenciar o flood de avisos no console.
-    map.on("styleimagemissing", function (e) {
-      if (!map.hasImage(e.id)) {
-        map.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) });
-      }
-    });
-
-    map.on("load", async function () {
-      clampViewToCentroBounds(map);
-      ensureMapGroundReadable();
-      console.log("[CENTRO] Mapa carregado com layout original");
-
-      await syncTrianguloHistoricoOverlay();
-
-      var poiBoot = ensurePoiBootstrapApi();
-      if (poiBoot) {
-        await poiBoot.bootMapLayers(map, {
-          onPistasLoaded: function () {
-            var pistasApi = window.CENTRO && window.CENTRO.pistas;
-            if (pistasApi && typeof pistasApi.setupPistasRsbToggle === "function") {
-              pistasApi.setupPistasRsbToggle(function () {
-                return map;
-              });
-            }
-            applyAllPoiThemeFilters();
-          },
-          onPistasError: function () {
-            applyAllPoiThemeFilters();
-          },
-        });
-      } else {
-        console.warn("[CENTRO] poi-bootstrap.js ausente — POI/pistas ignorados");
-        applyAllPoiThemeFilters();
-      }
-
-      // Inspector é uma ferramenta de DEBUG.
-      // para ativar use ?debug=1 ou localStorage.centroDebug=1.
-      // Escopa a query às layers conhecidas (POIs + catálogo ativo) para
-      // não varrer o style todo a cada clique.
-      if (DEBUG_INSPECTOR) {
-        map.on("click", function (e) {
-          var diagnosticLayers = poiInteractionLayerIds.concat(
-            Array.from(activeLayers).map(function (id) {
-              return map.getLayer(id + "-fill") ? id + "-fill" : id;
-            })
-          );
-          var queryOpts = diagnosticLayers.length ? { layers: diagnosticLayers } : undefined;
-          var features = map.queryRenderedFeatures(e.point, queryOpts);
-          if (!features || features.length === 0) return;
-          showInspector(features[0]);
-        });
-        console.log("[CENTRO] Debug inspector ativo (?debug=1)");
-      }
-
-      var chrome = ensureCentroChromeApi();
-      if (chrome && typeof chrome.wireSidebarMobileButtons === "function") {
-        chrome.wireSidebarMobileButtons();
-      }
-
-      if (mapReadyResolve) mapReadyResolve();
-
-      initBuildings3DState();
-      initSubterraneanState();
-    });
+    var api = ensureMapInitApi();
+    if (api && typeof api.init === "function") api.init();
   }
 
   function flyToLocation(lng, lat, zoom, pitch) {

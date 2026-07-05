@@ -515,6 +515,7 @@ describe('projeto_centro — sanity checks', () => {
       'ensurePoiBootstrapApi',
       'ensureSidebarOrchestratorApi',
       'ensureCentroChromeApi',
+      'ensureMapInitApi',
       'function loadSidebarData',
       'setupCentroUiFromModules',
       'window.centroNavigate',
@@ -744,13 +745,13 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('centro-runtime.js: showInspector debug usa card--inspector sem inline', () => {
-    const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('showInspector'), 'showInspector presente');
-    assert.ok(runtime.includes('card card--inspector'), 'debug inspector usa card DS');
-    assert.ok(runtime.includes('debug-inspector__body'), 'debug inspector body com classe');
-    const fn = runtime.slice(
-      runtime.indexOf('function showInspector'),
-      runtime.indexOf('function initMap')
+    const mapInit = read('centro/map/map-init.js');
+    assert.ok(mapInit.includes('showInspector'), 'showInspector presente');
+    assert.ok(mapInit.includes('card card--inspector'), 'debug inspector usa card DS');
+    assert.ok(mapInit.includes('debug-inspector__body'), 'debug inspector body com classe');
+    const fn = mapInit.slice(
+      mapInit.indexOf('function showInspector'),
+      mapInit.indexOf('function init()')
     );
     assert.ok(!fn.includes('style.cssText'), 'showInspector sem style.cssText');
     assert.ok(!fn.includes('style='), 'showInspector sem style inline em HTML');
@@ -1482,11 +1483,12 @@ describe('projeto_centro — sanity checks', () => {
 
   // ── Click handler escopado e debug-gated ────────────────────────
   it('centro-runtime.js: click inspector e debug-gated e queryRenderedFeatures e escopado', () => {
+    const mapInit = read('centro/map/map-init.js');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('DEBUG_INSPECTOR'), 'flag DEBUG_INSPECTOR ausente');
-    assert.ok(runtime.includes('if (DEBUG_INSPECTOR)'), 'inspector deve ser gated pelo flag');
-    assert.ok(/queryRenderedFeatures\s*\(\s*e\.point\s*,\s*queryOpts\s*\)/.test(runtime) || /queryRenderedFeatures\s*\(\s*e\.point\s*,\s*\{\s*layers/.test(runtime), 'queryRenderedFeatures deve passar layers');
-    assert.ok(runtime.includes('poiInteractionLayerIds'), 'lista de layers POI para escopar a query ausente');
+    assert.ok(mapInit.includes('isDebugInspectorEnabled'), 'flag debug inspector ausente');
+    assert.ok(mapInit.includes('if (debugInspector)'), 'inspector deve ser gated pelo flag');
+    assert.ok(/queryRenderedFeatures\s*\(\s*e\.point\s*,\s*queryOpts\s*\)/.test(mapInit), 'queryRenderedFeatures deve passar layers');
+    assert.ok(runtime.includes('getPoiInteractionLayerIds'), 'runtime expõe poiInteractionLayerIds ao map-init');
   });
 
   // ── Integridade catálogo (layers.json ↔ groups.json ↔ disco) ───
@@ -1553,12 +1555,14 @@ describe('projeto_centro — sanity checks', () => {
 
   // ── MapOptions PT-BR e attribution compacto ─────────────────────
   it('centro-runtime.js: MapOptions com locale PT-BR e attributionControl compacto', () => {
+    const mapInit = read('centro/map/map-init.js');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('MAPLIBRE_LOCALE_PT_BR'), 'tabela locale PT-BR ausente');
-    assert.ok(runtime.includes('NavigationControl.ZoomIn'), 'chaves de locale ausentes');
-    assert.ok(runtime.includes('Aproximar zoom'), 'traducao PT-BR ausente');
-    assert.ok(/attributionControl:\s*\{\s*compact:\s*true\s*\}/.test(runtime), 'attributionControl compact ausente');
-    assert.ok(runtime.includes('locale: MAPLIBRE_LOCALE_PT_BR'), 'locale nao passado ao Map');
+    assert.ok(mapInit.includes('MAPLIBRE_LOCALE_PT_BR'), 'tabela locale PT-BR ausente');
+    assert.ok(mapInit.includes('NavigationControl.ZoomIn'), 'chaves de locale ausentes');
+    assert.ok(mapInit.includes('Aproximar zoom'), 'traducao PT-BR ausente');
+    assert.ok(/attributionControl:\s*\{\s*compact:\s*true\s*\}/.test(mapInit), 'attributionControl compact ausente');
+    assert.ok(mapInit.includes('locale: MAPLIBRE_LOCALE_PT_BR'), 'locale nao passado ao Map');
+    assert.ok(runtime.includes('ensureMapInitApi'), 'runtime delega map init');
   });
 
   // ── Contraste WCAG labels POI ───────────────────────────────────
@@ -1677,10 +1681,12 @@ describe('projeto_centro — sanity checks', () => {
 
   // ── MapLibre agent fixes (hash, layering, fallback, healthcheck) ─
   it('centro-runtime.js valida hash/view contra maxBounds no load', () => {
+    const mapInit = read('centro/map/map-init.js');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('clampViewToCentroBounds'), 'clampViewToCentroBounds ausente');
-    assert.ok(runtime.includes('LngLatBounds.convert(CENTRO_MAX_BOUNDS)'), 'validacao de bounds ausente');
-    assert.ok(runtime.includes('clampViewToCentroBounds(map)'), 'clamp deve rodar no load');
+    assert.ok(mapInit.includes('clampViewToCentroBounds'), 'clampViewToCentroBounds ausente');
+    assert.ok(mapInit.includes('LngLatBounds.convert(maxBounds)'), 'validacao de bounds ausente');
+    assert.ok(mapInit.includes('clampViewToCentroBounds(mapInstance)'), 'clamp deve rodar no load');
+    assert.ok(runtime.includes('ensureMapInitApi'), 'runtime delega map init');
   });
 
   it('centro-runtime.js insere camadas do catalogo abaixo dos POIs (beforeId)', () => {
@@ -2333,9 +2339,10 @@ describe('projeto_centro — sanity checks', () => {
 
   it('index.html sem markup orfao feature-inspector (debug usa #inspector)', () => {
     const html = read('centro/index.html');
+    const mapInit = read('centro/map/map-init.js');
     assert.ok(!html.includes('id="feature-inspector"'), 'feature-inspector orfao removido');
     assert.ok(html.includes('feature-inspector.css'), 'CSS debug-inspector mantido');
-    assert.ok(read('centro/centro-runtime.js').includes('getElementById("inspector")'), 'debug inspector dinamico');
+    assert.ok(mapInit.includes('getElementById("inspector")'), 'debug inspector dinamico');
   });
 
   it('scripts/lib/python-cmd.mjs resolve python cross-platform', () => {
