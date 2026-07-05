@@ -259,6 +259,7 @@
   var poiFilterApi = null;
   var subterraneanApi = null;
   var poiBootstrapApi = null;
+  var trianguloOverlayApi = null;
 
   function ensurePoiBootstrapApi() {
     if (!poiBootstrapApi && window.CENTRO && window.CENTRO.poiBootstrap) {
@@ -332,84 +333,20 @@
     if (api && typeof api.flyToView === "function") api.flyToView();
   }
 
-  async function addTrianguloHistoricoOverlay() {
-    if (!map) return;
-    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
-    if (ph && typeof ph.isFeaturePhaseUnlocked === "function" && !ph.isFeaturePhaseUnlocked("triangulo-historico")) {
-      return;
-    }
-    var th = window.CENTRO && window.CENTRO.trianguloHistorico;
-    if (!th || typeof th.buildTrianguloHistoricoGeojson !== "function") return;
-    var cfg = th.CONFIG;
-    if (!cfg || map.getSource(cfg.sourceId)) return;
-
-    try {
-      var feature = await th.buildTrianguloHistoricoGeojson();
-      var feat =
-        feature && feature.type === "Feature"
-          ? feature
-          : {
-              type: "Feature",
-              properties: (feature && feature.properties) || { name: cfg.label },
-              geometry: feature && feature.geometry,
-            };
-      ensureSource(map, cfg.sourceId, {
-        type: "geojson",
-        data: { type: "FeatureCollection", features: [feat] },
+  function ensureTrianguloOverlayApi() {
+    if (!trianguloOverlayApi && window.CENTRO && window.CENTRO.trianguloOverlay) {
+      trianguloOverlayApi = window.CENTRO.trianguloOverlay.create({
+        ensureSource: ensureSource,
+        ensureLayer: ensureLayer,
+        getCatalogInsertBeforeId: getCatalogInsertBeforeId,
       });
-      ensureLayer(
-        map,
-        {
-          id: cfg.fillLayerId,
-          type: "fill",
-          source: cfg.sourceId,
-          paint: {
-            "fill-color": cfg.fillColor,
-            "fill-opacity": cfg.fillOpacity,
-          },
-        },
-        getCatalogInsertBeforeId()
-      );
-      ensureLayer(
-        map,
-        {
-          id: cfg.outlineLayerId,
-          type: "line",
-          source: cfg.sourceId,
-          paint: {
-            "line-color": cfg.outlineColor,
-            "line-width": cfg.outlineWidth,
-          },
-        },
-        getCatalogInsertBeforeId()
-      );
-    } catch (e) {
-      console.warn("[CENTRO] Triângulo histórico indisponível:", e);
     }
+    return trianguloOverlayApi;
   }
 
-  function removeTrianguloHistoricoOverlay() {
-    if (!map) return;
-    var th = window.CENTRO && window.CENTRO.trianguloHistorico;
-    if (!th || !th.CONFIG) return;
-    var cfg = th.CONFIG;
-    try {
-      if (map.getLayer(cfg.outlineLayerId)) map.removeLayer(cfg.outlineLayerId);
-      if (map.getLayer(cfg.fillLayerId)) map.removeLayer(cfg.fillLayerId);
-      if (map.getSource(cfg.sourceId)) map.removeSource(cfg.sourceId);
-    } catch (e) {
-      console.warn("[CENTRO] Triângulo histórico — erro ao remover:", e);
-    }
-  }
-
-  async function syncTrianguloHistoricoOverlay() {
-    if (!map) return;
-    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
-    if (ph && typeof ph.isFeaturePhaseUnlocked === "function" && !ph.isFeaturePhaseUnlocked("triangulo-historico")) {
-      removeTrianguloHistoricoOverlay();
-      return;
-    }
-    await addTrianguloHistoricoOverlay();
+  function syncTrianguloHistoricoOverlay() {
+    var api = ensureTrianguloOverlayApi();
+    if (api && typeof api.sync === "function") return api.sync(map);
   }
 
   function ensureMapGroundReadable() {

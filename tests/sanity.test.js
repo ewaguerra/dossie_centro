@@ -1804,8 +1804,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('poi-theme-filter.js'), 'index deve carregar poi-theme-filter.js');
     assert.ok(html.includes('centro-phase-badge'), 'badge de fase no centro ausente');
     const runtime = read('centro/centro-runtime.js');
+    const triOverlay = read('centro/map/triangulo-overlay.js');
     assert.ok(runtime.includes('isLayerPhaseUnlocked'), 'gate de fase ausente no runtime');
-    assert.ok(runtime.includes('isFeaturePhaseUnlocked("triangulo-historico")'), 'gate triangulo no runtime');
+    assert.ok(
+      triOverlay.includes('isFeaturePhaseUnlocked("triangulo-historico")'),
+      'gate triangulo no triangulo-overlay'
+    );
     const lockStateMod = read('centro/features/sidebar-layer-state.js');
     assert.ok(
       lockStateMod.includes('layer-row--phase-locked'),
@@ -1861,7 +1865,11 @@ describe('projeto_centro — sanity checks', () => {
 
   it('centro-runtime wired triangulo historico no map load', () => {
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('addTrianguloHistoricoOverlay'), 'overlay triangulo ausente');
+    const triOverlay = read('centro/map/triangulo-overlay.js');
+    assert.ok(triOverlay.includes('buildTrianguloHistoricoGeojson'), 'overlay triangulo em triangulo-overlay');
+    assert.ok(triOverlay.includes('sync: sync'), 'triangulo-overlay exporta sync');
+    assert.ok(runtime.includes('syncTrianguloHistoricoOverlay'), 'runtime delega sync triangulo');
+    assert.ok(runtime.includes('ensureTrianguloOverlayApi'), 'runtime instancia trianguloOverlay');
     assert.ok(runtime.includes('CENTRO.catalogLoad'), 'deve delegar catalogo a catalog-load');
   });
 
@@ -2283,10 +2291,12 @@ describe('projeto_centro — sanity checks', () => {
 
   it('runtime escuta centro:arg-state-changed e storage cross-tab', () => {
     const runtime = read('centro/centro-runtime.js');
+    const triOverlay = read('centro/map/triangulo-overlay.js');
     assert.ok(runtime.includes('setupArgStateListener'), 'setupArgStateListener presente');
     assert.ok(runtime.includes('resyncArgStateConsumers'), 'resyncArgStateConsumers centraliza gates');
     assert.ok(runtime.includes('syncTrianguloHistoricoOverlay'), 'triângulo resync no arg-state');
-    assert.ok(runtime.includes('removeTrianguloHistoricoOverlay'), 'triângulo remove quando fase < 11');
+    assert.ok(triOverlay.includes('remove(mapInstance)'), 'triângulo remove quando fase < 11');
+    assert.ok(triOverlay.includes('isFeaturePhaseUnlocked("triangulo-historico")'), 'gate triangulo no overlay');
     assert.ok(runtime.includes('protocolo13_caderno_clues'), 'storage listener caderno');
     assert.ok(runtime.includes('protocolo13_phase'), 'storage listener fase');
   });

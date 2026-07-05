@@ -1,6 +1,6 @@
 # Plano de refactor — `centro-runtime.js`
 
-> **Estado:** em curso — **R1 concluída** (2026-07-05).  
+> **Estado:** em curso — **R1 ✓**, **R2 ✓** (2026-07-05).  
 > **Objectivo:** reduzir o monólito (~1 180 linhas) sem bundler, mantendo IIFE + ordem de scripts.  
 > **Referência:** [map-init-flow.md](./map-init-flow.md).
 
@@ -22,7 +22,7 @@ centro-runtime.js
 ├── Lock helpers (clue + fase → resolveSidebarLockState)
 ├── POI boot → `map/poi-bootstrap.js` (R1 ✓)
 ├── initMap + map.on("load")                    ← ~170 linhas
-├── Triângulo sync (add/remove/sync)            ← ~80 linhas
+├── Triângulo sync → `map/triangulo-overlay.js` (R2 ✓)
 ├── Sidebar glue (loadSidebarData, wire…)       ← ~150 linhas
 ├── Feature API bridges (ensure*Api, toggles)   ← ~120 linhas
 ├── UI bootstrap (tabs, hamburger, guide…)    ← ~200 linhas
@@ -57,9 +57,9 @@ centro-runtime.js
 
 ---
 
-### Fase R2 — Triângulo overlay (prioridade alta)
+### Fase R2 — Triângulo overlay ✅ (concluída)
 
-**Novo:** `centro/map/triangulo-overlay.js`
+**Novo:** `centro/map/triangulo-overlay.js` — `window.CENTRO.trianguloOverlay.create(deps)` + `add` / `remove` / `sync`.
 
 | Move | De | Para |
 |------|-----|------|
