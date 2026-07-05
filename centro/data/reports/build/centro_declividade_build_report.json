@@ -1,0 +1,19 @@
+{
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "layer": "geoportal:declividade",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "total_centro": 306,
+  "por_classe": {
+    "0 a 05%": 141,
+    "05 a 25%": 80,
+    "> 60%": 5,
+    "25 a 60%": 80
+  },
+  "file_size_bytes": 718463,
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_declividade__polygon.geojson"
+}

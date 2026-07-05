@@ -1,0 +1,46 @@
+[
+  {
+    "id": "rua-sao-bento-1862",
+    "title": "Rua São Bento — 1862",
+    "description": "Litografia da Rua São Bento em 1862, mostrando o casario colonial e o movimento de pedestres e carroças.",
+    "lngLat": [-46.6358, -23.5455],
+    "image": "assets/pistas/rua-sao-bento-1862.jpg",
+    "sourceUrl": "https://revistarestauro.com.br/wp-content/uploads/2021/10/Fig2-1862-rua-Sao-Bento_Militao.jpg",
+    "downloadedAt": "2026-05-05T14:27:48.700653+00:00",
+    "contentType": "image/jpeg",
+    "bytes": 116609
+  },
+  {
+    "id": "rua-sao-bento-1902",
+    "title": "Rua São Bento — 1902",
+    "description": "Fotografia do início do século XX mostrando a Rua São Bento já urbanizada, com bondes e edificações ecléticas.",
+    "lngLat": [-46.6352, -23.5448],
+    "image": "assets/pistas/rua-sao-bento-1902.jpg",
+    "sourceUrl": "https://saopauloesuasruas.wordpress.com/wp-content/uploads/2015/05/sc3a3o-bentro-1902.jpg",
+    "downloadedAt": "2026-05-05T14:27:49.003293+00:00",
+    "contentType": "image/jpeg",
+    "bytes": 264614
+  },
+  {
+    "id": "rua-sao-bento-referencia",
+    "title": "Rua São Bento — referência visual",
+    "description": "Vista contemporânea de referência para comparação com as imagens históricas.",
+    "lngLat": [-46.6345, -23.5438],
+    "image": "assets/pistas/rua-sao-bento-thumb.jpg",
+    "sourceUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShwcDgRWsaRhUeBLbuH3AY9dL7xsMXrObmBg&s",
+    "downloadedAt": "2026-05-05T14:27:49.611546+00:00",
+    "contentType": "image/jpeg",
+    "bytes": 14199
+  },
+  {
+    "id": "rua-sao-bento-atual",
+    "title": "Rua São Bento — vista recente",
+    "description": "Fotografia recente da Rua São Bento, mostrando as transformações urbanas do centro paulistano.",
+    "lngLat": [-46.6348, -23.5443],
+    "image": "assets/pistas/rua-sao-bento-atual.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Rua_S%C3%A3o_Bento%2C_405-413_-_S%C3%A9%2C_S%C3%A3o_Paulo%2C_01011-100%2C_Brazil_-_panoramio.jpg/960px-Rua_S%C3%A3o_Bento%2C_405-413_-_S%C3%A9%2C_S%C3%A3o_Paulo%2C_01011-100%2C_Brazil_-_panoramio.jpg",
+    "downloadedAt": "2026-05-05T14:27:49.974443+00:00",
+    "contentType": "image/jpeg",
+    "bytes": 342037
+  }
+]

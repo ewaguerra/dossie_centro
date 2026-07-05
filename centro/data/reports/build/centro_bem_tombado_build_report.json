@@ -1,0 +1,37 @@
+{
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "layer": "geoportal:patrimonio_cultural_bem_tombado",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "total": 2974,
+  "distritos": {
+    "CAMBUCI": 51,
+    "REPÚBLICA": 757,
+    "LIBERDADE": 292,
+    "BOM RETIRO": 198,
+    "PARI": 7,
+    "BRAS / MÓOCA": 1,
+    " ": 1667,
+    "LIBERDADE, SE, CAMBUCI": 1
+  },
+  "niveis": {
+    "T": 169,
+    "P2": 514,
+    " ": 2073,
+    "P3": 127,
+    "P1": 46,
+    "P": 43,
+    "P1/P2": 2
+  },
+  "situacoes": {
+    "TOMBADO": 2568,
+    "APT": 191,
+    "APT / ESTUDO": 214,
+    " ": 1
+  },
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_bem_tombado__polygon.geojson"
+}

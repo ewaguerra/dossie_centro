@@ -1,0 +1,9 @@
+{
+  "officialIndex": 4,
+  "name": "Catedral Metropolitana de São Paulo",
+  "status": "footprint_not_found_in_local_geojson",
+  "note": "Nenhum Polygon/MultiPolygon local com evidência textual suficiente para Catedral da Sé.",
+  "minScoreThreshold": 1.0,
+  "bestScoreObserved": 0.0,
+  "bestEvidence": []
+}

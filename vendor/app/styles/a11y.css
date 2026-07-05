@@ -1,0 +1,80 @@
+/**
+ * Acessibilidade visual global — foco e reduced motion
+ * Carregar após tokens.css em landing, centro, arquivo-morto e arquivista.
+ *
+ * @see docs/design-system/accessibility.md
+ */
+
+:where(
+  button,
+  [role="button"],
+  a,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex]:not([tabindex="-1"]),
+  .btn,
+  .input,
+  .checkbox,
+  .toast__close,
+  .nav-retorno__link,
+  .nav-btn,
+  .hamburger-btn,
+  .hamburger-link,
+  .dock-item,
+  .skip-link
+):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* Centro HUD: outline no chrome forense, não na identidade âmbar */
+.has-jesuit-frame :where(
+  .nav-btn,
+  .btn--ghost,
+  .btn--bare,
+  .sidebar-open-btn
+):focus-visible {
+  outline-color: var(--color-accent-strong);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: var(--z-modal, 1000);
+  padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  background: var(--color-bg, #121212);
+  color: var(--color-text, #e5e5e5);
+  font-family: var(--font-mono, monospace);
+  font-size: var(--fs-sm, 0.875rem);
+  text-decoration: none;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: var(--space-3, 0.75rem);
+  top: var(--space-3, 0.75rem);
+  width: auto;
+  height: auto;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "layer": "geoportal:carta_geotecnica",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "total_cidade": 61,
+  "total_centro": 8,
+  "unidades": [
+    "III",
+    "X",
+    "VI",
+    "XIII",
+    "IV",
+    "XI",
+    "I",
+    "II"
+  ],
+  "file_size_bytes": 141895,
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_carta_geotecnica__polygon.geojson"
+}

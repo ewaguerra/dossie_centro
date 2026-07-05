@@ -1,0 +1,80 @@
+/** Centro — moldura jesuíta HUD */
+/* ─── Forensic Investigation HUD Frame ─────────────────── */
+
+.jesuit-screen-frame {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.jesuit-frame--top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--jesuit-frame-size-top);
+  background: var(--jesuit-frame-bg);
+  background-image:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 56" preserveAspectRatio="none"><g fill="none" stroke="%23dc2626" stroke-width="0.5" opacity="0.3"><path d="M0 10 L1000 10 M0 46 L1000 46"/><path d="M50 10 L50 46 M150 10 L150 46 M250 10 L250 46 M350 10 L350 46 M450 10 L450 46 M550 10 L550 46 M650 10 L650 46 M750 10 L750 46 M850 10 L850 46 M950 10 L950 46"/></g><text x="60" y="28" fill="%23ef4444" font-family="monospace" font-size="10" font-weight="bold" opacity="0.8">PROTOCOLO ALPHA // SENSOR: ON // GRID: 23.54S 46.63W</text></svg>'),
+    linear-gradient(to bottom, #000, #0a0a0a);
+  background-repeat: no-repeat, repeat;
+  background-position: center, center;
+  background-size: 100% 100%, 100% 100%;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.4);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.jesuit-frame--bottom {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 48px;
+  background: var(--jesuit-frame-bg);
+  background-image:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 48" preserveAspectRatio="none"><g fill="none" stroke="%23dc2626" stroke-width="0.5" opacity="0.3"><path d="M0 10 L1000 10 M0 38 L1000 38"/><path d="M100 10 L100 38 M300 10 L300 38 M500 10 L500 38 M700 10 L700 38 M900 10 L900 38"/></g><text x="50" y="28" fill="%23ef4444" font-family="monospace" font-size="9" font-weight="bold" opacity="0.7">STATUS: SCANNING... [OK] // DATASET: SP_CENTRO_CORE</text><text x="800" y="28" fill="%23ef4444" font-family="monospace" font-size="9" font-weight="bold" opacity="0.7">UNAUTHORIZED ACCESS DETECTED</text></svg>'),
+    linear-gradient(to top, #000, #0a0a0a);
+  background-size: 100% 100%;
+  border-top: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+.jesuit-frame--left, .jesuit-frame--right {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: var(--jesuit-frame-size-side);
+  background: var(--jesuit-frame-bg);
+  background-image:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 1000" preserveAspectRatio="none"><g fill="none" stroke="%23dc2626" stroke-width="0.5" opacity="0.2"><path d="M10 0 L10 1000 M34 0 L34 1000"/></g><g fill="%23ef4444" font-family="monospace" font-size="8" opacity="0.5"><text x="14" y="50">00.1</text><text x="14" y="150">00.2</text><text x="14" y="250">00.3</text><text x="14" y="350">00.4</text><text x="14" y="450">00.5</text><text x="14" y="550">00.6</text><text x="14" y="650">00.7</text><text x="14" y="750">00.8</text><text x="14" y="850">00.9</text><text x="14" y="950">01.0</text></g></svg>');
+  background-size: 100% 100%;
+}
+
+.jesuit-frame--left { left: 0; border-right: 1px solid rgba(220, 38, 38, 0.2); }
+.jesuit-frame--right { right: 0; border-left: 1px solid rgba(220, 38, 38, 0.2); }
+
+.jesuit-frame-corner {
+  position: fixed;
+  width: var(--jesuit-frame-size-side);
+  height: var(--jesuit-frame-size-top);
+  background: #000;
+  background-image:
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 56"><g fill="none" stroke="%23dc2626" stroke-width="1"><path d="M22 10 L22 46 M10 28 L34 28"/><circle cx="22" cy="28" r="10"/><circle cx="22" cy="28" r="2" fill="%23dc2626"/></g></svg>');
+  background-size: 100% 100%;
+  border: 1px solid rgba(220, 38, 38, 0.5);
+  z-index: 1000;
+}
+
+.jesuit-frame-corner--tl { top: 0; left: 0; }
+.jesuit-frame-corner--tr { top: 0; right: 0; }
+.jesuit-frame-corner--br { bottom: 0; right: 0; height: 48px; }
+.jesuit-frame-corner--bl { bottom: 0; left: 0; height: 48px; }
+.protocol-alpha-banner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 32vw;
+  max-width: 640px;
+  min-width: 300px;
+  height: 200px;
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.12) 0%, transparent 65%);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.25);
+  z-index: 2000;
+  pointer-events: none;
+  filter: drop-shadow(0 0 24px rgba(0, 0, 0, 0.9));
+}

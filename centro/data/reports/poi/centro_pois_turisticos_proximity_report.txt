@@ -1,0 +1,13 @@
+POIs com distância menor que 25m (classificado):
+
+possível colisão:
+- (nenhum)
+
+mesma fonte/mesma feature:
+- (nenhum)
+
+exige revisão humana:
+- (nenhum)
+
+proximidade aceitável:
+- (nenhum)

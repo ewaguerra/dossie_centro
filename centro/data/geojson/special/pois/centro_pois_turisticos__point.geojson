@@ -1,0 +1,2324 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "poi-001-beco-do-pinto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6318014,
+          -23.548302699999997
+        ]
+      },
+      "properties": {
+        "officialIndex": 1,
+        "slug": "beco-do-pinto",
+        "name": "Beco do Pinto",
+        "matchedName": "Beco do Pinto",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-003-casa-da-imagem",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.632198875,
+          -23.5483595375
+        ]
+      },
+      "properties": {
+        "officialIndex": 3,
+        "slug": "casa-da-imagem",
+        "name": "Casa da Imagem",
+        "matchedName": "Casa da Imagem",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "building",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-004-catedral-da-se",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63435966666667,
+          -23.551232885185186
+        ]
+      },
+      "properties": {
+        "officialIndex": 4,
+        "slug": "catedral-da-se",
+        "name": "Catedral Metropolitana de São Paulo",
+        "matchedName": "Catedral da Sé",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "amenity",
+          "historic",
+          "building",
+          "addr:street",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-005-ccbb",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6346871,
+          -23.5475552
+        ]
+      },
+      "properties": {
+        "officialIndex": 5,
+        "slug": "ccbb",
+        "name": "Centro Cultural Banco do Brasil",
+        "matchedName": "Centro Cultural Banco do Brasil São Paulo",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "amenity",
+          "addr:street",
+          "addr:housenumber",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-006-edificio-martinelli",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6349485,
+          -23.5456985
+        ]
+      },
+      "properties": {
+        "officialIndex": 6,
+        "slug": "edificio-martinelli",
+        "name": "Edifício Martinelli",
+        "matchedName": "Edifício Martinelli",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-007-edificio-sampaio-moreira",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63617396666667,
+          -23.546725388888888
+        ]
+      },
+      "properties": {
+        "officialIndex": 7,
+        "slug": "edificio-sampaio-moreira",
+        "name": "Edifício Sampaio Moreira",
+        "matchedName": "Edifício Sampaio Moreira",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-008-edificio-matarazzo---sede-da-prefeitura",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63744258333333,
+          -23.547525699999998
+        ]
+      },
+      "properties": {
+        "officialIndex": 8,
+        "slug": "edificio-matarazzo---sede-da-prefeitura",
+        "name": "Edifício Matarazzo – Sede da Prefeitura",
+        "matchedName": "Edifício Matarazzo",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-009-faculdade-de-direito-da-usp",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63687394736842,
+          -23.549715042105266
+        ]
+      },
+      "properties": {
+        "officialIndex": 9,
+        "slug": "faculdade-de-direito-da-usp",
+        "name": "Faculdade de Direito da USP",
+        "matchedName": "Largo São Francisco",
+        "category": "educacao_institucional",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "historic",
+          "leisure",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-010-farol-santander-farol-santander",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.634132845454545,
+          -23.545840763636363
+        ]
+      },
+      "properties": {
+        "officialIndex": 10,
+        "slug": "farol-santander-farol-santander",
+        "name": "Farol Santander / Edifício Altino Arantes",
+        "matchedName": "Edifício Altino Arantes",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-011-galeria-prestes-maia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6372536,
+          -23.5463276
+        ]
+      },
+      "properties": {
+        "officialIndex": 11,
+        "slug": "galeria-prestes-maia",
+        "name": "Galeria Prestes Maia",
+        "matchedName": "Galeria Prestes Maia",
+        "category": "mercado_comercio",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_transporte__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "public_transport"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-012-igreja-da-ordem-terceira-do-carmo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.655529380000004,
+          -23.54982982
+        ]
+      },
+      "properties": {
+        "officialIndex": 12,
+        "slug": "igreja-da-ordem-terceira-do-carmo",
+        "name": "Igreja da Ordem Terceira do Carmo",
+        "matchedName": "Cemitério da Ordem Terceira do Carmo",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 0.95,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-014-igreja-santo-antonio",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63142949090909,
+          -23.530396054545452
+        ]
+      },
+      "properties": {
+        "officialIndex": 14,
+        "slug": "igreja-santo-antonio",
+        "name": "Igreja Santo Antônio",
+        "matchedName": "Igreja Santo Antonio de Sant'Anna Galvão",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-015-igreja-sao-francisco-de-assis",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6371597,
+          -23.5497313
+        ]
+      },
+      "properties": {
+        "officialIndex": 15,
+        "slug": "igreja-sao-francisco-de-assis",
+        "name": "Igreja São Francisco de Assis",
+        "matchedName": "Igreja São Francisco",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "historic",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-016-mosteiro-de-sao-bento",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6339137,
+          -23.5438193
+        ]
+      },
+      "properties": {
+        "officialIndex": 16,
+        "slug": "mosteiro-de-sao-bento",
+        "name": "Mosteiro de São Bento",
+        "matchedName": "Mosteiro de São Bento",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-017-mub3---museu-da-bolsa-do-brasil",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6343972,
+          -23.5465253
+        ]
+      },
+      "properties": {
+        "officialIndex": 17,
+        "slug": "mub3---museu-da-bolsa-do-brasil",
+        "name": "Mub3 – Museu da Bolsa do Brasil",
+        "matchedName": "B3",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-018-museu-anchieta",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6368338,
+          -23.5418908
+        ]
+      },
+      "properties": {
+        "officialIndex": 18,
+        "slug": "museu-anchieta",
+        "name": "Museu Anchieta",
+        "matchedName": "Anchieta",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_alimentacao__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 2,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-020-pateo-do-colegio",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6331906,
+          -23.5478856
+        ]
+      },
+      "properties": {
+        "officialIndex": 20,
+        "slug": "pateo-do-colegio",
+        "name": "Pateo do Collegio",
+        "matchedName": "Largo Pateo Do Colégio",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_transporte__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 0.95,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "public_transport"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-021-praca-da-se",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.633219385000004,
+          -23.55054228
+        ]
+      },
+      "properties": {
+        "officialIndex": 21,
+        "slug": "praca-da-se",
+        "name": "Praça da Sé",
+        "matchedName": "Praça da Sé",
+        "category": "praca_espaco_publico",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "leisure",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-024-biblioteca-mario-de-andrade",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.64199202666667,
+          -23.54730766
+        ]
+      },
+      "properties": {
+        "officialIndex": 24,
+        "slug": "biblioteca-mario-de-andrade",
+        "name": "Biblioteca Mário de Andrade",
+        "matchedName": "Biblioteca Mário de Andrade",
+        "category": "educacao_institucional",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_educacao__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-025-capela-nossa-senhora-dos-aflitos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63464829,
+          -23.55612772
+        ]
+      },
+      "properties": {
+        "officialIndex": 25,
+        "slug": "capela-nossa-senhora-dos-aflitos",
+        "name": "Capela Nossa Senhora dos Aflitos",
+        "matchedName": "Capela dos Aflitos",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "amenity",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-026-casa-de-dona-yaya",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.64279581176471,
+          -23.55440560588235
+        ]
+      },
+      "properties": {
+        "officialIndex": 26,
+        "slug": "casa-de-dona-yaya",
+        "name": "Casa de Dona Yayá",
+        "matchedName": "Casa de Dona Yayá",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-027-casa-do-povo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.636584,
+          -23.52909
+        ]
+      },
+      "properties": {
+        "officialIndex": 27,
+        "slug": "casa-do-povo",
+        "name": "Casa do Povo",
+        "matchedName": "Casa do Povo",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-028-centro-cultural-correios",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6329984,
+          -23.5388625
+        ]
+      },
+      "properties": {
+        "officialIndex": 28,
+        "slug": "centro-cultural-correios",
+        "name": "Centro Cultural Correios",
+        "matchedName": "Correios",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-029-centro-cultural-liceu-de-artes-e-oficios",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.62713980322581,
+          -23.532929277419356
+        ]
+      },
+      "properties": {
+        "officialIndex": 29,
+        "slug": "centro-cultural-liceu-de-artes-e-oficios",
+        "name": "Centro Cultural Liceu de Artes e Ofícios",
+        "matchedName": "Liceu de Artes e Ofícios de São Paulo",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 0.95,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-031-edificio-copan",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6444978815,
+          -23.5466119425
+        ]
+      },
+      "properties": {
+        "officialIndex": 31,
+        "slug": "edificio-copan",
+        "name": "Edifício Copan",
+        "matchedName": "Edifício Copan",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "building",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-032-edificio-italia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6436337,
+          -23.5453075
+        ]
+      },
+      "properties": {
+        "officialIndex": 32,
+        "slug": "edificio-italia",
+        "name": "Edifício Itália",
+        "matchedName": "Edifício Itália",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-033-estacao-da-luz",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6335305,
+          -23.538065
+        ]
+      },
+      "properties": {
+        "officialIndex": 33,
+        "slug": "estacao-da-luz",
+        "name": "Estação da Luz",
+        "matchedName": "Estação da Luz",
+        "category": "transporte_estacao",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "railway",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-034-estacao-julio-prestes",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6402372,
+          -23.5336773
+        ]
+      },
+      "properties": {
+        "officialIndex": 34,
+        "slug": "estacao-julio-prestes",
+        "name": "Estação Júlio Prestes",
+        "matchedName": "Estação Motiva Cultural",
+        "category": "transporte_estacao",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-035-estacao-pinacoteca-e-memorial-da-resistencia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6391162,
+          -23.5347933
+        ]
+      },
+      "properties": {
+        "officialIndex": 35,
+        "slug": "estacao-pinacoteca-e-memorial-da-resistencia",
+        "name": "Estação Pinacoteca e Memorial da Resistência",
+        "matchedName": "Memorial da Resistência de São Paulo",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-036-galeria-do-rock",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63871745454546,
+          -23.543707827272726
+        ]
+      },
+      "properties": {
+        "officialIndex": 36,
+        "slug": "galeria-do-rock",
+        "name": "Galeria do Rock",
+        "matchedName": "Galeria do Rock",
+        "category": "mercado_comercio",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_comercio__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 2,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "building",
+          "shop",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-037-galeria-olido",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63885,
+          -23.5433207
+        ]
+      },
+      "properties": {
+        "officialIndex": 37,
+        "slug": "galeria-olido",
+        "name": "Galeria Olido",
+        "matchedName": "Galeria Olido",
+        "category": "mercado_comercio",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_comercio__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 2,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "shop",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-038-igreja-nossa-senhora-da-boa-morte",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.629927477777784,
+          -23.552365016666666
+        ]
+      },
+      "properties": {
+        "officialIndex": 38,
+        "slug": "igreja-nossa-senhora-da-boa-morte",
+        "name": "Igreja Nossa Senhora da Boa Morte",
+        "matchedName": "Igreja Nossa Senhora da Boa Morte",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-039-igreja-nossa-senhora-da-consolacao",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6479084375,
+          -23.548662625
+        ]
+      },
+      "properties": {
+        "officialIndex": 39,
+        "slug": "igreja-nossa-senhora-da-consolacao",
+        "name": "Igreja Nossa Senhora da Consolação",
+        "matchedName": "Nossa Senhora da Consolação",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_educacao__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "building",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-042-igreja-santa-cecilia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6323329,
+          -23.5446948
+        ]
+      },
+      "properties": {
+        "officialIndex": 42,
+        "slug": "igreja-santa-cecilia",
+        "name": "Igreja Santa Cecília",
+        "matchedName": "Santa Cecilia",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_comercio__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 2,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "shop",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-044-igreja-santa-ifigenia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.637941814814816,
+          -23.541983896296298
+        ]
+      },
+      "properties": {
+        "officialIndex": 44,
+        "slug": "igreja-santa-ifigenia",
+        "name": "Igreja Santa Ifigênia",
+        "matchedName": "Igreja Martin Luther",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-045-igreja-sao-goncalo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.635236166666665,
+          -23.55233857777778
+        ]
+      },
+      "properties": {
+        "officialIndex": 45,
+        "slug": "igreja-sao-goncalo",
+        "name": "Igreja São Gonçalo",
+        "matchedName": "Igreja São Gonçalo",
+        "category": "igreja_religiosidade",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-046-matilha-cultural",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.646920938461534,
+          -23.54669953846154
+        ]
+      },
+      "properties": {
+        "officialIndex": 46,
+        "slug": "matilha-cultural",
+        "name": "Matilha Cultural",
+        "matchedName": "Matilha Cultural",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "building"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-047-memorial-da-imigracao-judaica-e-do-holocausto",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6385290375,
+          -23.52978854375
+        ]
+      },
+      "properties": {
+        "officialIndex": 47,
+        "slug": "memorial-da-imigracao-judaica-e-do-holocausto",
+        "name": "Memorial da Imigração Judaica e do Holocausto",
+        "matchedName": "Memorial da Imigração Judaica e do Holocausto",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-048-mercado-municipal-kinjo-yamato",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6302563,
+          -23.5403591
+        ]
+      },
+      "properties": {
+        "officialIndex": 48,
+        "slug": "mercado-municipal-kinjo-yamato",
+        "name": "Mercado Municipal Kinjo Yamato",
+        "matchedName": "Mercado Municipal Kinjo Yamato",
+        "category": "mercado_comercio",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-049-mercado-municipal-paulistano",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.629406,
+          -23.541958
+        ]
+      },
+      "properties": {
+        "officialIndex": 49,
+        "slug": "mercado-municipal-paulistano",
+        "name": "Mercado Municipal Paulistano",
+        "matchedName": "Requalificação do Mercado Municipal",
+        "category": "mercado_comercio",
+        "group": "turismo",
+        "sourceGeojson": "data/processed/06_equipamentos/13_espacos_publicos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 2,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-050-monumento-a-carlos-gomes",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63569558333333,
+          -23.553235733333334
+        ]
+      },
+      "properties": {
+        "officialIndex": 50,
+        "slug": "monumento-a-carlos-gomes",
+        "name": "Monumento a Carlos Gomes",
+        "matchedName": "Praça Carlos Gomes",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 0.95,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "leisure"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-051-museu-catavento",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.627790972727276,
+          -23.543691577272728
+        ]
+      },
+      "properties": {
+        "officialIndex": 51,
+        "slug": "museu-catavento",
+        "name": "Museu Catavento",
+        "matchedName": "Catavento Cultural e Educacional",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-053-museu-da-lingua-portuguesa",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63498512142858,
+          -23.53495512857143
+        ]
+      },
+      "properties": {
+        "officialIndex": 53,
+        "slug": "museu-da-lingua-portuguesa",
+        "name": "Museu da Língua Portuguesa",
+        "matchedName": "Museu da Língua Portuguesa",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "addr:street",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-055-museu-das-favelas-palacio-campos-eliseos",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.645095741666665,
+          -23.533655975000002
+        ]
+      },
+      "properties": {
+        "officialIndex": 55,
+        "slug": "museu-das-favelas-palacio-campos-eliseos",
+        "name": "Museu das Favelas / Palácio Campos Elíseos",
+        "matchedName": "Museu das Favelas",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-056-museu-de-arte-sacra",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.65601681818182,
+          -23.56141900909091
+        ]
+      },
+      "properties": {
+        "officialIndex": 56,
+        "slug": "museu-de-arte-sacra",
+        "name": "Museu de Arte Sacra",
+        "matchedName": "Museu de Arte de São Paulo",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 0.8451,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-058-museu-do-tribunal-de-justica-do-estado-de-sao-paulo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6321281,
+          -23.5537763
+        ]
+      },
+      "properties": {
+        "officialIndex": 58,
+        "slug": "museu-do-tribunal-de-justica-do-estado-de-sao-paulo",
+        "name": "Museu do Tribunal de Justiça do Estado de São Paulo",
+        "matchedName": "Museu do Tribunal de Justiça SP",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-059-museu-judaico-de-sao-paulo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.64560551538462,
+          -23.550767746153845
+        ]
+      },
+      "properties": {
+        "officialIndex": 59,
+        "slug": "museu-judaico-de-sao-paulo",
+        "name": "Museu Judaico de São Paulo",
+        "matchedName": "Museu Judaico de São Paulo",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-060-obelisco-do-piques",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.64006599031689,
+          -23.5492123589533
+        ]
+      },
+      "properties": {
+        "officialIndex": 60,
+        "slug": "obelisco-do-piques",
+        "name": "Obelisco do Piques",
+        "matchedName": "Passarela dos Piques",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_ruas__line.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "line_midpoint",
+        "sourceRank": 3,
+        "coordinateSource": "midpoint_from_local_geojson_line",
+        "confidence": "high",
+        "matchScore": 0.95,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name"
+        ],
+        "geometryTypeOriginal": "LineString"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-061-oficina-cultural-oswald-de-andrade",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63779460833334,
+          -23.529364675
+        ]
+      },
+      "properties": {
+        "officialIndex": 61,
+        "slug": "oficina-cultural-oswald-de-andrade",
+        "name": "Oficina Cultural Oswald de Andrade",
+        "matchedName": "Oficina Cultural Oswald de Andrade",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-062-palacio-anchieta-camara-municipal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.641019292857145,
+          -23.550686842857143
+        ]
+      },
+      "properties": {
+        "officialIndex": 62,
+        "slug": "palacio-anchieta-camara-municipal",
+        "name": "Palácio Anchieta / Câmara Municipal",
+        "matchedName": "Câmara Municipal de São Paulo",
+        "category": "educacao_institucional",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-063-parque-jardim-da-luz",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.635320841025646,
+          -23.532920223076925
+        ]
+      },
+      "properties": {
+        "officialIndex": 63,
+        "slug": "parque-jardim-da-luz",
+        "name": "Parque Jardim da Luz",
+        "matchedName": "Parque da Luz",
+        "category": "praca_espaco_publico",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 0.9,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "leisure",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-065-pinacoteca-de-sao-paulo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63388775254237,
+          -23.53428718644068
+        ]
+      },
+      "properties": {
+        "officialIndex": 65,
+        "slug": "pinacoteca-de-sao-paulo",
+        "name": "Pinacoteca de São Paulo",
+        "matchedName": "Pinacoteca do Estado de São Paulo",
+        "category": "museu_memoria",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "medium",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": false,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-066-praca-da-liberdade",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.635290749999996,
+          -23.55523715
+        ]
+      },
+      "properties": {
+        "officialIndex": 66,
+        "slug": "praca-da-liberdade",
+        "name": "Praça da Liberdade",
+        "matchedName": "Praça da Liberdade",
+        "category": "praca_espaco_publico",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_ruas__line.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "line_midpoint",
+        "sourceRank": 3,
+        "coordinateSource": "midpoint_from_local_geojson_line",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name"
+        ],
+        "geometryTypeOriginal": "LineString"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-067-praca-da-republica",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.642366515,
+          -23.54281625
+        ]
+      },
+      "properties": {
+        "officialIndex": 67,
+        "slug": "praca-da-republica",
+        "name": "Praça da República",
+        "matchedName": "Praça da República",
+        "category": "praca_espaco_publico",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "leisure",
+          "addr:street",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-068-praca-das-artes",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6373301,
+          -23.5443176
+        ]
+      },
+      "properties": {
+        "officialIndex": 68,
+        "slug": "praca-das-artes",
+        "name": "Praça das Artes",
+        "matchedName": "Praça das Artes",
+        "category": "praca_espaco_publico",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-069-praca-franklin-roosevelt",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.64670835974026,
+          -23.54854523766234
+        ]
+      },
+      "properties": {
+        "officialIndex": 69,
+        "slug": "praca-franklin-roosevelt",
+        "name": "Praça Franklin Roosevelt",
+        "matchedName": "Praça Franklin Roosevelt",
+        "category": "praca_espaco_publico",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "leisure",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-070-sala-sao-paulo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63967692424242,
+          -23.53461523030303
+        ]
+      },
+      "properties": {
+        "officialIndex": 70,
+        "slug": "sala-sao-paulo",
+        "name": "Sala São Paulo",
+        "matchedName": "Sala São Paulo",
+        "category": "teatro_espetaculo",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "amenity",
+          "historic",
+          "building",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-071-sampa-sky",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6354953,
+          -23.5417098
+        ]
+      },
+      "properties": {
+        "officialIndex": 71,
+        "slug": "sampa-sky",
+        "name": "Sampa Sky",
+        "matchedName": "Sampa Sky",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_alimentacao__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 2,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-072-shopping-light",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63876225897435,
+          -23.546648564102565
+        ]
+      },
+      "properties": {
+        "officialIndex": 72,
+        "slug": "shopping-light",
+        "name": "Shopping Light",
+        "matchedName": "Shopping Light",
+        "category": "mercado_comercio",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_comercio__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 2,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "building",
+          "shop",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-073-sesc-24-de-maio",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6400018,
+          -23.5441168
+        ]
+      },
+      "properties": {
+        "officialIndex": 73,
+        "slug": "sesc-24-de-maio",
+        "name": "Sesc 24 de Maio",
+        "matchedName": "SESC 24 de Maio",
+        "category": "sesc_lazer",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-074-sesc-bom-retiro",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6433717,
+          -23.5310655
+        ]
+      },
+      "properties": {
+        "officialIndex": 74,
+        "slug": "sesc-bom-retiro",
+        "name": "Sesc Bom Retiro",
+        "matchedName": "SESC Bom Retiro",
+        "category": "sesc_lazer",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "address_fallback",
+        "sourceRank": 3,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "amenity",
+          "addr:street",
+          "addr:housenumber",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-077-theatro-municipal",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.63870822553192,
+          -23.545349323404256
+        ]
+      },
+      "properties": {
+        "officialIndex": 77,
+        "slug": "theatro-municipal",
+        "name": "Theatro Municipal",
+        "matchedName": "Teatro Municipal de São Paulo",
+        "category": "outro",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "amenity",
+          "historic",
+          "building",
+          "addr:street",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-078-viaduto-do-cha",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6379543,
+          -23.5465818
+        ]
+      },
+      "properties": {
+        "officialIndex": 78,
+        "slug": "viaduto-do-cha",
+        "name": "Viaduto do Chá",
+        "matchedName": "Viaduto do Chá",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "poi-079-viaduto-santa-ifigenia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.6356053,
+          -23.542624149999998
+        ]
+      },
+      "properties": {
+        "officialIndex": 79,
+        "slug": "viaduto-santa-ifigenia",
+        "name": "Viaduto Santa Ifigênia",
+        "matchedName": "Viaduto Santa Ifigênia",
+        "category": "arquitetura_mirante",
+        "group": "turismo",
+        "sourceGeojson": "data/osm/processed/15_osm_lazer__point.geojson",
+        "sourceFeatureId": null,
+        "sourceType": "poi_like",
+        "sourceRank": 1,
+        "coordinateSource": "point_from_local_geojson",
+        "confidence": "high",
+        "matchScore": 1.0,
+        "reviewStatus": "accepted",
+        "isExactAliasInName": true,
+        "evidenceFields": [
+          "name",
+          "tourism",
+          "historic",
+          "wikipedia",
+          "wikidata"
+        ],
+        "geometryTypeOriginal": "Point"
+      }
+    }
+  ]
+}

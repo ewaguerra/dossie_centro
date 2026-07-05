@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "defaultMinPhase": 1,
+  "maxPhase": 13,
+  "phaseTitles": {
+    "1": "Superfície",
+    "2": "Hidrografia soterrada",
+    "3": "Património rígido",
+    "4": "Acervo e memória",
+    "5": "Geotecnia",
+    "6": "Arquivo superficial",
+    "7": "Rasgue o Asfalto",
+    "8": "Setores interditos",
+    "9": "Malha urbana",
+    "10": "Risco sistémico",
+    "11": "Triângulo fechado",
+    "12": "Comissão",
+    "13": "Permanência"
+  },
+  "layerMinPhase": {
+    "03_eixo_existente__polygon": 2,
+    "03a_eixo_previsto__polygon": 2,
+    "05_hidrografia_rios__line": 2,
+    "17_alagamentos_contexto_hidrografico__point": 3,
+    "centro_rios_geosampa__line": 2,
+    "centro_area_inundavel__polygon": 2,
+    "centro_rios_osm__line": 2,
+    "centro_monumentos__point": 3,
+    "centro_bem_tombado__polygon": 3,
+    "centro_bem_arqueologico__point": 4,
+    "centro_acervo_tombado__point": 4,
+    "centro_memoria_paulistana__point": 4,
+    "centro_carta_geotecnica__polygon": 5,
+    "centro_risco_alagamento__point": 5,
+    "centro_declividade__polygon": 6,
+    "centro_arquivo_superficial__point": 6
+  },
+  "clueCountAdvance": [
+    { "minClues": 2, "phase": 2 },
+    { "minClues": 5, "phase": 3 },
+    { "minClues": 8, "phase": 4 },
+    { "minClues": 11, "phase": 5 },
+    { "minClues": 14, "phase": 6 }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "poi": {
+    "officialIndex": 4,
+    "slug": "catedral-da-se",
+    "name": "Catedral Metropolitana de São Paulo",
+    "coordinates": [
+      -46.63435966666667,
+      -23.551232885185186
+    ]
+  },
+  "search": {
+    "filesScanned": 168,
+    "polygonCandidates": 13420
+  },
+  "visibleFootprintInvestigation": {
+    "mapShowsFootprint": true,
+    "basemapSourceType": "unknown (requires runtime style inspection)",
+    "queryRenderedFeaturesFound": false,
+    "renderedFeatureLayers": [],
+    "renderedFeaturePropertiesSample": [],
+    "isExtractableFromBasemap": false,
+    "notes": [
+      "Sem inspeção runtime (map.getStyle()/queryRenderedFeatures) não dá para provar a origem do polígono visível.",
+      "O style do Centro é um URL remoto GL (provável vector tiles), então o footprint pode ser do basemap e não de GeoJSON local."
+    ]
+  },
+  "localGeojsonSearch": {
+    "textualMatches": [],
+    "spatialCandidates": [
+      {
+        "sourceGeojson": "data/processed/16_regioes_sp/16_regiao_centro__polygon.geojson",
+        "sourceFeatureId": "distrito_municipal.8583422",
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 489.58,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "data/processed/16_regioes_sp/distrito_municipal__polygon.geojson",
+        "sourceFeatureId": "distrito_municipal.8583422",
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 489.58,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "pages/centro/data/processed/16_regiao_centro__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 489.58,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "data/processed/08_hidrografia/05_bacias_hidrograficas__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 566.33,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "data/processed/16_regioes_sp/subprefeitura__polygon.geojson",
+        "sourceFeatureId": "subprefeitura.14",
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 646.36,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "pages/centro/data/processed/02a_subsetores_central__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 647.17,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "data/processed/02_macroareas_e_eixos/02a_subsetores_central__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 658.66,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "data/processed/01_macrozoneamento/01_macrozona_estruturacao_qualificacao_urbana__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "MultiPolygon",
+        "containsPoi": true,
+        "distanceMeters": 2222.47,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "data/processed/01_macrozoneamento/01a_zona_urbana__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 2460.42,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "data/processed/02_macroareas_e_eixos/02_macroarea_estruturacao_metropolitana__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "Polygon",
+        "containsPoi": true,
+        "distanceMeters": 4521.26,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "data/processed/03_zoneamento/04a_zeis3__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "Polygon",
+        "containsPoi": false,
+        "distanceMeters": 65.28,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      },
+      {
+        "sourceGeojson": "pages/centro/data/processed/04a_zeis3__polygon.geojson",
+        "sourceFeatureId": null,
+        "geometryType": "Polygon",
+        "containsPoi": false,
+        "distanceMeters": 65.28,
+        "hasTextualEvidence": false,
+        "semanticEvidence": [],
+        "confidence": "low",
+        "useForExtrusion": false
+      }
+    ],
+    "acceptedFootprint": null
+  },
+  "result": null,
+  "missing": {
+    "officialIndex": 4,
+    "name": "Catedral Metropolitana de São Paulo",
+    "status": "footprint_not_found_in_local_geojson",
+    "note": "Nenhum Polygon/MultiPolygon local com evidência textual suficiente para Catedral da Sé.",
+    "minScoreThreshold": 1.0,
+    "bestScoreObserved": 0.0,
+    "bestEvidence": []
+  }
+}

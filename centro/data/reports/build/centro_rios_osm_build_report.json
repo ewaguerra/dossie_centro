@@ -1,0 +1,57 @@
+{
+  "source": "OpenStreetMap / Overpass API",
+  "overpass_url": "https://overpass-api.de/api/interpreter",
+  "bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "waterway_types": [
+    "river",
+    "stream",
+    "canal",
+    "drain",
+    "ditch",
+    "riverbank"
+  ],
+  "total_features": 79,
+  "named": 47,
+  "tunnels": 6,
+  "by_type": {
+    "river": 24,
+    "stream": 55
+  },
+  "names": [
+    "2º Afluente do Pedra Azul",
+    "Afluente do Cambuci",
+    "Antigo curso do Rio Tamanduateí",
+    "Córrego Anhanguera",
+    "Córrego Assémbleia",
+    "Córrego Augusta",
+    "Córrego Cambuci",
+    "Córrego Cassandoca",
+    "Córrego Iguatemi",
+    "Córrego Itororó",
+    "Córrego Pedra Azul",
+    "Córrego Saracura",
+    "Córrego Saracura Mirim",
+    "Córrego da Luz",
+    "Córrego do Bixiga",
+    "Córrego do Moringuinho",
+    "Córrego dos Desprazeres",
+    "Riacho Jurubatuba",
+    "Riacho Saracura",
+    "Riacho do Ipiranga",
+    "Ribeirão Anhangabaú",
+    "Ribeirão Carandiru",
+    "Ribeirão Pacaembu",
+    "Ribeirão Sumaré",
+    "Rio Jurubatuba",
+    "Rio Lavapés",
+    "Rio Tamanduateí",
+    "Rio Tietê"
+  ],
+  "file_size_bytes": 44063,
+  "output": "F:\\dev\\mapa_sp\\pages\\centro\\data\\context\\centro_rios_osm__line.geojson"
+}

@@ -1,0 +1,5 @@
+{
+  "landing": "http://127.0.0.1:8080/landing/",
+  "arquivo-morto": "http://127.0.0.1:8080/arquivo-morto/",
+  "arquivista": "http://127.0.0.1:8080/arquivista/"
+}

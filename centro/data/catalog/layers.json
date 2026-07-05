@@ -1,0 +1,267 @@
+{
+  "id": "centro_snapshot",
+  "title": "Dossiê Centro",
+  "layers": [
+    {
+      "id": "02a_subsetores_arco_tamanduatei__polygon",
+      "title": "Setor de Interdição: Arco Tamanduateí",
+      "group": "02_macroareas_e_eixos",
+      "group_title": "Zonas Interditas (Macroáreas)",
+      "source_file": "geojson_extraidos/02A_Subsetores_Arco_Tamanduatei.geojson",
+      "file": "data/processed/02a_subsetores_arco_tamanduatei__polygon.geojson",
+      "file_size_bytes": 11191,
+      "feature_count": 1,
+      "geometry": "polygon",
+      "type": "fill",
+      "bbox": [
+        -46.6292909912448,
+        -23.62218761577018,
+        -46.57572299150358,
+        -23.547626619390286
+      ],
+      "suspect_coordinates_0_0": 0,
+      "minzoom": 8,
+      "maxzoom": 22,
+      "visible": true,
+      "style": {
+        "color": "#06b6d4",
+        "paint": {
+          "fill-color": "#06b6d4",
+          "fill-opacity": 0.25,
+          "fill-outline-color": "#ffffff"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
+      "id": "02a_subsetores_central__polygon",
+      "title": "Núcleo de Compressão Central",
+      "group": "02_macroareas_e_eixos",
+      "group_title": "Zonas Interditas (Macroáreas)",
+      "source_file": "geojson_extraidos/02A_Subsetores_Central.geojson",
+      "file": "data/processed/02a_subsetores_central__polygon.geojson",
+      "file_size_bytes": 10724,
+      "feature_count": 1,
+      "geometry": "polygon",
+      "type": "fill",
+      "bbox": [
+        -46.64856399115046,
+        -23.55617261899594,
+        -46.61152799134523,
+        -23.533172620115213
+      ],
+      "suspect_coordinates_0_0": 0,
+      "minzoom": 8,
+      "maxzoom": 22,
+      "visible": true,
+      "style": {
+        "color": "#06b6d4",
+        "paint": {
+          "fill-color": "#06b6d4",
+          "fill-opacity": 0.25,
+          "fill-outline-color": "#ffffff"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
+      "id": "16_regiao_centro__polygon",
+      "title": "Raio de Investigação Alpha",
+      "group": "16_regioes_sp",
+      "group_title": "Limites Territoriais",
+      "source_file": "geojson_extraidos/16_regiao_centro.geojson",
+      "file": "data/processed/16_regiao_centro__polygon.geojson",
+      "file_size_bytes": 217258,
+      "feature_count": 8,
+      "geometry": "polygon",
+      "type": "fill",
+      "bbox": [
+        -46.67584666013508,
+        -23.579059641272934,
+        -46.60393345614996,
+        -23.516784475059172
+      ],
+      "suspect_coordinates_0_0": 0,
+      "minzoom": 9,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#3b82f6",
+        "paint": {
+          "fill-color": "#3b82f6",
+          "fill-opacity": 0.25,
+          "fill-outline-color": "#ffffff"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
+      "id": "03_eixo_existente__polygon",
+      "title": "Eixo de Controle Primário",
+      "group": "02_macroareas_e_eixos",
+      "group_title": "Zonas Interditas (Macroáreas)",
+      "source_file": "data/processed/02_macroareas_e_eixos/03_eixo_existente__polygon.geojson",
+      "file": "data/processed/03_eixo_existente__polygon.geojson",
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 10,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#06b6d4",
+        "paint": {
+          "fill-color": "#06b6d4",
+          "fill-opacity": 0.08,
+          "fill-outline-color": "#ffffff"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
+      "id": "03a_eixo_previsto__polygon",
+      "title": "Eixo de Expansão (Projetado)",
+      "group": "02_macroareas_e_eixos",
+      "group_title": "Zonas Interditas (Macroáreas)",
+      "source_file": "data/processed/02_macroareas_e_eixos/03a_eixo_previsto__polygon.geojson",
+      "file": "data/processed/03a_eixo_previsto__polygon.geojson",
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 10,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#06b6d4",
+        "paint": {
+          "fill-color": "#06b6d4",
+          "fill-opacity": 0.06,
+          "fill-outline-color": "#ffffff"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
+      "id": "05_hidrografia_rios__line",
+      "title": "Afloramento Fluviário (Cicatrizes)",
+      "group": "08_hidrografia",
+      "group_title": "Anomalias Fluviais",
+      "stackRole": "hydro-line",
+      "source_file": "data/processed/08_hidrografia/05_hidrografia_rios__line.geojson",
+      "file": "data/processed/05_hidrografia_rios__line.geojson",
+      "geometry": "line",
+      "type": "line",
+      "minzoom": 12,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#0ea5e9",
+        "paint": {
+          "line-color": "#0ea5e9",
+          "line-width": 1.2,
+          "line-opacity": 0.4
+        }
+      },
+      "clipped": true,
+      "geom": "line"
+    },
+    {
+      "id": "04_zeis1__polygon",
+      "title": "Célula de Ocupação: ZEIS-1",
+      "group": "03_zoneamento",
+      "group_title": "Controlo Zonal",
+      "source_file": "data/processed/03_zoneamento/04_zeis1__polygon.geojson",
+      "file": "data/processed/04_zeis1__polygon.geojson",
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#f59e0b",
+        "paint": {
+          "fill-color": "#f59e0b",
+          "fill-opacity": 0.07,
+          "fill-outline-color": "#ffffff"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
+      "id": "04a_zeis2__polygon",
+      "title": "Célula de Ocupação: ZEIS-2",
+      "group": "03_zoneamento",
+      "group_title": "Controlo Zonal",
+      "source_file": "data/processed/03_zoneamento/04a_zeis2__polygon.geojson",
+      "file": "data/processed/04a_zeis2__polygon.geojson",
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#f59e0b",
+        "paint": {
+          "fill-color": "#fef08a",
+          "fill-opacity": 0.06,
+          "fill-outline-color": "#eab308"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
+      "id": "04a_zeis3__polygon",
+      "title": "Célula de Ocupação: ZEIS-3",
+      "group": "03_zoneamento",
+      "group_title": "Controlo Zonal",
+      "source_file": "data/processed/03_zoneamento/04a_zeis3__polygon.geojson",
+      "file": "data/processed/04a_zeis3__polygon.geojson",
+      "geometry": "polygon",
+      "type": "fill",
+      "minzoom": 11,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#f59e0b",
+        "paint": {
+          "fill-color": "#f59e0b",
+          "fill-opacity": 0.05,
+          "fill-outline-color": "#ffffff"
+        }
+      },
+      "clipped": true,
+      "geom": "polygon"
+    },
+    {
+      "id": "17_alagamentos_contexto_hidrografico__point",
+      "title": "Evidências de Submersão Traumática",
+      "group": "17_risco_hidrologico",
+      "group_title": "Eventos Críticos",
+      "stackRole": "point",
+      "source_file": "data/processed/17_risco_hidrologico/17_alagamentos_contexto_hidrografico__point.geojson",
+      "file": "data/processed/17_alagamentos_contexto_hidrografico__point.geojson",
+      "geometry": "point",
+      "type": "circle",
+      "minzoom": 13,
+      "maxzoom": 22,
+      "visible": false,
+      "style": {
+        "color": "#2563eb",
+        "paint": {
+          "circle-radius": 4,
+          "circle-color": "#2563eb",
+          "circle-opacity": 0.45,
+          "circle-stroke-width": 1,
+          "circle-stroke-color": "#ffffff"
+        }
+      },
+      "clipped": true,
+      "geom": "point"
+    }
+  ]
+}

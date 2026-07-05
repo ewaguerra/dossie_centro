@@ -1,0 +1,73 @@
+/**
+ * Centro — narrative nav (botões OP:* / flyTo)
+ * Breakpoints: docs/design-system/breakpoints.md
+ * (--bp-md: 640px, --bp-sm: 480px)
+ */
+
+.narrative-nav {
+  position: fixed;
+  bottom: calc(var(--jesuit-frame-bottom, 48px) + var(--centro-sidebar-gap, 12px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-nav);
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  padding-bottom: max(var(--space-2), env(safe-area-inset-bottom, 0px));
+  max-width: min(
+    95vw,
+    calc(
+      100vw
+      - var(--jesuit-frame-left, 44px)
+      - var(--jesuit-frame-right, 44px)
+      - var(--space-4)
+    )
+  );
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid #444444;
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(4px);
+}
+
+.narrative-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.narrative-nav .nav-btn {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+/* --bp-md: 640px — compacto + scroll horizontal */
+@media (max-width: 640px) {
+  .narrative-nav {
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    max-width: 96vw;
+  }
+
+  .narrative-nav .nav-btn {
+    font-size: 10px !important;
+    padding: var(--space-1) var(--space-2) !important;
+    min-height: 44px;
+    white-space: nowrap;
+  }
+}
+
+/* --bp-sm: 480px */
+@media (max-width: 480px) {
+  .narrative-nav {
+    max-width: 98vw;
+  }
+
+  .narrative-nav .nav-btn {
+    font-size: 9px !important;
+    letter-spacing: 0.06em;
+  }
+}

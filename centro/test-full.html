@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+  DEV ONLY — harness de integração local (não é runtime de produção).
+  Produção: centro/index.html (sem rio-animado.js).
+  Uso: python3 server.py && abrir /centro/test-full.html
+-->
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<title>[DEV] Centro — test-full harness</title>
+<script src="/vendor/maplibre/maplibre-gl.js"></script>
+<link href="/vendor/maplibre/maplibre-gl.css" rel="stylesheet"/>
+</head><body>
+<div id="map" style="width:100vw;height:100vh;position:absolute;top:0;left:0;"></div>
+
+<!-- /APP/ scripts -->
+<script src="/app/config/theme.js"></script>
+<script src="/app/config/knowledge.js"></script>
+<script src="/app/config/map-icons.js"></script>
+<script src="/app/config/ui-texts.js"></script>
+<script src="/app/utils/formatters.js"></script>
+<script src="/app/utils/html-utils.js"></script>
+<script src="/app/utils/value-utils.js"></script>
+<script src="/app/utils/freshness-utils.js"></script>
+<script src="/app/utils/card-utils.js"></script>
+<script src="/app/renderers/popup-renderer.js"></script>
+<script src="/pages/centro/utils.js"></script>
+<script src="/pages/centro/features/pistas.js"></script>
+<script src="/pages/centro/features/poi-icons.js"></script>
+<script src="/pages/centro/features/triangulo-historico.js"></script>
+<!-- rio-animado.js: utilitários hidro — opcional neste harness; animação fora do escopo -->
+<script src="/pages/centro/features/rio-animado.js"></script>
+
+<script src="/pages/centro/centro-runtime.js"></script>
+</body></html>

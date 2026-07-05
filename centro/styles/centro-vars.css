@@ -1,0 +1,49 @@
+/**
+ * Tokens locais do Centro.
+ *
+ * Identidade de marca (âmbar): --color-brand / --color-accent (tokens.css).
+ * Chrome HUD forense (vermelho): --centro-accent → --color-accent-strong.
+ *
+ * Nota: --centro-accent é nome legado — mapeia vermelho de alerta/chrome,
+ * não o acento âmbar do produto. Ver docs/design-system/brand-decision.md.
+ */
+:root {
+  --centro-accent: var(--color-accent-strong);
+  --centro-accent-dark: var(--color-accent-strong-dark);
+  --centro-accent-bg: var(--color-accent-strong-bg);
+  --centro-accent-muted: var(--color-accent-strong-muted);
+
+  --color-bg: #1f1f1f;
+  --color-bg-subtle: #121212;
+  --color-text: #e5e5e5;
+
+  --sidebar-width: 360px;
+  --radius: var(--radius-xs);
+
+  --jesuit-frame-top: 56px;
+  --jesuit-frame-bottom: 48px;
+  --jesuit-frame-left: 44px;
+  --jesuit-frame-right: 44px;
+  --centro-sidebar-gap: 12px;
+
+  --jesuit-frame-bg: #050505;
+  /* Nome histórico "blue" — cor real = vermelho HUD (--color-accent-strong) */
+  --jesuit-frame-blue: var(--color-accent-strong);
+  --jesuit-frame-blue-soft: var(--color-danger);
+  --jesuit-frame-shadow: rgba(220, 38, 38, 0.15);
+  --jesuit-frame-size-top: 56px;
+  --jesuit-frame-size-side: 44px;
+
+  /* Dossiê forense — superfície papel + tinta (cards de evidência) */
+  --centro-paper: #fdfbf7;
+  --centro-paper-elev: #f4f0e6;
+  --centro-paper-hover: #fffef9;
+  --centro-paper-border: #dcd3c6;
+  --centro-ink: #1a1a1a;
+  --centro-ink-mid: #3d3830;
+  --centro-ink-muted: #5c564c;
+  --centro-ink-faint: #7a7368;
+
+  /* Solo do basemap (OpenFreeMap bright/liberty) — evita void preto enquanto tiles carregam */
+  --map-ground-bg: #f8f4f0;
+}

@@ -1,0 +1,19 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pistas-rua-sao-bento",
+        "title": "Pistas históricas — Rua São Bento",
+        "kind": "historical_clues",
+        "street": "Rua São Bento"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-46.63595, -23.54755]
+      }
+    }
+  ]
+}
+

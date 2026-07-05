@@ -1,0 +1,28 @@
+/**
+ * Centro Zone — agregador CSS
+ *
+ * Carrega módulos por responsabilidade (ordem de cascata preservada).
+ * Preferir links explícitos em centro/index.html; este arquivo mantém
+ * compatibilidade com URLs legadas (/pages/centro/centro-sidebar.css).
+ *
+ * @see centro/styles/layout.css
+ * @see centro/styles/sidebar.css
+ * @see centro/styles/narrative-nav.css
+ * @see centro/styles/feature-inspector.css
+ * @see centro/styles/profile-card.css
+ * @see centro/styles/jesuit-frame.css
+ * @see centro/styles/map-popups.css
+ * @see centro/styles/responsive.css
+ *
+ * Tokens: centro/styles/centro-vars.css
+ * Chrome: centro/styles/centro-chrome.css
+ */
+
+@import url('styles/layout.css');
+@import url('styles/sidebar.css');
+@import url('styles/narrative-nav.css');
+@import url('styles/feature-inspector.css');
+@import url('styles/profile-card.css');
+@import url('styles/jesuit-frame.css');
+@import url('styles/map-popups.css');
+@import url('styles/responsive.css');

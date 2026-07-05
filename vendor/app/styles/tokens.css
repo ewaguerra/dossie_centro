@@ -1,0 +1,107 @@
+/**
+ * PROTOCOLO 13 ALMAS — Design tokens globais (MVP)
+ * Carregar PRIMEIRO em todas as páginas, antes do CSS do módulo.
+ * Coexiste com tokens locais (:root em landing.css, centro-vars.css, etc.).
+ *
+ * @see docs/design-system/tokens.md
+ * @see docs/design-system/brand-decision.md
+ */
+:root {
+  /* ── Cor: identidade & acento ─────────────────────────── */
+  --color-accent: #f59e0b;
+  --color-brand: var(--color-accent);
+  --color-accent-soft: rgba(245, 158, 11, 0.15);
+  --color-brand-soft: var(--color-accent-soft);
+  --color-brand-dim: #b45309;
+  --color-brand-border: rgba(245, 158, 11, 0.18);
+
+  /* HUD forense (Centro) — alerta/chrome, não identidade de marca */
+  --color-accent-strong: #dc2626;
+  --color-accent-strong-dark: #991b1b;
+  --color-accent-strong-muted: #fca5a5;
+  --color-accent-strong-bg: #fef2f2;
+
+  /* ── Cor: superfície & texto ──────────────────────────── */
+  --color-bg: #04070f;
+  --color-bg-elev-1: #0d1220;
+  --color-bg-elev-2: #1a1a1a;
+  --color-bg-subtle: #121212;
+
+  --color-text: #e8e4d8;
+  --color-text-mid: #a3a3a3;
+  --color-text-mute: var(--color-text-mid);
+  --color-text-muted: #999999;
+
+  /* Borda neutra (UI) vs borda marca (âmbar) */
+  --color-border: #404040;
+  --color-border-light: #262626;
+
+  /* ── Cor: semântica ───────────────────────────────────── */
+  --color-success: #22c55e;
+  --color-success-bright: #4ade80;
+  --color-warning: var(--color-accent);
+  --color-danger: #ef4444;
+  --color-confidential: #d97706;
+
+  /* Mono offline — Courier New do sistema; sem fonte externa auto-hospedada (.woff2).
+     --font-code é alias de --font-mono. Ver docs/design-system/typography.md */
+  --font-mono: 'Courier New', Courier, monospace;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-code: var(--font-mono);
+
+  /* ── Escala tipográfica ───────────────────────────────── */
+  --fs-xs: 0.72rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.42rem;
+  --fs-xl: 1.8rem;
+  --fs-2xl: 2.25rem;
+
+  /* ── Espaçamento (base 4px) ───────────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  /* ── Radius ───────────────────────────────────────────── */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  /* ── Shadow ───────────────────────────────────────────── */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.6);
+
+  /* ── Motion ───────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+
+  /* ── Z-index ──────────────────────────────────────────── */
+  --z-base: 1;
+  --z-overlay: 40;
+  --z-nav: 100;
+  --z-toast: 900;
+  --z-modal: 1000;
+  --z-hud: 1100;
+
+  /*
+   * Breakpoints — usar valores literais em @media (vars não funcionam em MQ).
+   * Referência: docs/design-system/breakpoints.md
+   *
+   * --bp-sm: 480px   phone estreito
+   * --bp-md: 640px   phone / phablet
+   * --bp-lg: 768px   tablet portrait
+   * --bp-xl: 1024px  tablet landscape / desktop estreito
+   */
+  --bp-sm: 480px;
+  --bp-md: 640px;
+  --bp-lg: 768px;
+  --bp-xl: 1024px;
+}

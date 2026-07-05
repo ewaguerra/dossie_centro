@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "name": "centro_bem_arqueologico__point",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.632664,
+          -23.54777102
+        ]
+      },
+      "properties": {
+        "cd_identificador": 8003,
+        "cd_identificador_original": 21048,
+        "nm_imovel": "PATIO DO COLEGIO",
+        "nm_endereco": "LG PATEO DO COLEGIO, 34",
+        "sg_fonte_original": "DPH/SMC",
+        "cd_setor_fiscal": "002",
+        "cd_quadra_fiscal": "059",
+        "cd_lote_fiscal": "0054",
+        "tx_resolucao_conpresp": "RES. 07/2015",
+        "_tipo": "arqueologico",
+        "_narrativa_curta": "Local da fundacao da cidade de Sao Paulo pelos jesuitas em 1554. Patrimonio arqueologico protegido pelo CONPRESP.",
+        "_link_resolucao": "https://www.prefeitura.sp.gov.br/cidade/secretarias/cultura/conpresp/legislacao/resolucoes/index.php?p=1137"
+      }
+    }
+  ]
+}

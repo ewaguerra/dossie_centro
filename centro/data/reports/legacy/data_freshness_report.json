@@ -1,0 +1,4020 @@
+[
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/01_Macrozona_Estruturacao_Qualificacao_Urbana.geojson",
+    "size_mb": 0.535,
+    "modified_at_local": "2026-05-04T06:02:30",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/01_Macrozona_Protecao_Recuperacao_Ambiental.geojson",
+    "size_mb": 1.027,
+    "modified_at_local": "2026-05-04T06:02:30",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/01A_Zona_Rural.geojson",
+    "size_mb": 1.227,
+    "modified_at_local": "2026-05-04T06:02:28",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 20
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/01A_Zona_Urbana.geojson",
+    "size_mb": 1.401,
+    "modified_at_local": "2026-05-04T06:02:29",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 38
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02_Macroarea_Contencao_Urbana_Uso_Sustentavel.geojson",
+    "size_mb": 0.949,
+    "modified_at_local": "2026-05-04T06:02:38",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 15
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02_Macroarea_Controle_Qualificacao_Urbana_Ambiental.geojson",
+    "size_mb": 1.108,
+    "modified_at_local": "2026-05-04T06:02:39",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 26
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02_Macroarea_Estruturacao_Metropolitana.geojson",
+    "size_mb": 0.538,
+    "modified_at_local": "2026-05-04T06:02:40",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02_Macroarea_Preservacao_Ecossistemas_Naturais.geojson",
+    "size_mb": 0.752,
+    "modified_at_local": "2026-05-04T06:02:40",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 28
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02_Macroarea_Qualificacao_Urbanizacao.geojson",
+    "size_mb": 0.344,
+    "modified_at_local": "2026-05-04T06:02:41",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 12
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02_Macroarea_Reducao_Vulnerabilidade_Urbana.geojson",
+    "size_mb": 0.396,
+    "modified_at_local": "2026-05-04T06:02:42",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 12
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02_Macroarea_Reducao_Vulnerabilidade_Urbana_Recuperacao_Ambiental.geojson",
+    "size_mb": 1.199,
+    "modified_at_local": "2026-05-04T06:02:43",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 66
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02_Macroarea_Urbanizacao_Consolidada.geojson",
+    "size_mb": 0.104,
+    "modified_at_local": "2026-05-04T06:02:43",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Arco_Jacu-Pessego.geojson",
+    "size_mb": 0.079,
+    "modified_at_local": "2026-05-04T06:02:31",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Arco_Jurubatuba.geojson",
+    "size_mb": 0.053,
+    "modified_at_local": "2026-05-04T06:02:32",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Arco_Leste.geojson",
+    "size_mb": 0.062,
+    "modified_at_local": "2026-05-04T06:02:32",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Arco_Pinheiros.geojson",
+    "size_mb": 0.031,
+    "modified_at_local": "2026-05-04T06:02:33",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Arco_Tamanduatei.geojson",
+    "size_mb": 0.022,
+    "modified_at_local": "2026-05-04T06:02:34",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Arco_Tiete.geojson",
+    "size_mb": 0.058,
+    "modified_at_local": "2026-05-04T06:02:34",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Central.geojson",
+    "size_mb": 0.008,
+    "modified_at_local": "2026-05-04T06:02:35",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Eixo_Cupece.geojson",
+    "size_mb": 0.024,
+    "modified_at_local": "2026-05-04T06:02:36",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Eixo_FernaoDias.geojson",
+    "size_mb": 0.107,
+    "modified_at_local": "2026-05-04T06:02:36",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_Eixo_Noroeste.geojson",
+    "size_mb": 0.114,
+    "modified_at_local": "2026-05-04T06:02:37",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/02A_Subsetores_FariaLima-AguasEspraiadas-ChucriZaidan.geojson",
+    "size_mb": 0.06,
+    "modified_at_local": "2026-05-04T06:02:37",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/03_Eixo_Existente.geojson",
+    "size_mb": 5.952,
+    "modified_at_local": "2026-05-04T06:02:46",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4779
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/03A_Eixo_Previsto.geojson",
+    "size_mb": 4.176,
+    "modified_at_local": "2026-05-04T06:02:44",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 3545
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/04_ZEIS1.geojson",
+    "size_mb": 6.318,
+    "modified_at_local": "2026-05-04T06:02:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1378
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/04A_ZEIS2.geojson",
+    "size_mb": 0.946,
+    "modified_at_local": "2026-05-04T06:02:46",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 386
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/04A_ZEIS3.geojson",
+    "size_mb": 0.82,
+    "modified_at_local": "2026-05-04T06:02:48",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 478
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/04A_ZEIS4.geojson",
+    "size_mb": 0.191,
+    "modified_at_local": "2026-05-04T06:02:48",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 43
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/04A_ZEIS5.geojson",
+    "size_mb": 0.494,
+    "modified_at_local": "2026-05-04T06:02:49",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 261
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/05_Bacias_Hidrograficas.geojson",
+    "size_mb": 24.009,
+    "modified_at_local": "2026-05-04T06:02:54",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 186
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/05_Hidrografia_Rios.geojson",
+    "size_mb": 60.379,
+    "modified_at_local": "2026-05-04T06:03:00",
+    "parse_error": "Arquivo muito grande para parse seguro (60.38 MB).",
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/05_Parques_Estaduais_Protecao_Integral.geojson",
+    "size_mb": 0.355,
+    "modified_at_local": "2026-05-04T06:03:01",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/05_Parques_Estaduais_Urbanos.geojson",
+    "size_mb": 0.146,
+    "modified_at_local": "2026-05-04T06:03:02",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 7
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/05_Parques_Municipais_existentes.geojson",
+    "size_mb": 0.756,
+    "modified_at_local": "2026-05-04T06:03:03",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 106
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/05_Parques_Municipais_implantacao.geojson",
+    "size_mb": 0.463,
+    "modified_at_local": "2026-05-04T06:03:04",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 62
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/05_Parques_Municipais_planejamento.geojson",
+    "size_mb": 1.167,
+    "modified_at_local": "2026-05-04T06:03:04",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 105
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/06_Adutora_Planejada.geojson",
+    "size_mb": 0.379,
+    "modified_at_local": "2026-05-04T06:03:05",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 17
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/06_Centro_Reservacao_Planejado.geojson",
+    "size_mb": 0.004,
+    "modified_at_local": "2026-05-04T06:03:06",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/06_Elevatoria_Planejada.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T06:03:06",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/06_Estacao_Tratamento_Agua_Existente.geojson",
+    "size_mb": 0.003,
+    "modified_at_local": "2026-05-04T06:03:07",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/06_Sistema_Abastecimento_Agua_Isolado_Planejado.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T06:03:08",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/06_Sistema_Adutor_Metropolitano_Existente.geojson",
+    "size_mb": 4.983,
+    "modified_at_local": "2026-05-04T06:03:09",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 273
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Coletor_Tronco_Existente.geojson",
+    "size_mb": 1.237,
+    "modified_at_local": "2026-05-04T06:03:10",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1195
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Coletor_Tronco_Planejado_2015.geojson",
+    "size_mb": 0.455,
+    "modified_at_local": "2026-05-04T06:03:10",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 351
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Coletor_Tronco_Planejado_2018.geojson",
+    "size_mb": 0.074,
+    "modified_at_local": "2026-05-04T06:03:11",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 70
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Coletor_Tronco_Planejado_pos_2018.geojson",
+    "size_mb": 0.098,
+    "modified_at_local": "2026-05-04T06:03:12",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 73
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Estacao_Tratamento_Esgoto_Existente.geojson",
+    "size_mb": 0.005,
+    "modified_at_local": "2026-05-04T06:03:12",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Interceptor_Existente.geojson",
+    "size_mb": 0.183,
+    "modified_at_local": "2026-05-04T06:03:13",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 130
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Interceptor_Planejado_2015.geojson",
+    "size_mb": 0.025,
+    "modified_at_local": "2026-05-04T06:03:14",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 24
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Interceptor_Planejado_2018.geojson",
+    "size_mb": 0.016,
+    "modified_at_local": "2026-05-04T06:03:14",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 12
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/07_Sist_Esgotamento_Sanitario_Isolado_Planejado.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T06:03:15",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/08_Melhoramentos_Viarios_abrir.geojson",
+    "size_mb": 0.066,
+    "modified_at_local": "2026-05-04T06:03:16",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 75
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/08_Melhoramentos_Viarios_melhorar.geojson",
+    "size_mb": 0.22,
+    "modified_at_local": "2026-05-04T06:03:16",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 129
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/08_Melhoramentos_Viarios_pontual.geojson",
+    "size_mb": 0.135,
+    "modified_at_local": "2026-05-04T06:03:18",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 43
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/08_Rodoanel.geojson",
+    "size_mb": 0.038,
+    "modified_at_local": "2026-05-04T06:03:19",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Corredor_Onibus_Intermunicipal_Existente.geojson",
+    "size_mb": 0.031,
+    "modified_at_local": "2026-05-04T06:03:19",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Corredor_Onibus_Intermunicipal_Planejado_2016.geojson",
+    "size_mb": 0.249,
+    "modified_at_local": "2026-05-04T06:03:20",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 324
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Corredor_onibus_municipal_existente.geojson",
+    "size_mb": 0.158,
+    "modified_at_local": "2026-05-04T06:03:21",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 35
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Corredor_onibus_municipal_planejado_2016.geojson",
+    "size_mb": 0.159,
+    "modified_at_local": "2026-05-04T06:03:22",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 46
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Corredor_Onibus_Planejado_2025.geojson",
+    "size_mb": 0.228,
+    "modified_at_local": "2026-05-04T06:03:21",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 74
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Metro_Estacao_Existente.geojson",
+    "size_mb": 0.031,
+    "modified_at_local": "2026-05-04T06:03:23",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 64
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Metro_Estacao_Planejada_2016.geojson",
+    "size_mb": 0.012,
+    "modified_at_local": "2026-05-04T06:03:23",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 39
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Metro_Linha_Existente.geojson",
+    "size_mb": 0.065,
+    "modified_at_local": "2026-05-04T06:03:24",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Metro_Linha_Planejada_2016.geojson",
+    "size_mb": 0.015,
+    "modified_at_local": "2026-05-04T06:03:24",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Metro_Linha_Planejada_2025.geojson",
+    "size_mb": 0.03,
+    "modified_at_local": "2026-05-04T06:03:25",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 10
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Modal_a_ser_definido_2025.geojson",
+    "size_mb": 0.024,
+    "modified_at_local": "2026-05-04T06:03:26",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 27
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Monotriho_Linha_Planejada_2016.geojson",
+    "size_mb": 0.056,
+    "modified_at_local": "2026-05-04T06:03:26",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Monotrilho_Estacao_Planejada_2016.geojson",
+    "size_mb": 0.017,
+    "modified_at_local": "2026-05-04T06:03:27",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 53
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Monotrilho_Linha_Planejada_2025.geojson",
+    "size_mb": 0.021,
+    "modified_at_local": "2026-05-04T06:03:28",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 23
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Terminal_onibus_existente.geojson",
+    "size_mb": 0.012,
+    "modified_at_local": "2026-05-04T06:03:29",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 29
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Terminal_onibus_planejado_2016.geojson",
+    "size_mb": 0.009,
+    "modified_at_local": "2026-05-04T06:03:29",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 21
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Terminal_Onibus_Planejado_2025.geojson",
+    "size_mb": 0.004,
+    "modified_at_local": "2026-05-04T06:03:28",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 9
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Trem_Estacao_Existente.geojson",
+    "size_mb": 0.036,
+    "modified_at_local": "2026-05-04T06:03:30",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 99
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Trem_Linha_Existente.geojson",
+    "size_mb": 0.176,
+    "modified_at_local": "2026-05-04T06:03:31",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 85
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/09_Trem_Linha_Planejada_2025.geojson",
+    "size_mb": 0.058,
+    "modified_at_local": "2026-05-04T06:03:32",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 39
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/10_Areas_Risco_Geologico_Assentamento_Precario.geojson",
+    "size_mb": 5.361,
+    "modified_at_local": "2026-05-04T06:03:33",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1183
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/11_Cupece.geojson",
+    "size_mb": 0.024,
+    "modified_at_local": "2026-05-04T06:03:34",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/11_Fernao_Dias.geojson",
+    "size_mb": 0.113,
+    "modified_at_local": "2026-05-04T06:03:34",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 3
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/11_Jacu_Pessego.geojson",
+    "size_mb": 0.145,
+    "modified_at_local": "2026-05-04T06:03:35",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 15
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/11_Raimundo.geojson",
+    "size_mb": 0.023,
+    "modified_at_local": "2026-05-04T06:03:36",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/12_Em_avaliacao.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T06:03:37",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "conhecimento_publico": [
+        "02/07 a 15/07/2014",
+        "13/08 a 26/08/2014"
+      ],
+      "data_evento": [
+        ""
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 2
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/12_Existentes.geojson",
+    "size_mb": 0.004,
+    "modified_at_local": "2026-05-04T06:03:38",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "conhecimento_publico": [
+        "",
+        "01/09 a 12/09/2014",
+        "05/06 a 19/06/2014",
+        "18/07 a 31/07/2014",
+        "ok"
+      ],
+      "data_evento": [
+        ""
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/12_Planejados.geojson",
+    "size_mb": 0.005,
+    "modified_at_local": "2026-05-04T06:03:38",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "conhecimento_publico": [
+        "--",
+        "01/09 a 12/09/2014",
+        "04/10 a 17/10/2014"
+      ],
+      "data_evento": [
+        ""
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Atendimento_ao_Cidadao.geojson",
+    "size_mb": 0.059,
+    "modified_at_local": "2026-05-04T06:03:39",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 37
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Cultura.geojson",
+    "size_mb": 0.038,
+    "modified_at_local": "2026-05-04T06:03:39",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 32
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Desenvolvimento_Economico.geojson",
+    "size_mb": 0.044,
+    "modified_at_local": "2026-05-04T06:03:40",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 35
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Desenvolvimento_Social.geojson",
+    "size_mb": 0.143,
+    "modified_at_local": "2026-05-04T06:03:41",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 97
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Desenvolvimento_Urbano.geojson",
+    "size_mb": 0.007,
+    "modified_at_local": "2026-05-04T06:03:41",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Direitos_Humanos_e_Cidadania.geojson",
+    "size_mb": 0.057,
+    "modified_at_local": "2026-05-04T06:03:42",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 43
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Drenagem.geojson",
+    "size_mb": 0.079,
+    "modified_at_local": "2026-05-04T06:03:42",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 63
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Educacao.geojson",
+    "size_mb": 0.446,
+    "modified_at_local": "2026-05-04T06:03:43",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 365
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Espacos_Publicos.geojson",
+    "size_mb": 0.074,
+    "modified_at_local": "2026-05-04T06:03:44",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 48
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Esporte_e_Lazer.geojson",
+    "size_mb": 0.11,
+    "modified_at_local": "2026-05-04T06:03:45",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 90
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Habitacao.geojson",
+    "size_mb": 0.352,
+    "modified_at_local": "2026-05-04T06:03:45",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 288
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Meio_Ambiente.geojson",
+    "size_mb": 0.129,
+    "modified_at_local": "2026-05-04T06:03:46",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 101
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Mobilidade.geojson",
+    "size_mb": 0.129,
+    "modified_at_local": "2026-05-04T06:03:47",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 86
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Participacao_e_Transparencia.geojson",
+    "size_mb": 0.03,
+    "modified_at_local": "2026-05-04T06:03:47",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 15
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Pessoas_com_Deficiencia.geojson",
+    "size_mb": 0.053,
+    "modified_at_local": "2026-05-04T06:03:48",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 32
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Populacao_Idosa.geojson",
+    "size_mb": 0.038,
+    "modified_at_local": "2026-05-04T06:03:49",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 31
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Residuos_Solidos.geojson",
+    "size_mb": 0.076,
+    "modified_at_local": "2026-05-04T06:03:49",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 63
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Saude.geojson",
+    "size_mb": 0.232,
+    "modified_at_local": "2026-05-04T06:03:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 192
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Seguranca.geojson",
+    "size_mb": 0.062,
+    "modified_at_local": "2026-05-04T06:03:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 49
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/13_Tecnologia_e_Inovacao.geojson",
+    "size_mb": 0.004,
+    "modified_at_local": "2026-05-04T06:03:51",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 3
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/14_APA_Bobore_Colonia.geojson",
+    "size_mb": 0.053,
+    "modified_at_local": "2026-05-04T06:03:52",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/14_APA_Capivari_Monos.geojson",
+    "size_mb": 0.178,
+    "modified_at_local": "2026-05-04T06:03:52",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/14_APA_Estadual.geojson",
+    "size_mb": 0.532,
+    "modified_at_local": "2026-05-04T06:03:53",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 3
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/14_Area_Protecao_Recuperacao_Mananciais_RMSP.geojson",
+    "size_mb": 3.181,
+    "modified_at_local": "2026-05-04T06:03:54",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 2
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/15_RPPN.geojson",
+    "size_mb": 0.01,
+    "modified_at_local": "2026-05-04T06:03:55",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 2
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/15_Terra_Indigena_Existente.geojson",
+    "size_mb": 0.001,
+    "modified_at_local": "2026-05-04T06:03:55",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/15_Terra_Indigena_Homologacao_RMSP.geojson",
+    "size_mb": 0.796,
+    "modified_at_local": "2026-05-04T06:03:56",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/15_Viario_Estrutural_N1.geojson",
+    "size_mb": 0.194,
+    "modified_at_local": "2026-05-04T06:03:57",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 49
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/16_regiao_centro.geojson",
+    "size_mb": 0.208,
+    "modified_at_local": "2026-05-04T06:03:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:20.011Z",
+        "2026-03-20T16:13:20.027Z",
+        "2026-03-20T16:13:20.038Z",
+        "2026-03-20T16:13:20.065Z",
+        "2026-03-20T16:13:20.083Z",
+        "2026-03-20T16:13:20.089Z",
+        "2026-03-20T16:13:20.107Z",
+        "2026-03-20T16:13:20.126Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/16_regiao_leste.geojson",
+    "size_mb": 1.876,
+    "modified_at_local": "2026-05-04T06:04:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:19.988Z",
+        "2026-03-20T16:13:20.006Z",
+        "2026-03-20T16:13:20.010Z",
+        "2026-03-20T16:13:20.012Z",
+        "2026-03-20T16:13:20.020Z",
+        "2026-03-20T16:13:20.023Z",
+        "2026-03-20T16:13:20.031Z",
+        "2026-03-20T16:13:20.035Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 33
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/16_regiao_norte.geojson",
+    "size_mb": 1.68,
+    "modified_at_local": "2026-05-04T06:03:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:20.014Z",
+        "2026-03-20T16:13:20.016Z",
+        "2026-03-20T16:13:20.021Z",
+        "2026-03-20T16:13:20.025Z",
+        "2026-03-20T16:13:20.028Z",
+        "2026-03-20T16:13:20.040Z",
+        "2026-03-20T16:13:20.046Z",
+        "2026-03-20T16:13:20.048Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 18
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/16_regiao_oeste.geojson",
+    "size_mb": 0.525,
+    "modified_at_local": "2026-05-04T06:04:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:20.005Z",
+        "2026-03-20T16:13:20.014Z",
+        "2026-03-20T16:13:20.018Z",
+        "2026-03-20T16:13:20.026Z",
+        "2026-03-20T16:13:20.030Z",
+        "2026-03-20T16:13:20.037Z",
+        "2026-03-20T16:13:20.043Z",
+        "2026-03-20T16:13:20.052Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 15
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/16_regiao_sul.geojson",
+    "size_mb": 1.313,
+    "modified_at_local": "2026-05-04T06:04:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:20.008Z",
+        "2026-03-20T16:13:20.017Z",
+        "2026-03-20T16:13:20.023Z",
+        "2026-03-20T16:13:20.032Z",
+        "2026-03-20T16:13:20.034Z",
+        "2026-03-20T16:13:20.039Z",
+        "2026-03-20T16:13:20.044Z",
+        "2026-03-20T16:13:20.057Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 22
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/17_alagamentos_100_250m_hidrografia__point.geojson",
+    "size_mb": 0.051,
+    "modified_at_local": "2026-05-04T07:10:49",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-13Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z",
+        "2026-01-18Z",
+        "2026-01-20Z",
+        "2026-01-26Z",
+        "2026-01-27Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 43
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/17_alagamentos_50_100m_hidrografia__point.geojson",
+    "size_mb": 0.059,
+    "modified_at_local": "2026-05-04T07:10:49",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-08Z",
+        "2026-01-15Z",
+        "2026-01-16Z",
+        "2026-01-17Z",
+        "2026-01-19Z",
+        "2026-01-20Z",
+        "2026-01-26Z",
+        "2026-01-27Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 51
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/17_alagamentos_acima_250m_hidrografia__point.geojson",
+    "size_mb": 0.024,
+    "modified_at_local": "2026-05-04T07:10:49",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-08Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z",
+        "2026-01-25Z",
+        "2026-01-27Z",
+        "2026-01-28Z",
+        "2026-02-03Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 20
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/17_alagamentos_ate_50m_hidrografia__point.geojson",
+    "size_mb": 0.073,
+    "modified_at_local": "2026-05-04T07:10:49",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-04Z",
+        "2026-01-05Z",
+        "2026-01-08Z",
+        "2026-01-10Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z",
+        "2026-01-17Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 62
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/17_alagamentos_contexto_hidrografico__point.geojson",
+    "size_mb": 0.207,
+    "modified_at_local": "2026-05-04T07:10:49",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-04Z",
+        "2026-01-05Z",
+        "2026-01-08Z",
+        "2026-01-10Z",
+        "2026-01-13Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 176
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/17_ocorrencias_alagamento_defesa_civil__point.geojson",
+    "size_mb": 0.129,
+    "modified_at_local": "2026-05-04T06:46:54",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-04Z",
+        "2026-01-05Z",
+        "2026-01-08Z",
+        "2026-01-10Z",
+        "2026-01-13Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 176
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/distrito_municipal.geojson",
+    "size_mb": 5.601,
+    "modified_at_local": "2026-05-04T06:03:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "_top_level": {
+        "timeStamp": "2026-05-04T09:02:26.399Z"
+      },
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:19.988Z",
+        "2026-03-20T16:13:20.005Z",
+        "2026-03-20T16:13:20.006Z",
+        "2026-03-20T16:13:20.008Z",
+        "2026-03-20T16:13:20.010Z",
+        "2026-03-20T16:13:20.011Z",
+        "2026-03-20T16:13:20.012Z",
+        "2026-03-20T16:13:20.014Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 96
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/perimetro-expansao.geojson",
+    "size_mb": 0.066,
+    "modified_at_local": "2026-05-04T06:03:57",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_brutos",
+    "file": "geojson_extraidos/subprefeitura.geojson",
+    "size_mb": 3.45,
+    "modified_at_local": "2026-05-04T06:03:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "_top_level": {
+        "timeStamp": "2026-05-04T09:02:28.009Z"
+      },
+      "dt_criacao": [
+        "2023-11-30Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:14:01.317Z",
+        "2026-03-20T16:14:01.340Z",
+        "2026-03-20T16:14:01.342Z",
+        "2026-03-20T16:14:01.344Z",
+        "2026-03-20T16:14:01.345Z",
+        "2026-03-20T16:14:01.347Z",
+        "2026-03-20T16:14:01.349Z",
+        "2026-03-20T16:14:01.353Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 32
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/01_macrozoneamento/01_macrozona_estruturacao_qualificacao_urbana__polygon.geojson",
+    "size_mb": 0.201,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/01_macrozoneamento/01_macrozona_protecao_recuperacao_ambiental__polygon.geojson",
+    "size_mb": 0.416,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/01_macrozoneamento/01a_zona_rural__polygon.geojson",
+    "size_mb": 0.471,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 20
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/01_macrozoneamento/01a_zona_urbana__polygon.geojson",
+    "size_mb": 0.568,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 38
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02_macroarea_contencao_urbana_uso_sustentavel__polygon.geojson",
+    "size_mb": 0.36,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 15
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02_macroarea_controle_qualificacao_urbana_ambiental__polygon.geojson",
+    "size_mb": 0.45,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 26
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02_macroarea_estruturacao_metropolitana__polygon.geojson",
+    "size_mb": 0.218,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02_macroarea_preservacao_ecossistemas_naturais__polygon.geojson",
+    "size_mb": 0.306,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 28
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02_macroarea_qualificacao_urbanizacao__polygon.geojson",
+    "size_mb": 0.138,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 12
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02_macroarea_reducao_vulnerabilidade_urbana__polygon.geojson",
+    "size_mb": 0.161,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 12
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02_macroarea_reducao_vulnerabilidade_urbana_recuperacao_ambiental__polygon.geojson",
+    "size_mb": 0.486,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 66
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02_macroarea_urbanizacao_consolidada__polygon.geojson",
+    "size_mb": 0.042,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_arco_jacu_pessego__polygon.geojson",
+    "size_mb": 0.032,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_arco_jurubatuba__polygon.geojson",
+    "size_mb": 0.022,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_arco_leste__polygon.geojson",
+    "size_mb": 0.025,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_arco_pinheiros__polygon.geojson",
+    "size_mb": 0.013,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_arco_tamanduatei__polygon.geojson",
+    "size_mb": 0.009,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_arco_tiete__polygon.geojson",
+    "size_mb": 0.024,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_central__polygon.geojson",
+    "size_mb": 0.003,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_eixo_cupece__polygon.geojson",
+    "size_mb": 0.009,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_eixo_fernaodias__polygon.geojson",
+    "size_mb": 0.04,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_eixo_noroeste__polygon.geojson",
+    "size_mb": 0.043,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/02a_subsetores_farialima_aguasespraiadas_chucrizaidan__polygon.geojson",
+    "size_mb": 0.024,
+    "modified_at_local": "2026-05-04T07:10:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/03_eixo_existente__polygon.geojson",
+    "size_mb": 2.547,
+    "modified_at_local": "2026-05-04T07:10:51",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4779
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/03a_eixo_previsto__polygon.geojson",
+    "size_mb": 1.793,
+    "modified_at_local": "2026-05-04T07:10:51",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 3545
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/02_macroareas_e_eixos/perimetro_expansao__line.geojson",
+    "size_mb": 0.026,
+    "modified_at_local": "2026-05-04T07:11:02",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/03_zoneamento/04_zeis1__polygon.geojson",
+    "size_mb": 2.353,
+    "modified_at_local": "2026-05-04T07:10:52",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1378
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/03_zoneamento/04a_zeis2__polygon.geojson",
+    "size_mb": 0.365,
+    "modified_at_local": "2026-05-04T07:10:52",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 386
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/03_zoneamento/04a_zeis3__polygon.geojson",
+    "size_mb": 0.324,
+    "modified_at_local": "2026-05-04T07:10:52",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 478
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/03_zoneamento/04a_zeis4__polygon.geojson",
+    "size_mb": 0.072,
+    "modified_at_local": "2026-05-04T07:10:52",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 43
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/03_zoneamento/04a_zeis5__polygon.geojson",
+    "size_mb": 0.195,
+    "modified_at_local": "2026-05-04T07:10:52",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 261
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/04_ambiental/05_parques_estaduais_protecao_integral__polygon.geojson",
+    "size_mb": 0.142,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/04_ambiental/05_parques_estaduais_urbanos__polygon.geojson",
+    "size_mb": 0.058,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 7
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/04_ambiental/05_parques_municipais_existentes__polygon.geojson",
+    "size_mb": 0.302,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 106
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/04_ambiental/05_parques_municipais_implantacao__polygon.geojson",
+    "size_mb": 0.188,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 62
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/04_ambiental/05_parques_municipais_planejamento__polygon.geojson",
+    "size_mb": 0.467,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 105
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/04_ambiental/10_areas_risco_geologico_assentamento_precario__polygon.geojson",
+    "size_mb": 2.261,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1183
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/04_ambiental/13_meio_ambiente__point.geojson",
+    "size_mb": 0.048,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 62
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/08_melhoramentos_viarios_abrir__line.geojson",
+    "size_mb": 0.032,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 75
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/08_melhoramentos_viarios_melhorar__line.geojson",
+    "size_mb": 0.101,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 129
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/08_melhoramentos_viarios_pontual__line.geojson",
+    "size_mb": 0.061,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 43
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/08_rodoanel__line.geojson",
+    "size_mb": 0.016,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_corredor_onibus_intermunicipal_existente__line.geojson",
+    "size_mb": 0.014,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_corredor_onibus_intermunicipal_planejado_2016__line.geojson",
+    "size_mb": 0.122,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 324
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_corredor_onibus_municipal_existente__line.geojson",
+    "size_mb": 0.071,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 35
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_corredor_onibus_municipal_planejado_2016__line.geojson",
+    "size_mb": 0.072,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 46
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_corredor_onibus_planejado_2025__line.geojson",
+    "size_mb": 0.102,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 74
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_metro_estacao_existente__point.geojson",
+    "size_mb": 0.018,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 64
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_metro_estacao_planejada_2016__point.geojson",
+    "size_mb": 0.007,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 39
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_metro_linha_existente__line.geojson",
+    "size_mb": 0.029,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_metro_linha_planejada_2016__line.geojson",
+    "size_mb": 0.007,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_metro_linha_planejada_2025__line.geojson",
+    "size_mb": 0.014,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 10
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_modal_a_ser_definido_2025__line.geojson",
+    "size_mb": 0.011,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 27
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_monotriho_linha_planejada_2016__line.geojson",
+    "size_mb": 0.025,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_monotrilho_estacao_planejada_2016__point.geojson",
+    "size_mb": 0.01,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 53
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_monotrilho_linha_planejada_2025__line.geojson",
+    "size_mb": 0.01,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 23
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_terminal_onibus_existente__point.geojson",
+    "size_mb": 0.007,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 29
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_terminal_onibus_planejado_2016__point.geojson",
+    "size_mb": 0.005,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 21
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_terminal_onibus_planejado_2025__point.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 9
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_trem_estacao_existente__point.geojson",
+    "size_mb": 0.021,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 99
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_trem_linha_existente__line.geojson",
+    "size_mb": 0.08,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 85
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/09_trem_linha_planejada_2025__line.geojson",
+    "size_mb": 0.027,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 39
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/13_mobilidade__point.geojson",
+    "size_mb": 0.044,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 57
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/05_mobilidade/15_viario_estrutural_n1__line.geojson",
+    "size_mb": 0.087,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 49
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/06_equipamentos/13_cultura__point.geojson",
+    "size_mb": 0.009,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 13
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/06_equipamentos/13_educacao__point.geojson",
+    "size_mb": 0.211,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 305
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/06_equipamentos/13_espacos_publicos__point.geojson",
+    "size_mb": 0.009,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 13
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/06_equipamentos/13_esporte_e_lazer__point.geojson",
+    "size_mb": 0.052,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 76
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/06_equipamentos/13_habitacao__point.geojson",
+    "size_mb": 0.014,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 19
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/06_equipamentos/13_saude__point.geojson",
+    "size_mb": 0.088,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 131
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/06_equipamentos/13_seguranca__point.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 3
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/07_objetivos_tematicos/13_desenvolvimento_social__point.geojson",
+    "size_mb": 0.031,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 44
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/07_objetivos_tematicos/13_direitos_humanos_e_cidadania__point.geojson",
+    "size_mb": 0.009,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 13
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/07_objetivos_tematicos/13_drenagem__point.geojson",
+    "size_mb": 0.043,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 62
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/07_objetivos_tematicos/13_pessoas_com_deficiencia__point.geojson",
+    "size_mb": 0.019,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 26
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/07_objetivos_tematicos/13_populacao_idosa__point.geojson",
+    "size_mb": 0.006,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/07_objetivos_tematicos/13_residuos_solidos__point.geojson",
+    "size_mb": 0.024,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 36
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/07_objetivos_tematicos/13_tecnologia_e_inovacao__point.geojson",
+    "size_mb": 0.001,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/08_hidrografia/05_bacias_hidrograficas__polygon.geojson",
+    "size_mb": 9.705,
+    "modified_at_local": "2026-05-04T07:10:53",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 186
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/08_hidrografia/05_hidrografia_rios__line.geojson",
+    "size_mb": 26.006,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 13806
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/06_adutora_planejada__line.geojson",
+    "size_mb": 0.167,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 17
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/06_centro_reservacao_planejado__point.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/06_elevatoria_planejada__point.geojson",
+    "size_mb": 0.001,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 4
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/06_estacao_tratamento_agua_existente__point.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/06_sistema_abastecimento_agua_isolado_planejado__point.geojson",
+    "size_mb": 0.001,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/06_sistema_adutor_metropolitano_existente__line.geojson",
+    "size_mb": 2.201,
+    "modified_at_local": "2026-05-04T07:10:58",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 273
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_coletor_tronco_existente__line.geojson",
+    "size_mb": 0.633,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1195
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_coletor_tronco_planejado_2015__line.geojson",
+    "size_mb": 0.23,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 351
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_coletor_tronco_planejado_2018__line.geojson",
+    "size_mb": 0.038,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 70
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_coletor_tronco_planejado_pos_2018__line.geojson",
+    "size_mb": 0.049,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 73
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_estacao_tratamento_esgoto_existente__polygon.geojson",
+    "size_mb": 0.002,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_interceptor_existente__line.geojson",
+    "size_mb": 0.091,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 130
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_interceptor_planejado_2015__line.geojson",
+    "size_mb": 0.013,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 24
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_interceptor_planejado_2018__line.geojson",
+    "size_mb": 0.008,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 12
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/09_saneamento/07_sist_esgotamento_sanitario_isolado_planejado__point.geojson",
+    "size_mb": 0.001,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/10_ambiental_protecao/14_apa_bobore_colonia__polygon.geojson",
+    "size_mb": 0.021,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/10_ambiental_protecao/14_apa_capivari_monos__polygon.geojson",
+    "size_mb": 0.072,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/10_ambiental_protecao/14_apa_estadual__polygon.geojson",
+    "size_mb": 0.216,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 3
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/10_ambiental_protecao/14_area_protecao_recuperacao_mananciais_rmsp__polygon.geojson",
+    "size_mb": 1.288,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 2
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/10_ambiental_protecao/15_rppn__polygon.geojson",
+    "size_mb": 0.004,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 2
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/11_territorios_tradicionais/15_terra_indigena_existente__polygon.geojson",
+    "size_mb": 0.001,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/11_territorios_tradicionais/15_terra_indigena_homologacao_rmsp__polygon.geojson",
+    "size_mb": 0.323,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/12_intervencoes_urbanas_parcerias/12_em_avaliacao__point.geojson",
+    "size_mb": 0.001,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "conhecimento_publico": [
+        "02/07 a 15/07/2014",
+        "13/08 a 26/08/2014"
+      ],
+      "data_evento": [
+        ""
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 2
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/12_intervencoes_urbanas_parcerias/12_existentes__point.geojson",
+    "size_mb": 0.003,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "conhecimento_publico": [
+        "",
+        "01/09 a 12/09/2014",
+        "05/06 a 19/06/2014",
+        "18/07 a 31/07/2014",
+        "ok"
+      ],
+      "data_evento": [
+        ""
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 5
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/12_intervencoes_urbanas_parcerias/12_planejados__point.geojson",
+    "size_mb": 0.003,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "conhecimento_publico": [
+        "--",
+        "01/09 a 12/09/2014",
+        "04/10 a 17/10/2014"
+      ],
+      "data_evento": [
+        ""
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 6
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/13_atendimento_cidadao/13_atendimento_ao_cidadao__point.geojson",
+    "size_mb": 0.023,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 31
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/14_perimetros_especiais/11_cupece__polygon.geojson",
+    "size_mb": 0.01,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/14_perimetros_especiais/11_fernao_dias__polygon.geojson",
+    "size_mb": 0.041,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 3
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/14_perimetros_especiais/11_jacu_pessego__polygon.geojson",
+    "size_mb": 0.059,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 15
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/14_perimetros_especiais/11_raimundo__polygon.geojson",
+    "size_mb": 0.009,
+    "modified_at_local": "2026-05-04T07:10:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": [],
+    "feature_count_seen": 1
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/16_regioes_sp/16_regiao_centro__polygon.geojson",
+    "size_mb": 0.198,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:20.011Z",
+        "2026-03-20T16:13:20.027Z",
+        "2026-03-20T16:13:20.038Z",
+        "2026-03-20T16:13:20.065Z",
+        "2026-03-20T16:13:20.083Z",
+        "2026-03-20T16:13:20.089Z",
+        "2026-03-20T16:13:20.107Z",
+        "2026-03-20T16:13:20.126Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 8
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/16_regioes_sp/16_regiao_leste__polygon.geojson",
+    "size_mb": 1.788,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:19.988Z",
+        "2026-03-20T16:13:20.006Z",
+        "2026-03-20T16:13:20.010Z",
+        "2026-03-20T16:13:20.012Z",
+        "2026-03-20T16:13:20.020Z",
+        "2026-03-20T16:13:20.023Z",
+        "2026-03-20T16:13:20.031Z",
+        "2026-03-20T16:13:20.035Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 33
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/16_regioes_sp/16_regiao_norte__polygon.geojson",
+    "size_mb": 1.601,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:20.014Z",
+        "2026-03-20T16:13:20.016Z",
+        "2026-03-20T16:13:20.021Z",
+        "2026-03-20T16:13:20.025Z",
+        "2026-03-20T16:13:20.028Z",
+        "2026-03-20T16:13:20.040Z",
+        "2026-03-20T16:13:20.046Z",
+        "2026-03-20T16:13:20.048Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 18
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/16_regioes_sp/16_regiao_oeste__polygon.geojson",
+    "size_mb": 0.501,
+    "modified_at_local": "2026-05-04T07:11:00",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:20.005Z",
+        "2026-03-20T16:13:20.014Z",
+        "2026-03-20T16:13:20.018Z",
+        "2026-03-20T16:13:20.026Z",
+        "2026-03-20T16:13:20.030Z",
+        "2026-03-20T16:13:20.037Z",
+        "2026-03-20T16:13:20.043Z",
+        "2026-03-20T16:13:20.052Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 15
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/16_regioes_sp/16_regiao_sul__polygon.geojson",
+    "size_mb": 1.251,
+    "modified_at_local": "2026-05-04T07:11:01",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:20.008Z",
+        "2026-03-20T16:13:20.017Z",
+        "2026-03-20T16:13:20.023Z",
+        "2026-03-20T16:13:20.032Z",
+        "2026-03-20T16:13:20.034Z",
+        "2026-03-20T16:13:20.039Z",
+        "2026-03-20T16:13:20.044Z",
+        "2026-03-20T16:13:20.057Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 22
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/16_regioes_sp/distrito_municipal__polygon.geojson",
+    "size_mb": 5.338,
+    "modified_at_local": "2026-05-04T07:11:02",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2004-01-01Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:13:19.988Z",
+        "2026-03-20T16:13:20.005Z",
+        "2026-03-20T16:13:20.006Z",
+        "2026-03-20T16:13:20.008Z",
+        "2026-03-20T16:13:20.010Z",
+        "2026-03-20T16:13:20.011Z",
+        "2026-03-20T16:13:20.012Z",
+        "2026-03-20T16:13:20.014Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 96
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/16_regioes_sp/subprefeitura__polygon.geojson",
+    "size_mb": 3.288,
+    "modified_at_local": "2026-05-04T07:11:02",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_criacao": [
+        "2023-11-30Z"
+      ],
+      "dt_atualizacao": [
+        "2026-03-20T16:14:01.317Z",
+        "2026-03-20T16:14:01.340Z",
+        "2026-03-20T16:14:01.342Z",
+        "2026-03-20T16:14:01.344Z",
+        "2026-03-20T16:14:01.345Z",
+        "2026-03-20T16:14:01.347Z",
+        "2026-03-20T16:14:01.349Z",
+        "2026-03-20T16:14:01.353Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 32
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/17_risco_hidrologico/17_alagamentos_100_250m_hidrografia__point.geojson",
+    "size_mb": 0.037,
+    "modified_at_local": "2026-05-04T07:11:01",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-13Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z",
+        "2026-01-18Z",
+        "2026-01-20Z",
+        "2026-01-26Z",
+        "2026-01-27Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 43
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/17_risco_hidrologico/17_alagamentos_50_100m_hidrografia__point.geojson",
+    "size_mb": 0.043,
+    "modified_at_local": "2026-05-04T07:11:01",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-08Z",
+        "2026-01-15Z",
+        "2026-01-16Z",
+        "2026-01-17Z",
+        "2026-01-19Z",
+        "2026-01-20Z",
+        "2026-01-26Z",
+        "2026-01-27Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 51
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/17_risco_hidrologico/17_alagamentos_acima_250m_hidrografia__point.geojson",
+    "size_mb": 0.018,
+    "modified_at_local": "2026-05-04T07:11:01",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-08Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z",
+        "2026-01-25Z",
+        "2026-01-27Z",
+        "2026-01-28Z",
+        "2026-02-03Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 20
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/17_risco_hidrologico/17_alagamentos_ate_50m_hidrografia__point.geojson",
+    "size_mb": 0.053,
+    "modified_at_local": "2026-05-04T07:11:01",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-04Z",
+        "2026-01-05Z",
+        "2026-01-08Z",
+        "2026-01-10Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z",
+        "2026-01-17Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 62
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/17_risco_hidrologico/17_alagamentos_contexto_hidrografico__point.geojson",
+    "size_mb": 0.151,
+    "modified_at_local": "2026-05-04T07:11:01",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-04Z",
+        "2026-01-05Z",
+        "2026-01-08Z",
+        "2026-01-10Z",
+        "2026-01-13Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 176
+  },
+  {
+    "category": "geojson_processados",
+    "file": "data/processed/17_risco_hidrologico/17_ocorrencias_alagamento_defesa_civil__point.geojson",
+    "size_mb": 0.088,
+    "modified_at_local": "2026-05-04T07:11:01",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "dt_ocorrencia": [
+        "2026-01-04Z",
+        "2026-01-05Z",
+        "2026-01-08Z",
+        "2026-01-10Z",
+        "2026-01-13Z",
+        "2026-01-14Z",
+        "2026-01-15Z",
+        "2026-01-16Z"
+      ],
+      "dt_carga": [
+        "2026-04-15Z"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 176
+  },
+  {
+    "category": "catalogo",
+    "file": "data/catalog/classification_report.csv",
+    "size_mb": 0.018,
+    "modified_at_local": "2026-05-04T07:11:02",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "catalogo",
+    "file": "data/catalog/data_freshness_report.json",
+    "size_mb": 0.111,
+    "modified_at_local": "2026-05-04T07:10:23",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "catalogo",
+    "file": "data/catalog/groups.json",
+    "size_mb": 0.007,
+    "modified_at_local": "2026-05-04T07:11:02",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "catalogo",
+    "file": "data/catalog/knowledge.generated.json",
+    "size_mb": 0.251,
+    "modified_at_local": "2026-05-04T07:11:04",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "catalogo",
+    "file": "data/catalog/layer_dictionary.json",
+    "size_mb": 0.387,
+    "modified_at_local": "2026-05-04T07:11:04",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "catalogo",
+    "file": "data/catalog/layers.json",
+    "size_mb": 0.102,
+    "modified_at_local": "2026-05-04T07:11:02",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "catalogo",
+    "file": "data/catalog/osm_groups.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T03:52:21",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "catalogo",
+    "file": "data/catalog/osm_layers.json",
+    "size_mb": 0.006,
+    "modified_at_local": "2026-05-04T04:25:46",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_alimentacao__point.json",
+    "size_mb": 0.8,
+    "modified_at_local": "2026-05-04T04:01:29",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T07:00:29Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_comercio__point.json",
+    "size_mb": 1.151,
+    "modified_at_local": "2026-05-04T04:01:24",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T06:59:29Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_educacao__point.json",
+    "size_mb": 0.161,
+    "modified_at_local": "2026-05-04T03:51:55",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T06:50:14Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_enderecos__point.json",
+    "size_mb": 14.727,
+    "modified_at_local": "2026-05-04T04:01:18",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T06:59:29Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_lazer__point.json",
+    "size_mb": 1.834,
+    "modified_at_local": "2026-05-04T03:52:11",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T06:50:14Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_ruas__line.json",
+    "size_mb": 8.451,
+    "modified_at_local": "2026-05-04T04:00:51",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T06:59:29Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_saude__point.json",
+    "size_mb": 0.259,
+    "modified_at_local": "2026-05-04T03:51:51",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T06:50:14Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_servicos__point.json",
+    "size_mb": 0.262,
+    "modified_at_local": "2026-05-04T03:52:19",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T06:51:13Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw",
+    "file": "data/osm/raw/15_osm_transporte__point.json",
+    "size_mb": 2.585,
+    "modified_at_local": "2026-05-04T03:52:05",
+    "parse_error": null,
+    "overpass_metadata": {
+      "timestamp_osm_base": "2026-05-04T06:50:14Z",
+      "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r0_c0.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:16:42",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r0_c1.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:21:39",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r0_c2.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:26:36",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r0_c3.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:31:33",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r0_c4.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:36:30",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r0_c5.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:41:28",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r0_c6.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:46:25",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r0_c7.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:51:22",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r1_c0.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T04:56:19",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r1_c1.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:01:16",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r1_c2.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:06:13",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r1_c3.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:11:10",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r1_c4.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:16:07",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r1_c5.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:21:04",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r1_c6.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:26:02",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r1_c7.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:30:59",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r2_c0.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:35:56",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r2_c1.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:40:53",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r2_c2.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:45:50",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r2_c3.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:50:47",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r2_c4.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T05:55:44",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r2_c5.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:00:41",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r2_c6.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:05:38",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r2_c7.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:10:35",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r3_c0.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:15:32",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r3_c1.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:20:29",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r3_c2.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:25:26",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r3_c3.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:30:24",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r3_c4.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:35:21",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_raw_tiles",
+    "file": "data/osm/raw_tiles/15_osm_comercio__point_tile_r3_c5.json",
+    "size_mb": 0.0,
+    "modified_at_local": "2026-05-04T06:40:18",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  },
+  {
+    "category": "osm_processed",
+    "file": "data/osm/processed/15_osm_alimentacao__point.geojson",
+    "size_mb": 0.505,
+    "modified_at_local": "2026-05-04T04:01:29",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "brand:wikidata": [
+        "Q118946030",
+        "Q130293405",
+        "Q1392113",
+        "Q177054",
+        "Q244457",
+        "Q2504930",
+        "Q37158",
+        "Q38076"
+      ],
+      "check_date": [
+        "2023-05-10",
+        "2023-10-28",
+        "2023-11-03",
+        "2023-12-16",
+        "2024-01-26",
+        "2024-01-31",
+        "2024-02-07",
+        "2024-04-11"
+      ],
+      "check_date:opening_hours": [
+        "2026-03-29"
+      ],
+      "fuel:ethanol": [
+        "yes"
+      ],
+      "wikidata": [
+        "Q16496717",
+        "Q42409327",
+        "Q5203437",
+        "Q55805827",
+        "Q61960010",
+        "Q62027286",
+        "Q69524613"
+      ],
+      "survey:date": [
+        "2015-04-06"
+      ],
+      "start_date": [
+        "1972"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 1406
+  },
+  {
+    "category": "osm_processed",
+    "file": "data/osm/processed/15_osm_comercio__point.geojson",
+    "size_mb": 0.666,
+    "modified_at_local": "2026-05-04T04:01:24",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "check_date": [
+        "2023-12-16",
+        "2024-03-31",
+        "2024-06-08",
+        "2024-07-27",
+        "2026-02-05"
+      ],
+      "brand:wikidata": [
+        "Q1060537",
+        "Q1342538",
+        "Q154950",
+        "Q1585448",
+        "Q2940190",
+        "Q3064071",
+        "Q3064093",
+        "Q3411543"
+      ],
+      "wikidata": [
+        "Q123398760",
+        "Q61960010"
+      ],
+      "not:brand:wikidata": [
+        "Q5422131"
+      ],
+      "operator:wikidata": [
+        "Q80955"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 2062
+  },
+  {
+    "category": "osm_processed",
+    "file": "data/osm/processed/15_osm_educacao__point.geojson",
+    "size_mb": 0.049,
+    "modified_at_local": "2026-05-04T03:51:55",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "check_date": [
+        "2024-04-06",
+        "2024-08-11",
+        "2024-08-12",
+        "2024-10-06",
+        "2025-01-25",
+        "2025-04-11"
+      ],
+      "wikidata": [
+        "Q10274327",
+        "Q10274560",
+        "Q10279326",
+        "Q10279368",
+        "Q10286310",
+        "Q10387854",
+        "Q10387857",
+        "Q17126291"
+      ],
+      "operator:wikidata": [
+        "Q10290787",
+        "Q10351100",
+        "Q52637715",
+        "Q835960"
+      ],
+      "check_date:opening_hours": [
+        "2025-12-17"
+      ],
+      "start_date": [
+        "1917",
+        "1942-10-31",
+        "1946-08-22",
+        "1947",
+        "1950-12-24",
+        "1971"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 117
+  },
+  {
+    "category": "osm_processed",
+    "file": "data/osm/processed/15_osm_lazer__point.geojson",
+    "size_mb": 0.43,
+    "modified_at_local": "2026-05-04T03:52:11",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "check_date": [
+        "2024-04-26",
+        "2024-05-13",
+        "2024-06-06",
+        "2024-07-20",
+        "2024-08-12",
+        "2024-09-21",
+        "2024-10-04",
+        "2025-01-25"
+      ],
+      "wikidata": [
+        "Q10325364",
+        "Q10333751",
+        "Q10343598",
+        "Q111414092",
+        "Q111414118",
+        "Q111414119",
+        "Q111883584",
+        "Q111883595"
+      ],
+      "start_date": [
+        "12/04/2018",
+        "1892-11-06",
+        "1922",
+        "1947-06-11",
+        "1954",
+        "1959",
+        "1965-09-11",
+        "2007"
+      ],
+      "brand:wikidata": [
+        "Q111154874",
+        "Q1458135",
+        "Q24906315",
+        "Q30930959",
+        "Q420545",
+        "Q794939",
+        "Q920166"
+      ],
+      "artist:wikidata": [
+        "Q10267982",
+        "Q10334411",
+        "Q1791056",
+        "Q1791068",
+        "Q18907502",
+        "Q2377295",
+        "Q23893560",
+        "Q2749091"
+      ],
+      "commemorates:wikidata": [
+        "Q21652952"
+      ],
+      "survey:date": [
+        "2021-11-04"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 1501
+  },
+  {
+    "category": "osm_processed",
+    "file": "data/osm/processed/15_osm_saude__point.geojson",
+    "size_mb": 0.112,
+    "modified_at_local": "2026-05-04T03:51:51",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "check_date": [
+        "2023-07-08",
+        "2023-08-02",
+        "2024-04-06",
+        "2024-08-03",
+        "2024-08-11",
+        "2025-01-25",
+        "2025-01-26",
+        "2025-02-04"
+      ],
+      "brand:wikidata": [
+        "Q100492677",
+        "Q10357101",
+        "Q20055480",
+        "Q48856833",
+        "Q5308184",
+        "Q5308185",
+        "Q7124466"
+      ],
+      "check_date:opening_hours": [
+        "2025-01-25"
+      ],
+      "wikidata": [
+        "Q10298335",
+        "Q10298341",
+        "Q10298462",
+        "Q10298464",
+        "Q10303688",
+        "Q1303150",
+        "Q53679606",
+        "Q5908682"
+      ],
+      "survey:date": [
+        "2024-09-15"
+      ],
+      "start_date": [
+        "1884-08-31",
+        "1894-01-25",
+        "1953-04-23",
+        "1954-01-25",
+        "2001-09-17"
+      ],
+      "operator:wikidata": [
+        "Q7531056"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 271
+  },
+  {
+    "category": "osm_processed",
+    "file": "data/osm/processed/15_osm_servicos__point.geojson",
+    "size_mb": 0.135,
+    "modified_at_local": "2026-05-04T03:52:19",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "brand:wikidata": [
+        "Q1424293",
+        "Q16496429",
+        "Q190464",
+        "Q3375004",
+        "Q3483060",
+        "Q4116096",
+        "Q4854069",
+        "Q4854119"
+      ],
+      "check_date": [
+        "2023-10-28",
+        "2024-04-08",
+        "2024-04-18",
+        "2024-05-05",
+        "2024-05-06",
+        "2024-07-27",
+        "2024-08-03",
+        "2024-08-11"
+      ],
+      "operator:wikidata": [
+        "Q10260738",
+        "Q10350993",
+        "Q10351025",
+        "Q111137534",
+        "Q125454187",
+        "Q1424293",
+        "Q3375004",
+        "Q3621649"
+      ],
+      "not:brand:wikidata": [
+        "Q1424293",
+        "Q806181"
+      ],
+      "wikidata": [
+        "Q10344070",
+        "Q10351100",
+        "Q4116096",
+        "Q806186"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 327
+  },
+  {
+    "category": "osm_processed",
+    "file": "data/osm/processed/15_osm_transporte__point.geojson",
+    "size_mb": 0.988,
+    "modified_at_local": "2026-05-04T03:52:05",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {
+      "public_transport": [
+        "platform",
+        "station",
+        "stop_position"
+      ],
+      "network:wikidata": [
+        "Q7392689"
+      ],
+      "wikidata": [
+        "Q15243160",
+        "Q3132156",
+        "Q4764340",
+        "Q7159656",
+        "Q7314773",
+        "Q8779002",
+        "Q8779071"
+      ],
+      "operator:wikidata": [
+        "Q111785735"
+      ]
+    },
+    "notes": [],
+    "feature_count_seen": 2988
+  },
+  {
+    "category": "fonte_principal",
+    "file": "mapasp.json",
+    "size_mb": 0.009,
+    "modified_at_local": "2026-05-04T05:51:44",
+    "parse_error": null,
+    "overpass_metadata": {},
+    "date_like_fields": {},
+    "notes": []
+  }
+]

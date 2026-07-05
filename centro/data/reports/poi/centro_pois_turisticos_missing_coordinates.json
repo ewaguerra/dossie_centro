@@ -1,0 +1,198 @@
+{
+  "expectedTotal": 79,
+  "foundHighOrMedium": 64,
+  "missing": [
+    {
+      "officialIndex": 2,
+      "name": "Caixa Cultural",
+      "aliases": [
+        "Caixa Cultural",
+        "Caixa Cultural São Paulo",
+        "Caixa Cultural SP"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 13,
+      "name": "Igreja das Chagas do Seráphico Pai São Francisco",
+      "aliases": [
+        "Igreja das Chagas do Seráphico Pai São Francisco",
+        "Igreja das Chagas do Serafico Pai Sao Francisco",
+        "Igreja das Chagas",
+        "Chagas do São Francisco",
+        "Chagas do Sao Francisco"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 19,
+      "name": "Palácio da Justiça",
+      "aliases": [
+        "Palácio da Justiça",
+        "Palacio da Justiça",
+        "Palacio da Justica",
+        "Palácio da Justica"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 22,
+      "name": "Solar da Marquesa de Santos",
+      "aliases": [
+        "Solar da Marquesa de Santos",
+        "Solar da Marquesa"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 23,
+      "name": "Associação Portuguesa de Desportos",
+      "aliases": [
+        "Associação Portuguesa de Desportos",
+        "Associacao Portuguesa de Desportos",
+        "Portuguesa",
+        "Lusa"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 30,
+      "name": "Complexo Cultural Funarte",
+      "aliases": [
+        "Complexo Cultural Funarte",
+        "Funarte"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 40,
+      "name": "Igreja Nossa Senhora da Paz",
+      "aliases": [
+        "Igreja Nossa Senhora da Paz",
+        "Nossa Senhora da Paz"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 41,
+      "name": "Igreja Nossa Senhora do Rosário dos Homens Pretos",
+      "aliases": [
+        "Igreja Nossa Senhora do Rosário dos Homens Pretos",
+        "Igreja Nossa Senhora do Rosario dos Homens Pretos",
+        "Rosário dos Homens Pretos",
+        "Rosario dos Homens Pretos"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 43,
+      "name": "Igreja Santa Cruz das Almas dos Enforcados",
+      "aliases": [
+        "Igreja Santa Cruz das Almas dos Enforcados",
+        "Santa Cruz das Almas dos Enforcados",
+        "Almas dos Enforcados"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 52,
+      "name": "Museu da Energia de São Paulo",
+      "aliases": [
+        "Museu da Energia de São Paulo",
+        "Museu da Energia de Sao Paulo",
+        "Museu da Energia"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 54,
+      "name": "Museu da Polícia Militar de São Paulo",
+      "aliases": [
+        "Museu da Polícia Militar de São Paulo",
+        "Museu da Policia Militar de Sao Paulo",
+        "Museu da Polícia Militar",
+        "Museu da Policia Militar"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 57,
+      "name": "Museu de Saúde Pública Emílio Ribas",
+      "aliases": [
+        "Museu de Saúde Pública Emílio Ribas",
+        "Museu de Saude Publica Emilio Ribas",
+        "Emílio Ribas",
+        "Emilio Ribas"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 64,
+      "name": "Pina Contemporânea",
+      "aliases": [
+        "Pina Contemporânea",
+        "Pina Contemporanea"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 75,
+      "name": "Sesc Carmo",
+      "aliases": [
+        "Sesc Carmo",
+        "SESC Carmo"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    },
+    {
+      "officialIndex": 76,
+      "name": "Templo de Salomão",
+      "aliases": [
+        "Templo de Salomão",
+        "Templo de Salomao"
+      ],
+      "status": "not_found_in_local_geojson",
+      "needs_review": true
+    }
+  ],
+  "lowConfidence": [
+    {
+      "officialIndex": 41,
+      "name": "Igreja Nossa Senhora do Rosário dos Homens Pretos",
+      "aliases": [
+        "Igreja Nossa Senhora do Rosário dos Homens Pretos",
+        "Igreja Nossa Senhora do Rosario dos Homens Pretos",
+        "Rosário dos Homens Pretos",
+        "Rosario dos Homens Pretos"
+      ],
+      "candidateName": "Igreja Nossa Senhora da Boa Morte",
+      "sourceGeojson": "data/osm/processed/15_osm_enderecos__point.geojson",
+      "matchScore": 0.7334,
+      "needs_review": true,
+      "evidenceFields": [
+        "name",
+        "amenity",
+        "historic",
+        "building",
+        "addr:street",
+        "addr:housenumber",
+        "wikipedia",
+        "wikidata"
+      ]
+    }
+  ]
+}

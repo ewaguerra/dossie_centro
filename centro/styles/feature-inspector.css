@@ -1,0 +1,210 @@
+/** Centro — feature inspector + poi-card */
+/* ─── Feature Inspector ────────────────────────────────── */
+
+.feature-inspector {
+  position: fixed;
+  bottom: calc(var(--jesuit-frame-bottom) + var(--centro-sidebar-gap));
+  right: calc(var(--jesuit-frame-right) + var(--centro-sidebar-gap));
+  width: 320px;
+  max-height: calc(
+    100vh
+    - var(--jesuit-frame-top)
+    - var(--jesuit-frame-bottom)
+    - var(--centro-sidebar-gap) * 3
+  );
+  background: var(--centro-paper);
+  border: 1px solid var(--centro-paper-border);
+  border-top: 4px solid var(--centro-accent);
+  border-radius: 2px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  z-index: 40;
+  overflow: hidden;
+  color: var(--centro-ink-mid);
+}
+
+.feature-inspector[hidden] { display: none; }
+
+.feature-inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px 16px 12px;
+  border-bottom: 2px dashed var(--centro-paper-border);
+  flex-shrink: 0;
+  background: var(--centro-paper-elev);
+}
+
+.feature-inspector-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--centro-accent);
+  margin-bottom: 4px;
+  font-family: var(--font-code);
+}
+
+.feature-inspector-header h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--centro-ink);
+  line-height: 1.3;
+  font-family: var(--font-mono);
+}
+
+#feature-inspector-close {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--centro-ink-faint);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+}
+
+#feature-inspector-close:hover {
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--centro-accent);
+}
+
+#feature-inspector-close svg { width: 15px; height: 15px; }
+
+.feature-inspector-meta {
+  padding: 8px 14px;
+  font-size: 11px;
+  color: var(--centro-ink-muted);
+  background: var(--centro-paper-elev);
+  border-bottom: 1px solid var(--centro-paper-border);
+  flex-shrink: 0;
+  font-family: var(--font-code);
+}
+
+.feature-inspector-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--centro-ink-mid);
+}
+
+.poi-card {
+  margin-top: 10px;
+  padding: 10px 10px 8px;
+  border: 1px solid var(--centro-paper-border);
+  border-radius: 2px;
+  background: var(--centro-paper-elev);
+  color: var(--centro-ink-mid);
+}
+
+.poi-card__title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--centro-accent-dark);
+  margin-bottom: 6px;
+  font-family: var(--font-code);
+}
+
+.poi-card__hook {
+  color: var(--centro-ink);
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.poi-card__prompt {
+  font-size: 12px;
+  color: var(--centro-ink-muted);
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.poi-card__choices {
+  display: grid;
+  gap: 6px;
+}
+
+.poi-card__choice {
+  padding: 7px 8px;
+  border: 1px solid var(--centro-paper-border);
+  border-radius: 2px;
+  background: var(--centro-paper-hover);
+  color: var(--centro-ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+button.poi-card__choice {
+  cursor: pointer;
+  text-align: left;
+}
+
+button.poi-card__choice:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  background: rgba(245, 158, 11, 0.08);
+  color: var(--centro-ink);
+}
+
+button.poi-card__choice:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.poi-card__choice--selected {
+  border-color: var(--color-accent) !important;
+  background: rgba(245, 158, 11, 0.12) !important;
+  opacity: 1 !important;
+  color: var(--centro-ink) !important;
+}
+
+.poi-card__feedback {
+  display: none;
+  margin-top: 6px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  color: var(--color-brand-dim);
+  opacity: 0.9;
+}
+
+.poi-card__feedback--visible {
+  display: block;
+}
+
+/* ─── Debug inspector (click mapa → JSON) ───────────────── */
+.debug-inspector {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: var(--z-modal);
+  max-width: 400px;
+  max-height: 300px;
+  overflow: auto;
+  padding: var(--space-4);
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  color: var(--centro-ink-mid);
+}
+
+.debug-inspector__close {
+  float: right;
+  margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) var(--space-2) var(--space-2);
+}
+
+.debug-inspector__body {
+  white-space: pre-wrap;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--centro-ink);
+}

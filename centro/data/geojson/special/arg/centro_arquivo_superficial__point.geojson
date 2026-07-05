@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 1,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-46.6377, -23.5453]
+      },
+      "properties": {
+        "arquivo_id": "AS-01",
+        "nome": "Café Parceiro",
+        "endereco": "Rua Líbero Badaró, 508",
+        "camada_narrativa": "Vale do Anhangabaú",
+        "status": "bloqueado",
+        "tipo": "ponto_patrocinado",
+        "fragmento": "Este local guarda um fragmento do Arquivo dos Soterrados.",
+        "desbloqueio_fisico": "Visite o local e encontre o símbolo ∞ impresso no verso do cardápio. Fotografe e envie.",
+        "desbloqueio_digital": "Siga @protocolo13almas e responda ao post fixado com a frase 'SOTERRADO NÃO APAGADO'.",
+        "codigo_desbloqueio": "ARQ-ALMA_01-CODENOME_CAFE_PARCEIRO",
+        "recompensa": "Acesso ao fragmento de imagem — #01: 'Eles asfaltaram o rio mas o rio ainda canta'.",
+        "sponsor_nome": "Café Parceiro",
+        "sponsor_url": "",
+        "sponsor_tipo": "arquivo_urbano"
+      }
+    }
+  ]
+}
