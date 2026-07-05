@@ -10,6 +10,43 @@
   function create(ctx) {
     var getMap = ctx.getMap;
 
+    function isPhaseUnlocked() {
+      var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+      if (ph && typeof ph.isFeaturePhaseUnlocked === "function") {
+        return ph.isFeaturePhaseUnlocked("buildings-3d");
+      }
+      return true;
+    }
+
+    function getPhaseLockLabel() {
+      var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+      if (ph && typeof ph.formatPhaseLockLabel === "function" && typeof ph.getMinPhaseForFeature === "function") {
+        return ph.formatPhaseLockLabel(ph.getMinPhaseForFeature("buildings-3d"));
+      }
+      return "";
+    }
+
+    function syncPhaseGateCard() {
+      var cb = document.getElementById("centro-buildings-3d-toggle");
+      var card = cb && cb.closest(".sidebar-viz-card");
+      var unlocked = isPhaseUnlocked();
+      if (cb) cb.disabled = !unlocked;
+      if (card) {
+        card.classList.toggle("sidebar-viz-card--phase-locked", !unlocked);
+        var meta = card.querySelector(".sidebar-viz-card__phase-lock");
+        if (!unlocked) {
+          if (!meta) {
+            meta = document.createElement("p");
+            meta.className = "sidebar-viz-card__phase-lock";
+            card.appendChild(meta);
+          }
+          meta.textContent = getPhaseLockLabel();
+        } else if (meta) {
+          meta.remove();
+        }
+      }
+    }
+
     function getInitialEnabled() {
       try {
         var stored = window.localStorage && window.localStorage.getItem(STORAGE_KEY);
@@ -71,6 +108,16 @@
 
     function setEnabled(enabled, options) {
       options = options || {};
+      if (enabled && !isPhaseUnlocked()) {
+        if (!options.silent && typeof window.centroToast === "function") {
+          window.centroToast(
+            "Maquete 3D bloqueada. " + (getPhaseLockLabel() || "Avance de fase no ARG."),
+            "warn"
+          );
+        }
+        syncToggleUI(false);
+        return false;
+      }
       var map = getMap();
       if (!map || !map.getLayer || !map.getLayer(LAYER_ID)) {
         if (!options.silent) {
@@ -107,19 +154,43 @@
     }
 
     function initState() {
-      var enabled = getInitialEnabled();
+      syncPhaseGateCard();
+      var enabled = getInitialEnabled() && isPhaseUnlocked();
       var ok = setEnabled(enabled, { persist: false, silent: true });
       if (!ok && enabled) enabled = false;
       syncToggleUI(enabled);
+    }
+
+    function syncPhaseGate() {
+      syncPhaseGateCard();
+      if (!isPhaseUnlocked()) {
+        ctx.mapReadyPromise.then(function () {
+          setEnabled(false, { persist: false, silent: true });
+          syncToggleUI(false);
+        });
+        return;
+      }
     }
 
     function setupToggle() {
       var cb = document.getElementById("centro-buildings-3d-toggle");
       if (!cb) return;
       renderLegend();
+      syncPhaseGateCard();
       cb.addEventListener("change", function () {
         ctx.mapReadyPromise.then(function () {
           var wantOn = cb.checked;
+          if (wantOn && !isPhaseUnlocked()) {
+            cb.checked = false;
+            updateLegendVisibility(false);
+            if (typeof window.centroToast === "function") {
+              window.centroToast(
+                "Maquete 3D bloqueada. " + (getPhaseLockLabel() || "Avance de fase no ARG."),
+                "warn"
+              );
+            }
+            return;
+          }
           var ok = setEnabled(wantOn);
           if (!ok && wantOn) {
             cb.checked = false;
@@ -142,6 +213,8 @@
       initState: initState,
       setupToggle: setupToggle,
       syncToggleUI: syncToggleUI,
+      syncPhaseGate: syncPhaseGate,
+      isPhaseUnlocked: isPhaseUnlocked,
     };
   }
 

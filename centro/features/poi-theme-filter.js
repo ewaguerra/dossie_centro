@@ -1,11 +1,35 @@
 /**
- * Filtro temático POI (#poi-legend-grid).
+ * Filtro temático POI (#poi-legend-grid) — respeita themeMinPhase (13 Almas).
  */
 (function () {
   "use strict";
 
   var STORAGE_KEY = "centroPoiThemeFilter";
   var OPEN_STORAGE_KEY = "centroPoiLegendOpen";
+
+  function getProtocoloPhase() {
+    return window.CENTRO && window.CENTRO.protocoloPhase;
+  }
+
+  function isThemeUnlocked(themeId) {
+    var ph = getProtocoloPhase();
+    if (ph && typeof ph.isThemePhaseUnlocked === "function") {
+      return ph.isThemePhaseUnlocked(themeId);
+    }
+    return true;
+  }
+
+  function getThemeLockLabel(themeId) {
+    var ph = getProtocoloPhase();
+    if (
+      ph &&
+      typeof ph.formatPhaseLockLabel === "function" &&
+      typeof ph.getMinPhaseForTheme === "function"
+    ) {
+      return ph.formatPhaseLockLabel(ph.getMinPhaseForTheme(themeId));
+    }
+    return "";
+  }
 
   function setupCollapsible() {
     var details = document.getElementById("poi-legend-details");
@@ -76,14 +100,59 @@
       }
     }
 
+    function syncThemeRowUI(row, toggle, theme, state) {
+      var phaseOk = isThemeUnlocked(theme.id);
+      row.classList.toggle("poi-legend__item--phase-locked", !phaseOk);
+      toggle.disabled = !phaseOk;
+
+      var lockMeta = row.querySelector(".poi-legend__phase-lock");
+      if (!phaseOk) {
+        if (!lockMeta) {
+          lockMeta = document.createElement("span");
+          lockMeta.className = "poi-legend__phase-lock";
+          row.appendChild(lockMeta);
+        }
+        lockMeta.textContent = getThemeLockLabel(theme.id);
+        toggle.checked = false;
+        state[theme.id] = false;
+        row.classList.add("poi-legend__item--off");
+      } else if (lockMeta) {
+        lockMeta.remove();
+      }
+    }
+
     function applyAll() {
       var icons = window.MAPA_SP_ICONS;
       if (!icons || typeof icons.getThemeFilters !== "function") return;
       var state = loadState();
       var themes = icons.getThemeFilters();
       for (var i = 0; i < themes.length; i++) {
-        setVisibility(themes[i], state[themes[i].id] !== false);
+        var theme = themes[i];
+        var phaseOk = isThemeUnlocked(theme.id);
+        var userWants = state[theme.id] !== false;
+        setVisibility(theme, phaseOk && userWants);
       }
+    }
+
+    function syncPhaseGate() {
+      var grid = document.getElementById("poi-legend-grid");
+      var icons = window.MAPA_SP_ICONS;
+      if (!grid || !icons || typeof icons.getThemeFilters !== "function") {
+        applyAll();
+        return;
+      }
+      var state = loadState();
+      var themes = icons.getThemeFilters();
+      for (var i = 0; i < themes.length; i++) {
+        var theme = themes[i];
+        var row = grid.querySelector('.poi-legend__item[data-theme-id="' + theme.id + '"]');
+        if (!row) continue;
+        var toggle = row.querySelector(".poi-legend__toggle");
+        if (!toggle) continue;
+        syncThemeRowUI(row, toggle, theme, state);
+      }
+      saveState(state);
+      applyAll();
     }
 
     function setup() {
@@ -129,7 +198,20 @@
           label.textContent = theme.label;
           row.appendChild(label);
 
+          syncThemeRowUI(row, toggle, theme, state);
+
           toggle.addEventListener("change", function () {
+            if (!isThemeUnlocked(theme.id)) {
+              toggle.checked = false;
+              row.classList.add("poi-legend__item--off");
+              if (typeof window.centroToast === "function") {
+                window.centroToast(
+                  "Tema bloqueado. " + (getThemeLockLabel(theme.id) || "Avance de fase no ARG."),
+                  "warn"
+                );
+              }
+              return;
+            }
             state[theme.id] = toggle.checked;
             row.classList.toggle("poi-legend__item--off", !toggle.checked);
             saveState(state);
@@ -147,6 +229,7 @@
       STORAGE_KEY: STORAGE_KEY,
       loadState: loadState,
       applyAll: applyAll,
+      syncPhaseGate: syncPhaseGate,
       setup: setup,
     };
   }

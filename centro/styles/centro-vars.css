@@ -17,7 +17,7 @@
   --color-bg-subtle: #121212;
   --color-text: #e5e5e5;
 
-  --sidebar-width: 360px;
+  --sidebar-width: 400px;
   --radius: var(--radius-xs);
 
   --jesuit-frame-top: 56px;
@@ -46,4 +46,26 @@
 
   /* Solo do basemap (OpenFreeMap bright/liberty) — evita void preto enquanto tiles carregam */
   --map-ground-bg: #f8f4f0;
+
+  /*
+   * Sidebar — duas superfícies (ver brand-decision.md + docs/design-system/tokens.md)
+   * shell = fundo escuro HUD (#1a1a1a); paper = cartões evidência (--centro-paper)
+   */
+  --sidebar-shell-text: var(--color-text);
+  --sidebar-shell-text-muted: var(--color-text-mid);
+  --sidebar-shell-text-faint: var(--color-text-muted);
+  --sidebar-shell-border: var(--color-border-light);
+  --sidebar-type-meta: var(--fs-sm);
+  --sidebar-type-body: var(--fs-base);
+  --sidebar-type-section: var(--fs-md);
+  --sidebar-type-title: var(--fs-lg);
+
+  /*
+   * Acento interactivo da sidebar (tabs, secções, grupos, selecção em cartões).
+   * Chrome estrutural HUD (borda header, status) mantém --centro-accent (vermelho).
+   */
+  --sidebar-accent: var(--color-brand);
+  --sidebar-accent-dim: var(--color-brand-dim);
+  --sidebar-accent-border: var(--color-brand-border);
+  --sidebar-accent-soft: var(--color-brand-soft);
 }

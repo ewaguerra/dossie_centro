@@ -66,41 +66,46 @@
 }
 
 .sidebar-header__eyebrow--chrome {
-  font-size: 10px;
-  color: var(--color-accent-strong);
-  letter-spacing: 2px;
+  font-size: var(--sidebar-type-meta);
+  color: var(--color-danger);
+  letter-spacing: 0.12em;
   margin: 0;
 }
 
 .sidebar-header__title--chrome {
-  font-size: 16px;
-  color: #ffffff;
+  font-size: var(--sidebar-type-title);
+  color: var(--sidebar-shell-text);
   margin: 0 0 4px;
+  line-height: 1.25;
 }
 
 .sidebar-header__title-accent {
-  color: var(--color-accent-strong);
+  color: var(--sidebar-accent);
 }
 
 .sidebar-header__intro--chrome {
-  font-size: 11px;
-  color: #888888;
+  font-size: var(--sidebar-type-body);
+  color: var(--sidebar-shell-text-muted);
   margin: 0;
   line-height: 1.5;
+  font-family: var(--font-ui);
 }
 
 .sidebar-header__meta {
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   margin-top: 8px;
-  font-size: 9px;
-  color: var(--color-text-muted);
-  border-top: 1px solid #1a1a1a;
+  font-size: var(--sidebar-type-meta);
+  color: var(--sidebar-shell-text-faint);
+  border-top: 1px solid var(--sidebar-shell-border);
   padding-top: 8px;
+  font-family: var(--font-code);
 }
 
 .sidebar-header__meta-label {
-  color: var(--color-accent-strong);
+  color: var(--sidebar-accent-dim);
+  font-weight: 700;
 }
 
 .sidebar-header__meta-status {

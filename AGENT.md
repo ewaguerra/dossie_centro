@@ -38,7 +38,7 @@ Sempre valide com evidência empírica antes de aplicar fix sugerido por terceir
 
 | Página | Rota | Função |
 |---|---|---|
-| **Centro** | `/centro/` | Mapa interativo MapLibre GL JS. POIs, pistas Rua São Bento, sidebar 9 grupos / 24 camadas, gates de fase e desbloqueio por pistas. |
+| **Centro** | `/centro/` | Mapa interativo MapLibre GL JS. POIs, pistas Rua São Bento, sidebar **Território / Evidências / Visualização** (20 camadas wired, 9 grupos), gates de fase e desbloqueio por pistas. |
 
 `/index.html` raiz redirecciona para `/centro/`.
 
@@ -105,6 +105,7 @@ Consequências práticas:
 - Chaves canónicas actuais:
   - `centroDebug` — flag do inspector debug (`?debug=1` também activa).
   - `centroPoiThemeFilter` — filtro temático POI (JSON `{themeId: bool}`).
+  - `centroPistasRsbVisible` — toggle pistas Rua São Bento no mapa (`"0"` / `"1"`).
   - `centroBuildings3D` — toggle da maquete 3D (`"0"` / `"1"`).
   - `protocolo13_caderno_clues` — array de IDs de pistas colectadas no
     Arquivo Morto; ponte para `centro/data/catalog/layer-unlocks.json`
@@ -296,15 +297,40 @@ MapLibre**. As convenções específicas:
   (`MAPA_SP_ICONS`). POIs via `addPOILayer`, pistas via `addPistasLayer`,
   camadas sidebar (point) via `addLayerToMap` + `resolveLayerIcon`. Filtro
   temático em `#poi-legend` (`setupPoiThemeFilter` + `getThemeFilters`). Ver **§7.9**.
+- **Sidebar IA (4 tabs — IDs DOM preservados):**
+  | Tab (label) | ID DOM | Conteúdo |
+  |---|---|---|
+  | **Território** | `#sidebar-tab-camadas` | Camadas wired (polígonos/linhas). 3 secções narrativas: Centro Histórico, Arquivo dos Soterrados, Contexto Urbano (OSM). Subgrupo **PESADO** colapsado por defeito. |
+  | **Evidências** | `#sidebar-tab-pois` | Filtro temático de ícones clicáveis (património + turismo via `addPOILayer`). Toggle `#centro-pistas-rsb-toggle` para pistas Rua São Bento. **Não** duplica toggles do Território. |
+  | **13 Fases** | `#sidebar-tab-fases` | Lista `#phases-panel` com as 13 Almas (`phase-gates.json` → `renderPhasesPanel`). Estado: Activa / Concluída / Bloqueada; actualiza com `centro:arg-state-changed`. |
+  | **Visualização** | `#sidebar-tab-opcoes` | Cartões: maquete 3D (`#centro-buildings-3d-toggle`) e missão Fase 7 / subsolo (`#centro-subterranean-toggle`, `#subterranean-guide-open`). |
 - **Dois catálogos** em `centro/data/catalog/`:
   - `layers.json` + `groups.json` → **wired** na sidebar (**10 camadas processed** +
     **5 grupos** processed). Context wired via `context-wired.json` adiciona
-    **14 camadas** em `centro/data/context/` (**9 grupos** no total na sidebar).
+    **10 camadas** (**9 grupos** no total na sidebar).
   - `context-layers.json` + `context-groups.json` + `context-wired.json` →
-    **14 camadas wired** (OSM ruas/endereços + 12 context em `centro/data/context/`).
-    Regeneração opcional: `npm run sync:geojson-from-salto` → **commitar** os `.geojson`.
-    Excluída da sidebar: `centro_pois_turisticos` (já em `addPOILayer`).
-    Carregamento via `centro/features/catalog-load.js`.
+    **10 camadas wired** (OSM ruas/endereços + context). Regeneração opcional:
+    `npm run sync:geojson-from-salto` → **commitar** os `.geojson`.
+  - **Exclusão sidebar (dedup POI):** `sidebar-exclude.json` remove da UI do
+    Território (mantém no catálogo para debug) os IDs carregados por
+    `addPOILayer`: `centro_memoria_paulistana__point`, `centro_acervo_tombado__point`,
+    `centro_bem_arqueologico__point`, `centro_monumentos__point`.
+  - **MAP-DATA-GOV-A:** `centro_pois_turisticos__point` continua **fora** de
+    `context-wired.json` (só `addPOILayer`).
+  - **ARG wired:** `centro_arquivo_superficial__point` permanece no Território
+    (secção Arquivo dos Soterrados) — missão, não POI duplicado.
+  - Carregamento via `centro/features/catalog-load.js` (`sidebarLayers` filtrado).
+- **Superfícies da sidebar (tipografia + cor):** duas camadas visuais —
+  **shell escuro** (`#1a1a1a`, tokens `--sidebar-shell-text*`) para tabs, intros,
+  secções e metadados; **cartões papel** (`--centro-paper`, `--centro-ink*`) para
+  `.layer-row`, `.poi-legend`, `.sidebar-viz-card`. Nunca usar `--centro-ink*` sobre
+  fundo escuro (contraste ~2:1). Escala sidebar (2026-07): meta `--sidebar-type-meta`
+  (`--fs-sm` ~13px), corpo `--sidebar-type-body` (`--fs-base` 16px), secções
+  `--sidebar-type-section` (`--fs-md` ~18px), título header `--sidebar-type-title`
+  (`--fs-lg` ~23px). Largura `--sidebar-width: 400px`.
+  **Acentos:** interacção/selecção → `--sidebar-accent` (= `--color-brand` âmbar);
+  chrome HUD estrutural (borda header, moldura) → `--centro-accent` (vermelho).
+  Ver `centro-vars.css` e `docs/design-system/brand-decision.md`.
 - **Fundo do mapa:** o body é `#121212` (HUD). O `#map` recebe
   `--map-ground-bg` (`#f8f4f0`) em `centro/styles/layout.css` e o runtime
   força `background-color` no layer `background` do estilo via
@@ -322,9 +348,31 @@ MapLibre**. As convenções específicas:
   bloqueadas até o jogador colectar pistas no Arquivo Morto. Mapa em
   `centro/data/catalog/layer-unlocks.json` (`layerId → [clueId, ...]`).
   Runtime lê `localStorage.protocolo13_caderno_clues` via
-  `getCollectedClueIds()` e `isLayerUnlocked()`. UI: classe
-  `.layer-row--locked` na sidebar, checkbox `disabled`, toast
+  `getCollectedClueIds()` e `isLayerUnlocked()`. UI: classes
+  `.layer-row--locked`, `.layer-row--clue-locked` (Caderno + link Arquivo Morto),
+  `.layer-row--phase-locked` (fase ARG), checkbox `disabled`, toast
   in-character ao tentar activar.
+- **13 Almas / 13 Fases (gates unificados):** registo canónico em
+  `centro/data/catalog/phase-gates.json` (`version: 2`). Cada fase bloqueia
+  **toda** a informação ligada até `protocolo13_phase >= minPhase`:
+  | Mapa | Chave | Consumidor |
+  |---|---|---|
+  | Camadas sidebar/mapa | `layerMinPhase` | `protocolo-phase.js` → `centro-runtime.js` |
+  | Temas POI (Evidências) | `themeMinPhase` | `poi-theme-filter.js` |
+  | Features transversais | `featureMinPhase` | ver abaixo |
+  **`featureMinPhase`:** `pistas-rsb` (2) → `pistas.js`; `subterranean` (7) →
+  `subterranean-cutaway.js`; `buildings-3d` (9) → `buildings-3d.js`;
+  `triangulo-historico` (11) → `addTrianguloHistoricoOverlay()` no runtime.
+  **`souls[]`:** 13 entradas (`alma-01`…`alma-13`) com título por fase; badge
+  `#centro-phase-badge` e mensagens de lock usam `formatPhaseLockLabel()` —
+  ex.: `Alma 07 — Rasgue o Asfalto`. Avanço automático por pistas só até fase 6
+  (`clueCountAdvance`); fases 7–13 via narrativa, `?phase=`, `?master=1` ou
+  missão subsolo. **Nota:** as 13 almas colectáveis no corte Three.js
+  (`TREZE_ALMAS` em `subterranean-cutaway.js`) são missão da Fase 7, distintas
+  do registo ARG em `souls[]`, embora partilhem IDs `alma-NN`.
+  API: `getMinPhaseForLayer|Theme|Feature`, `is*PhaseUnlocked`,
+  `getSoul(phase)`, `formatPhaseLockLabel(minPhase)`. Evento
+  `centro:arg-state-changed` reaplica sidebar, POI, pistas RSB, 3D e subsolo.
 - POIs/popups via DOM API (`setDOMContent` + `createElement` + `textContent`).
   **`setHTML` é proibido em runtime** — teste guardião em
   `tests/sanity.test.js`. Ver §6 para a regra geral de `innerHTML`.

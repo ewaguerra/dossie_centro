@@ -85,7 +85,7 @@ projeto_centro/
 
 ## Funcionalidades
 
-- 24 camadas wired na sidebar (10 processed + 14 context), 9 grupos
+- 20 camadas wired na sidebar Território (10 processed + 10 context), 9 grupos; 6 temas em Evidências
 - 4 POI patrimoniais + POI turístico; 4 pistas Rua São Bento
 - Desbloqueio por pistas (`layer-unlocks.json`) e gates de fase (`phase-gates.json`)
 - Matriz de Endereçamento (`15_osm_enderecos__point`) desligada no boot

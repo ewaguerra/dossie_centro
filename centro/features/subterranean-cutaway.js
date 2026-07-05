@@ -17,7 +17,6 @@ import * as THREE from "/vendor/three/three.module.min.js";
   var LABELS_ID         = "subterranean-labels";
   var REQUIRED_PHASE    = 7;
   var REQUIRED_CLUES    = ["agua-calada", "aresta-fria", "peso-fundacao"];
-  // localStorage keys da visão subterrânea:
   // centroSubterraneanEnabled        — "0"/"1"
   // centroSubterraneanUnlockedElements — JSON array de IDs descobertos
   // centroMaster                      — "1" activa modo mestre
@@ -159,7 +158,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
     try {
       if (window.localStorage) {
         window.localStorage.setItem(MASTER_STORAGE_KEY,   "1");
-        window.localStorage.setItem(PHASE_STORAGE_KEY,    String(REQUIRED_PHASE));
+        window.localStorage.setItem(PHASE_STORAGE_KEY,    String(getRequiredPhase()));
         window.localStorage.setItem(ENABLED_STORAGE_KEY,  "1");
         var existing = [];
         var raw = window.localStorage.getItem(CADERNO_STORAGE_KEY);
@@ -169,7 +168,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
         window.localStorage.setItem(CADERNO_STORAGE_KEY, JSON.stringify(Array.from(set)));
       }
       var ph = window.CENTRO && window.CENTRO.protocoloPhase;
-      if (ph && typeof ph.setPhase === "function") ph.setPhase(REQUIRED_PHASE);
+      if (ph && typeof ph.setPhase === "function") ph.setPhase(getRequiredPhase());
     } catch (_e) { /* ignora */ }
     return true;
   }
@@ -184,6 +183,22 @@ import * as THREE from "/vendor/three/three.module.min.js";
     var ph = window.CENTRO && window.CENTRO.protocoloPhase;
     if (ph && typeof ph.getPhase === "function") return ph.getPhase();
     return 1;
+  }
+
+  function getRequiredPhase() {
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.getMinPhaseForFeature === "function") {
+      return ph.getMinPhaseForFeature("subterranean");
+    }
+    return REQUIRED_PHASE;
+  }
+
+  function getPhaseLockLabel() {
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.formatPhaseLockLabel === "function") {
+      return ph.formatPhaseLockLabel(getRequiredPhase());
+    }
+    return "Fase " + getRequiredPhase() + " — " + PHASE_TITLE;
   }
 
   function getFoundElementIds() {
@@ -214,11 +229,11 @@ import * as THREE from "/vendor/three/three.module.min.js";
 
   function isUnlocked() {
     if (isMasterMode()) return true;
-    return getPhase() >= REQUIRED_PHASE && getMissingClues().length === 0;
+    return getPhase() >= getRequiredPhase() && getMissingClues().length === 0;
   }
 
   function advancePhaseIfReady() {
-    if (getMissingClues().length > 0 || getPhase() >= REQUIRED_PHASE) return;
+    if (getMissingClues().length > 0 || getPhase() >= getRequiredPhase()) return;
     var ph = window.CENTRO && window.CENTRO.protocoloPhase;
     if (ph && typeof ph.setPhase === "function") ph.setPhase(REQUIRED_PHASE);
   }
@@ -226,8 +241,10 @@ import * as THREE from "/vendor/three/three.module.min.js";
   function getGateMessage() {
     if (isMasterMode()) return "Modo mestre — visão subterrânea liberada.";
     var missing = getMissingClues();
-    if (getPhase() < REQUIRED_PHASE && missing.length > 0) return "Fase 7 e pistas exigidas: " + missing.join(", ") + ".";
-    if (getPhase() < REQUIRED_PHASE) return "Pistas reunidas. Ative para abrir Fase 7 — " + PHASE_TITLE + ".";
+    var req = getRequiredPhase();
+    var lockLabel = getPhaseLockLabel();
+    if (getPhase() < req && missing.length > 0) return lockLabel + " e pistas exigidas: " + missing.join(", ") + ".";
+    if (getPhase() < req) return "Pistas reunidas. Ative para abrir " + lockLabel + ".";
     if (missing.length > 0) return "Colete no Arquivo Morto: " + missing.join(", ") + ".";
     return "Visão subterrânea liberada.";
   }
@@ -870,6 +887,13 @@ import * as THREE from "/vendor/three/three.module.min.js";
       }
     }
 
+    function syncPhaseGate() {
+      syncStatus();
+      if (!isUnlocked() && enabled) {
+        setEnabled(false, { persist: true, silent: true });
+      }
+    }
+
     function flyToView() {
       var map = getMap();
       if (!map) return;
@@ -879,6 +903,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
     return {
       LAYER_ID:            LAYER_ID,
       REQUIRED_PHASE:      REQUIRED_PHASE,
+      getRequiredPhase:    getRequiredPhase,
       REQUIRED_CLUES:      REQUIRED_CLUES.slice(),
       ENABLED_STORAGE_KEY: ENABLED_STORAGE_KEY,
       FOUND_STORAGE_KEY:   FOUND_STORAGE_KEY,
@@ -890,6 +915,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
       setupToggle:         setupToggle,
       initState:           initState,
       syncToggleUI:        syncToggleUI,
+      syncPhaseGate:       syncPhaseGate,
     };
   }
 

@@ -66,49 +66,38 @@
       <p class="sidebar-header__intro sidebar-header__intro--chrome">Registo de evidências territoriais, zonas de interdição e anomalias recuperadas da região central de São Paulo.</p>
       <div class="sidebar-header__meta">
         <span><span class="sidebar-header__meta-label">ID:</span> CENTRO-2026</span>
-        <span><span class="sidebar-header__meta-label">FONTES:</span> 27 GEOJSON</span>
+        <span><span class="sidebar-header__meta-label">TERRITÓRIO:</span> 20 camadas · 3 secções</span>
+        <span><span class="sidebar-header__meta-label">EVIDÊNCIAS:</span> 6 temas</span>
+        <span><span class="sidebar-header__meta-label">FASES:</span> 13 almas</span>
         <span><span class="sidebar-header__meta-label">STATUS:</span> <span class="sidebar-header__meta-status">EM ANÁLISE</span></span>
         <span id="centro-phase-badge" class="sidebar-header__phase badge" aria-live="polite"></span>
       </div>
     </div>
     <div id="sidebar-status" class="sidebar-status">Carregando…</div>
     <div class="sidebar-tabs" role="tablist" aria-label="Painéis do dossiê">
-      <button class="sidebar-tab sidebar-tab--active" role="tab" id="sidebar-tab-camadas"
-              aria-controls="sidebar-panel-camadas" aria-selected="true" type="button">Camadas</button>
-      <button class="sidebar-tab" role="tab" id="sidebar-tab-opcoes"
-              aria-controls="sidebar-panel-opcoes" aria-selected="false" type="button">Opções</button>
-      <button class="sidebar-tab" role="tab" id="sidebar-tab-pois"
-              aria-controls="sidebar-panel-pois" aria-selected="false" type="button">POIs</button>
+      <button class="sidebar-tab sidebar-tab--compact sidebar-tab--active" role="tab" id="sidebar-tab-camadas"
+              aria-controls="sidebar-panel-camadas" aria-selected="true" type="button"
+              aria-label="Território — camadas territoriais">Território</button>
+      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-pois"
+              aria-controls="sidebar-panel-pois" aria-selected="false" type="button"
+              aria-label="Evidências — ícones e pistas no mapa">Evidências</button>
+      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-fases"
+              aria-controls="sidebar-panel-fases" aria-selected="false" type="button"
+              aria-label="13 Fases — progresso ARG e almas">13 Fases</button>
+      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-opcoes"
+              aria-controls="sidebar-panel-opcoes" aria-selected="false" type="button"
+              aria-label="Visualização — modos 3D e subterrâneo">Visualização</button>
     </div>
     <div id="sidebar-panel-camadas" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-camadas">
+      <p class="sidebar-tab-intro">Operador: interpole camadas de superfície — bairros, rios soterrados, zoneamento, risco. Marque o que ainda resiste no mapa-base. Nódulos clicáveis → aba Evidências.</p>
       <div id="layers-panel" class="layers-list"></div>
     </div>
-    <div id="sidebar-panel-opcoes" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-opcoes" hidden>
-      <div class="sidebar-extras">
-        <label class="sidebar-extras__row layer-row" for="centro-buildings-3d-toggle">
-          <input type="checkbox" id="centro-buildings-3d-toggle" />
-          <span class="sidebar-extras__text">
-            Maquete estrutural 3D
-            <span class="sidebar-extras__muted"> — extrusão por altura (OpenFreeMap)</span>
-          </span>
-        </label>
-        <div id="buildings-legend" class="buildings-legend" hidden>
-          <div class="buildings-legend__title">Faixas de altura</div>
-          <div class="buildings-legend__grid" id="buildings-legend-grid"></div>
-        </div>
-        <label class="sidebar-extras__row layer-row subterranean-toggle" for="centro-subterranean-toggle">
-          <input type="checkbox" id="centro-subterranean-toggle" />
-          <span class="sidebar-extras__text">
-            Visão subterrânea
-            <span class="sidebar-extras__muted"> — Fase 7: Rasgue o Asfalto</span>
-          </span>
-        </label>
-        <div id="subterranean-status" class="subterranean-status" aria-live="polite"></div>
-        <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
-        <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
-      </div>
-    </div>
     <div id="sidebar-panel-pois" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-pois" hidden>
+      <p class="sidebar-tab-intro">Sinais recuperados no terreno: património, turismo, pistas da Rua São Bento. Filtre por temática — decodifique o que importa, silencie o ruído abaixo.</p>
+      <label class="sidebar-extras__row layer-row sidebar-pistas-toggle" for="centro-pistas-rsb-toggle">
+        <input type="checkbox" id="centro-pistas-rsb-toggle" checked />
+        <span class="sidebar-extras__text">Exibir rastros RSB no mapa (Rua São Bento)</span>
+      </label>
       <div id="poi-legend" class="poi-legend poi-legend--full">
         <details id="poi-legend-details" class="poi-legend__details" open>
           <summary class="poi-legend__summary" aria-controls="poi-legend-panel">
@@ -119,10 +108,43 @@
             <span class="poi-legend__summary-hint">abrir / fechar</span>
           </summary>
           <div id="poi-legend-panel" class="poi-legend__panel">
-            <p class="poi-legend__hint">Marque só as categorias que deseja ver no mapa.</p>
+            <p class="poi-legend__hint">Marque só as temáticas que quer decodificar no mapa.</p>
             <div class="poi-legend__list" id="poi-legend-grid" role="group" aria-label="Filtrar evidências por temática"></div>
           </div>
         </details>
+      </div>
+    </div>
+    <div id="sidebar-panel-fases" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-fases" hidden>
+      <p class="sidebar-tab-intro">Registo das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.</p>
+      <div id="phases-panel" class="phases-list" role="list" aria-label="13 fases do Protocolo 13 Almas"></div>
+    </div>
+    <div id="sidebar-panel-opcoes" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-opcoes" hidden>
+      <p class="sidebar-tab-intro">Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver clearance para ver o que a cidade enterrou.</p>
+      <div class="sidebar-extras">
+        <div class="sidebar-viz-card">
+          <h2 class="sidebar-viz-card__title">Maquete 3D</h2>
+          <p class="sidebar-viz-card__desc">Relevo estrutural dos edifícios — leitura de altura sobre o tecido urbano.</p>
+          <label class="sidebar-extras__row layer-row" for="centro-buildings-3d-toggle">
+            <input type="checkbox" id="centro-buildings-3d-toggle" />
+            <span class="sidebar-extras__text">Activar maquete estrutural 3D</span>
+          </label>
+          <div id="buildings-legend" class="buildings-legend" hidden>
+            <div class="buildings-legend__title">Faixas de altura</div>
+            <div class="buildings-legend__grid" id="buildings-legend-grid"></div>
+          </div>
+        </div>
+        <div class="sidebar-viz-card sidebar-viz-card--mission">
+          <h2 class="sidebar-viz-card__title">Missão Fase 7 — Rasgue o Asfalto</h2>
+          <p class="sidebar-viz-card__desc">Visão subterrânea, corte vertical e colecta das 13 almas soterradas.</p>
+          <label class="sidebar-extras__row layer-row subterranean-toggle" for="centro-subterranean-toggle">
+            <input type="checkbox" id="centro-subterranean-toggle" />
+            <span class="sidebar-extras__text">Activar visão subterrânea</span>
+          </label>
+          <div id="subterranean-status" class="subterranean-status" aria-live="polite"></div>
+          <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
+          <button id="subterranean-guide-open" class="subterranean-guide-open-btn" type="button">Ver guia da missão</button>
+          <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
+        </div>
       </div>
     </div>
   </aside>
@@ -221,6 +243,7 @@
   <script src="/pages/centro/ui/lazy-assets.js" defer></script>
   <script src="/pages/centro/ui/map-popups.js" defer></script>
   <script src="/pages/centro/ui/sidebar-panel.js" defer></script>
+  <script src="/pages/centro/ui/sidebar-phases-panel.js" defer></script>
   <script src="/pages/centro/ui/sidebar-events.js" defer></script>
   <script src="/pages/centro/map/map-safe.js" defer></script>
   <script src="/pages/centro/map/layer-data-url.js" defer></script>

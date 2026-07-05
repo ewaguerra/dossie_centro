@@ -80,13 +80,125 @@
   }
 
   // ── Exports ────────────────────────────────────────────────────────────
+  var PISTAS_RSB_STORAGE_KEY = "centroPistasRsbVisible";
+  var pistasGetMap = null;
+
+  function isPistasRsbUnlocked() {
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.isFeaturePhaseUnlocked === "function") {
+      return ph.isFeaturePhaseUnlocked("pistas-rsb");
+    }
+    return true;
+  }
+
+  function getPistasRsbLockLabel() {
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.formatPhaseLockLabel === "function" && typeof ph.getMinPhaseForFeature === "function") {
+      return ph.formatPhaseLockLabel(ph.getMinPhaseForFeature("pistas-rsb"));
+    }
+    return "";
+  }
+
+  function syncPistasRsbToggleUI(toggle, getMap) {
+    var unlocked = isPistasRsbUnlocked();
+    var row = toggle.closest(".sidebar-pistas-toggle") || toggle.closest("label");
+    toggle.disabled = !unlocked;
+    if (row) row.classList.toggle("layer-row--phase-locked", !unlocked);
+
+    var lockMeta = row && row.querySelector(".sidebar-pistas-toggle__phase-lock");
+    if (!unlocked && row) {
+      if (!lockMeta) {
+        lockMeta = document.createElement("span");
+        lockMeta.className = "layer-meta layer-meta--lock sidebar-pistas-toggle__phase-lock";
+        row.appendChild(lockMeta);
+      }
+      lockMeta.textContent = getPistasRsbLockLabel();
+      toggle.checked = false;
+      setPistasRsbVisibility(getMap(), false);
+    } else if (lockMeta) {
+      lockMeta.remove();
+    }
+  }
+
+  function setPistasRsbVisibility(map, visible) {
+    if (!map) return;
+    var layerIds = [
+      RSB_POI_LAYERS.hitbox,
+      RSB_POI_LAYERS.fill,
+      RSB_POI_LAYERS.icon,
+      RSB_POI_LAYERS.outline,
+    ];
+    var visibility = visible ? "visible" : "none";
+    for (var i = 0; i < layerIds.length; i++) {
+      if (map.getLayer(layerIds[i])) {
+        map.setLayoutProperty(layerIds[i], "visibility", visibility);
+      }
+    }
+  }
+
+  function syncPhaseGate() {
+    var toggle = document.getElementById("centro-pistas-rsb-toggle");
+    if (!toggle || typeof pistasGetMap !== "function") return;
+    syncPistasRsbToggleUI(toggle, pistasGetMap);
+    if (isPistasRsbUnlocked() && toggle.checked) {
+      setPistasRsbVisibility(pistasGetMap(), true);
+    }
+  }
+
+  function setupPistasRsbToggle(getMap) {
+    var toggle = document.getElementById("centro-pistas-rsb-toggle");
+    if (!toggle || typeof getMap !== "function") return;
+    pistasGetMap = getMap;
+
+    var visible = true;
+    try {
+      var stored = window.localStorage && window.localStorage.getItem(PISTAS_RSB_STORAGE_KEY);
+      if (stored === "0") visible = false;
+      if (stored === "1") visible = true;
+    } catch (_e) {
+      // ignora
+    }
+    if (!isPistasRsbUnlocked()) visible = false;
+    toggle.checked = visible;
+    syncPistasRsbToggleUI(toggle, getMap);
+    if (visible) setPistasRsbVisibility(getMap(), true);
+
+    toggle.addEventListener("change", function () {
+      if (!isPistasRsbUnlocked()) {
+        toggle.checked = false;
+        setPistasRsbVisibility(getMap(), false);
+        if (typeof window.centroToast === "function") {
+          window.centroToast(
+            "Pistas bloqueadas. " + (getPistasRsbLockLabel() || "Avance de fase no ARG."),
+            "warn"
+          );
+        }
+        return;
+      }
+      var next = toggle.checked;
+      setPistasRsbVisibility(getMap(), next);
+      try {
+        if (window.localStorage) {
+          window.localStorage.setItem(PISTAS_RSB_STORAGE_KEY, next ? "1" : "0");
+        }
+      } catch (_e) {
+        // ignora
+      }
+    });
+  }
+
   window.CENTRO = window.CENTRO || {};
   window.CENTRO.pistas = {
     CONFIG: PISTAS_RUA_SAO_BENTO_POI,
     POI_LAYERS: RSB_POI_LAYERS,
+    PISTAS_RSB_STORAGE_KEY: PISTAS_RSB_STORAGE_KEY,
     loadRuaSaoBentoPistas: loadRuaSaoBentoPistas,
     isRuaSaoBentoFeature: isRuaSaoBentoFeature,
     normalizeText: normalizeText,
     createRuaSaoBentoPistasProfileCard: createRuaSaoBentoPistasProfileCard,
+    setPistasRsbVisibility: setPistasRsbVisibility,
+    setupPistasRsbToggle: setupPistasRsbToggle,
+    syncPhaseGate: syncPhaseGate,
+    isPistasRsbUnlocked: isPistasRsbUnlocked,
   };
 })();

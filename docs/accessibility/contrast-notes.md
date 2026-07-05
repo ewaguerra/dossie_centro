@@ -17,8 +17,10 @@
 |---|---|---|---|---|---|
 | Texto principal (`--color-text`) | `#e5e5e5` | `#1a1a1a` | 13.8:1 | OK | OK |
 | Texto muted (`--color-text-muted`) | `#999999` | `#1a1a1a` | 6.1:1 | OK | OK |
-| Intro sidebar (inline) | `#888888` | `#1a1a1a` | 4.9:1 | OK | OK |
-| Meta footer (`.sidebar-header__meta`) | `var(--color-text-muted)` `#999` | `#1a1a1a` | 6.1:1 | OK | OK |
+| Intro sidebar (`.sidebar-tab-intro`) | `var(--sidebar-shell-text-muted)` | `#1a1a1a` | ~6.5:1 | OK | OK | Corrigido 2026-07 — fase design sidebar |
+| Tab activa (`.sidebar-tab[aria-selected]`) | `var(--sidebar-accent)` `#f59e0b` | `#1a1a1a` | ~6.8:1 | OK | OK | Identidade âmbar unificada 2026-07 |
+| Grupo aberto (`.group[open] summary`) | `var(--sidebar-accent)` | `#1a1a1a` | ~6.8:1 | OK | OK | Título legível `--sidebar-type-body` 2026-07 |
+| Meta footer (`.sidebar-header__meta`) | `var(--sidebar-shell-text-faint)` | `#1a1a1a` | 6.1:1 | OK | OK | Escala `--sidebar-type-meta` 2026-07 |
 | Layer meta (`.layer-meta`) | `var(--color-text-muted)` `#999` | `#1a1a1a` | 6.1:1 | OK | OK |
 | Accent vermelho HUD (`--centro-accent`) | `#dc2626` | `#1a1a1a` | 3.6:1 | **FAIL** em texto pequeno | OK | Reservar para bordas; texto HUD usa `--color-danger` |
 | Status verde (inline) | `#4ade80` | `#1a1a1a` | 10.0:1 | OK | OK |
@@ -35,10 +37,11 @@
 
 ## Pendências (sem correção nesta fase)
 
-1. ~~**Accent `#dc2626` em texto pequeno**~~ — corrigido 2026-07: `.sidebar-header__eyebrow` e `.layer-row--active .layer-title` usam `--color-danger`; accent reservado a bordas/checkboxes.
-2. **`.as-digital-aviso` `#404040`** — módulo arquivista, fora do runtime centro.
-3. **Links `.nav-retorno__link` (terminal) opacidade 0.55** — falha AA.
-4. **Animações** — `prefers-reduced-motion` em `a11y.css` e módulos específicos.
+1. ~~**Accent `#dc2626` em texto pequeno**~~ — corrigido 2026-07: tabs/secções/grupos usam `--sidebar-accent` (âmbar); vermelho HUD reservado a bordas estruturais e status.
+2. ~~**Intro sidebar com `--centro-ink*` em fundo escuro**~~ — corrigido 2026-07: `--sidebar-shell-text*`.
+3. **`.as-digital-aviso` `#404040`** — módulo arquivista, fora do runtime centro.
+4. **Links `.nav-retorno__link` (terminal) opacidade 0.55** — falha AA.
+5. **Animações** — `prefers-reduced-motion` em `a11y.css` e módulos específicos.
 
 ## Animação do rio
 

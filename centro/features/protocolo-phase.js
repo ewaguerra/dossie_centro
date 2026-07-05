@@ -1,5 +1,5 @@
 /**
- * Fases ARG — protocolo13_phase + phase-gates.json (1–13).
+ * Fases ARG — protocolo13_phase + phase-gates.json (13 Almas / 13 Fases).
  */
 (function () {
   "use strict";
@@ -16,12 +16,24 @@
           return r.ok ? r.json() : null;
         })
         .then(function (data) {
-          gatesData = data || { defaultMinPhase: 1, layerMinPhase: {}, clueCountAdvance: [] };
+          gatesData = data || {
+            defaultMinPhase: 1,
+            layerMinPhase: {},
+            themeMinPhase: {},
+            featureMinPhase: {},
+            clueCountAdvance: [],
+          };
           if (data && data.maxPhase) MAX_PHASE = data.maxPhase;
           return gatesData;
         })
         .catch(function () {
-          gatesData = { defaultMinPhase: 1, layerMinPhase: {}, clueCountAdvance: [] };
+          gatesData = {
+            defaultMinPhase: 1,
+            layerMinPhase: {},
+            themeMinPhase: {},
+            featureMinPhase: {},
+            clueCountAdvance: [],
+          };
           return gatesData;
         });
     }
@@ -73,17 +85,55 @@
     }
   }
 
-  function getMinPhaseForLayer(layerId) {
+  function resolveMinPhase(map, id) {
     if (!gatesData) return MAX_PHASE;
-    if (!gatesData.layerMinPhase) return gatesData.defaultMinPhase || 1;
-    return gatesData.layerMinPhase[layerId] != null
-      ? gatesData.layerMinPhase[layerId]
-      : gatesData.defaultMinPhase || 1;
+    if (map && map[id] != null) return map[id];
+    return gatesData.defaultMinPhase || 1;
+  }
+
+  function getMinPhaseForLayer(layerId) {
+    return resolveMinPhase(gatesData && gatesData.layerMinPhase, layerId);
+  }
+
+  function getMinPhaseForTheme(themeId) {
+    return resolveMinPhase(gatesData && gatesData.themeMinPhase, themeId);
+  }
+
+  function getMinPhaseForFeature(featureId) {
+    return resolveMinPhase(gatesData && gatesData.featureMinPhase, featureId);
+  }
+
+  function isPhaseAtLeast(minPhase) {
+    if (!gatesData) return false;
+    return getPhase() >= (minPhase != null ? minPhase : 1);
   }
 
   function isLayerPhaseUnlocked(layerId) {
-    if (!gatesData) return false;
-    return getPhase() >= getMinPhaseForLayer(layerId);
+    return isPhaseAtLeast(getMinPhaseForLayer(layerId));
+  }
+
+  function isThemePhaseUnlocked(themeId) {
+    return isPhaseAtLeast(getMinPhaseForTheme(themeId));
+  }
+
+  function isFeaturePhaseUnlocked(featureId) {
+    return isPhaseAtLeast(getMinPhaseForFeature(featureId));
+  }
+
+  function getSoul(phaseNum) {
+    var p = phaseNum != null ? phaseNum : getPhase();
+    if (gatesData && Array.isArray(gatesData.souls)) {
+      for (var i = 0; i < gatesData.souls.length; i++) {
+        if (gatesData.souls[i].phase === p) return gatesData.souls[i];
+      }
+    }
+    var id = "alma-" + String(p).padStart(2, "0");
+    return {
+      phase: p,
+      id: id,
+      title: getPhaseTitle(p),
+      kicker: "Alma " + String(p).padStart(2, "0"),
+    };
   }
 
   function getPhaseTitle(phaseNum) {
@@ -92,6 +142,11 @@
       return gatesData.phaseTitles[String(p)];
     }
     return "Fase " + p;
+  }
+
+  function formatPhaseLockLabel(minPhase) {
+    var soul = getSoul(minPhase);
+    return "Alma " + String(minPhase).padStart(2, "0") + " — " + soul.title;
   }
 
   function computePhaseFromClueCount(count) {
@@ -129,9 +184,18 @@
 
   function updatePhaseBadge(phaseNum) {
     var p = phaseNum != null ? phaseNum : getPhase();
+    var soul = getSoul(p);
     var el = document.getElementById("centro-phase-badge");
     if (el) {
-      el.textContent = "Fase " + p + "/" + MAX_PHASE + " — " + getPhaseTitle(p);
+      el.textContent =
+        "Alma " +
+        String(p).padStart(2, "0") +
+        " · Fase " +
+        p +
+        "/" +
+        MAX_PHASE +
+        " — " +
+        soul.title;
     }
     var landing = document.getElementById("protocolo-phase-badge");
     if (landing) {
@@ -156,8 +220,15 @@
     loadPhaseGates: loadPhaseGates,
     arePhaseGatesReady: arePhaseGatesReady,
     getMinPhaseForLayer: getMinPhaseForLayer,
+    getMinPhaseForTheme: getMinPhaseForTheme,
+    getMinPhaseForFeature: getMinPhaseForFeature,
+    isPhaseAtLeast: isPhaseAtLeast,
     isLayerPhaseUnlocked: isLayerPhaseUnlocked,
+    isThemePhaseUnlocked: isThemePhaseUnlocked,
+    isFeaturePhaseUnlocked: isFeaturePhaseUnlocked,
+    getSoul: getSoul,
     getPhaseTitle: getPhaseTitle,
+    formatPhaseLockLabel: formatPhaseLockLabel,
     maybeAdvancePhaseFromClues: maybeAdvancePhaseFromClues,
     applyPhaseFromQuery: applyPhaseFromQuery,
     updatePhaseBadge: updatePhaseBadge,

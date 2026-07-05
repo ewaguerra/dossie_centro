@@ -197,6 +197,10 @@
       isClueUnlocked: isLayerUnlocked(layerId),
       isPhaseUnlocked: isLayerPhaseUnlocked(layerId),
       minPhase: minPhase,
+      phaseSoulLabel:
+        ph && typeof ph.formatPhaseLockLabel === "function" && minPhase != null
+          ? ph.formatPhaseLockLabel(minPhase)
+          : "",
     };
     if (typeof compute === "function") return compute(opts);
     var clueLocked = !opts.isClueUnlocked;
@@ -504,6 +508,10 @@
 
   async function addTrianguloHistoricoOverlay() {
     if (!map) return;
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.isFeaturePhaseUnlocked === "function" && !ph.isFeaturePhaseUnlocked("triangulo-historico")) {
+      return;
+    }
     var th = window.CENTRO && window.CENTRO.trianguloHistorico;
     if (!th || typeof th.buildTrianguloHistoricoGeojson !== "function") return;
     var cfg = th.CONFIG;
@@ -727,6 +735,12 @@
           try {
             var count = await addPistasLayer(map, items);
             console.log("[CENTRO] " + count + " pistas adicionadas (symbol layer)");
+            var pistasApi = window.CENTRO && window.CENTRO.pistas;
+            if (pistasApi && typeof pistasApi.setupPistasRsbToggle === "function") {
+              pistasApi.setupPistasRsbToggle(function () {
+                return map;
+              });
+            }
           } catch (e) {
             console.warn("[CENTRO] Erro ao carregar pistas:", e);
           }
@@ -822,6 +836,7 @@
         catalogIndex = data.catalogIndex;
         return {
           layers: data.layers,
+          sidebarLayers: data.sidebarLayers || data.layers,
           groups: data.groups,
         };
       });
@@ -850,6 +865,23 @@
     });
   }
 
+  function renderPhasesPanel() {
+    var panel = document.getElementById("phases-panel");
+    if (!panel) return;
+    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.renderPhasesPanel;
+    if (typeof fn !== "function") {
+      console.warn("[CENTRO] sidebar-phases-panel.js ausente — renderPhasesPanel indisponível");
+      return;
+    }
+    var phaseApi = window.CENTRO && window.CENTRO.protocoloPhase;
+    fn({
+      panel: panel,
+      getPhase: phaseApi && typeof phaseApi.getPhase === "function" ? phaseApi.getPhase.bind(phaseApi) : null,
+      getSoul: phaseApi && typeof phaseApi.getSoul === "function" ? phaseApi.getSoul.bind(phaseApi) : null,
+      maxPhase: phaseApi && phaseApi.MAX_PHASE ? phaseApi.MAX_PHASE : 13,
+    });
+  }
+
   function loadSidebarData() {
     var statusEl = document.getElementById("sidebar-status");
     var panel = document.getElementById("layers-panel");
@@ -868,17 +900,18 @@
           phaseApi.maybeAdvancePhaseFromClues();
         }
         if (statusEl) statusEl.style.display = "none";
-        renderSidebarPanel(panel, data.groups, data.layers);
+        renderSidebarPanel(panel, data.groups, data.sidebarLayers || data.layers);
         wireLayerCheckboxes(panel);
         if (phaseApi && typeof phaseApi.updatePhaseBadge === "function") {
           phaseApi.updatePhaseBadge();
         }
+        renderPhasesPanel();
         var phaseNum = phaseApi && typeof phaseApi.getPhase === "function" ? phaseApi.getPhase() : 1;
         console.log(
           "[CENTRO] Sidebar carregada:",
           data.groups.length,
           "grupos,",
-          data.layers.length,
+          (data.sidebarLayers || data.layers).length,
           "camadas (fase ARG",
           phaseNum,
           "/",
@@ -1153,6 +1186,7 @@
     var GUIDE_KEY = "centroSubterraneanGuideDismissed";
     var guide    = document.getElementById("subterranean-guide");
     var closeBtn = document.getElementById("subterranean-guide-close");
+    var openBtn  = document.getElementById("subterranean-guide-open");
     var masterLink = document.getElementById("subterranean-master-link");
     if (masterLink) {
       var params = new URLSearchParams(window.location.search);
@@ -1160,6 +1194,11 @@
       masterLink.href = "?" + params.toString();
     }
     if (!guide || !closeBtn) return;
+    if (openBtn) {
+      openBtn.addEventListener("click", function () {
+        guide.hidden = false;
+      });
+    }
     try {
       if (window.localStorage && window.localStorage.getItem(GUIDE_KEY) === "1") {
         guide.hidden = true;
@@ -1176,6 +1215,15 @@
   function setupArgStateListener() {
     document.addEventListener("centro:arg-state-changed", function () {
       loadSidebarData();
+      var poiApi = ensurePoiFilterApi();
+      if (poiApi && typeof poiApi.syncPhaseGate === "function") poiApi.syncPhaseGate();
+      else if (poiApi && typeof poiApi.applyAll === "function") poiApi.applyAll();
+      var b3d = ensureBuildings3dApi();
+      if (b3d && typeof b3d.syncPhaseGate === "function") b3d.syncPhaseGate();
+      var pistasApi = window.CENTRO && window.CENTRO.pistas;
+      if (pistasApi && typeof pistasApi.syncPhaseGate === "function") pistasApi.syncPhaseGate();
+      var subApi = ensureSubterraneanApi();
+      if (subApi && typeof subApi.syncPhaseGate === "function") subApi.syncPhaseGate();
     });
     window.addEventListener("storage", function (e) {
       if (!e.key) return;

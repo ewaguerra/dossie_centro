@@ -1,7 +1,8 @@
 {
-  "version": 1,
+  "version": 2,
   "defaultMinPhase": 1,
   "maxPhase": 13,
+  "description": "13 Almas = 13 Fases ARG. Cada fase bloqueia camadas, temas POI e features ligadas até protocolo13_phase >= minPhase.",
   "phaseTitles": {
     "1": "Superfície",
     "2": "Hidrografia soterrada",
@@ -17,11 +18,32 @@
     "12": "Comissão",
     "13": "Permanência"
   },
+  "souls": [
+    { "phase": 1, "id": "alma-01", "title": "Superfície", "kicker": "Primeira Alma" },
+    { "phase": 2, "id": "alma-02", "title": "Hidrografia soterrada", "kicker": "Segunda Alma" },
+    { "phase": 3, "id": "alma-03", "title": "Património rígido", "kicker": "Terceira Alma" },
+    { "phase": 4, "id": "alma-04", "title": "Acervo e memória", "kicker": "Quarta Alma" },
+    { "phase": 5, "id": "alma-05", "title": "Geotecnia", "kicker": "Quinta Alma" },
+    { "phase": 6, "id": "alma-06", "title": "Arquivo superficial", "kicker": "Sexta Alma" },
+    { "phase": 7, "id": "alma-07", "title": "Rasgue o Asfalto", "kicker": "Sétima Alma" },
+    { "phase": 8, "id": "alma-08", "title": "Setores interditos", "kicker": "Oitava Alma" },
+    { "phase": 9, "id": "alma-09", "title": "Malha urbana", "kicker": "Nona Alma" },
+    { "phase": 10, "id": "alma-10", "title": "Risco sistémico", "kicker": "Décima Alma" },
+    { "phase": 11, "id": "alma-11", "title": "Triângulo fechado", "kicker": "Décima Primeira Alma" },
+    { "phase": 12, "id": "alma-12", "title": "Comissão", "kicker": "Décima Segunda Alma" },
+    { "phase": 13, "id": "alma-13", "title": "Permanência", "kicker": "Décima Terceira Alma" }
+  ],
   "layerMinPhase": {
+    "16_regiao_centro__polygon": 1,
+    "02a_subsetores_central__polygon": 1,
+    "02a_subsetores_arco_tamanduatei__polygon": 8,
     "03_eixo_existente__polygon": 2,
     "03a_eixo_previsto__polygon": 2,
     "05_hidrografia_rios__line": 2,
     "17_alagamentos_contexto_hidrografico__point": 3,
+    "04_zeis1__polygon": 10,
+    "04a_zeis2__polygon": 10,
+    "04a_zeis3__polygon": 10,
     "centro_rios_geosampa__line": 2,
     "centro_area_inundavel__polygon": 2,
     "centro_rios_osm__line": 2,
@@ -33,7 +55,24 @@
     "centro_carta_geotecnica__polygon": 5,
     "centro_risco_alagamento__point": 5,
     "centro_declividade__polygon": 6,
-    "centro_arquivo_superficial__point": 6
+    "centro_arquivo_superficial__point": 6,
+    "15_osm_ruas__line": 9,
+    "15_osm_enderecos__point": 9,
+    "centro_pois_turisticos__point": 3
+  },
+  "themeMinPhase": {
+    "monumentos": 3,
+    "poi-turistico": 3,
+    "memoria-paulistana": 4,
+    "acervo-tombado": 4,
+    "bem-arqueologico": 4,
+    "pistas": 2
+  },
+  "featureMinPhase": {
+    "pistas-rsb": 2,
+    "subterranean": 7,
+    "buildings-3d": 9,
+    "triangulo-historico": 11
   },
   "clueCountAdvance": [
     { "minClues": 2, "phase": 2 },

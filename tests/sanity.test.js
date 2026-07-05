@@ -284,6 +284,9 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('id="sidebar-tab-camadas"'), 'tab camadas ausente');
     assert.ok(html.includes('id="sidebar-tab-opcoes"'), 'tab opcoes ausente');
     assert.ok(html.includes('id="sidebar-tab-pois"'), 'tab pois ausente');
+    assert.ok(html.includes('id="sidebar-tab-fases"'), 'tab fases ausente');
+    assert.ok(html.includes('id="phases-panel"'), 'phases-panel ausente');
+    assert.ok(html.includes('13 Fases'), 'tab 13 Fases presente');
     assert.ok(html.includes('aria-selected="true"'), 'aba ativa ausente');
     assert.ok(html.includes('id="sidebar-panel-camadas"'), 'panel camadas ausente');
     assert.ok(html.includes('id="sidebar-panel-opcoes"'), 'panel opcoes ausente');
@@ -313,9 +316,16 @@ describe('projeto_centro — sanity checks', () => {
                        'poi-legend-details', 'poi-legend-grid', 'subterranean-legend']) {
       assert.ok(html.includes(`id="${id}"`), 'ID essencial ausente: ' + id);
     }
-    assert.ok(html.includes('Maquete estrutural 3D'), 'label 3D preservado');
-    assert.ok(html.includes('Visão subterrânea'), 'label subterraneo preservado');
+    assert.ok(html.includes('Activar maquete estrutural 3D'), 'label 3D preservado');
+    assert.ok(html.includes('Activar visão subterrânea'), 'label subterraneo preservado');
     assert.ok(html.includes('Evidências no mapa'), 'label filtro POI preservado');
+    assert.ok(html.includes('Território'), 'tab Território renomeado');
+    assert.ok(html.includes('Evidências'), 'tab Evidências renomeado');
+    assert.ok(html.includes('Visualização'), 'tab Visualização renomeado');
+    assert.ok(html.includes('sidebar-tab-intro'), 'intro por tab presente');
+    assert.ok(html.includes('sidebar-viz-card'), 'cartões Visualização presentes');
+    assert.ok(html.includes('centro-pistas-rsb-toggle'), 'toggle pistas RSB presente');
+    assert.ok(html.includes('subterranean-guide-open'), 'botão guia Fase 7 presente');
     assert.ok(!html.includes('class="sidebar-tools"'), 'acordeao A2 nao deve voltar');
 
     // Runtime tem tabs
@@ -822,12 +832,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.strictEqual(clueLocked.locked, true);
     assert.strictEqual(clueLocked.clueLocked, true);
     assert.strictEqual(clueLocked.phaseLocked, false);
-    assert.strictEqual(state.getLayerRowClass(clueLocked), 'layer-row layer-row--locked');
+    assert.strictEqual(state.getLayerRowClass(clueLocked), 'layer-row layer-row--locked layer-row--clue-locked');
     assert.strictEqual(
       state.getLockMessage(clueLocked, 'sidebar-hint'),
-      ' (bloqueada — registre pistas no Caderno)'
+      ' (bloqueada — Requer pista no Caderno)'
     );
-    assert.strictEqual(state.getLockMessage(clueLocked, 'sidebar-meta'), 'bloqueada');
+    assert.strictEqual(state.getLockMessage(clueLocked, 'sidebar-meta'), 'Requer pista no Caderno');
     assert.ok(
       state.getLockMessage(clueLocked, 'toast').includes('Caderno do Arquivista'),
       'toast clue lock'
@@ -842,10 +852,21 @@ describe('projeto_centro — sanity checks', () => {
     assert.strictEqual(state.getLayerRowClass(phaseLocked), 'layer-row layer-row--locked layer-row--phase-locked');
     assert.strictEqual(
       state.getLockMessage(phaseLocked, 'sidebar-hint'),
-      ' (bloqueada — avance de fase no ARG)'
+      ' (bloqueada — Fase 7)'
     );
-    assert.strictEqual(state.getLockMessage(phaseLocked, 'sidebar-meta'), 'fase 7');
-    assert.ok(state.getLockMessage(phaseLocked, 'toast').includes('fase mínima 7'), 'toast phase lock');
+    assert.strictEqual(state.getLockMessage(phaseLocked, 'sidebar-meta'), 'Disponível na Fase 7');
+    assert.ok(state.getLockMessage(phaseLocked, 'toast').includes('Avance para a Fase 7'), 'toast phase lock');
+
+    const soulLocked = state.getLayerLockState({
+      isClueUnlocked: true,
+      isPhaseUnlocked: false,
+      minPhase: 7,
+      phaseSoulLabel: 'Alma 07 — Rasgue o Asfalto',
+    });
+    assert.strictEqual(
+      state.getLockMessage(soulLocked, 'sidebar-meta'),
+      'Alma 07 — Rasgue o Asfalto'
+    );
   });
 
   it('centro: layer-data-url.js carregado apos map-safe e antes do runtime', () => {
@@ -970,10 +991,10 @@ describe('projeto_centro — sanity checks', () => {
     const panel = sandbox.document.createElement('div');
     render({
       panel: panel,
-      groups: [{ id: 'g1', title: 'Grupo Teste' }],
+      groups: [{ id: 'geotecnica', title: 'Grupo Teste' }],
       layers: [
-        { id: 'ly-open', group: 'g1', title: 'Aberta', visible: true, feature_count: 3 },
-        { id: 'ly-lock', group: 'g1', title: 'Fase', visible: true },
+        { id: 'ly-open', group: 'geotecnica', title: 'Aberta', visible: true, feature_count: 3 },
+        { id: 'ly-lock', group: 'geotecnica', title: 'Fase', visible: true },
       ],
       resolveSidebarLockState: function (id) {
         if (id === 'ly-lock') {
@@ -990,8 +1011,8 @@ describe('projeto_centro — sanity checks', () => {
         return state.locked ? 'layer-row layer-row--locked layer-row--phase-locked' : 'layer-row';
       },
       getLockMessage: function (state, kind) {
-        if (kind === 'sidebar-meta') return 'fase 2';
-        return ' (bloqueada — avance de fase no ARG)';
+        if (kind === 'sidebar-meta') return 'Disponível na Fase 2';
+        return ' (bloqueada — Disponível na Fase 2)';
       },
       getMinPhaseLabel: function () {
         return '2';
@@ -1000,7 +1021,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(panel.children.length >= 1, 'panel recebeu grupos');
     const htmlDump = JSON.stringify(panel);
     assert.ok(htmlDump.includes('layer-row--phase-locked'), 'phase-locked renderizado');
-    assert.ok(htmlDump.includes('fase 2'), 'meta fase preservada');
+    assert.ok(htmlDump.includes('Disponível na Fase 2'), 'meta fase preservada');
     assert.ok(htmlDump.includes('ly-open'), 'camada aberta presente');
   });
 
@@ -1529,7 +1550,7 @@ describe('projeto_centro — sanity checks', () => {
     const html = read('centro/index.html');
     const runtime = read('centro/centro-runtime.js');
     assert.ok(html.includes('centro-buildings-3d-toggle'), 'checkbox 3D ausente no HTML');
-    assert.ok(html.includes('Maquete estrutural 3D'), 'label da maquete 3D ausente');
+    assert.ok(html.includes('Activar maquete estrutural 3D'), 'label da maquete 3D ausente');
     assert.ok(html.includes('sidebar-extras'), 'container sidebar-extras ausente');
     assert.ok(html.includes('buildings-legend'), 'legenda de faixas de altura ausente');
     assert.ok(runtime.includes('BUILDINGS_3D_LAYER_ID'), 'constante da layer 3D ausente');
@@ -1758,12 +1779,17 @@ describe('projeto_centro — sanity checks', () => {
   it('centro: phase-gates, modulos 3D/POI e gates na sidebar', () => {
     assert.ok(exists('centro/data/catalog/phase-gates.json'), 'phase-gates.json ausente');
     const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    assert.strictEqual(gates.version, 2, 'phase-gates version 2');
+    assert.ok(Array.isArray(gates.souls) && gates.souls.length === 13, '13 almas em souls[]');
     assert.ok(gates.layerMinPhase && Object.keys(gates.layerMinPhase).length > 0, 'layerMinPhase vazio');
+    assert.ok(gates.themeMinPhase && gates.themeMinPhase.pistas === 2, 'themeMinPhase.pistas');
+    assert.ok(gates.featureMinPhase && gates.featureMinPhase.subterranean === 7, 'featureMinPhase.subterranean');
     const html = read('centro/index.html');
     assert.ok(html.includes('poi-theme-filter.js'), 'index deve carregar poi-theme-filter.js');
     assert.ok(html.includes('centro-phase-badge'), 'badge de fase no centro ausente');
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('isLayerPhaseUnlocked'), 'gate de fase ausente no runtime');
+    assert.ok(runtime.includes('isFeaturePhaseUnlocked("triangulo-historico")'), 'gate triangulo no runtime');
     const lockStateMod = read('centro/features/sidebar-layer-state.js');
     assert.ok(
       lockStateMod.includes('layer-row--phase-locked'),
@@ -1773,6 +1799,17 @@ describe('projeto_centro — sanity checks', () => {
     const phase = read('centro/features/protocolo-phase.js');
     assert.ok(phase.includes('phase-gates.json'), 'protocolo-phase deve carregar gates');
     assert.ok(phase.includes('isLayerPhaseUnlocked'), 'API isLayerPhaseUnlocked ausente');
+    assert.ok(phase.includes('isThemePhaseUnlocked'), 'API isThemePhaseUnlocked ausente');
+    assert.ok(phase.includes('formatPhaseLockLabel'), 'API formatPhaseLockLabel ausente');
+    const poiFilter = read('centro/features/poi-theme-filter.js');
+    assert.ok(poiFilter.includes('isThemePhaseUnlocked'), 'poi-theme-filter deve respeitar fase');
+    assert.ok(poiFilter.includes('syncPhaseGate'), 'poi-theme-filter syncPhaseGate');
+    const b3d = read('centro/features/buildings-3d.js');
+    assert.ok(b3d.includes('isFeaturePhaseUnlocked("buildings-3d")'), 'buildings-3d gate de fase');
+    const pistas = read('centro/features/pistas.js');
+    assert.ok(pistas.includes('isFeaturePhaseUnlocked("pistas-rsb")'), 'pistas RSB gate de fase');
+    const sub = read('centro/features/subterranean-cutaway.js');
+    assert.ok(sub.includes('getMinPhaseForFeature("subterranean")'), 'subsolo lê featureMinPhase');
   });
 
   it('WCAG: contraste aviso digital e nav terminal', () => {
@@ -1790,9 +1827,9 @@ describe('projeto_centro — sanity checks', () => {
     );
   });
 
-  it('context-wired.json lista 14 camadas com ficheiro no disco', () => {
+  it('context-wired.json lista 10 camadas com ficheiro no disco', () => {
     const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
-    assert.strictEqual(wired.layerIds.length, 14);
+    assert.strictEqual(wired.layerIds.length, 10);
     assert.ok(wired.layerIds.includes('15_osm_ruas__line'), 'OSM ruas wired');
     assert.ok(wired.layerIds.includes('15_osm_enderecos__point'), 'OSM enderecos wired');
     for (const id of wired.layerIds) {
@@ -1809,13 +1846,16 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('CENTRO.catalogLoad'), 'deve delegar catalogo a catalog-load');
   });
 
-  it('sidebar: 9 grupos e 24 camadas wired no catalogo', () => {
+  it('sidebar: 9 grupos e 20 camadas na sidebar (10 processed + 10 context wired)', () => {
     const processedGroups = JSON.parse(read('centro/data/catalog/groups.json'));
     const contextGroups = JSON.parse(read('centro/data/catalog/context-groups.json'));
     const processedLayers = JSON.parse(read('centro/data/catalog/layers.json')).layers || [];
     const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const exclude = JSON.parse(read('centro/data/catalog/sidebar-exclude.json'));
+    const excludeSet = new Set(exclude.layerIds || []);
+    const sidebarCount = processedLayers.length + wired.layerIds.filter((id) => !excludeSet.has(id)).length;
     assert.strictEqual(processedGroups.length + contextGroups.length, 9, 'sidebar deve ter 9 grupos');
-    assert.strictEqual(processedLayers.length + wired.layerIds.length, 24, 'sidebar deve ter 24 camadas wired');
+    assert.strictEqual(sidebarCount, 20, 'sidebar deve ter 20 camadas wired');
   });
 
   it('server.py: superficies removidas retornam 404', () => {
@@ -1836,8 +1876,9 @@ describe('projeto_centro — sanity checks', () => {
     const wiredDoc  = JSON.parse(read('centro/data/catalog/context-wired.json'));
     const wiredSet  = new Set((wiredDoc.layerIds || []));
     const processed = (layersDoc.layers || []);
-    const context   = (ctxDoc.layers || []).filter(l => wiredSet.has(l.id));
-    return { processed, context, wiredSet };
+    const contextAll = (ctxDoc.layers || []);
+    const context   = contextAll.filter(l => wiredSet.has(l.id));
+    return { processed, context, contextAll, wiredSet };
   }
 
   function resolveGeoJsonPath(layer) {
@@ -1950,8 +1991,8 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('GEO-B: phase-gates referencia apenas layers existentes no catálogo', () => {
-    const { processed, context } = loadCatalogLayers();
-    const known = new Set([...processed, ...context].map(l => l.id));
+    const { processed, contextAll } = loadCatalogLayers();
+    const known = new Set([...processed, ...contextAll].map(l => l.id));
     const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
     const unknown = Object.keys(gates.layerMinPhase || {}).filter(id => !known.has(id));
     assert.deepStrictEqual(unknown, [], 'phase-gates referencia IDs desconhecidos: ' + unknown.join(', '));
@@ -2264,5 +2305,71 @@ describe('projeto_centro — sanity checks', () => {
     const texts = read('vendor/app/config/ui-texts.js');
     assert.ok(texts.includes('keyboardShortcuts'), 'keyboardShortcuts presente');
     assert.ok(texts.includes('toggleSidebar'), 'toggleSidebar documentado');
+  });
+
+  it('sidebar IA: POIs patrimoniais fora de context-wired e em sidebar-exclude', () => {
+    const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
+    const exclude = JSON.parse(read('centro/data/catalog/sidebar-exclude.json'));
+    const wiredSet = new Set(wired.layerIds || []);
+    const POI_DUP = [
+      'centro_memoria_paulistana__point',
+      'centro_acervo_tombado__point',
+      'centro_bem_arqueologico__point',
+      'centro_monumentos__point',
+    ];
+    for (const id of POI_DUP) {
+      assert.ok(!wiredSet.has(id), id + ' não deve estar em context-wired (addPOILayer)');
+      assert.ok((exclude.layerIds || []).includes(id), id + ' deve estar em sidebar-exclude.json');
+    }
+    assert.ok(wiredSet.has('centro_arquivo_superficial__point'), 'arquivo superficial permanece wired');
+  });
+
+  it('catalog-load.js filtra sidebar-exclude e expõe sidebarLayers', () => {
+    const load = read('centro/features/catalog-load.js');
+    assert.ok(load.includes('sidebar-exclude.json'), 'catalog-load deve ler sidebar-exclude');
+    assert.ok(load.includes('sidebarLayers'), 'catalog-load deve expor sidebarLayers');
+    assert.ok(load.includes('sidebarExcludeSet'), 'filtro sidebar exclude presente');
+  });
+
+  it('sidebar-panel.js renderiza 3 secções narrativas no Território', () => {
+    const panel = read('centro/ui/sidebar-panel.js');
+    assert.ok(panel.includes('SIDEBAR_SECTIONS'), 'SIDEBAR_SECTIONS definido');
+    assert.ok(panel.includes('centro_historico'), 'secção Centro Histórico');
+    assert.ok(panel.includes('arquivo_soterrados'), 'secção Arquivo dos Soterrados');
+    assert.ok(panel.includes('contexto_urbano'), 'secção Contexto Urbano');
+    assert.ok(panel.includes('group--heavy'), 'subgrupo PESADO colapsado');
+    assert.ok(panel.includes('layer-badge--heavy'), 'badge PESADO');
+    assert.ok(panel.includes('layer-lock--clue'), 'lock clue visual');
+    assert.ok(panel.includes('layer-lock--phase'), 'lock fase visual');
+    assert.ok(panel.includes('Arquivo Morto'), 'link Arquivo Morto em lock clue');
+  });
+
+  it('sidebar-layer-state distingue locks clue vs fase ARG', () => {
+    const state = read('centro/features/sidebar-layer-state.js');
+    assert.ok(state.includes('layer-row--clue-locked'), 'classe clue-locked');
+    assert.ok(state.includes('Requer pista no Caderno'), 'mensagem clue');
+    assert.ok(state.includes('Disponível na Fase'), 'mensagem fase');
+  });
+
+  it('pistas.js expõe toggle RSB na sidebar Evidências', () => {
+    const pistas = read('centro/features/pistas.js');
+    assert.ok(pistas.includes('setupPistasRsbToggle'), 'setupPistasRsbToggle exportado');
+    assert.ok(read('centro/centro-runtime.js').includes('setupPistasRsbToggle'), 'runtime chama toggle RSB');
+  });
+
+  it('sidebar-phases-panel.js renderiza 13 fases com estado ARG', () => {
+    const html = read('centro/index.html');
+    assert.ok(html.includes('sidebar-phases-panel.js'), 'sidebar-phases-panel.js carregado');
+    const mod = read('centro/ui/sidebar-phases-panel.js');
+    assert.doesNotThrow(() => new Function(mod));
+    assert.ok(mod.includes('renderPhasesPanel'), 'export renderPhasesPanel');
+    assert.ok(mod.includes('phase-row--'), 'classe de estado por fase');
+    assert.ok(mod.includes('"active"'), 'estado active');
+    assert.ok(mod.includes('"locked"'), 'estado locked');
+    const runtime = read('centro/centro-runtime.js');
+    assert.ok(runtime.includes('renderPhasesPanel'), 'runtime chama renderPhasesPanel');
+    const css = read('centro/styles/sidebar.css');
+    assert.ok(css.includes('.phases-list'), 'CSS phases-list');
+    assert.ok(css.includes('.phase-row'), 'CSS phase-row');
   });
 });

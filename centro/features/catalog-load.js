@@ -36,6 +36,9 @@
       fetch("/centro/data/catalog/context-wired.json").then(function (r) {
         return r.ok ? r.json() : { layerIds: [] };
       }),
+      fetch("/centro/data/catalog/sidebar-exclude.json").then(function (r) {
+        return r.ok ? r.json() : { layerIds: [] };
+      }),
     ]).then(function (payload) {
       var layersDoc = payload[0];
       var groupsRaw = payload[1];
@@ -43,8 +46,10 @@
       var contextDoc = payload[3];
       var contextGroups = payload[4];
       var wired = payload[5];
+      var sidebarExclude = payload[6];
 
       var wiredSet = new Set((wired && wired.layerIds) || []);
+      var sidebarExcludeSet = new Set((sidebarExclude && sidebarExclude.layerIds) || []);
       var processedList = ((layersDoc && layersDoc.layers) || []).map(normalizeLayer);
       var contextList = [];
 
@@ -55,7 +60,9 @@
         }
       }
 
-      var allLayers = processedList.concat(contextList);
+      var sidebarLayers = processedList.concat(contextList).filter(function (ly) {
+        return !sidebarExcludeSet.has(ly.id);
+      });
       var allGroups = Array.isArray(groupsRaw)
         ? groupsRaw.slice()
         : (groupsRaw && groupsRaw.groups) || [];
@@ -65,7 +72,9 @@
           var cg = contextGroups[g];
           var ctxIds = [];
           for (var j = 0; j < contextList.length; j++) {
-            if (contextList[j].group === cg.id) ctxIds.push(contextList[j].id);
+            if (contextList[j].group === cg.id && !sidebarExcludeSet.has(contextList[j].id)) {
+              ctxIds.push(contextList[j].id);
+            }
           }
           if (ctxIds.length > 0) {
             allGroups.push({
@@ -78,6 +87,21 @@
         }
       }
 
+      var sidebarGroupIds = new Set();
+      for (var sg = 0; sg < sidebarLayers.length; sg++) {
+        if (sidebarLayers[sg].group) sidebarGroupIds.add(sidebarLayers[sg].group);
+      }
+      allGroups = allGroups.filter(function (grp) {
+        if (grp.layers && grp.layers.length) {
+          return grp.layers.some(function (lid) {
+            return !sidebarExcludeSet.has(lid);
+          });
+        }
+        return sidebarGroupIds.has(grp.id);
+      });
+
+      var allLayers = processedList.concat(contextList);
+
       var catalogIndex = new Map();
       for (var k = 0; k < allLayers.length; k++) {
         catalogIndex.set(allLayers[k].id, allLayers[k]);
@@ -85,12 +109,15 @@
 
       return {
         layers: allLayers,
+        sidebarLayers: sidebarLayers,
         groups: allGroups,
         catalogIndex: catalogIndex,
         layerUnlockRules: (unlocks && unlocks.layers) || {},
+        sidebarExcludeIds: Array.from(sidebarExcludeSet),
         counts: {
           processed: processedList.length,
           context: contextList.length,
+          sidebar: sidebarLayers.length,
         },
       };
     });

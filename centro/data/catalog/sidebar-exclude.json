@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "description": "Camadas wired excluídas da sidebar Território — já visíveis via addPOILayer (map-icons.js).",
+  "layerIds": [
+    "centro_memoria_paulistana__point",
+    "centro_acervo_tombado__point",
+    "centro_bem_arqueologico__point",
+    "centro_monumentos__point"
+  ]
+}

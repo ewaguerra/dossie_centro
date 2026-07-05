@@ -19,12 +19,14 @@
       phaseLocked: phaseLocked,
       locked: clueLocked || phaseLocked,
       minPhaseLabel: getMinPhaseLabel(opts.minPhase),
+      phaseSoulLabel: opts.phaseSoulLabel || "",
     };
   }
 
   function getLayerRowClass(state) {
     var rowClass = "layer-row";
     if (state.locked) rowClass += " layer-row--locked";
+    if (state.clueLocked) rowClass += " layer-row--clue-locked";
     if (state.phaseLocked) rowClass += " layer-row--phase-locked";
     return rowClass;
   }
@@ -32,16 +34,19 @@
   function getLockMessage(state, kind) {
     if (kind === "sidebar-hint") {
       return state.clueLocked
-        ? " (bloqueada — registre pistas no Caderno)"
-        : " (bloqueada — avance de fase no ARG)";
+        ? " (bloqueada — Requer pista no Caderno)"
+        : " (bloqueada — " + (state.phaseSoulLabel || "Fase " + state.minPhaseLabel) + ")";
     }
     if (kind === "sidebar-meta") {
-      return state.phaseLocked ? "fase " + state.minPhaseLabel : "bloqueada";
+      return state.clueLocked
+        ? "Requer pista no Caderno"
+        : state.phaseSoulLabel || "Disponível na Fase " + state.minPhaseLabel;
     }
     if (kind === "toast") {
       return state.clueLocked
         ? "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto)."
-        : "Camada bloqueada. Avance de fase no ARG (fase mínima " + state.minPhaseLabel + ").";
+        : "Camada bloqueada. " +
+            (state.phaseSoulLabel || "Avance para a Fase " + state.minPhaseLabel + ".");
     }
     return "";
   }
