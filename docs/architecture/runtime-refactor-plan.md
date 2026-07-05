@@ -1,6 +1,6 @@
 # Plano de refactor — `centro-runtime.js`
 
-> **Estado:** em curso — **R1 ✓**, **R2 ✓**, **R3 ✓** (2026-07-05).  
+> **Estado:** em curso — **R1 ✓**, **R2 ✓**, **R3 ✓**, **R4 ✓** (2026-07-05).  
 > **Objectivo:** reduzir o monólito (~1 180 linhas) sem bundler, mantendo IIFE + ordem de scripts.  
 > **Referência:** [map-init-flow.md](./map-init-flow.md).
 
@@ -26,7 +26,7 @@ centro-runtime.js
 ├── Sidebar glue → `ui/sidebar-orchestrator.js` (R3 ✓)
 ├── Feature API bridges (ensure*Api, toggles)   ← ~120 linhas
 ├── UI bootstrap (tabs, hamburger, guide…)    ← ~200 linhas
-├── resyncArgStateConsumers                     ← ~15 linhas
+├── ARG resync → `features/arg-resync.js` (R4 ✓)
 └── flyTo, inspector, CENTRO_POIS               ← ~100 linhas
 ```
 
@@ -90,9 +90,9 @@ centro-runtime.js
 
 ---
 
-### Fase R4 — ARG resync hub (prioridade média)
+### Fase R4 — ARG resync hub ✅ (concluída)
 
-**Novo:** `centro/features/arg-resync.js`
+**Novo:** `centro/features/arg-resync.js` — `window.CENTRO.argResync.create(deps)` + `install()` / `resync()`.
 
 | Move | De | Para |
 |------|-----|------|

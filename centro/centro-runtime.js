@@ -260,6 +260,7 @@
   var poiBootstrapApi = null;
   var trianguloOverlayApi = null;
   var sidebarOrchestratorApi = null;
+  var argResyncApi = null;
 
   function ensurePoiBootstrapApi() {
     if (!poiBootstrapApi && window.CENTRO && window.CENTRO.poiBootstrap) {
@@ -829,28 +830,22 @@
     window.CENTRO.ui.openSubterraneanGuide = openGuide;
   }
 
-  function resyncArgStateConsumers() {
-    loadSidebarData();
-    var poiApi = ensurePoiFilterApi();
-    if (poiApi && typeof poiApi.syncPhaseGate === "function") poiApi.syncPhaseGate();
-    else if (poiApi && typeof poiApi.applyAll === "function") poiApi.applyAll();
-    var b3d = ensureBuildings3dApi();
-    if (b3d && typeof b3d.syncPhaseGate === "function") b3d.syncPhaseGate();
-    var pistasApi = window.CENTRO && window.CENTRO.pistas;
-    if (pistasApi && typeof pistasApi.syncPhaseGate === "function") pistasApi.syncPhaseGate();
-    var subApi = ensureSubterraneanApi();
-    if (subApi && typeof subApi.syncPhaseGate === "function") subApi.syncPhaseGate();
-    syncTrianguloHistoricoOverlay();
+  function ensureArgResyncApi() {
+    if (!argResyncApi && window.CENTRO && window.CENTRO.argResync) {
+      argResyncApi = window.CENTRO.argResync.create({
+        loadSidebar: loadSidebarData,
+        ensurePoiFilterApi: ensurePoiFilterApi,
+        ensureBuildings3dApi: ensureBuildings3dApi,
+        ensureSubterraneanApi: ensureSubterraneanApi,
+        syncTriangulo: syncTrianguloHistoricoOverlay,
+      });
+    }
+    return argResyncApi;
   }
 
   function setupArgStateListener() {
-    document.addEventListener("centro:arg-state-changed", resyncArgStateConsumers);
-    window.addEventListener("storage", function (e) {
-      if (!e.key) return;
-      if (e.key === "protocolo13_caderno_clues" || e.key === "protocolo13_phase") {
-        resyncArgStateConsumers();
-      }
-    });
+    var api = ensureArgResyncApi();
+    if (api && typeof api.install === "function") api.install();
   }
 
   function bootstrap() {

@@ -2299,14 +2299,16 @@ describe('projeto_centro — sanity checks', () => {
 
   it('runtime escuta centro:arg-state-changed e storage cross-tab', () => {
     const runtime = read('centro/centro-runtime.js');
+    const argResync = read('centro/features/arg-resync.js');
     const triOverlay = read('centro/map/triangulo-overlay.js');
     assert.ok(runtime.includes('setupArgStateListener'), 'setupArgStateListener presente');
-    assert.ok(runtime.includes('resyncArgStateConsumers'), 'resyncArgStateConsumers centraliza gates');
-    assert.ok(runtime.includes('syncTrianguloHistoricoOverlay'), 'triângulo resync no arg-state');
+    assert.ok(runtime.includes('ensureArgResyncApi'), 'runtime instancia argResync');
+    assert.ok(argResync.includes('centro:arg-state-changed'), 'arg-resync escuta evento');
+    assert.ok(argResync.includes('syncTriangulo'), 'triângulo resync via ctx.syncTriangulo');
     assert.ok(triOverlay.includes('remove(mapInstance)'), 'triângulo remove quando fase < 11');
     assert.ok(triOverlay.includes('isFeaturePhaseUnlocked("triangulo-historico")'), 'gate triangulo no overlay');
-    assert.ok(runtime.includes('protocolo13_caderno_clues'), 'storage listener caderno');
-    assert.ok(runtime.includes('protocolo13_phase'), 'storage listener fase');
+    assert.ok(argResync.includes('protocolo13_caderno_clues'), 'storage listener caderno');
+    assert.ok(argResync.includes('protocolo13_phase'), 'storage listener fase');
   });
 
   it('sidebar-events usa delegacao para re-render idempotente', () => {
