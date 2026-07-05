@@ -57,7 +57,7 @@ Scripts com `defer` executam **na ordem do HTML** antes de `DOMContentLoaded`.
 | 3 | Centro utils | `centro/utils.js` → `window.CENTRO.utils` |
 | 4 | Features | `triangulo-historico`, `pistas`, `poi-icons`, `buildings-3d`, `poi-theme-filter`, `layer-unlocks`, `catalog-load`, `protocolo-phase`, `sidebar-layer-state` |
 | 5 | Subsolo | `subterranean-cutaway.js` (**`type="module"`**) |
-| 6 | UI | `toast`, `lazy-assets`, `map-popups`, `sidebar-panel`, `sidebar-phases-panel`, `sidebar-events` |
+| 6 | UI | `toast`, `lazy-assets`, `map-popups`, `sidebar-panel`, `sidebar-phases-panel`, `sidebar-events`, **`sidebar-orchestrator`** |
 | 7 | Map infra | `map-safe`, `layer-data-url`, `catalog-layer-controller`, `symbol-popup-layer`, **`poi-bootstrap`**, **`triangulo-overlay`** |
 | 8 | Runtime | **`centro-runtime.js`** (orquestrador) |
 
@@ -76,7 +76,7 @@ setupCentroUiFromModules  → sidebar-events delegação
 setupKeyboardShortcuts    → tecla S
 setupSubterraneanGuide    → botões #subterranean-guide-open(+fases)
 setupArgStateListener     → centro:arg-state-changed + storage cross-tab
-loadSidebarData           → catalog-load + renderPhasesPanel + renderSidebarPanel
+loadSidebarData           → sidebar-orchestrator.load() (catalog-load + render + wire)
 initMap()
 ```
 
@@ -98,7 +98,7 @@ Quando a fase ou o caderno mudam, **`resyncArgStateConsumers()`** reaplica:
 
 | Consumidor | Módulo |
 |------------|--------|
-| Sidebar Território + 13 Almas | `loadSidebarData()` |
+| Sidebar Território + 13 Almas | `sidebar-orchestrator.load()` via `loadSidebarData()` |
 | Filtro temático Evidências | `poi-theme-filter.syncPhaseGate` |
 | Maquete 3D | `buildings-3d.syncPhaseGate` |
 | Pistas RSB | `pistas.syncPhaseGate` |

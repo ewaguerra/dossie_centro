@@ -507,6 +507,7 @@ describe('projeto_centro — sanity checks', () => {
       'function bootstrap',
       'function initMap',
       'ensurePoiBootstrapApi',
+      'ensureSidebarOrchestratorApi',
       'function loadSidebarData',
       'setupCentroUiFromModules',
       'window.centroNavigate',
@@ -957,10 +958,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!/innerHTML\s*=\s*[`'"][^`'"]+\$\{/.test(panel), 'sem innerHTML com interpolacao de catalogo');
 
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('CENTRO.ui.renderSidebarPanel'), 'runtime delega renderSidebarPanel');
+    const orchestrator = read('centro/ui/sidebar-orchestrator.js');
+    assert.ok(orchestrator.includes('CENTRO.ui.renderSidebarPanel'), 'orchestrator delega renderSidebarPanel');
+    assert.ok(runtime.includes('ensureSidebarOrchestratorApi'), 'runtime instancia sidebarOrchestrator');
     assert.ok(!runtime.includes('details.className = "group"'), 'render DOM nao duplicado no runtime');
-    assert.strictEqual((runtime.match(/function wireLayerCheckboxes/g) || []).length, 1, 'wireLayerCheckboxes intacto');
-    assert.strictEqual((runtime.match(/function renderSidebarPanel/g) || []).length, 1, 'wrapper renderSidebarPanel no runtime');
+    assert.ok(orchestrator.includes('wireLayerCheckboxes'), 'wireLayerCheckboxes no orchestrator');
+    assert.ok(orchestrator.includes('renderPhasesPanel'), 'renderPhasesPanel no orchestrator');
   });
 
   it('sidebar-panel.js: render basico com deps injetadas', () => {
@@ -1054,12 +1057,13 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!events.includes('data-centro-wired'), 'sem guard panel-level');
 
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('CENTRO.ui.wireLayerCheckboxes'), 'runtime delega wireLayerCheckboxes');
-    assert.ok(runtime.includes('getLockToastMessage'), 'runtime expoe toast lock via wrapper');
+    const orchestrator = read('centro/ui/sidebar-orchestrator.js');
+    assert.ok(orchestrator.includes('CENTRO.ui.wireLayerCheckboxes'), 'orchestrator delega wireLayerCheckboxes');
+    assert.ok(runtime.includes('getLockToastMessage'), 'runtime expoe toast lock para orchestrator');
     assert.ok(!runtime.includes('querySelectorAll("input[type=\\"checkbox\\"][data-layer-id]")'), 'query wire nao duplicado no runtime');
     assert.ok(runtime.includes('function addLayerToMap'), 'addLayerToMap permanece no runtime');
     assert.ok(runtime.includes('function removeLayerFromMap'), 'removeLayerFromMap permanece no runtime');
-    assert.strictEqual((runtime.match(/function wireLayerCheckboxes/g) || []).length, 1, 'wrapper wireLayerCheckboxes');
+    assert.ok(orchestrator.includes('function load'), 'orchestrator exporta load');
   });
 
   it('sidebar-events.js: wiring mock checkbox unlocked/checked chama addLayerToMap', () => {
@@ -1517,10 +1521,11 @@ describe('projeto_centro — sanity checks', () => {
   // ── Catalog cache ───────────────────────────────────────────────
   it('centro-runtime.js: catalogo carregado uma unica vez e indexado por id', () => {
     const runtime = read('centro/centro-runtime.js');
+    const orchestrator = read('centro/ui/sidebar-orchestrator.js');
     const load = read('centro/features/catalog-load.js');
-    assert.ok(runtime.includes('function loadCatalog'), 'loadCatalog ausente');
+    assert.ok(orchestrator.includes('function loadCatalog'), 'loadCatalog no sidebar-orchestrator');
     assert.ok(runtime.includes('catalogIndex'), 'catalogIndex ausente no runtime');
-    assert.ok(runtime.includes('CENTRO.catalogLoad'), 'runtime deve delegar a catalog-load');
+    assert.ok(orchestrator.includes('CENTRO.catalogLoad'), 'orchestrator delega a catalog-load');
     assert.ok(load.includes('new Map()'), 'indice deve usar Map nativo em catalog-load');
     assert.ok(!/\bsetInterval\s*\(/.test(runtime), 'wiring deve ser direto, sem chamada setInterval');
     assert.ok(!runtime.includes('bindLayerCheckboxesWhenReady'), 'polling antigo deve estar removido');
@@ -1870,7 +1875,8 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(triOverlay.includes('sync: sync'), 'triangulo-overlay exporta sync');
     assert.ok(runtime.includes('syncTrianguloHistoricoOverlay'), 'runtime delega sync triangulo');
     assert.ok(runtime.includes('ensureTrianguloOverlayApi'), 'runtime instancia trianguloOverlay');
-    assert.ok(runtime.includes('CENTRO.catalogLoad'), 'deve delegar catalogo a catalog-load');
+    const orchestrator = read('centro/ui/sidebar-orchestrator.js');
+    assert.ok(orchestrator.includes('CENTRO.catalogLoad'), 'catalogo delegado via sidebar-orchestrator');
   });
 
   it('sidebar: 9 grupos e 20 camadas na sidebar (10 processed + 10 context wired)', () => {
@@ -2275,10 +2281,12 @@ describe('projeto_centro — sanity checks', () => {
 
   // ── Regressões pós-auditoria 2026-07 ─────────────────────────────
   it('loadSidebarData aguarda loadPhaseGates antes de renderizar sidebar', () => {
+    const orchestrator = read('centro/ui/sidebar-orchestrator.js');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('Promise.all'), 'loadSidebarData deve usar Promise.all');
-    assert.ok(runtime.includes('loadPhaseGates'), 'loadSidebarData deve aguardar loadPhaseGates');
-    assert.ok(runtime.includes('maybeAdvancePhaseFromClues'), 'advance de fase antes do render');
+    assert.ok(orchestrator.includes('Promise.all'), 'loadSidebarData deve usar Promise.all');
+    assert.ok(orchestrator.includes('loadPhaseGates'), 'loadSidebarData deve aguardar loadPhaseGates');
+    assert.ok(orchestrator.includes('maybeAdvancePhaseFromClues'), 'advance de fase antes do render');
+    assert.ok(runtime.includes('loadSidebarData'), 'runtime delega loadSidebarData');
   });
 
   it('protocolo-phase: fail-closed quando gates ainda nao carregaram', () => {
@@ -2399,7 +2407,9 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(mod.includes('"active"'), 'estado active');
     assert.ok(mod.includes('"locked"'), 'estado locked');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('renderPhasesPanel'), 'runtime chama renderPhasesPanel');
+    const orchestrator = read('centro/ui/sidebar-orchestrator.js');
+    assert.ok(orchestrator.includes('renderPhasesPanel'), 'orchestrator chama renderPhasesPanel');
+    assert.ok(runtime.includes('loadSidebarData'), 'runtime delega sidebar load');
     const css = read('centro/styles/sidebar.css');
     assert.ok(css.includes('.phases-list'), 'CSS phases-list');
     assert.ok(css.includes('.phase-row'), 'CSS phase-row');

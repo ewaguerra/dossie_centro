@@ -63,7 +63,6 @@
   var poiInteractionLayerIds = [];
 
   // Catálogo (layers.json + groups.json) é carregado uma única vez e indexado.
-  var catalogPromise = null;
   var catalogIndex = null;
 
   // Maquete 3D — fill-extrusion nativa do estilo OpenFreeMap liberty.
@@ -260,6 +259,7 @@
   var subterraneanApi = null;
   var poiBootstrapApi = null;
   var trianguloOverlayApi = null;
+  var sidebarOrchestratorApi = null;
 
   function ensurePoiBootstrapApi() {
     if (!poiBootstrapApi && window.CENTRO && window.CENTRO.poiBootstrap) {
@@ -534,110 +534,36 @@
     });
   };
 
-  // Carrega o catálogo (layers.json + groups.json) uma única vez e
-  // indexa por id. Toda interação subsequente da sidebar usa o cache.
-  function loadCatalog() {
-    if (!catalogPromise) {
-      var loader = window.CENTRO && window.CENTRO.catalogLoad;
-      if (!loader || typeof loader.loadCatalog !== "function") {
-        catalogPromise = Promise.reject(new Error("CENTRO.catalogLoad indisponível"));
-        return catalogPromise;
-      }
-      catalogPromise = loader.loadCatalog().then(function (data) {
-        layerUnlockRules = data.layerUnlockRules;
-        catalogIndex = data.catalogIndex;
-        return {
-          layers: data.layers,
-          sidebarLayers: data.sidebarLayers || data.layers,
-          groups: data.groups,
-        };
+  function ensureSidebarOrchestratorApi() {
+    if (!sidebarOrchestratorApi && window.CENTRO && window.CENTRO.sidebarOrchestrator) {
+      sidebarOrchestratorApi = window.CENTRO.sidebarOrchestrator.create({
+        onCatalogLoaded: function (data) {
+          layerUnlockRules = data.layerUnlockRules;
+          catalogIndex = data.catalogIndex;
+        },
+        hasCatalog: function () {
+          return !!catalogIndex;
+        },
+        getLayerConfig: function (layerId) {
+          return catalogIndex ? catalogIndex.get(layerId) : null;
+        },
+        resolveSidebarLockState: resolveSidebarLockState,
+        getMinPhaseLabel: getMinPhaseLabel,
+        isLayerAccessible: isLayerAccessible,
+        getLockToastMessage: getLockToastMessage,
+        whenMapReady: function (cb) {
+          return mapReadyPromise.then(cb);
+        },
+        addLayerToMap: addLayerToMap,
+        removeLayerFromMap: removeLayerFromMap,
       });
     }
-    return catalogPromise;
-  }
-
-  // Constrói o DOM da sidebar a partir do catálogo. Usa createElement +
-  // textContent para evitar interpolação de strings em innerHTML.
-  function renderSidebarPanel(panel, groupsList, layersList) {
-    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.renderSidebarPanel;
-    if (typeof fn !== "function") {
-      console.warn("[CENTRO] sidebar-panel.js ausente — renderSidebarPanel indisponível");
-      return;
-    }
-    var rowClassFn = getSidebarLayerStateHelper("getLayerRowClass");
-    var lockMsgFn = getSidebarLayerStateHelper("getLockMessage");
-    fn({
-      panel: panel,
-      groups: groupsList,
-      layers: layersList,
-      resolveSidebarLockState: resolveSidebarLockState,
-      getLayerRowClass: typeof rowClassFn === "function" ? rowClassFn : null,
-      getLockMessage: typeof lockMsgFn === "function" ? lockMsgFn : null,
-      getMinPhaseLabel: getMinPhaseLabel,
-    });
-  }
-
-  function renderPhasesPanel() {
-    var panel = document.getElementById("phases-panel");
-    if (!panel) return;
-    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.renderPhasesPanel;
-    if (typeof fn !== "function") {
-      console.warn("[CENTRO] sidebar-phases-panel.js ausente — renderPhasesPanel indisponível");
-      return;
-    }
-    var phaseApi = window.CENTRO && window.CENTRO.protocoloPhase;
-    fn({
-      panel: panel,
-      getPhase: phaseApi && typeof phaseApi.getPhase === "function" ? phaseApi.getPhase.bind(phaseApi) : null,
-      getSoul: phaseApi && typeof phaseApi.getSoul === "function" ? phaseApi.getSoul.bind(phaseApi) : null,
-      maxPhase: phaseApi && phaseApi.MAX_PHASE ? phaseApi.MAX_PHASE : 13,
-    });
+    return sidebarOrchestratorApi;
   }
 
   function loadSidebarData() {
-    var statusEl = document.getElementById("sidebar-status");
-    var panel = document.getElementById("layers-panel");
-    if (!panel) return;
-
-    var phaseApi = window.CENTRO && window.CENTRO.protocoloPhase;
-    var gatesPromise =
-      phaseApi && typeof phaseApi.loadPhaseGates === "function"
-        ? phaseApi.loadPhaseGates()
-        : Promise.resolve();
-
-    Promise.all([loadCatalog(), gatesPromise])
-      .then(function (results) {
-        var data = results[0];
-        if (phaseApi && typeof phaseApi.maybeAdvancePhaseFromClues === "function") {
-          phaseApi.maybeAdvancePhaseFromClues();
-        }
-        if (statusEl) statusEl.style.display = "none";
-        renderSidebarPanel(panel, data.groups, data.sidebarLayers || data.layers);
-        wireLayerCheckboxes(panel);
-        if (phaseApi && typeof phaseApi.updatePhaseBadge === "function") {
-          phaseApi.updatePhaseBadge();
-        }
-        renderPhasesPanel();
-        var phaseNum = phaseApi && typeof phaseApi.getPhase === "function" ? phaseApi.getPhase() : 1;
-        console.log(
-          "[CENTRO] Sidebar carregada:",
-          data.groups.length,
-          "grupos,",
-          (data.sidebarLayers || data.layers).length,
-          "camadas (fase ARG",
-          phaseNum,
-          "/",
-          phaseApi && phaseApi.MAX_PHASE ? phaseApi.MAX_PHASE : 13,
-          ")"
-        );
-      })
-      .catch(function (e) {
-        console.error("[CENTRO] Erro ao carregar sidebar:", e);
-        if (statusEl) statusEl.textContent = "Erro ao carregar dados: " + e.message;
-        if (typeof window.centroToast === "function") {
-          window.centroToast("Erro ao carregar camadas: " + e.message, "error");
-        }
-      });
+    var api = ensureSidebarOrchestratorApi();
+    if (api && typeof api.load === "function") api.load();
   }
 
   function buildLayerDataUrl(cfg) {
@@ -705,36 +631,6 @@
       : "Camada bloqueada. Avance de fase no ARG (fase mínima " + getMinPhaseLabel(layerId) + ").";
   }
 
-  // Conecta os checkboxes ao mapa. Substitui o polling com setInterval
-  // anterior: agora é chamado uma única vez logo após o render da sidebar,
-  // e cada mudança consulta o catálogo já indexado em memória.
-  function wireLayerCheckboxes(panel) {
-    var fn = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.wireLayerCheckboxes;
-    if (typeof fn !== "function") {
-      console.warn("[CENTRO] sidebar-events.js ausente — wireLayerCheckboxes indisponível");
-      return;
-    }
-    fn(panel, {
-      hasCatalog: function () {
-        return !!catalogIndex;
-      },
-      getLayerConfig: function (layerId) {
-        return catalogIndex ? catalogIndex.get(layerId) : null;
-      },
-      isLayerAccessible: isLayerAccessible,
-      getLockToastMessage: getLockToastMessage,
-      whenMapReady: function (cb) {
-        return mapReadyPromise.then(cb);
-      },
-      addLayerToMap: addLayerToMap,
-      removeLayerFromMap: removeLayerFromMap,
-      toast: function (msg, level) {
-        if (typeof window.centroToast === "function") {
-          window.centroToast(msg, level);
-        }
-      },
-    });
-  }
 
   function setupCentroUiFromModules() {
     var ui = window.CENTRO && window.CENTRO.ui;

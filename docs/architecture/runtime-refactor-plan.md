@@ -1,6 +1,6 @@
 # Plano de refactor — `centro-runtime.js`
 
-> **Estado:** em curso — **R1 ✓**, **R2 ✓** (2026-07-05).  
+> **Estado:** em curso — **R1 ✓**, **R2 ✓**, **R3 ✓** (2026-07-05).  
 > **Objectivo:** reduzir o monólito (~1 180 linhas) sem bundler, mantendo IIFE + ordem de scripts.  
 > **Referência:** [map-init-flow.md](./map-init-flow.md).
 
@@ -23,7 +23,7 @@ centro-runtime.js
 ├── POI boot → `map/poi-bootstrap.js` (R1 ✓)
 ├── initMap + map.on("load")                    ← ~170 linhas
 ├── Triângulo sync → `map/triangulo-overlay.js` (R2 ✓)
-├── Sidebar glue (loadSidebarData, wire…)       ← ~150 linhas
+├── Sidebar glue → `ui/sidebar-orchestrator.js` (R3 ✓)
 ├── Feature API bridges (ensure*Api, toggles)   ← ~120 linhas
 ├── UI bootstrap (tabs, hamburger, guide…)    ← ~200 linhas
 ├── resyncArgStateConsumers                     ← ~15 linhas
@@ -73,9 +73,9 @@ centro-runtime.js
 
 ---
 
-### Fase R3 — Sidebar orchestration (prioridade média)
+### Fase R3 — Sidebar orchestration ✅ (concluída)
 
-**Novo:** `centro/ui/sidebar-orchestrator.js`
+**Novo:** `centro/ui/sidebar-orchestrator.js` — `window.CENTRO.sidebarOrchestrator.create(deps)` + `load()` / `loadCatalog()`.
 
 | Move | De | Para |
 |------|-----|------|
