@@ -58,7 +58,7 @@ Scripts com `defer` executam **na ordem do HTML** antes de `DOMContentLoaded`.
 | 4 | Features | `triangulo-historico`, `pistas`, `poi-icons`, `buildings-3d`, `poi-theme-filter`, `layer-unlocks`, `catalog-load`, `protocolo-phase`, `sidebar-layer-state` |
 | 5 | Subsolo | `subterranean-cutaway.js` (**`type="module"`**) |
 | 6 | UI | `toast`, `lazy-assets`, `map-popups`, `sidebar-panel`, `sidebar-phases-panel`, `sidebar-events` |
-| 7 | Map infra | `map-safe`, `layer-data-url`, `catalog-layer-controller`, `symbol-popup-layer` |
+| 7 | Map infra | `map-safe`, `layer-data-url`, `catalog-layer-controller`, `symbol-popup-layer`, **`poi-bootstrap`** |
 | 8 | Runtime | **`centro-runtime.js`** (orquestrador) |
 
 **Nota:** `rio-animado.js` **não** está na lista — só em `centro/test-full.html`.

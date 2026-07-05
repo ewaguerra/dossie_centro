@@ -20,9 +20,7 @@
   var BASEMAP_GROUND_COLOR = "#f8f4f0";
 
   // Fonte para labels POI: precisa existir no fontstack do basemap. Noto
-  // Sans Regular é o default da OpenFreeMap.
-  var POI_TEXT_FONT = ["Noto Sans Regular"];
-
+  // Sans Regular é o default da OpenFreeMap. Implementação em poi-bootstrap.js.
   // Localização PT-BR para tooltips de controles MapLibre.
   var MAPLIBRE_LOCALE_PT_BR = {
     "AttributionControl.ToggleAttribution": "Alternar atribuição",
@@ -72,15 +70,6 @@
   var BUILDINGS_3D_LAYER_ID = "building-3d";
   var CADERNO_STORAGE_KEY = "protocolo13_caderno_clues";
 
-  // Fallback por categoria quando MAPA_SP_ICONS não carregou (404 / ordem de script).
-  var POI_FALLBACK_ICON_BY_ID = {
-    "memoria-paulistana": "icon-memoria.svg",
-    "acervo-tombado": "icon-acervo.svg",
-    "bem-arqueologico": "icon-arqueologia.svg",
-    monumentos: "icon-monumentos.svg",
-    "poi-turistico": "icon-turismo.svg",
-  };
-
   // Regras de desbloqueio sidebar ← Caderno do Arquivista (layer-unlocks.json).
   var layerUnlockRules = null;
 
@@ -127,6 +116,18 @@
     console.warn("[CENTRO] map-safe.js ausente — ensureLayer indisponível");
   }
 
+  function bindLayerEventOnce(mapInstance, eventName, layerId, handler) {
+    var fn = getCentroMapHelper("bindLayerEventOnce");
+    if (typeof fn === "function") return fn(mapInstance, eventName, layerId, handler);
+    console.warn("[CENTRO] map-safe.js ausente — bindLayerEventOnce indisponível");
+  }
+
+  async function ensureImage(mapInstance, imageId, imagePath) {
+    var fn = getCentroMapHelper("ensureImage");
+    if (typeof fn === "function") return fn(mapInstance, imageId, imagePath);
+    console.warn("[CENTRO] map-safe.js ausente — ensureImage indisponível");
+  }
+
   // Camadas temáticas da sidebar ficam abaixo dos símbolos POI/pistas.
   function getCatalogInsertBeforeId() {
     if (!map) return undefined;
@@ -135,16 +136,6 @@
       if (map.getLayer(layerId)) return layerId;
     }
     return undefined;
-  }
-
-  function resolvePatrimonioIconPath(poiId) {
-    var iconsRegistry = window.MAPA_SP_ICONS;
-    if (iconsRegistry && typeof iconsRegistry.resolvePatrimonio === "function") {
-      var resolved = iconsRegistry.resolvePatrimonio(poiId);
-      if (resolved) return resolved;
-    }
-    var stem = POI_FALLBACK_ICON_BY_ID[poiId] || "icon-memoria.svg";
-    return "/centro/assets/icons/" + stem;
   }
 
   function getCollectedClueIds() {
@@ -229,23 +220,6 @@
     }
   }
 
-  function styleSupportsTextLabels(mapInstance) {
-    var style = mapInstance.getStyle && mapInstance.getStyle();
-    return !!(style && style.glyphs);
-  }
-
-  function bindLayerEventOnce(mapInstance, eventName, layerId, handler) {
-    var fn = getCentroMapHelper("bindLayerEventOnce");
-    if (typeof fn === "function") return fn(mapInstance, eventName, layerId, handler);
-    console.warn("[CENTRO] map-safe.js ausente — bindLayerEventOnce indisponível");
-  }
-
-  async function ensureImage(mapInstance, imageId, imagePath) {
-    var fn = getCentroMapHelper("ensureImage");
-    if (typeof fn === "function") return fn(mapInstance, imageId, imagePath);
-    console.warn("[CENTRO] map-safe.js ausente — ensureImage indisponível");
-  }
-
   function getMapIconHaloPaint() {
     var iconsRegistry = window.MAPA_SP_ICONS;
     var paper = (iconsRegistry && iconsRegistry.settings && iconsRegistry.settings.paper) || "#fdfbf7";
@@ -254,166 +228,6 @@
       "icon-halo-width": 2,
       "icon-halo-blur": 0.5,
     };
-  }
-
-  async function addPOILayer(mapInstance, cfg) {
-    var sourceId = cfg.sourceId;
-    var iconLayerId = cfg.iconLayerId;
-    var labelLayerId = cfg.labelLayerId;
-    var imageId = cfg.imageId;
-    var dataPath = cfg.dataPath;
-    var titleProp = cfg.titleProp;
-    var descProp = cfg.descProp;
-    var addrProp = cfg.addrProp;
-    var iconPath = cfg.iconPath;
-    var layerFile = cfg.layerFile;
-
-    var addSymbol = getCentroMapHelper("addSymbolPopupLayer");
-    if (typeof addSymbol !== "function") {
-      console.warn("[CENTRO] symbol-popup-layer.js ausente — addPOILayer abortado");
-      return;
-    }
-
-    var labelConfig = null;
-    if (titleProp && styleSupportsTextLabels(mapInstance)) {
-      labelConfig = {
-        layerId: labelLayerId,
-        enabled: true,
-        layout: {
-          "text-field": ["get", titleProp],
-          "text-font": POI_TEXT_FONT,
-          "text-size": 10,
-          "text-offset": [0, 2],
-          "text-anchor": "top",
-        },
-        paint: {
-          "text-color": "#1a1a1a",
-          "text-halo-color": "#ffffff",
-          "text-halo-width": 1.5,
-          "text-halo-blur": 0.5,
-        },
-      };
-    }
-
-    var sourceData = dataPath;
-    if (layerFile) {
-      var fetchLayer = getCentroMapHelper("fetchLayerGeojson");
-      if (typeof fetchLayer !== "function") {
-        throw new Error(
-          "[CENTRO] fetchLayerGeojson ausente — não é possível carregar " + layerFile
-        );
-      }
-      sourceData = await fetchLayer(layerFile);
-    }
-
-    return addSymbol(mapInstance, {
-      sourceId: sourceId,
-      iconLayerId: iconLayerId,
-      source: { type: "geojson", data: sourceData },
-      imageId: imageId,
-      iconPath: iconPath,
-      iconLayout: {
-        "icon-image": imageId,
-        "icon-size": 0.82,
-        "icon-allow-overlap": true,
-        "icon-anchor": "center",
-      },
-      iconPaint: getMapIconHaloPaint(),
-      label: labelConfig,
-      popup: {
-        factoryKey: "createPoiPopupNode",
-        buildArgs: function (properties) {
-          var name = titleProp ? properties[titleProp] || "POI" : "POI";
-          var secondary = descProp
-            ? properties[descProp] || ""
-            : addrProp
-              ? properties[addrProp] || ""
-              : "";
-          return [name, secondary];
-        },
-        popupOptions: {},
-      },
-      interactionLayerIds: poiInteractionLayerIds,
-      onGuardFail: function () {
-        console.warn("[CENTRO] addPOILayer: sourceId ou iconLayerId ausente (cache stale?) — sourceId=" + sourceId + " iconLayerId=" + iconLayerId + " dataPath=" + dataPath);
-      },
-    });
-  }
-
-  function pistaItemFromProperties(properties) {
-    if (!properties) return null;
-    return {
-      title: properties.title || "Pista",
-      description: properties.description || "",
-      image: properties.image || "",
-      sourceUrl: properties.sourceUrl || "",
-    };
-  }
-
-  async function addPistasLayer(mapInstance, items) {
-    var pistasCfg = window.CENTRO && window.CENTRO.pistas && window.CENTRO.pistas.CONFIG;
-    var iconsRegistry = window.MAPA_SP_ICONS;
-    var sourceId = (pistasCfg && pistasCfg.sourceId) || "rsb-pistas-source";
-    var iconLayerId = (pistasCfg && pistasCfg.iconLayerId) || "rsb-pistas-icon";
-    var iconPath =
-      iconsRegistry && typeof iconsRegistry.resolvePistasIcon === "function"
-        ? iconsRegistry.resolvePistasIcon()
-        : "/centro/assets/icons/icon-pista.svg";
-    var imageId = "rsb-pista-icon";
-    var features = [];
-
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      if (!item.lngLat || !Array.isArray(item.lngLat) || item.lngLat.length < 2) continue;
-      features.push({
-        type: "Feature",
-        geometry: { type: "Point", coordinates: item.lngLat },
-        properties: {
-          id: item.id || "",
-          title: item.title || "",
-          description: item.description || "",
-          image: item.image || "",
-          sourceUrl: item.sourceUrl || "",
-        },
-      });
-    }
-
-    var addSymbol = getCentroMapHelper("addSymbolPopupLayer");
-    if (typeof addSymbol !== "function") {
-      console.warn("[CENTRO] symbol-popup-layer.js ausente — addPistasLayer abortado");
-      return 0;
-    }
-
-    return addSymbol(mapInstance, {
-      sourceId: sourceId,
-      iconLayerId: iconLayerId,
-      source: {
-        type: "geojson",
-        data: { type: "FeatureCollection", features: features },
-      },
-      imageId: imageId,
-      iconPath: iconPath,
-      iconLayout: {
-        "icon-image": imageId,
-        "icon-size": 0.82,
-        "icon-allow-overlap": true,
-        "icon-anchor": "center",
-      },
-      iconPaint: getMapIconHaloPaint(),
-      label: null,
-      popup: {
-        factoryKey: "createPistaPopupNode",
-        buildArgs: function (properties) {
-          return [pistaItemFromProperties(properties)];
-        },
-        guard: function (properties) {
-          return pistaItemFromProperties(properties) !== null;
-        },
-        popupOptions: { offset: 25, maxWidth: "300px" },
-      },
-      interactionLayerIds: poiInteractionLayerIds,
-      returnFeatureCount: true,
-    });
   }
 
   function showInspector(feature) {
@@ -444,6 +258,18 @@
   var buildings3dApi = null;
   var poiFilterApi = null;
   var subterraneanApi = null;
+  var poiBootstrapApi = null;
+
+  function ensurePoiBootstrapApi() {
+    if (!poiBootstrapApi && window.CENTRO && window.CENTRO.poiBootstrap) {
+      poiBootstrapApi = window.CENTRO.poiBootstrap.create({
+        getMapHelper: getCentroMapHelper,
+        buildLayerDataUrl: buildLayerDataUrl,
+        poiInteractionLayerIds: poiInteractionLayerIds,
+      });
+    }
+    return poiBootstrapApi;
+  }
 
   function ensureBuildings3dApi() {
     if (!buildings3dApi && window.CENTRO && window.CENTRO.buildings3D) {
@@ -679,103 +505,28 @@
 
       await syncTrianguloHistoricoOverlay();
 
-      var poi = window.CENTRO && window.CENTRO.poiIcons;
-      if (poi) {
-        // IDs explícitos para não depender da estrutura cacheada do poi-icons.js.
-        // Fallback para os valores definidos em poi-icons.js se o objeto estiver disponível.
-        var poiConfigs = [
-          {
-            id: "memoria-paulistana",
-            layerFile: "data/context/centro_memoria_paulistana__point.geojson",
-            sourceId:    (poi.MEMORIA_PAULISTANA_LAYERS && poi.MEMORIA_PAULISTANA_LAYERS.sourceId)    || "memoria-paulistana-source",
-            iconLayerId: (poi.MEMORIA_PAULISTANA_LAYERS && poi.MEMORIA_PAULISTANA_LAYERS.iconLayerId) || "memoria-paulistana-icon",
-            titleProp: "nm_titulo_placa", descProp: "dc_enunciado_placa", addrProp: "nm_endereco_placa",
-          },
-          {
-            id: "acervo-tombado",
-            layerFile: "data/context/centro_acervo_tombado__point.geojson",
-            sourceId:    (poi.ACERVO_TOMBADO_LAYERS && poi.ACERVO_TOMBADO_LAYERS.sourceId)    || "acervo-tombado-source",
-            iconLayerId: (poi.ACERVO_TOMBADO_LAYERS && poi.ACERVO_TOMBADO_LAYERS.iconLayerId) || "acervo-tombado-icon",
-            titleProp: "nm_acervo",
-          },
-          {
-            id: "bem-arqueologico",
-            layerFile: "data/context/centro_bem_arqueologico__point.geojson",
-            sourceId:    (poi.BEM_ARQUEOLOGICO_LAYERS && poi.BEM_ARQUEOLOGICO_LAYERS.sourceId)    || "bem-arqueologico-source",
-            iconLayerId: (poi.BEM_ARQUEOLOGICO_LAYERS && poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId) || "bem-arqueologico-icon",
-          },
-          {
-            id: "monumentos",
-            layerFile: "data/context/centro_monumentos__point.geojson",
-            sourceId:    (poi.MONUMENTOS_LAYERS && poi.MONUMENTOS_LAYERS.sourceId)    || "monumentos-source",
-            iconLayerId: (poi.MONUMENTOS_LAYERS && poi.MONUMENTOS_LAYERS.iconLayerId) || "monumentos-icon",
-            titleProp: "nm_obra",
-          },
-          {
-            id: "poi-turistico",
-            layerFile: poi.POI_TURISTICO_LAYER_FILE,
-            sourceId:    (poi.POI_TURISTICO_LAYERS && poi.POI_TURISTICO_LAYERS.sourceId)    || "poi-turistico-source",
-            iconLayerId: (poi.POI_TURISTICO_LAYERS && poi.POI_TURISTICO_LAYERS.iconLayerId) || "poi-turistico-icon",
-            titleProp: "name", descProp: "category",
-          },
-        ];
-        for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
-          var poiCfg = poiConfigs[poiIndex];
-          var iconPath = resolvePatrimonioIconPath(poiCfg.id);
-          var poiLayerArgs = {
-            sourceId: poiCfg.sourceId,
-            iconLayerId: poiCfg.iconLayerId,
-            labelLayerId: poiCfg.id + "-label",
-            imageId: poiCfg.id + "-pin",
-            iconPath: iconPath,
-            titleProp: poiCfg.titleProp,
-            descProp: poiCfg.descProp,
-            addrProp: poiCfg.addrProp,
-          };
-          if (poiCfg.id === "poi-turistico") {
-            poiLayerArgs.layerFile = poiCfg.layerFile;
-          } else {
-            poiLayerArgs.dataPath = buildLayerDataUrl({ file: poiCfg.layerFile });
-          }
-          try {
-            await addPOILayer(map, poiLayerArgs);
-          } catch (e) {
-            console.warn("[CENTRO] Erro POI layer", poiCfg.iconLayerId, e.message);
-            if (typeof window.centroToast === "function") {
-              window.centroToast("Erro ao carregar camada POI: " + poiCfg.iconLayerId, "warn");
-            }
-          }
-        }
-        console.log("[CENTRO] 5 POI layers adicionados (fluxo único)");
-      } else {
-        console.warn("[CENTRO] CENTRO.poiIcons nao disponivel — POI layers ignorados");
-      }
-
-      fetch("/centro/assets/pistas/rua-sao-bento-pistas.json")
-        .then(function (r) {
-          return r.json();
-        })
-        .then(async function (items) {
-          try {
-            var count = await addPistasLayer(map, items);
-            console.log("[CENTRO] " + count + " pistas adicionadas (symbol layer)");
+      var poiBoot = ensurePoiBootstrapApi();
+      if (poiBoot) {
+        await poiBoot.bootMapLayers(map, {
+          onPistasLoaded: function () {
             var pistasApi = window.CENTRO && window.CENTRO.pistas;
             if (pistasApi && typeof pistasApi.setupPistasRsbToggle === "function") {
               pistasApi.setupPistasRsbToggle(function () {
                 return map;
               });
             }
-          } catch (e) {
-            console.warn("[CENTRO] Erro ao carregar pistas:", e);
-          }
-          applyAllPoiThemeFilters();
-        })
-        .catch(function (e) {
-          console.warn("[CENTRO] Erro ao carregar pistas:", e);
-          applyAllPoiThemeFilters();
+            applyAllPoiThemeFilters();
+          },
+          onPistasError: function () {
+            applyAllPoiThemeFilters();
+          },
         });
+      } else {
+        console.warn("[CENTRO] poi-bootstrap.js ausente — POI/pistas ignorados");
+        applyAllPoiThemeFilters();
+      }
 
-      // Inspector é uma ferramenta de DEBUG. Em produção fica desabilitado;
+      // Inspector é uma ferramenta de DEBUG.
       // para ativar use ?debug=1 ou localStorage.centroDebug=1.
       // Escopa a query às layers conhecidas (POIs + catálogo ativo) para
       // não varrer o style todo a cada clique.

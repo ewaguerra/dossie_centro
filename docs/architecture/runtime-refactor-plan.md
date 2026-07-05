@@ -1,6 +1,6 @@
 # Plano de refactor — `centro-runtime.js`
 
-> **Estado:** proposta (não implementada).  
+> **Estado:** em curso — **R1 concluída** (2026-07-05).  
 > **Objectivo:** reduzir o monólito (~1 180 linhas) sem bundler, mantendo IIFE + ordem de scripts.  
 > **Referência:** [map-init-flow.md](./map-init-flow.md).
 
@@ -8,7 +8,7 @@
 
 | Métrica | Valor |
 |---------|-------|
-| Linhas `centro-runtime.js` | ~1 180 |
+| Linhas `centro-runtime.js` | ~960 (−220 após R1) |
 | Funções no ficheiro | ~55 |
 | Já extraído | `features/*`, `ui/*`, `map/*` |
 | Ainda no runtime | init mapa, POI boot, sidebar glue, flyTo, debug, bootstrap |
@@ -20,7 +20,7 @@ centro-runtime.js
 ├── Constantes + estado (map, activeLayers, mapReadyPromise)
 ├── Delegates map-safe (ensureSource/Layer/Image)
 ├── Lock helpers (clue + fase → resolveSidebarLockState)
-├── POI (addPOILayer, addPistasLayer)           ← ~200 linhas
+├── POI boot → `map/poi-bootstrap.js` (R1 ✓)
 ├── initMap + map.on("load")                    ← ~170 linhas
 ├── Triângulo sync (add/remove/sync)            ← ~80 linhas
 ├── Sidebar glue (loadSidebarData, wire…)       ← ~150 linhas
@@ -40,9 +40,9 @@ centro-runtime.js
 
 ## Fases propostas
 
-### Fase R1 — POI bootstrap (prioridade alta)
+### Fase R1 — POI bootstrap ✅ (concluída)
 
-**Novo:** `centro/map/poi-bootstrap.js`
+**Novo:** `centro/map/poi-bootstrap.js` — `window.CENTRO.poiBootstrap.create(deps)` + `bootMapLayers(map, hooks)`.
 
 | Move | De | Para |
 |------|-----|------|

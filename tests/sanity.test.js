@@ -340,28 +340,28 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── Features — POI layers (fluxo único) ─────────────────────────
-  it('centro-runtime.js deve ter uma unica implementacao idempotente de addPOILayer', () => {
+  it('poi-bootstrap.js deve ter implementacao unica de addPOILayer e addPistasLayer', () => {
+    const poiBoot = read('centro/map/poi-bootstrap.js');
     const runtime = read('centro/centro-runtime.js');
-    const defs = runtime.match(/function addPOILayer/g) || [];
-    assert.strictEqual(defs.length, 1, 'deve existir apenas uma definicao de addPOILayer');
+    const poiDefs = poiBoot.match(/function addPOILayer/g) || [];
+    const pistaDefs = poiBoot.match(/function addPistasLayer/g) || [];
+    assert.strictEqual(poiDefs.length, 1, 'deve existir apenas uma definicao de addPOILayer');
+    assert.strictEqual(pistaDefs.length, 1, 'deve existir apenas uma definicao de addPistasLayer');
+    assert.strictEqual((runtime.match(/function addPOILayer/g) || []).length, 0, 'runtime nao redefine addPOILayer');
+    assert.strictEqual((runtime.match(/function addPistasLayer/g) || []).length, 0, 'runtime nao redefine addPistasLayer');
+    assert.ok(poiBoot.includes('MEMORIA_PAULISTANA_LAYERS'), 'POI layer MEMORIA ausente');
+    assert.ok(poiBoot.includes('bootMapLayers'), 'bootMapLayers exportado');
+    assert.ok(runtime.includes('ensurePoiBootstrapApi'), 'runtime delega poi-bootstrap');
+    assert.ok(runtime.includes('.bootMapLayers'), 'runtime chama bootMapLayers');
+  });
+
+  it('centro-runtime.js delega POI ao map-safe e registry MAPA_SP_ICONS', () => {
+    const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('ensureSource'), 'ensureSource ausente');
     assert.ok(runtime.includes('ensureLayer'), 'ensureLayer ausente');
     assert.ok(runtime.includes('ensureImage'), 'ensureImage ausente');
     assert.ok(runtime.includes('bindLayerEventOnce'), 'bindLayerEventOnce ausente');
-    assert.ok(runtime.includes('styleSupportsTextLabels'), 'styleSupportsTextLabels ausente');
-    assert.ok(runtime.includes('MEMORIA_PAULISTANA_LAYERS'), 'POI layer MEMORIA ausente');
-    assert.ok(runtime.includes('ACERVO_TOMBADO_LAYERS'), 'POI layer ACERVO ausente');
-    assert.ok(runtime.includes('BEM_ARQUEOLOGICO_LAYERS'), 'POI layer ARQUEOLOGIA ausente');
-    assert.ok(runtime.includes('MONUMENTOS_LAYERS'), 'POI layer MONUMENTOS ausente');
-    assert.ok(runtime.includes('MAPA_SP_ICONS'), 'runtime deve usar registry MAPA_SP_ICONS');
-    assert.ok(runtime.includes('resolvePatrimonio'), 'resolvePatrimonio ausente');
-  });
-
-  it('centro-runtime.js: pistas usam symbol layer via addPistasLayer (sem Marker generico)', () => {
-    const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('function addPistasLayer'), 'addPistasLayer ausente');
-    assert.ok(runtime.includes('rsb-pistas-icon'), 'layer rsb-pistas-icon ausente');
-    assert.ok(!runtime.includes('new maplibregl.Marker({ color:'), 'nao deve usar Marker vermelho generico');
+    assert.ok(runtime.includes('getMapIconHaloPaint'), 'getMapIconHaloPaint ausente');
   });
 
   it('map-icons.js: registry patrimonio e pistas com resolve helpers', () => {
@@ -506,7 +506,7 @@ describe('projeto_centro — sanity checks', () => {
     const modules = [
       'function bootstrap',
       'function initMap',
-      'function addPOILayer',
+      'ensurePoiBootstrapApi',
       'function loadSidebarData',
       'setupCentroUiFromModules',
       'window.centroNavigate',
@@ -786,11 +786,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(popups.includes('poi-popup'), 'factory POI usa classe poi-popup');
     assert.ok(popups.includes('pista-popup__desc'), 'factory pista monta descricao');
 
+    const poiBoot = read('centro/map/poi-bootstrap.js');
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('setDOMContent') || read('centro/map/symbol-popup-layer.js').includes('setDOMContent'), 'popups devem usar setDOMContent');
-    assert.ok(runtime.includes('addSymbolPopupLayer'), 'runtime delega via addSymbolPopupLayer');
-    assert.ok(runtime.includes('createPoiPopupNode'), 'runtime referencia export createPoiPopupNode');
-    assert.ok(runtime.includes('createPistaPopupNode'), 'runtime referencia export createPistaPopupNode');
+    assert.ok(poiBoot.includes('addSymbolPopupLayer'), 'poi-bootstrap delega via addSymbolPopupLayer');
+    assert.ok(poiBoot.includes('createPoiPopupNode'), 'poi-bootstrap referencia export createPoiPopupNode');
+    assert.ok(poiBoot.includes('createPistaPopupNode'), 'poi-bootstrap referencia export createPistaPopupNode');
     assert.ok(!runtime.includes('function createPoiPopupNode'), 'runtime nao duplica factory POI');
     assert.ok(!runtime.includes('function createPistaPopupNode'), 'runtime nao duplica factory pista');
     assert.ok(!runtime.includes('pista-popup__desc'), 'markup pista-popup so no modulo');
@@ -1293,10 +1294,13 @@ describe('projeto_centro — sanity checks', () => {
   it('centro: symbol-popup-layer.js carregado antes do runtime', () => {
     const html = read('centro/index.html');
     const runtimeIdx = html.indexOf('centro-runtime.js');
+    const poiBootIdx = html.indexOf('poi-bootstrap.js');
     const symbolIdx = html.indexOf('symbol-popup-layer.js');
     const mapSafeIdx = html.indexOf('map/map-safe.js');
     assert.ok(symbolIdx > -1, 'symbol-popup-layer.js ausente no HTML');
-    assert.ok(mapSafeIdx < symbolIdx && symbolIdx < runtimeIdx, 'symbol-popup-layer deve preceder centro-runtime.js');
+    assert.ok(poiBootIdx > -1, 'poi-bootstrap.js ausente no HTML');
+    assert.ok(mapSafeIdx < symbolIdx && symbolIdx < poiBootIdx && poiBootIdx < runtimeIdx,
+      'poi-bootstrap deve preceder centro-runtime.js');
 
     const symbol = read('centro/map/symbol-popup-layer.js');
     assert.doesNotThrow(() => new Function(symbol));
@@ -1310,10 +1314,15 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!symbol.includes('pistaItemFromProperties'), 'factory nao conhece pistaItemFromProperties');
     assert.ok(symbol.includes('getMapFn("ensureSource")'), 'factory delega ensureSource');
 
+    const poiBoot = read('centro/map/poi-bootstrap.js');
+    assert.doesNotThrow(() => new Function(poiBoot));
+    assert.strictEqual((poiBoot.match(/function addPOILayer/g) || []).length, 1, 'uma addPOILayer');
+    assert.strictEqual((poiBoot.match(/function addPistasLayer/g) || []).length, 1, 'uma addPistasLayer');
+    assert.ok(poiBoot.includes('getMapHelper("addSymbolPopupLayer")'), 'poi-bootstrap delega factory');
+
     const runtime = read('centro/centro-runtime.js');
-    assert.strictEqual((runtime.match(/function addPOILayer/g) || []).length, 1, 'uma addPOILayer');
-    assert.strictEqual((runtime.match(/function addPistasLayer/g) || []).length, 1, 'uma addPistasLayer');
-    assert.ok(runtime.includes('getCentroMapHelper("addSymbolPopupLayer")'), 'wrappers delegam factory');
+    assert.strictEqual((runtime.match(/function addPOILayer/g) || []).length, 0, 'runtime sem addPOILayer');
+    assert.strictEqual((runtime.match(/function addPistasLayer/g) || []).length, 0, 'runtime sem addPistasLayer');
     assert.ok(!runtime.includes('bindLayerEventOnce(mapInstance, "click", iconLayerId'), 'click handler so na factory');
 
     const criticalIds = [
@@ -1325,9 +1334,9 @@ describe('projeto_centro — sanity checks', () => {
       'rsb-pistas-source', 'rsb-pistas-icon', 'rsb-pista-icon',
     ];
     criticalIds.forEach(function (id) {
-      assert.ok(runtime.includes(id), id + ' ausente no runtime');
+      assert.ok(poiBoot.includes(id), id + ' ausente no poi-bootstrap');
     });
-    assert.ok(runtime.includes('labelLayerId: poiCfg.id + "-label"'), 'pattern label layer POI');
+    assert.ok(poiBoot.includes('labelLayerId: poiCfg.id + "-label"'), 'pattern label layer POI');
   });
 
   it('symbol-popup-layer.js: factory idempotente com mock map', async () => {
@@ -1541,12 +1550,12 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── Contraste WCAG labels POI ───────────────────────────────────
-  it('centro-runtime.js: labels POI usam texto escuro com halo branco', () => {
-    const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('"text-color": "#1a1a1a"'), 'texto escuro ausente');
-    assert.ok(runtime.includes('"text-halo-color": "#ffffff"'), 'halo branco ausente');
-    assert.ok(/"text-halo-width":\s*1\.5/.test(runtime), 'halo width 1.5');
-    assert.ok(!/"text-color":\s*"#fff"/.test(runtime), 'nao deve manter branco antigo');
+  it('poi-bootstrap.js: labels POI usam texto escuro com halo branco', () => {
+    const poiBoot = read('centro/map/poi-bootstrap.js');
+    assert.ok(poiBoot.includes('"text-color": "#1a1a1a"'), 'texto escuro ausente');
+    assert.ok(poiBoot.includes('"text-halo-color": "#ffffff"'), 'halo branco ausente');
+    assert.ok(/"text-halo-width":\s*1\.5/.test(poiBoot), 'halo width 1.5');
+    assert.ok(!/"text-color":\s*"#fff"/.test(poiBoot), 'nao deve manter branco antigo');
   });
 
   // ── Maquete 3D (fill-extrusion OpenFreeMap) ─────────────────────
@@ -1629,6 +1638,7 @@ describe('projeto_centro — sanity checks', () => {
   // ── Migra\u00e7\u00e3o para OpenFreeMap ─────────────────────────────────
   it('runtime aponta para OpenFreeMap como basemap (vector tiles gratuitos)', () => {
     const runtime = read('centro/centro-runtime.js');
+    const poiBoot = read('centro/map/poi-bootstrap.js');
     assert.ok(runtime.includes('BASEMAP_STYLE'), 'constante BASEMAP_STYLE ausente');
     assert.ok(
       runtime.includes('tiles.openfreemap.org/styles/'),
@@ -1636,11 +1646,11 @@ describe('projeto_centro — sanity checks', () => {
     );
     assert.ok(!runtime.includes('"/osm-style.json"'), 'runtime nao deve usar osm-style.json local');
     assert.ok(
-      runtime.includes('POI_TEXT_FONT'),
+      poiBoot.includes('POI_TEXT_FONT'),
       'POI_TEXT_FONT centralizado para casar com fontstack do basemap'
     );
     assert.ok(
-      runtime.includes('Noto Sans Regular'),
+      poiBoot.includes('Noto Sans Regular'),
       'POI labels devem usar Noto Sans (default OpenFreeMap)'
     );
   });
@@ -1669,12 +1679,12 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('getCatalogInsertBeforeId()'), 'addLayerToMap deve usar beforeId');
   });
 
-  it('centro-runtime.js fallback de icone POI e por categoria, nao unico', () => {
-    const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('POI_FALLBACK_ICON_BY_ID'), 'mapa de fallback ausente');
-    assert.ok(runtime.includes('resolvePatrimonioIconPath'), 'helper resolvePatrimonioIconPath ausente');
-    assert.ok(runtime.includes('icon-arqueologia.svg'), 'fallback arqueologia ausente');
-    assert.ok(runtime.includes('icon-monumentos.svg'), 'fallback monumentos ausente');
+  it('poi-bootstrap.js fallback de icone POI e por categoria, nao unico', () => {
+    const poiBoot = read('centro/map/poi-bootstrap.js');
+    assert.ok(poiBoot.includes('POI_FALLBACK_ICON_BY_ID'), 'mapa de fallback ausente');
+    assert.ok(poiBoot.includes('resolvePatrimonioIconPath'), 'helper resolvePatrimonioIconPath ausente');
+    assert.ok(poiBoot.includes('icon-arqueologia.svg'), 'fallback arqueologia ausente');
+    assert.ok(poiBoot.includes('icon-monumentos.svg'), 'fallback monumentos ausente');
   });
 
   it('healthcheck CLI ESM substitui centro-healthcheck.js obsoleto', () => {
@@ -1684,15 +1694,17 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(pkg.scripts && pkg.scripts['healthcheck:centro'], 'npm run healthcheck:centro ausente');
   });
 
-  it('POI turistico wired no runtime e map-icons', () => {
+  it('POI turistico wired no poi-bootstrap e map-icons', () => {
+    const poiBoot = read('centro/map/poi-bootstrap.js');
     const runtime = read('centro/centro-runtime.js');
     const icons = read('vendor/app/config/map-icons.js');
     const poiIcons = read('centro/features/poi-icons.js');
     const layerFile = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
-    assert.ok(runtime.includes('poi-turistico'), 'runtime deve carregar POI turistico');
-    assert.ok(runtime.includes('POI_TURISTICO_LAYER_FILE'), 'runtime referencia POI_TURISTICO_LAYER_FILE');
-    assert.ok(runtime.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'addPOILayer via buildLayerDataUrl');
-    assert.ok(!runtime.includes('"/centro/data/context/" + poiCfg.file'), 'addPOILayer sem hardcode /centro/data/context/');
+    assert.ok(poiBoot.includes('poi-turistico'), 'poi-bootstrap deve carregar POI turistico');
+    assert.ok(poiBoot.includes('POI_TURISTICO_LAYER_FILE'), 'poi-bootstrap referencia POI_TURISTICO_LAYER_FILE');
+    assert.ok(poiBoot.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'addPOILayer via buildLayerDataUrl');
+    assert.ok(!poiBoot.includes('"/centro/data/context/" + poiCfg.file'), 'addPOILayer sem hardcode /centro/data/context/');
+    assert.ok(runtime.includes('.bootMapLayers'), 'runtime delega boot POI');
     assert.ok(icons.includes('"poi-turistico"'), 'map-icons patrimonio turistico ausente');
     assert.ok(icons.includes('icon-turismo'), 'icone turismo ausente no registry');
     assert.ok(poiIcons.includes('poi-turistico-source'), 'poi-icons source turistico ausente');
@@ -2138,7 +2150,7 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('DATA-ORG-B4B-2A: POI turístico usa caminho canônico via buildLayerDataUrl', () => {
-    const runtime = read('centro/centro-runtime.js');
+    const poiBoot = read('centro/map/poi-bootstrap.js');
     const triangulo = read('centro/features/triangulo-historico.js');
     const poiIcons = read('centro/features/poi-icons.js');
     const layerFile = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
@@ -2150,9 +2162,9 @@ describe('projeto_centro — sanity checks', () => {
       layerFile,
       'POI_TURISTICO_LAYER_FILE deve apontar para special/pois'
     );
-    assert.ok(runtime.includes('layerFile: poi.POI_TURISTICO_LAYER_FILE'), 'runtime usa POI_TURISTICO_LAYER_FILE');
-    assert.ok(runtime.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'demais POIs via buildLayerDataUrl');
-    assert.ok(!runtime.includes('"/centro/data/context/" + poiCfg'), 'sem hardcode /centro/data/context/ no runtime');
+    assert.ok(poiBoot.includes('layerFile: poi.POI_TURISTICO_LAYER_FILE'), 'poi-bootstrap usa POI_TURISTICO_LAYER_FILE');
+    assert.ok(poiBoot.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'demais POIs via buildLayerDataUrl');
+    assert.ok(!poiBoot.includes('"/centro/data/context/" + poiCfg'), 'sem hardcode /centro/data/context/ no poi-bootstrap');
     assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
     assert.ok(triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo referencia POI_TURISTICO_LAYER_FILE');
     assert.ok(!triangulo.includes('fetchCentroJson'), 'triangulo não usa fetchCentroJson');
@@ -2163,13 +2175,13 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('DATA-PERF-POI-DEDUP: POI turístico compartilha fetchLayerGeojson no boot', async () => {
-    const runtime = read('centro/centro-runtime.js');
+    const poiBoot = read('centro/map/poi-bootstrap.js');
     const triangulo = read('centro/features/triangulo-historico.js');
     const layerFile = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
 
-    assert.ok(runtime.includes('getCentroMapHelper("fetchLayerGeojson")'), 'addPOILayer delega fetchLayerGeojson');
-    assert.ok(runtime.includes('poiCfg.id === "poi-turistico"'), 'poi-turistico usa fluxo dedicado');
-    assert.ok(runtime.includes('poiLayerArgs.layerFile = poiCfg.layerFile'), 'poi-turistico passa layerFile');
+    assert.ok(poiBoot.includes('getMapHelper("fetchLayerGeojson")'), 'addPOILayer delega fetchLayerGeojson');
+    assert.ok(poiBoot.includes('poiCfg.id === "poi-turistico"'), 'poi-turistico usa fluxo dedicado');
+    assert.ok(poiBoot.includes('poiLayerArgs.layerFile = poiCfg.layerFile'), 'poi-turistico passa layerFile');
     assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
     assert.ok(triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo usa POI_TURISTICO_LAYER_FILE');
     assert.ok(!triangulo.includes('fetchCentroJson'), 'triangulo sem fetchCentroJson');
