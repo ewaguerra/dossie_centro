@@ -264,11 +264,13 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('centro-runtime.js: toggle sidebar usa sidebar--collapsed (nao .collapsed)', () => {
+    const chrome = read('centro/ui/centro-chrome.js');
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('setSidebarCollapsed'), 'helper setSidebarCollapsed ausente');
-    assert.ok(runtime.includes('sidebar--collapsed'), 'classe sidebar--collapsed ausente');
-    assert.ok(!runtime.includes('classList.toggle("collapsed")'), 'toggle legado .collapsed ainda presente');
-    assert.ok(!runtime.includes('classList.contains("collapsed")'), 'check legado .collapsed ainda presente');
+    assert.ok(chrome.includes('setSidebarCollapsed'), 'helper setSidebarCollapsed ausente');
+    assert.ok(chrome.includes('sidebar--collapsed'), 'classe sidebar--collapsed ausente');
+    assert.ok(runtime.includes('ensureCentroChromeApi'), 'runtime instancia centroChrome');
+    assert.ok(!chrome.includes('classList.toggle("collapsed")'), 'toggle legado .collapsed ainda presente');
+    assert.ok(!chrome.includes('classList.contains("collapsed")'), 'check legado .collapsed ainda presente');
   });
 
   it('responsive.css: sidebar mobile nao limita max-height a 70vh', () => {
@@ -331,12 +333,14 @@ describe('projeto_centro — sanity checks', () => {
 
     // Runtime tem tabs
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('setupSidebarTabs'), 'setupSidebarTabs ausente');
-    assert.ok(runtime.includes('activateSidebarTab'), 'activateSidebarTab ausente');
-    assert.ok(runtime.includes('sidebar-tab-camadas'), 'tab camadas default ausente');
-    assert.ok(runtime.includes('subterranean-guide-open-fases'), 'guia missão abre só por botão na tab 13 Almas');
-    assert.ok(runtime.includes('openSubterraneanGuide'), 'API openSubterraneanGuide ausente');
-    assert.ok(!runtime.includes('fasesTab.addEventListener("click", openGuide)'), 'tab 13 Almas não deve auto-abrir guia');
+    const chrome = read('centro/ui/centro-chrome.js');
+    assert.ok(chrome.includes('setupSidebarTabs'), 'setupSidebarTabs no centro-chrome');
+    assert.ok(chrome.includes('activateSidebarTab'), 'activateSidebarTab no centro-chrome');
+    assert.ok(chrome.includes('sidebar-tab-camadas'), 'tab camadas default ausente');
+    assert.ok(chrome.includes('subterranean-guide-open-fases'), 'guia missão abre só por botão na tab 13 Almas');
+    assert.ok(chrome.includes('openSubterraneanGuide'), 'API openSubterraneanGuide ausente');
+    assert.ok(runtime.includes('ensureCentroChromeApi'), 'runtime delega chrome bootstrap');
+    assert.ok(!chrome.includes('fasesTab.addEventListener("click", openGuide)'), 'tab 13 Almas não deve auto-abrir guia');
   });
 
   // ── Features — POI layers (fluxo único) ─────────────────────────
@@ -496,8 +500,10 @@ describe('projeto_centro — sanity checks', () => {
 
   it('centro-runtime.js deve registrar event listeners para UI do centro', () => {
     const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('function setupSidebarToggle'), 'setupSidebarToggle ausente');
-    assert.ok(runtime.includes('function setupNarrativeNav'), 'setupNarrativeNav ausente');
+    const chrome = read('centro/ui/centro-chrome.js');
+    assert.ok(chrome.includes('setupSidebarToggle'), 'setupSidebarToggle no centro-chrome');
+    assert.ok(chrome.includes('setupNarrativeNav'), 'setupNarrativeNav no centro-chrome');
+    assert.ok(runtime.includes('ensureCentroChromeApi'), 'runtime delega UI chrome');
     assert.ok(!/onclick\s*=/.test(runtime), 'runtime nao deve gerar onclick inline');
   });
 
@@ -508,6 +514,7 @@ describe('projeto_centro — sanity checks', () => {
       'function initMap',
       'ensurePoiBootstrapApi',
       'ensureSidebarOrchestratorApi',
+      'ensureCentroChromeApi',
       'function loadSidebarData',
       'setupCentroUiFromModules',
       'window.centroNavigate',
@@ -2319,8 +2326,9 @@ describe('projeto_centro — sanity checks', () => {
 
   it('subterranean-cutaway expoe flag ready para bootstrap tardio', () => {
     const sub = read('centro/features/subterranean-cutaway.js');
+    const chrome = read('centro/ui/centro-chrome.js');
     assert.ok(sub.includes('ready: true'), 'flag ready no export');
-    assert.ok(read('centro/centro-runtime.js').includes('cutaway.ready'), 'runtime consulta ready');
+    assert.ok(chrome.includes('cutaway.ready'), 'centro-chrome consulta ready');
   });
 
   it('index.html sem markup orfao feature-inspector (debug usa #inspector)', () => {
@@ -2338,9 +2346,9 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   it('setupSidebarTabs suporta navegacao ARIA por setas', () => {
-    const runtime = read('centro/centro-runtime.js');
-    assert.ok(runtime.includes('ArrowRight'), 'setas direita na tablist');
-    assert.ok(runtime.includes('ArrowLeft'), 'setas esquerda na tablist');
+    const chrome = read('centro/ui/centro-chrome.js');
+    assert.ok(chrome.includes('ArrowRight'), 'setas direita na tablist');
+    assert.ok(chrome.includes('ArrowLeft'), 'setas esquerda na tablist');
   });
 
   it('ui-texts documenta atalho S da sidebar', () => {

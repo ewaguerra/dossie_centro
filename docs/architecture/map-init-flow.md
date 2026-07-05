@@ -57,7 +57,7 @@ Scripts com `defer` executam **na ordem do HTML** antes de `DOMContentLoaded`.
 | 3 | Centro utils | `centro/utils.js` → `window.CENTRO.utils` |
 | 4 | Features | `triangulo-historico`, `pistas`, `poi-icons`, `buildings-3d`, `poi-theme-filter`, `layer-unlocks`, `catalog-load`, `protocolo-phase`, **`arg-resync`**, `sidebar-layer-state` |
 | 5 | Subsolo | `subterranean-cutaway.js` (**`type="module"`**) |
-| 6 | UI | `toast`, `lazy-assets`, `map-popups`, `sidebar-panel`, `sidebar-phases-panel`, `sidebar-events`, **`sidebar-orchestrator`** |
+| 6 | UI | `toast`, `lazy-assets`, `map-popups`, `sidebar-panel`, `sidebar-phases-panel`, `sidebar-events`, `sidebar-orchestrator`, **`centro-chrome`** |
 | 7 | Map infra | `map-safe`, `layer-data-url`, `catalog-layer-controller`, `symbol-popup-layer`, **`poi-bootstrap`**, **`triangulo-overlay`** |
 | 8 | Runtime | **`centro-runtime.js`** (orquestrador) |
 
@@ -66,15 +66,10 @@ Scripts com `defer` executam **na ordem do HTML** antes de `DOMContentLoaded`.
 ## `bootstrap()` — ordem interna
 
 ```text
-setupHamburgerMenu
-setupSidebarTabs          → tab default: Território (#sidebar-tab-camadas)
-setupSidebarToggle
-setupBuildings3DToggle / setupSubterraneanToggle / setupSubterraneanFlyButtons
+ensureCentroChromeApi().install()  → hamburger, tabs, toggle, fly subsolo, narrative nav, tecla S, guia
+setupBuildings3DToggle / setupSubterraneanToggle
 setupPoiThemeFilter
-setupNarrativeNav
 setupCentroUiFromModules  → sidebar-events delegação
-setupKeyboardShortcuts    → tecla S
-setupSubterraneanGuide    → botões #subterranean-guide-open(+fases)
 setupArgStateListener     → arg-resync.install() (centro:arg-state-changed + storage)
 loadSidebarData           → sidebar-orchestrator.load() (catalog-load + render + wire)
 initMap()

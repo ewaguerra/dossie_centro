@@ -1,6 +1,6 @@
 # Plano de refactor — `centro-runtime.js`
 
-> **Estado:** em curso — **R1 ✓**, **R2 ✓**, **R3 ✓**, **R4 ✓** (2026-07-05).  
+> **Estado:** em curso — **R1–R5 ✓** (2026-07-05). R6 opcional pendente.  
 > **Objectivo:** reduzir o monólito (~1 180 linhas) sem bundler, mantendo IIFE + ordem de scripts.  
 > **Referência:** [map-init-flow.md](./map-init-flow.md).
 
@@ -25,7 +25,7 @@ centro-runtime.js
 ├── Triângulo sync → `map/triangulo-overlay.js` (R2 ✓)
 ├── Sidebar glue → `ui/sidebar-orchestrator.js` (R3 ✓)
 ├── Feature API bridges (ensure*Api, toggles)   ← ~120 linhas
-├── UI bootstrap (tabs, hamburger, guide…)    ← ~200 linhas
+├── UI bootstrap → `ui/centro-chrome.js` (R5 ✓)
 ├── ARG resync → `features/arg-resync.js` (R4 ✓)
 └── flyTo, inspector, CENTRO_POIS               ← ~100 linhas
 ```
@@ -105,9 +105,9 @@ centro-runtime.js
 
 ---
 
-### Fase R5 — UI chrome bootstrap (prioridade baixa)
+### Fase R5 — UI chrome bootstrap ✅ (concluída)
 
-**Novo:** `centro/ui/centro-chrome.js`
+**Novo:** `centro/ui/centro-chrome.js` — `window.CENTRO.centroChrome.create(deps)` + `install()` / `setSidebarCollapsed`.
 
 | Move | De | Para |
 |------|-----|------|
