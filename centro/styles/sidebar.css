@@ -178,7 +178,7 @@
   letter-spacing: 0.04em;
 }
 
-/* ─── 13 Fases tab ─────────────────────────────────────── */
+/* ─── 13 Almas tab ─────────────────────────────────────── */
 
 .phases-list {
   display: flex;
@@ -411,6 +411,11 @@
 .subterranean-guide-open-btn:hover {
   background: rgba(217, 119, 6, 0.22);
   color: var(--color-brand);
+}
+
+.subterranean-guide-open-btn--fases {
+  width: calc(100% - 24px);
+  margin: 0 12px 12px;
 }
 
 /* ─── Território sections ──────────────────────────────── */

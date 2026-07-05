@@ -75,18 +75,18 @@
     </div>
     <div id="sidebar-status" class="sidebar-status">Carregando…</div>
     <div class="sidebar-tabs" role="tablist" aria-label="Painéis do dossiê">
+      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-fases"
+              aria-controls="sidebar-panel-fases" aria-selected="false" type="button"
+              aria-label="13 Almas — progresso ARG">13 Almas</button>
+      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-opcoes"
+              aria-controls="sidebar-panel-opcoes" aria-selected="false" type="button"
+              aria-label="Visualização — modos 3D e subterrâneo">Visualização</button>
       <button class="sidebar-tab sidebar-tab--compact sidebar-tab--active" role="tab" id="sidebar-tab-camadas"
               aria-controls="sidebar-panel-camadas" aria-selected="true" type="button"
               aria-label="Território — camadas territoriais">Território</button>
       <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-pois"
               aria-controls="sidebar-panel-pois" aria-selected="false" type="button"
               aria-label="Evidências — ícones e pistas no mapa">Evidências</button>
-      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-fases"
-              aria-controls="sidebar-panel-fases" aria-selected="false" type="button"
-              aria-label="13 Fases — progresso ARG e almas">13 Fases</button>
-      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-opcoes"
-              aria-controls="sidebar-panel-opcoes" aria-selected="false" type="button"
-              aria-label="Visualização — modos 3D e subterrâneo">Visualização</button>
     </div>
     <div id="sidebar-panel-camadas" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-camadas">
       <p class="sidebar-tab-intro">Operador: interpole camadas de superfície — bairros, rios soterrados, zoneamento, risco. Marque o que ainda resiste no mapa-base. Nódulos clicáveis → aba Evidências.</p>
@@ -116,7 +116,8 @@
     </div>
     <div id="sidebar-panel-fases" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-fases" hidden>
       <p class="sidebar-tab-intro">Registo das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.</p>
-      <div id="phases-panel" class="phases-list" role="list" aria-label="13 fases do Protocolo 13 Almas"></div>
+      <button id="subterranean-guide-open-fases" class="subterranean-guide-open-btn subterranean-guide-open-btn--fases" type="button">Abrir guia da missão ↗</button>
+      <div id="phases-panel" class="phases-list" role="list" aria-label="13 almas do Protocolo 13 Almas"></div>
     </div>
     <div id="sidebar-panel-opcoes" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-opcoes" hidden>
       <p class="sidebar-tab-intro">Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver clearance para ver o que a cidade enterrou.</p>
@@ -142,7 +143,7 @@
           </label>
           <div id="subterranean-status" class="subterranean-status" aria-live="polite"></div>
           <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
-          <button id="subterranean-guide-open" class="subterranean-guide-open-btn" type="button">Ver guia da missão</button>
+          <button id="subterranean-guide-open" class="subterranean-guide-open-btn" type="button">Abrir guia da missão ↗</button>
           <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
         </div>
       </div>
@@ -152,7 +153,7 @@
   <div id="map"></div>
 
   <!-- Card de missão: guia passo a passo para a Visão Subterrânea (Fase 7) -->
-  <div id="subterranean-guide" class="subterranean-guide" role="complementary" aria-label="Guia de missão — Fase 7">
+  <div id="subterranean-guide" class="subterranean-guide" role="complementary" aria-label="Guia de missão — Fase 7" hidden>
     <div class="subterranean-guide__header">
       <span class="subterranean-guide__kicker">MISSÃO / FASE 7</span>
       <span class="subterranean-guide__title">RASGUE O ASFALTO</span>
@@ -163,7 +164,7 @@
         <span class="subterranean-guide__step-num">01</span>
         <div class="subterranean-guide__step-body">
           <strong>Activar modo mestre</strong>
-          <span>Acesse <code>?master=1</code> na URL — desbloqueia Fase 7 e todas as pistas.</span>
+          <span>Acesse <code>?master=1</code> na URL — desbloqueia Fase 7, as 3 pistas do subsolo e a visão subterrânea.</span>
           <a id="subterranean-master-link" class="subterranean-guide__btn" href="?master=1">ACTIVAR AGORA →</a>
         </div>
       </li>

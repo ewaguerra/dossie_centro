@@ -562,6 +562,30 @@
     }
   }
 
+  function removeTrianguloHistoricoOverlay() {
+    if (!map) return;
+    var th = window.CENTRO && window.CENTRO.trianguloHistorico;
+    if (!th || !th.CONFIG) return;
+    var cfg = th.CONFIG;
+    try {
+      if (map.getLayer(cfg.outlineLayerId)) map.removeLayer(cfg.outlineLayerId);
+      if (map.getLayer(cfg.fillLayerId)) map.removeLayer(cfg.fillLayerId);
+      if (map.getSource(cfg.sourceId)) map.removeSource(cfg.sourceId);
+    } catch (e) {
+      console.warn("[CENTRO] Triângulo histórico — erro ao remover:", e);
+    }
+  }
+
+  async function syncTrianguloHistoricoOverlay() {
+    if (!map) return;
+    var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+    if (ph && typeof ph.isFeaturePhaseUnlocked === "function" && !ph.isFeaturePhaseUnlocked("triangulo-historico")) {
+      removeTrianguloHistoricoOverlay();
+      return;
+    }
+    await addTrianguloHistoricoOverlay();
+  }
+
   function ensureMapGroundReadable() {
     if (!map || !map.getLayer) return;
     try {
@@ -653,7 +677,7 @@
       ensureMapGroundReadable();
       console.log("[CENTRO] Mapa carregado com layout original");
 
-      await addTrianguloHistoricoOverlay();
+      await syncTrianguloHistoricoOverlay();
 
       var poi = window.CENTRO && window.CENTRO.poiIcons;
       if (poi) {
@@ -1045,6 +1069,7 @@
     } else {
       sb.classList.remove("sidebar--collapsed");
     }
+    document.body.classList.toggle("centro-sidebar-collapsed", collapsed);
     if (openBtn) openBtn.hidden = !collapsed;
     if (btn) {
       btn.classList.toggle("open", collapsed);
@@ -1183,10 +1208,11 @@
   }
 
   function setupSubterraneanGuide() {
-    var GUIDE_KEY = "centroSubterraneanGuideDismissed";
-    var guide    = document.getElementById("subterranean-guide");
+    var guide = document.getElementById("subterranean-guide");
     var closeBtn = document.getElementById("subterranean-guide-close");
-    var openBtn  = document.getElementById("subterranean-guide-open");
+    var openBtns = document.querySelectorAll(
+      "#subterranean-guide-open, #subterranean-guide-open-fases"
+    );
     var masterLink = document.getElementById("subterranean-master-link");
     if (masterLink) {
       var params = new URLSearchParams(window.location.search);
@@ -1194,41 +1220,51 @@
       masterLink.href = "?" + params.toString();
     }
     if (!guide || !closeBtn) return;
-    if (openBtn) {
-      openBtn.addEventListener("click", function () {
-        guide.hidden = false;
-      });
-    }
-    try {
-      if (window.localStorage && window.localStorage.getItem(GUIDE_KEY) === "1") {
-        guide.hidden = true;
-        return;
-      }
-    } catch (_e) { /* ignora */ }
-    guide.hidden = false;
-    closeBtn.addEventListener("click", function () {
+
+    function closeGuide() {
       guide.hidden = true;
-      try { if (window.localStorage) window.localStorage.setItem(GUIDE_KEY, "1"); } catch (_e) { /* ignora */ }
+    }
+
+    function openGuide() {
+      guide.hidden = false;
+    }
+
+    closeBtn.addEventListener("click", closeGuide);
+    openBtns.forEach(function (btn) {
+      btn.addEventListener("click", openGuide);
     });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !guide.hidden) closeGuide();
+    });
+
+    guide.hidden = true;
+
+    window.CENTRO = window.CENTRO || {};
+    window.CENTRO.ui = window.CENTRO.ui || {};
+    window.CENTRO.ui.openSubterraneanGuide = openGuide;
+  }
+
+  function resyncArgStateConsumers() {
+    loadSidebarData();
+    var poiApi = ensurePoiFilterApi();
+    if (poiApi && typeof poiApi.syncPhaseGate === "function") poiApi.syncPhaseGate();
+    else if (poiApi && typeof poiApi.applyAll === "function") poiApi.applyAll();
+    var b3d = ensureBuildings3dApi();
+    if (b3d && typeof b3d.syncPhaseGate === "function") b3d.syncPhaseGate();
+    var pistasApi = window.CENTRO && window.CENTRO.pistas;
+    if (pistasApi && typeof pistasApi.syncPhaseGate === "function") pistasApi.syncPhaseGate();
+    var subApi = ensureSubterraneanApi();
+    if (subApi && typeof subApi.syncPhaseGate === "function") subApi.syncPhaseGate();
+    syncTrianguloHistoricoOverlay();
   }
 
   function setupArgStateListener() {
-    document.addEventListener("centro:arg-state-changed", function () {
-      loadSidebarData();
-      var poiApi = ensurePoiFilterApi();
-      if (poiApi && typeof poiApi.syncPhaseGate === "function") poiApi.syncPhaseGate();
-      else if (poiApi && typeof poiApi.applyAll === "function") poiApi.applyAll();
-      var b3d = ensureBuildings3dApi();
-      if (b3d && typeof b3d.syncPhaseGate === "function") b3d.syncPhaseGate();
-      var pistasApi = window.CENTRO && window.CENTRO.pistas;
-      if (pistasApi && typeof pistasApi.syncPhaseGate === "function") pistasApi.syncPhaseGate();
-      var subApi = ensureSubterraneanApi();
-      if (subApi && typeof subApi.syncPhaseGate === "function") subApi.syncPhaseGate();
-    });
+    document.addEventListener("centro:arg-state-changed", resyncArgStateConsumers);
     window.addEventListener("storage", function (e) {
       if (!e.key) return;
       if (e.key === "protocolo13_caderno_clues" || e.key === "protocolo13_phase") {
-        loadSidebarData();
+        resyncArgStateConsumers();
       }
     });
   }

@@ -286,7 +286,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('id="sidebar-tab-pois"'), 'tab pois ausente');
     assert.ok(html.includes('id="sidebar-tab-fases"'), 'tab fases ausente');
     assert.ok(html.includes('id="phases-panel"'), 'phases-panel ausente');
-    assert.ok(html.includes('13 Fases'), 'tab 13 Fases presente');
+    assert.ok(html.includes('13 Almas'), 'tab 13 Almas presente');
     assert.ok(html.includes('aria-selected="true"'), 'aba ativa ausente');
     assert.ok(html.includes('id="sidebar-panel-camadas"'), 'panel camadas ausente');
     assert.ok(html.includes('id="sidebar-panel-opcoes"'), 'panel opcoes ausente');
@@ -326,6 +326,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('sidebar-viz-card'), 'cartões Visualização presentes');
     assert.ok(html.includes('centro-pistas-rsb-toggle'), 'toggle pistas RSB presente');
     assert.ok(html.includes('subterranean-guide-open'), 'botão guia Fase 7 presente');
+    assert.ok(html.includes('subterranean-guide-open-fases'), 'botão guia na tab 13 Almas presente');
     assert.ok(!html.includes('class="sidebar-tools"'), 'acordeao A2 nao deve voltar');
 
     // Runtime tem tabs
@@ -333,6 +334,9 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('setupSidebarTabs'), 'setupSidebarTabs ausente');
     assert.ok(runtime.includes('activateSidebarTab'), 'activateSidebarTab ausente');
     assert.ok(runtime.includes('sidebar-tab-camadas'), 'tab camadas default ausente');
+    assert.ok(runtime.includes('subterranean-guide-open-fases'), 'guia missão abre só por botão na tab 13 Almas');
+    assert.ok(runtime.includes('openSubterraneanGuide'), 'API openSubterraneanGuide ausente');
+    assert.ok(!runtime.includes('fasesTab.addEventListener("click", openGuide)'), 'tab 13 Almas não deve auto-abrir guia');
   });
 
   // ── Features — POI layers (fluxo único) ─────────────────────────
@@ -1810,6 +1814,9 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(pistas.includes('isFeaturePhaseUnlocked("pistas-rsb")'), 'pistas RSB gate de fase');
     const sub = read('centro/features/subterranean-cutaway.js');
     assert.ok(sub.includes('getMinPhaseForFeature("subterranean")'), 'subsolo lê featureMinPhase');
+    assert.ok(sub.includes('REQUIRED_CLUES'), 'subsolo exige pistas compostas');
+    assert.ok(sub.includes('syncPhaseGateCard'), 'subsolo desabilita toggle quando bloqueado');
+    assert.ok(!read('centro/centro-runtime.js').includes('centroSubterraneanGuideDismissed'), 'guia não persiste dismiss órfão');
   });
 
   it('WCAG: contraste aviso digital e nav terminal', () => {
@@ -2265,8 +2272,11 @@ describe('projeto_centro — sanity checks', () => {
   it('runtime escuta centro:arg-state-changed e storage cross-tab', () => {
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('setupArgStateListener'), 'setupArgStateListener presente');
-    assert.ok(runtime.includes('centro:arg-state-changed'), 'listener arg-state-changed');
+    assert.ok(runtime.includes('resyncArgStateConsumers'), 'resyncArgStateConsumers centraliza gates');
+    assert.ok(runtime.includes('syncTrianguloHistoricoOverlay'), 'triângulo resync no arg-state');
+    assert.ok(runtime.includes('removeTrianguloHistoricoOverlay'), 'triângulo remove quando fase < 11');
     assert.ok(runtime.includes('protocolo13_caderno_clues'), 'storage listener caderno');
+    assert.ok(runtime.includes('protocolo13_phase'), 'storage listener fase');
   });
 
   it('sidebar-events usa delegacao para re-render idempotente', () => {

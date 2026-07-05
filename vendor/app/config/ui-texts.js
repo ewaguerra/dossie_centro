@@ -35,7 +35,7 @@
       tabs: {
         territorio: "Território",
         evidencias: "Evidências",
-        fases: "13 Fases",
+        fases: "13 Almas",
         visualizacao: "Visualização"
       },
       intro: {
@@ -72,7 +72,7 @@
         "",
         "- Território: camadas de superfície — bairros, rios soterrados, zoneamento, risco",
         "- Evidências: nódulos no mapa — património, turismo, rastros Rua São Bento",
-        "- 13 Fases: registo das Almas e clearance do Protocolo",
+        "- 13 Almas: registo das Almas e clearance do Protocolo",
         "- Visualização: maquete 3D e corte subterrâneo (Fase 7)",
         "- Relatórios: Transcrição de metadados recuperados",
         "",

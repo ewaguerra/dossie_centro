@@ -640,6 +640,15 @@ import * as THREE from "/vendor/three/three.module.min.js";
     if (!el) return;
     el.textContent = getGateMessage();
     el.classList.toggle("subterranean-status--locked", !isUnlocked());
+    syncPhaseGateCard();
+  }
+
+  function syncPhaseGateCard() {
+    var cb = document.getElementById(TOGGLE_ID);
+    var card = cb && cb.closest(".sidebar-viz-card");
+    var unlocked = isUnlocked();
+    if (cb) cb.disabled = !unlocked;
+    if (card) card.classList.toggle("sidebar-viz-card--phase-locked", !unlocked);
   }
 
   // ── Sidebar: legenda (elementos + almas) ─────────────────────────────────
