@@ -29,7 +29,8 @@ Quando uma análise CAPRI gera uma decisão, ela vira **ADR**, entrada em `docs/
 | [accessibility/contrast-notes.md](./accessibility/contrast-notes.md) | Contraste WCAG (amostragem) |
 | [adr/0001-site-estatico-sem-framework.md](./adr/0001-site-estatico-sem-framework.md) | Decisão: site estático |
 | [design-system/README.md](./design-system/README.md) | Tokens, componentes, a11y |
-| [architecture/map-init-flow.md](./architecture/map-init-flow.md) | Fluxo de init do mapa |
+| [architecture/map-init-flow.md](./architecture/map-init-flow.md) | Fluxo de init do mapa (boot DOM + MapLibre) |
+| [architecture/runtime-refactor-plan.md](./architecture/runtime-refactor-plan.md) | Plano para fatiar `centro-runtime.js` |
 
 ## Repositórios irmãos (ARG)
 

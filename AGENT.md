@@ -389,7 +389,9 @@ MapLibre**. As convenções específicas:
   `getSoul(phase)`, `formatPhaseLockLabel(minPhase)`. Evento
   `centro:arg-state-changed` (e listener `storage` para `protocolo13_phase` /
   `protocolo13_caderno_clues`) reaplica sidebar, POI, pistas RSB, 3D, subsolo
-  e triângulo histórico via `resyncArgStateConsumers()`.
+  e triângulo histórico via `resyncArgStateConsumers()`. Fluxo detalhado:
+  `docs/architecture/map-init-flow.md`. Plano de refactor do runtime:
+  `docs/architecture/runtime-refactor-plan.md`.
 - **Módulos satélite em `centro/features/`** (carregados pelo
   `centro/index.html` antes do runtime, na ordem em que aparecem):
   - `layer-unlocks.js`, `protocolo-phase.js`, `catalog-load.js` — catálogo,
