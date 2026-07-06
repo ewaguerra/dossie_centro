@@ -6,6 +6,7 @@
   "use strict";
 
   var STORAGE_KEY = "centroAccessGranted";
+  var FRESH_BOOT_SESSION_KEY = "centroFreshBootPending";
   var PASSWORD = "joelma";
 
   function normalizeSecret(value) {
@@ -45,6 +46,30 @@
     }
   }
 
+  function markFreshBootPending() {
+    try {
+      if (window.sessionStorage) window.sessionStorage.setItem(FRESH_BOOT_SESSION_KEY, "1");
+    } catch (_e) {
+      /* ignora */
+    }
+  }
+
+  function isFreshBootPending() {
+    try {
+      return window.sessionStorage && window.sessionStorage.getItem(FRESH_BOOT_SESSION_KEY) === "1";
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  function clearFreshBootPending() {
+    try {
+      if (window.sessionStorage) window.sessionStorage.removeItem(FRESH_BOOT_SESSION_KEY);
+    } catch (_e) {
+      /* ignora */
+    }
+  }
+
   function grantAccess() {
     try {
       if (window.localStorage) window.localStorage.setItem(STORAGE_KEY, "1");
@@ -52,6 +77,7 @@
       /* ignora */
     }
     resetFreshMapPreferences();
+    markFreshBootPending();
   }
 
   function getElements() {
@@ -129,6 +155,8 @@
     shouldSkipGate: shouldSkipGate,
     grantAccess: grantAccess,
     resetFreshMapPreferences: resetFreshMapPreferences,
+    isFreshBootPending: isFreshBootPending,
+    clearFreshBootPending: clearFreshBootPending,
     install: install,
   };
 })();

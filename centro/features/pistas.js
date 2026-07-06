@@ -145,12 +145,39 @@
     }
   }
 
+  function readPistasRsbVisibleFromStorage() {
+    try {
+      if (window.localStorage) {
+        return window.localStorage.getItem(PISTAS_RSB_STORAGE_KEY) === "1";
+      }
+    } catch (_e) {
+      // ignora
+    }
+    return false;
+  }
+
+  function restoreFromStorage(map) {
+    var mapRef = map;
+    if (!mapRef && typeof pistasGetMap === "function") mapRef = pistasGetMap();
+    if (!mapRef) return;
+
+    var toggle = document.getElementById("centro-pistas-rsb-toggle");
+    var visible = readPistasRsbVisibleFromStorage() && isPistasRsbUnlocked();
+    if (toggle) {
+      toggle.checked = visible;
+      syncPistasRsbToggleUI(toggle, function () {
+        return mapRef;
+      });
+    }
+    setPistasRsbVisibility(mapRef, visible);
+  }
+
   function setupPistasRsbToggle(getMap) {
     var toggle = document.getElementById("centro-pistas-rsb-toggle");
     if (!toggle || typeof getMap !== "function") return;
     pistasGetMap = getMap;
 
-    var visible = false;
+    var visible = readPistasRsbVisibleFromStorage();
     if (!isPistasRsbUnlocked()) visible = false;
     toggle.checked = visible;
     syncPistasRsbToggleUI(toggle, getMap);
@@ -190,6 +217,7 @@
     normalizeText: normalizeText,
     createRuaSaoBentoPistasProfileCard: createRuaSaoBentoPistasProfileCard,
     setPistasRsbVisibility: setPistasRsbVisibility,
+    restoreFromStorage: restoreFromStorage,
     setupPistasRsbToggle: setupPistasRsbToggle,
     syncPhaseGate: syncPhaseGate,
     isPistasRsbUnlocked: isPistasRsbUnlocked,

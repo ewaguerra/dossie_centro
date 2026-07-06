@@ -218,8 +218,8 @@
 
         if (typeof ctx.initBuildings3DState === "function") ctx.initBuildings3DState();
         if (typeof ctx.initSubterraneanState === "function") ctx.initSubterraneanState();
-        if (typeof ctx.scheduleBasemapOnlyBoot === "function") {
-          ctx.scheduleBasemapOnlyBoot(mapInstance);
+        if (typeof ctx.runMapBootPolicy === "function") {
+          ctx.runMapBootPolicy(mapInstance);
         } else if (typeof ctx.applyBasemapOnlyView === "function") {
           ctx.applyBasemapOnlyView(mapInstance);
         }

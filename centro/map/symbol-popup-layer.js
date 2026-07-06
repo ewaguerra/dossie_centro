@@ -61,6 +61,7 @@
         paint: config.label.paint,
       };
       if (config.label.filter) labelLayer.filter = config.label.filter;
+      if (config.label.minzoom != null) labelLayer.minzoom = config.label.minzoom;
       labelLayer.layout = Object.assign({}, config.label.layout, { visibility: "none" });
       ensureLayer(mapInstance, labelLayer);
     }

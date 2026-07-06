@@ -149,12 +149,15 @@
             "text-size": 11,
             "text-offset": [0, 2.2],
             "text-anchor": "top",
-            "text-allow-overlap": true,
-            "text-ignore-placement": true,
-            "text-optional": false,
+            "text-allow-overlap": false,
+            "text-ignore-placement": false,
+            "text-optional": true,
             "text-max-width": 18,
+            "text-padding": 2,
+            "visibility": "none",
           },
           paint: getMapLabelPaint(themeId),
+          minzoom: 15,
         };
       }
 
@@ -197,7 +200,9 @@
         iconLayout: {
           "icon-image": iconImageLayout,
           "icon-size": 0.82,
-          "icon-allow-overlap": true,
+          "icon-allow-overlap": false,
+          "icon-ignore-placement": false,
+          "icon-padding": 2,
           "icon-anchor": "center",
         },
         iconPaint: getMapIconHaloPaint(themeId),

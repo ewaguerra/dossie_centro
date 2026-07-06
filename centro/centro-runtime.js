@@ -328,14 +328,42 @@
     if (poiApi && typeof poiApi.applyAll === "function") poiApi.applyAll();
   }
 
-  function scheduleBasemapOnlyBoot(mapInstance) {
-    applyBasemapOnlyView(mapInstance);
-    mapReadyPromise.then(function () {
-      applyBasemapOnlyView(mapInstance || map);
-      window.setTimeout(function () {
-        applyBasemapOnlyView(mapInstance || map);
-      }, 0);
-    });
+  function isFreshBootPending() {
+    var gate = window.CENTRO && window.CENTRO.accessGate;
+    if (gate && typeof gate.isFreshBootPending === "function") {
+      return gate.isFreshBootPending();
+    }
+    return false;
+  }
+
+  function clearFreshBootPending() {
+    var gate = window.CENTRO && window.CENTRO.accessGate;
+    if (gate && typeof gate.clearFreshBootPending === "function") {
+      gate.clearFreshBootPending();
+    }
+  }
+
+  function restoreSavedMapPreferences(mapInstance) {
+    var mapRef = mapInstance || map;
+    applyAllPoiThemeFilters();
+
+    var pistasApi = window.CENTRO && window.CENTRO.pistas;
+    if (pistasApi && typeof pistasApi.restoreFromStorage === "function") {
+      pistasApi.restoreFromStorage(mapRef);
+    }
+
+    initBuildings3DState();
+    initSubterraneanState();
+    syncTrianguloHistoricoOverlay();
+  }
+
+  function runMapBootPolicy(mapInstance) {
+    if (isFreshBootPending()) {
+      applyBasemapOnlyView(mapInstance);
+      clearFreshBootPending();
+      return;
+    }
+    restoreSavedMapPreferences(mapInstance);
   }
 
   function setupPoiThemeFilter() {
@@ -472,7 +500,7 @@
           }
         },
         onPistasError: function () {
-          /* POI boot continua; limpeza no scheduleBasemapOnlyBoot */
+          /* POI boot continua; política de arranque no runMapBootPolicy */
         },
         applyAllPoiThemeFilters: applyAllPoiThemeFilters,
         wireSidebarMobileButtons: function () {
@@ -484,7 +512,8 @@
         initBuildings3DState: initBuildings3DState,
         initSubterraneanState: initSubterraneanState,
         applyBasemapOnlyView: applyBasemapOnlyView,
-        scheduleBasemapOnlyBoot: scheduleBasemapOnlyBoot,
+        runMapBootPolicy: runMapBootPolicy,
+        syncTriangulo: syncTrianguloHistoricoOverlay,
         mapReadyResolve: mapReadyResolve,
       });
     }
@@ -554,6 +583,10 @@
         getLockToastMessage: getLockToastMessage,
         whenMapReady: function (cb) {
           return mapReadyPromise.then(cb);
+        },
+        syncPoiPhaseGate: function () {
+          var api = ensurePoiFilterApi();
+          if (api && typeof api.syncPhaseGate === "function") api.syncPhaseGate();
         },
         addLayerToMap: addLayerToMap,
         removeLayerFromMap: removeLayerFromMap,
@@ -673,11 +706,6 @@
 
   function bootstrap() {
     function startCentro() {
-      var gate = window.CENTRO && window.CENTRO.accessGate;
-      if (gate && typeof gate.resetFreshMapPreferences === "function") {
-        gate.resetFreshMapPreferences();
-      }
-
       setupCentroUiFromModules();
       setupMissionsOrchestrator();
       setupArgStateListener();
@@ -707,7 +735,7 @@
 
   window.CENTRO = window.CENTRO || {};
   window.CENTRO.applyBasemapOnlyView = applyBasemapOnlyView;
-  window.CENTRO.scheduleBasemapOnlyBoot = scheduleBasemapOnlyBoot;
+  window.CENTRO.runMapBootPolicy = runMapBootPolicy;
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", bootstrap);

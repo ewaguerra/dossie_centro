@@ -143,11 +143,7 @@
           wireLayerCheckboxes(panel);
           if (typeof ctx.whenMapReady === "function") {
             ctx.whenMapReady(function () {
-              if (typeof window.CENTRO.scheduleBasemapOnlyBoot === "function") {
-                window.CENTRO.scheduleBasemapOnlyBoot();
-              } else if (typeof window.CENTRO.applyBasemapOnlyView === "function") {
-                window.CENTRO.applyBasemapOnlyView();
-              }
+              if (typeof ctx.syncPoiPhaseGate === "function") ctx.syncPoiPhaseGate();
             });
           }
           if (phaseApi && typeof phaseApi.updatePhaseBadge === "function") {

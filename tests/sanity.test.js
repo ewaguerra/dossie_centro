@@ -452,7 +452,9 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(poiBoot.includes('nm_obra'), 'bootstrap usa nm_obra como titulo');
     assert.ok(poiBoot.includes('ensureEraThemedIcons'), 'bootstrap registra icones tintados por epoca');
     assert.ok(poiBoot.includes('buildEraIconImageMatch'), 'bootstrap usa icon-image por poi_era');
-    assert.ok(poiBoot.includes('text-allow-overlap'), 'labels POI permitem overlap');
+    assert.ok(poiBoot.includes('"text-allow-overlap": false'), 'labels POI respeitam colisão');
+    assert.ok(poiBoot.includes('"text-optional": true'), 'labels POI podem ceder a colisão');
+    assert.ok(poiBoot.includes('minzoom: 15'), 'labels POI só a partir de zoom 15');
     assert.ok(!poiBoot.includes('titleProp && styleSupportsTextLabels'), 'labels nao dependem de guard glyphs');
     assert.ok(poiBoot.includes('getMapLabelPaint'), 'labels POI usam paint por epoca');
     assert.ok(eraCls.includes('buildSubFilterLabelPaint'), 'classifier expoe paint de label por epoca');
@@ -1935,6 +1937,9 @@ describe('projeto_centro — sanity checks', () => {
     const poiFilter = read('centro/features/poi-theme-filter.js');
     assert.ok(poiFilter.includes('isThemePhaseUnlocked'), 'poi-theme-filter deve respeitar fase');
     assert.ok(poiFilter.includes('syncPhaseGate'), 'poi-theme-filter syncPhaseGate');
+    assert.ok(poiFilter.includes('getFilterableThemes'), 'poi-theme-filter exclui pistas duplicado');
+    assert.ok(poiFilter.includes('subs[subId] === true'), 'sub-filtros exigem marcação explícita');
+    assert.ok(poiFilter.includes('["==", 1, 0]'), 'tema sem épocas marcadas não mostra tudo');
     const b3d = read('centro/features/buildings-3d.js');
     assert.ok(b3d.includes('isFeaturePhaseUnlocked("buildings-3d")'), 'buildings-3d gate de fase');
     const pistas = read('centro/features/pistas.js');
@@ -2453,13 +2458,19 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('ensureArgResyncApi'), 'runtime instancia argResync');
     assert.ok(argResync.includes('centro:arg-state-changed'), 'arg-resync escuta evento');
     assert.ok(runtime.includes('applyBasemapOnlyView'), 'runtime expõe applyBasemapOnlyView');
-    assert.ok(runtime.includes('scheduleBasemapOnlyBoot'), 'runtime agenda limpeza pós-boot');
+    assert.ok(runtime.includes('runMapBootPolicy'), 'runtime aplica política híbrida de boot');
+    assert.ok(runtime.includes('restoreSavedMapPreferences'), 'runtime restaura prefs guardadas');
+    assert.ok(!runtime.includes('scheduleBasemapOnlyBoot'), 'scheduleBasemapOnlyBoot removido');
     const sidebarOrch = read('centro/ui/sidebar-orchestrator.js');
-    assert.ok(sidebarOrch.includes('scheduleBasemapOnlyBoot') || sidebarOrch.includes('applyBasemapOnlyView'), 'sidebar re-aplica basemap only após carregar');
+    assert.ok(sidebarOrch.includes('syncPoiPhaseGate'), 'sidebar sincroniza gates POI sem basemap wipe');
+    assert.ok(!sidebarOrch.includes('scheduleBasemapOnlyBoot'), 'sidebar não re-aplica basemap only');
+    const poiFilter = read('centro/features/poi-theme-filter.js');
+    assert.ok(poiFilter.includes('localStorage.getItem(STORAGE_KEY)'), 'loadState lê localStorage POI');
     assert.ok(triOverlay.includes('remove(mapInstance)'), 'triângulo remove quando fase < 11');
     assert.ok(triOverlay.includes('isFeaturePhaseUnlocked("triangulo-historico")'), 'gate triangulo no overlay');
     assert.ok(argResync.includes('protocolo13_caderno_clues'), 'storage listener caderno');
     assert.ok(argResync.includes('protocolo13_phase'), 'storage listener fase');
+    assert.ok(argResync.includes('syncTriangulo'), 'arg-resync sincroniza triângulo');
   });
 
   it('sidebar-events usa delegacao para re-render idempotente', () => {

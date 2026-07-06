@@ -327,7 +327,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
   }
 
     function getInitialEnabled() {
-      return false;
+      return isViewEnabled();
     }
 
   function persistEnabled(enabled) {

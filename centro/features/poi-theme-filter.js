@@ -39,6 +39,17 @@
     return icons.getThemeFilters();
   }
 
+  /** Temas controlados pelo grid POI — pistas RSB têm toggle dedicado na sidebar. */
+  function getFilterableThemes() {
+    var themes = getThemes();
+    var out = [];
+    for (var i = 0; i < themes.length; i++) {
+      if (themes[i].id === "pistas") continue;
+      out.push(themes[i]);
+    }
+    return out;
+  }
+
   function defaultSubsForTheme(theme, allOn) {
     var subs = {};
     var list = theme.subFilters || [];
@@ -98,7 +109,38 @@
     var getMap = ctx.getMap;
 
     function loadState() {
-      return buildDefaultState(getThemes());
+      var themes = getThemes();
+      var state = buildDefaultState(themes);
+      try {
+        var raw = window.localStorage && window.localStorage.getItem(STORAGE_KEY);
+        if (!raw) return state;
+        var parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") return state;
+        if (parsed._v === STATE_VERSION) {
+          for (var i = 0; i < themes.length; i++) {
+            var theme = themes[i];
+            var entry = parsed[theme.id];
+            if (!entry || typeof entry !== "object") continue;
+            if (typeof entry.on === "boolean") state[theme.id].on = entry.on;
+            if (entry.subs && typeof entry.subs === "object") {
+              var subIds = Object.keys(state[theme.id].subs);
+              for (var j = 0; j < subIds.length; j++) {
+                var subId = subIds[j];
+                if (typeof entry.subs[subId] === "boolean") {
+                  state[theme.id].subs[subId] = entry.subs[subId];
+                }
+              }
+            }
+          }
+          return state;
+        }
+        if (typeof parsed._v === "number" && parsed._v < STATE_VERSION) {
+          return buildDefaultState(themes);
+        }
+        return migrateLegacyState(parsed, themes);
+      } catch (_e) {
+        return state;
+      }
     }
 
     function saveState(state) {
@@ -117,13 +159,14 @@
       var list = theme.subFilters || [];
       for (var i = 0; i < list.length; i++) {
         var subId = list[i].id;
-        if (subs[subId] !== false) ids.push(subId);
+        if (subs[subId] === true) ids.push(subId);
       }
       return ids;
     }
 
     function buildLayerFilter(theme, enabledIds) {
-      if (!theme.subProperty || !enabledIds.length) return null;
+      if (!theme.subProperty) return null;
+      if (!enabledIds.length) return ["==", 1, 0];
       var total = (theme.subFilters || []).length;
       if (enabledIds.length >= total) return null;
       return ["in", ["get", theme.subProperty], ["literal", enabledIds]];
@@ -137,9 +180,11 @@
         var layerId = theme.layerIds[i];
         if (!map.getLayer(layerId)) continue;
         map.setLayoutProperty(layerId, "visibility", visibility);
-        if (visible && filter) {
+        if (!visible) {
+          map.setFilter(layerId, null);
+        } else if (filter) {
           map.setFilter(layerId, filter);
-        } else if (visible) {
+        } else {
           map.setFilter(layerId, null);
         }
       }
@@ -181,7 +226,7 @@
     }
 
     function applyAll() {
-      var themes = getThemes();
+      var themes = getFilterableThemes();
       var state = loadState();
       for (var i = 0; i < themes.length; i++) {
         var theme = themes[i];
@@ -190,14 +235,22 @@
         var userWants = themeState.on === true;
         var visible = phaseOk && userWants;
         var enabledIds = enabledSubIds(theme, themeState);
-        var filter = visible ? buildLayerFilter(theme, enabledIds) : null;
+        var hasSubFilters = (theme.subFilters || []).length > 0;
+        var filter = null;
+        if (visible) {
+          if (hasSubFilters && enabledIds.length === 0) {
+            filter = ["==", 1, 0];
+          } else {
+            filter = buildLayerFilter(theme, enabledIds);
+          }
+        }
         setThemeVisibility(theme, visible, filter);
       }
     }
 
     function syncPhaseGate() {
       var grid = document.getElementById("poi-legend-grid");
-      var themes = getThemes();
+      var themes = getFilterableThemes();
       if (!grid) {
         applyAll();
         return;
@@ -258,7 +311,7 @@
 
       grid.innerHTML = "";
       var state = loadState();
-      var themes = getThemes();
+      var themes = getFilterableThemes();
 
       for (var i = 0; i < themes.length; i++) {
         (function (theme) {
@@ -355,18 +408,6 @@
               return;
             }
             state[theme.id].on = toggle.checked;
-            if (toggle.checked) {
-              var subKeys = Object.keys(state[theme.id].subs);
-              for (var sk = 0; sk < subKeys.length; sk++) {
-                state[theme.id].subs[subKeys[sk]] = true;
-              }
-              var subToggles = group.querySelectorAll(".poi-legend__sub-toggle");
-              for (var st = 0; st < subToggles.length; st++) {
-                subToggles[st].checked = true;
-                var subRow = subToggles[st].closest(".poi-legend__sub-item");
-                if (subRow) subRow.classList.remove("poi-legend__sub-item--off");
-              }
-            }
             row.classList.toggle("poi-legend__item--off", !toggle.checked);
             syncThemeRowUI(group, theme, state);
             saveState(state);
