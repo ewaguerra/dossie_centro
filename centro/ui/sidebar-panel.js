@@ -8,7 +8,7 @@
     {
       id: "centro_historico",
       title: "Centro Histórico",
-      intro: "Polígonos, eixos e camadas processadas do dossiê.",
+      intro: "Polígonos, eixos e camadas forenses do núcleo — cruzamento territorial do dossiê.",
       groupIds: [
         "02_macroareas_e_eixos",
         "16_regioes_sp",
@@ -23,14 +23,14 @@
     {
       id: "arquivo_soterrados",
       title: "Arquivo dos Soterrados",
-      intro: "Missões ARG e camadas de superfície soterrada.",
+      intro: "Rastros das missões do Protocolo e camadas de superfície enterrada.",
       groupIds: ["arquivo_soterrado"],
       defaultOpen: true,
     },
     {
       id: "contexto_urbano",
       title: "Contexto Urbano (OSM)",
-      intro: "Malha urbana e hidrologia de contexto. Camadas pesadas carregam ao activar.",
+      intro: "Malha urbana e hidrologia de contexto. Camadas pesadas carregam ao ativar.",
       groupIds: ["urbano_contexto"],
       defaultOpen: false,
       heavySubgroup: true,
@@ -69,8 +69,8 @@
         typeof getLockMessage === "function"
           ? getLockMessage(lockState, "sidebar-hint")
           : clueLocked
-            ? " (bloqueada — Requer pista no Caderno)"
-            : " (bloqueada — Disponível na fase ARG)";
+            ? " (bloqueada — pista pendente no Caderno)"
+            : " (bloqueada — liberação na fase do Protocolo)";
       cb.setAttribute("aria-label", (ly.title || ly.id) + lockHint);
     }
 
@@ -85,7 +85,7 @@
       var heavyBadge = document.createElement("span");
       heavyBadge.className = "layer-badge layer-badge--heavy";
       heavyBadge.textContent = "PESADO";
-      heavyBadge.title = "Carrega ao activar";
+      heavyBadge.title = "Carrega ao ativar";
       label.appendChild(heavyBadge);
     }
 
@@ -164,7 +164,7 @@
     heavySummary.appendChild(heavyCount);
     var heavyHint = document.createElement("span");
     heavyHint.className = "group__heavy-hint";
-    heavyHint.textContent = " — carrega ao activar";
+    heavyHint.textContent = " — carrega ao ativar";
     heavySummary.appendChild(heavyHint);
     heavyDetails.appendChild(heavySummary);
 

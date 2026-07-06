@@ -322,8 +322,8 @@ describe('projeto_centro — sanity checks', () => {
                        'poi-legend-details', 'poi-legend-grid', 'subterranean-legend']) {
       assert.ok(html.includes(`id="${id}"`), 'ID essencial ausente: ' + id);
     }
-    assert.ok(html.includes('Activar maquete estrutural 3D'), 'label 3D preservado');
-    assert.ok(html.includes('Activar visão subterrânea'), 'label subterraneo preservado');
+    assert.ok(html.includes('Ativar maquete estrutural 3D'), 'label 3D preservado');
+    assert.ok(html.includes('Ativar visão subterrânea'), 'label subterraneo preservado');
     assert.ok(html.includes('Evidências no mapa'), 'label filtro POI preservado');
     assert.ok(html.includes('Território'), 'tab Território renomeado');
     assert.ok(html.includes('Evidências'), 'tab Evidências renomeado');
@@ -343,7 +343,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(chrome.includes('setupSidebarTabs'), 'setupSidebarTabs no centro-chrome');
     assert.ok(chrome.includes('activateSidebarTab'), 'activateSidebarTab no centro-chrome');
     assert.ok(chrome.includes('sidebar-tab-fases'), 'tab 13 Almas default ausente');
-    assert.ok(html.includes('id="sidebar-tab-fases"') && html.includes('aria-selected="true"'), '13 Almas activa no HTML');
+    assert.ok(html.includes('id="sidebar-tab-fases"') && html.includes('aria-selected="true"'), 'aba 13 Almas selecionada por padrão no HTML');
     assert.ok(html.includes('id="sidebar-panel-fases"') && !html.match(/id="sidebar-panel-fases"[^>]*hidden/), 'painel 13 Almas visivel por defeito');
     assert.ok(chrome.includes('syncSubterraneanGuideAccess'), 'guia subsolo sincroniza com fase ARG');
     assert.ok(chrome.includes('GUIDE_MIN_PHASE'), 'guia subsolo exige fase minima');
@@ -904,9 +904,9 @@ describe('projeto_centro — sanity checks', () => {
     assert.strictEqual(state.getLayerRowClass(clueLocked), 'layer-row layer-row--locked layer-row--clue-locked');
     assert.strictEqual(
       state.getLockMessage(clueLocked, 'sidebar-hint'),
-      ' (bloqueada — Requer pista no Caderno)'
+      ' (bloqueada — pista pendente no Caderno)'
     );
-    assert.strictEqual(state.getLockMessage(clueLocked, 'sidebar-meta'), 'Requer pista no Caderno');
+    assert.strictEqual(state.getLockMessage(clueLocked, 'sidebar-meta'), 'Pista pendente no Caderno');
     assert.ok(
       state.getLockMessage(clueLocked, 'toast').includes('Caderno do Arquivista'),
       'toast clue lock'
@@ -923,8 +923,8 @@ describe('projeto_centro — sanity checks', () => {
       state.getLockMessage(phaseLocked, 'sidebar-hint'),
       ' (bloqueada — Fase 7)'
     );
-    assert.strictEqual(state.getLockMessage(phaseLocked, 'sidebar-meta'), 'Disponível na Fase 7');
-    assert.ok(state.getLockMessage(phaseLocked, 'toast').includes('Avance para a Fase 7'), 'toast phase lock');
+    assert.strictEqual(state.getLockMessage(phaseLocked, 'sidebar-meta'), 'Liberação na Fase 7');
+    assert.ok(state.getLockMessage(phaseLocked, 'toast').includes('Avance até a Fase 7'), 'toast phase lock');
 
     const soulLocked = state.getLayerLockState({
       isClueUnlocked: true,
@@ -1641,7 +1641,7 @@ describe('projeto_centro — sanity checks', () => {
     const html = read('centro/index.html');
     const runtime = read('centro/centro-runtime.js');
     assert.ok(html.includes('centro-buildings-3d-toggle'), 'checkbox 3D ausente no HTML');
-    assert.ok(html.includes('Activar maquete estrutural 3D'), 'label da maquete 3D ausente');
+    assert.ok(html.includes('Ativar maquete estrutural 3D'), 'label da maquete 3D ausente');
     assert.ok(html.includes('sidebar-extras'), 'container sidebar-extras ausente');
     assert.ok(html.includes('buildings-legend'), 'legenda de faixas de altura ausente');
     assert.ok(runtime.includes('BUILDINGS_3D_LAYER_ID'), 'constante da layer 3D ausente');
@@ -2684,8 +2684,8 @@ describe('projeto_centro — sanity checks', () => {
   it('sidebar-layer-state distingue locks clue vs fase ARG', () => {
     const state = read('centro/features/sidebar-layer-state.js');
     assert.ok(state.includes('layer-row--clue-locked'), 'classe clue-locked');
-    assert.ok(state.includes('Requer pista no Caderno'), 'mensagem clue');
-    assert.ok(state.includes('Disponível na Fase'), 'mensagem fase');
+    assert.ok(state.includes('pista pendente no Caderno'), 'mensagem clue');
+    assert.ok(state.includes('Liberação na Fase'), 'mensagem fase');
   });
 
   it('pistas.js expõe toggle RSB na sidebar Evidências', () => {

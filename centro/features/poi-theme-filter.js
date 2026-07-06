@@ -437,7 +437,7 @@
               row.classList.add("poi-legend__item--off");
               if (typeof window.centroToast === "function") {
                 window.centroToast(
-                  "Tema bloqueado. " + (getThemeLockLabel(theme.id) || "Avance de fase no ARG."),
+                  "Tema bloqueado. " + (getThemeLockLabel(theme.id) || "Avance uma fase no Protocolo."),
                   "warn"
                 );
               }

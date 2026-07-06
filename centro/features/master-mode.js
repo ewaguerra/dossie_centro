@@ -65,7 +65,7 @@
       // ignora
     }
     if (typeof window.centroToast === "function") {
-      window.centroToast("Modo revisão: todas as camadas e evidências desbloqueadas.", "info");
+      window.centroToast("Modo revisão: Protocolo liberado — camadas e evidências abertas para inspeção.", "info");
     }
   }
 

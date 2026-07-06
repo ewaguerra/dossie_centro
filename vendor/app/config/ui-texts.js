@@ -1,23 +1,23 @@
 (function () {
   window.MAPA_SP_UI_TEXTS = {
-    searchPlaceholder: "Filtrar protocolos de evidência...",
+    searchPlaceholder: "Filtrar registros de evidência…",
     buttons: {
-      clear: "Purgar",
-      open: "Exumar",
-      close: "Selar",
-      explain: "Descodificar?"
+      clear: "Limpar filtro",
+      open: "Exumar registro",
+      close: "Sellar dossiê",
+      explain: "Como decifrar?"
     },
     status: {
-      loadingCatalog: "Sincronizando banco de dados soterrados..."
+      loadingCatalog: "Sincronizando arquivo soterrado…"
     },
     empty: {
-      noLayersFound: "Nenhum rastro detectado no setor."
+      noLayersFound: "Nenhum rastro localizado neste setor."
     },
     errors: {
-      catalogLoad: "FALHA CRÍTICA: Erro ao sincronizar catálogo."
+      catalogLoad: "FALHA CRÍTICA: arquivo não sincronizou."
     },
     globalToggle: {
-      label: "Interpolar camadas de superfície e transversais"
+      label: "Sobrepor camadas de superfície e transversais"
     },
     layerCard: {
       features: "rastros",
@@ -28,8 +28,8 @@
       noBbox: "sem delimitação"
     },
     inspector: {
-      kicker: "Sinal Identificado",
-      title: "Relatório de Evidência"
+      kicker: "Sinal identificado",
+      title: "Relatório de evidência"
     },
     sidebar: {
       tabs: {
@@ -41,20 +41,20 @@
       },
       intro: {
         territorio:
-          "Operador: interpole camadas de superfície — bairros, rios soterrados, zoneamento, risco. Marque o que ainda resiste no mapa-base. Nódulos clicáveis → aba Evidências.",
+          "Operador: sobreponha camadas de superfície — bairros, rios soterrados, zoneamento, risco. Marque o que ainda aparece no mapa-base. Pontos no mapa levam à aba Evidências.",
         evidencias:
-          "Sinais recuperados no terreno: património, turismo, pistas da Rua São Bento. Filtre por temática — decodifique o que importa, silencie o ruído abaixo.",
+          "Sinais recuperados no terreno: patrimônio, turismo, rastros da Rua São Bento. Filtre por temática — decifre o que importa e silencie o ruído.",
         fases:
-          "Registo das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.",
+          "Registro das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.",
         visualizacao:
-          "Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver clearance para ver o que a cidade enterrou.",
+          "Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver liberação de acesso para ver o que a cidade enterrou.",
         demo:
-          "Capítulo demo do livro-jogo: Demonão, Titília e o Marco Zero. Decodifique senhas narrativas e cruze o mapa entre Praça da Sé e o Solar da Marquesa."
+          "Investigação demo: Demonão, Titília e o Marco Zero que mente. Siga os passos, decifre senhas narrativas e cruze o mapa entre a Praça da Sé e o Solar da Marquesa."
       },
       meta: {
         layers: "21 camadas",
-        sections: "3 secções",
-        themes: "6 temas evidência"
+        sections: "3 seções",
+        themes: "6 temas de evidência"
       },
       vizCards: {
         maquete3d: {
@@ -63,26 +63,26 @@
         },
         missaoFase7: {
           title: "Missão Fase 7 — Rasgue o Asfalto",
-          desc: "Visão subterrânea, corte vertical e colecta das 13 almas soterradas."
+          desc: "Visão subterrânea, corte vertical e coleta das 13 almas soterradas."
         }
       },
       pistasToggle: "Exibir rastros RSB no mapa (Rua São Bento)",
-      poiLegendHint: "Marque só as temáticas que quer decodificar no mapa."
+      poiLegendHint: "Marque só as temáticas que quer decifrar no mapa."
     },
     help: {
       lines: [
-        "PROTOCOL ALPHA-09: Sistema de Visualização Forense",
+        "PROTOCOLO ALPHA-09 — Sistema de visualização forense",
         "",
         "- Território: camadas de superfície — bairros, rios soterrados, zoneamento, risco",
-        "- Evidências: nódulos no mapa — património, turismo, rastros Rua São Bento",
-        "- 13 Almas: registo das Almas e clearance do Protocolo",
+        "- Evidências: pontos no mapa — patrimônio, turismo, rastros Rua São Bento",
+        "- 13 Almas: registro das Almas e liberação do Protocolo",
         "- Visualização: maquete 3D e corte subterrâneo (Fase 7)",
-        "- Relatórios: Transcrição de metadados recuperados",
+        "- Relatórios: transcrição de metadados recuperados",
         "",
-        "Raiz visual = Topografia de superfície",
-        "Nódulo temático = Registos de soterramento",
-        "Relatório técnico = Propriedades da evidência",
-        "Knowledge.js = A voz do Arquivista"
+        "Raiz visual = topografia de superfície",
+        "Ponto temático = registro de soterramento",
+        "Relatório técnico = propriedades da evidência",
+        "Knowledge.js = voz do Arquivista"
       ]
     },
     keyboardShortcuts: {

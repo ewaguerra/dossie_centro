@@ -71,7 +71,7 @@
       },
       {
         id: "toggle",
-        title: "Activar visão subterrânea na sidebar",
+        title: "Ativar visão subterrânea na sidebar",
         complete: isViewActive(),
       },
       {
@@ -98,7 +98,7 @@
     var souls = countSoulsFound();
     var max = soulTarget();
     if (isComplete()) return "Missão concluída — 13/13 esferas do subsolo.";
-    return "Missão activa — " + souls + "/" + max + " esferas do subsolo.";
+    return "Missão em curso — " + souls + "/" + max + " esferas do subsolo.";
   }
 
   function tryAdvancePhase() {

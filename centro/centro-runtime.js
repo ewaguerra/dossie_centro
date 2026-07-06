@@ -684,8 +684,8 @@
     var state = resolveSidebarLockState(layerId);
     if (typeof lockMsgFn === "function") return lockMsgFn(state, "toast");
     return !isLayerUnlocked(layerId)
-      ? "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto)."
-      : "Camada bloqueada. Avance de fase no ARG (fase mínima " + getMinPhaseLabel(layerId) + ").";
+      ? "Camada bloqueada. Registre a pista no Caderno do Arquivista (Arquivo Morto)."
+      : "Camada bloqueada. Avance uma fase no Protocolo (mínima: " + getMinPhaseLabel(layerId) + ").";
   }
 
 

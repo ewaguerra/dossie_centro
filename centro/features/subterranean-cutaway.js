@@ -320,9 +320,9 @@ import * as THREE from "/vendor/three/three.module.min.js";
     var missing = getMissingClues();
     var req = getRequiredPhase();
     var lockLabel = getPhaseLockLabel();
-    if (getPhase() < req && missing.length > 0) return lockLabel + " e pistas exigidas: " + missing.join(", ") + ".";
-    if (getPhase() < req) return "Pistas reunidas. Ative para abrir " + lockLabel + ".";
-    if (missing.length > 0) return "Colete no Arquivo Morto: " + missing.join(", ") + ".";
+    if (getPhase() < req && missing.length > 0) return lockLabel + " — pistas exigidas: " + missing.join(", ") + ".";
+    if (getPhase() < req) return "Pistas cruzadas. Ative para liberar " + lockLabel + ".";
+    if (missing.length > 0) return "Recupere no Arquivo Morto: " + missing.join(", ") + ".";
     return "Visão subterrânea liberada.";
   }
 
@@ -982,7 +982,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
         // noFly: evita conflito com posição inicial/hash durante o boot.
         setEnabled(true, { persist: false, silent: true, noFly: true });
         if (isMasterMode() && typeof window.centroToast === "function") {
-          window.centroToast("Modo mestre activo. Active o toggle para a visão subterrânea.", "warn");
+          window.centroToast("Modo mestre ativo. Ative o toggle para a visão subterrânea.", "warn");
         }
       } else {
         syncToggleUI(false);

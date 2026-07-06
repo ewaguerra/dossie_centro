@@ -34,19 +34,19 @@
   function getLockMessage(state, kind) {
     if (kind === "sidebar-hint") {
       return state.clueLocked
-        ? " (bloqueada — Requer pista no Caderno)"
+        ? " (bloqueada — pista pendente no Caderno)"
         : " (bloqueada — " + (state.phaseSoulLabel || "Fase " + state.minPhaseLabel) + ")";
     }
     if (kind === "sidebar-meta") {
       return state.clueLocked
-        ? "Requer pista no Caderno"
-        : state.phaseSoulLabel || "Disponível na Fase " + state.minPhaseLabel;
+        ? "Pista pendente no Caderno"
+        : state.phaseSoulLabel || "Liberação na Fase " + state.minPhaseLabel;
     }
     if (kind === "toast") {
       return state.clueLocked
-        ? "Camada bloqueada. Registre pistas no Caderno do Arquivista (Arquivo Morto)."
+        ? "Camada bloqueada. Registre a pista no Caderno do Arquivista (Arquivo Morto)."
         : "Camada bloqueada. " +
-            (state.phaseSoulLabel || "Avance para a Fase " + state.minPhaseLabel + ".");
+            (state.phaseSoulLabel || "Avance até a Fase " + state.minPhaseLabel + ".");
     }
     return "";
   }

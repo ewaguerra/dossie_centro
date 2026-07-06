@@ -205,7 +205,7 @@
     }
     var landing = document.getElementById("protocolo-phase-badge");
     if (landing) {
-      landing.textContent = "Fase " + p + " de " + MAX_PHASE + " (activa)";
+      landing.textContent = "Fase " + p + " de " + MAX_PHASE + " (em curso)";
     }
   }
 

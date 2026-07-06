@@ -126,7 +126,7 @@
     var submit = document.createElement("button");
     submit.type = "submit";
     submit.className = "btn btn--primary demo-submit-btn";
-    submit.textContent = "Decodificar";
+    submit.textContent = "Decifrar";
     actions.appendChild(submit);
 
     form.appendChild(actions);
@@ -139,7 +139,7 @@
         err.textContent =
           result.reason === "complete"
             ? "Capítulo já concluído."
-            : "Senha incorreta — releia o trecho ou a pista.";
+            : "Senha incorreta — releia o trecho ou a pista do dossiê.";
         err.hidden = false;
         input.focus();
         return;
@@ -147,7 +147,7 @@
       input.value = "";
       if (typeof window.centroToast === "function") {
         window.centroToast(
-          result.completed ? "Epílogo desbloqueado — capítulo demo concluído." : "Passo decodificado.",
+          result.completed ? "Epílogo decifrado — capítulo demo concluído." : "Passo decifrado.",
           "ok"
         );
       }
@@ -211,8 +211,8 @@
 
       var badge = document.createElement("span");
       badge.className = "demo-step-row__badge";
-      if (status === "active") badge.textContent = "Activo";
-      else if (status === "completed") badge.textContent = "OK";
+      if (status === "active") badge.textContent = "Em curso";
+      else if (status === "completed") badge.textContent = "Decifrado";
       else badge.textContent = "—";
       head.appendChild(badge);
 

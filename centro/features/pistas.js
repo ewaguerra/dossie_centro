@@ -189,7 +189,7 @@
         setPistasRsbVisibility(getMap(), false);
         if (typeof window.centroToast === "function") {
           window.centroToast(
-            "Pistas bloqueadas. " + (getPistasRsbLockLabel() || "Avance de fase no ARG."),
+            "Pistas bloqueadas. " + (getPistasRsbLockLabel() || "Avance uma fase no Protocolo."),
             "warn"
           );
         }

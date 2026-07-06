@@ -18,7 +18,7 @@
       missions: [
         {
           id: "malha-osm",
-          title: "Activar Malha de Circulação (Vias) e ler nomes actuais",
+          title: "Ativar Malha de Circulação (Vias) e ler nomes atuais",
           complete: false,
         },
       ],

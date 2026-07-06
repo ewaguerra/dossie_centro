@@ -14,7 +14,7 @@
   }
 
   function getStatusLabel(status) {
-    if (status === "active") return "Activa";
+    if (status === "active") return "Em curso";
     if (status === "completed") return "Concluída";
     return "Bloqueada";
   }

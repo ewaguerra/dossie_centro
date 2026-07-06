@@ -104,7 +104,7 @@
       "stackRole": "street-label",
       "coverage": "partial",
       "coverageCheck": "skip-bbox",
-      "coverageNote": "Malha enriquecida com nomes actuais/históricos — activada pelo runtime de labels, não pela sidebar.",
+      "coverageNote": "Malha enriquecida com nomes atuais/históricos — ativada pelo runtime de labels, não pela sidebar.",
       "file": "data/geojson/special/streets/centro_ruas_nomes__line.geojson",
       "feature_count": 4626,
       "geometry": "line",

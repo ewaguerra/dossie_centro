@@ -27,9 +27,9 @@
   <div id="centro-access-gate" class="centro-access-gate" role="dialog" aria-modal="true" aria-labelledby="centro-access-gate-title">
     <div class="centro-access-gate__backdrop" aria-hidden="true"></div>
     <div class="centro-access-gate__panel">
-      <p class="centro-access-gate__kicker">Protocolo 13 · Clearance</p>
+      <p class="centro-access-gate__kicker">Protocolo 13 · Liberação de acesso</p>
       <h2 id="centro-access-gate-title" class="centro-access-gate__title">Acesso ao dossiê cartográfico</h2>
-      <p class="centro-access-gate__intro">Operador não identificado. Introduza a chave de desbloqueio para aceder ao mapa forense do Centro.</p>
+      <p class="centro-access-gate__intro">Operador não identificado. Informe a chave de desbloqueio para acessar o mapa forense do Centro.</p>
       <form id="centro-access-gate-form" class="centro-access-gate__form" autocomplete="off">
         <label class="centro-access-gate__label" for="centro-access-gate-input">Chave de operador</label>
         <input id="centro-access-gate-input" class="centro-access-gate__input" name="centro-access-key" type="password" inputmode="text" autocomplete="off" required />
@@ -81,10 +81,10 @@
         </div>
       </div>
       <h1 class="sidebar-header__title--chrome"><span class="sidebar-header__title-accent">#</span> Dossiê: Centro</h1>
-      <p class="sidebar-header__intro sidebar-header__intro--chrome">Registo de evidências territoriais, zonas de interdição e anomalias recuperadas da região central de São Paulo.</p>
+      <p class="sidebar-header__intro sidebar-header__intro--chrome">Registro de evidências territoriais, zonas de interdição e anomalias recuperadas no centro de São Paulo.</p>
       <div class="sidebar-header__meta">
         <span><span class="sidebar-header__meta-label">ID:</span> CENTRO-2026</span>
-        <span><span class="sidebar-header__meta-label">TERRITÓRIO:</span> 21 camadas · 3 secções</span>
+        <span><span class="sidebar-header__meta-label">TERRITÓRIO:</span> 21 camadas · 3 seções</span>
         <span><span class="sidebar-header__meta-label">EVIDÊNCIAS:</span> 6 temas</span>
         <span><span class="sidebar-header__meta-label">FASES:</span> 13 almas</span>
         <span><span class="sidebar-header__meta-label">STATUS:</span> <span class="sidebar-header__meta-status">EM ANÁLISE</span></span>
@@ -110,11 +110,11 @@
               aria-label="Demo — capítulo livro-jogo Demonão e Titília">Demo</button>
     </div>
     <div id="sidebar-panel-camadas" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-camadas" hidden>
-      <p class="sidebar-tab-intro">Operador: interpole camadas de superfície — bairros, rios soterrados, zoneamento, risco. Marque o que ainda resiste no mapa-base. Nódulos clicáveis → aba Evidências.</p>
+      <p class="sidebar-tab-intro">Operador: sobreponha camadas de superfície — bairros, rios soterrados, zoneamento, risco. Marque o que ainda aparece no mapa-base. Pontos no mapa levam à aba Evidências.</p>
       <div id="layers-panel" class="layers-list"></div>
     </div>
     <div id="sidebar-panel-pois" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-pois" hidden>
-      <p class="sidebar-tab-intro">Sinais recuperados no terreno: património, turismo, pistas da Rua São Bento. Filtre por temática — decodifique o que importa, silencie o ruído abaixo.</p>
+      <p class="sidebar-tab-intro">Sinais recuperados no terreno: patrimônio, turismo, rastros da Rua São Bento. Filtre por temática — decifre o que importa e silencie o ruído.</p>
       <label class="sidebar-extras__row layer-row sidebar-pistas-toggle" for="centro-pistas-rsb-toggle">
         <input type="checkbox" id="centro-pistas-rsb-toggle" />
         <span class="sidebar-extras__text">Exibir rastros RSB no mapa (Rua São Bento)</span>
@@ -129,14 +129,14 @@
             <span class="poi-legend__summary-hint">abrir / fechar</span>
           </summary>
           <div id="poi-legend-panel" class="poi-legend__panel">
-            <p class="poi-legend__hint">Marque temáticas e, dentro de cada uma, filtre por época (cor no halo). Linha do tempo agrupa evidências do mesmo logradouro.</p>
+            <p class="poi-legend__hint">Marque só as temáticas que quer cruzar no mapa. Dentro de cada uma, filtre por época (cor no halo). A linha do tempo agrupa evidências do mesmo logradouro.</p>
             <div class="poi-legend__list" id="poi-legend-grid" role="group" aria-label="Filtrar evidências por temática"></div>
           </div>
         </details>
       </div>
     </div>
     <div id="sidebar-panel-demo" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-demo" hidden>
-      <p class="sidebar-tab-intro">Capítulo demo do livro-jogo: Demonão, Titília e o Marco Zero que mente. Siga os passos, decodifique senhas narrativas e cruze o mapa entre Praça da Sé e o Solar da Marquesa.</p>
+      <p class="sidebar-tab-intro">Investigação demo: Demonão, Titília e o Marco Zero que mente. Siga os passos, decifre senhas narrativas e cruze o mapa entre a Praça da Sé e o Solar da Marquesa.</p>
       <label class="sidebar-extras__row layer-row sidebar-demo-markers-toggle" for="centro-demo-markers-toggle">
         <input type="checkbox" id="centro-demo-markers-toggle" checked />
         <span class="sidebar-extras__text">Exibir pistas do capítulo demo no mapa</span>
@@ -148,19 +148,19 @@
       <div id="demo-panel" class="demo-panel" role="region" aria-label="Capítulo demo Demonão e Titília"></div>
     </div>
     <div id="sidebar-panel-fases" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-fases">
-      <p class="sidebar-tab-intro">Registo das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.</p>
+      <p class="sidebar-tab-intro">Registro das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.</p>
       <button id="subterranean-guide-open-fases" class="subterranean-guide-open-btn subterranean-guide-open-btn--fases" type="button" hidden>Abrir guia da missão ↗</button>
       <div id="phases-panel" class="phases-list" role="list" aria-label="13 almas do Protocolo 13 Almas"></div>
     </div>
     <div id="sidebar-panel-opcoes" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-opcoes" hidden>
-      <p class="sidebar-tab-intro">Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver clearance para ver o que a cidade enterrou.</p>
+      <p class="sidebar-tab-intro">Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver liberação de acesso para ver o que a cidade enterrou.</p>
       <div class="sidebar-extras">
         <div class="sidebar-viz-card">
           <h2 class="sidebar-viz-card__title">Maquete 3D</h2>
           <p class="sidebar-viz-card__desc">Relevo estrutural dos edifícios — leitura de altura sobre o tecido urbano.</p>
           <label class="sidebar-extras__row layer-row" for="centro-buildings-3d-toggle">
             <input type="checkbox" id="centro-buildings-3d-toggle" />
-            <span class="sidebar-extras__text">Activar maquete estrutural 3D</span>
+            <span class="sidebar-extras__text">Ativar maquete estrutural 3D</span>
           </label>
           <div id="buildings-legend" class="buildings-legend" hidden>
             <div class="buildings-legend__title">Faixas de altura</div>
@@ -169,19 +169,19 @@
         </div>
         <div class="sidebar-viz-card sidebar-viz-card--mission">
           <h2 class="sidebar-viz-card__title">Missão Fase 7 — Rasgue o Asfalto</h2>
-          <p class="sidebar-viz-card__desc">Visão subterrânea, corte vertical e colecta das 13 esferas do subsolo.</p>
+          <p class="sidebar-viz-card__desc">Visão subterrânea, corte vertical e coleta das 13 esferas do subsolo.</p>
           <label class="sidebar-extras__row layer-row subterranean-toggle" for="centro-subterranean-toggle">
             <input type="checkbox" id="centro-subterranean-toggle" />
-            <span class="sidebar-extras__text">Activar visão subterrânea</span>
+            <span class="sidebar-extras__text">Ativar visão subterrânea</span>
           </label>
           <div id="subterranean-status" class="subterranean-status" aria-live="polite"></div>
-          <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
+          <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Ir ao corte subterrâneo">↗ IR AO SUBSOLO</button>
           <button id="subterranean-guide-open" class="subterranean-guide-open-btn" type="button" hidden>Abrir guia da missão ↗</button>
           <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
         </div>
         <div id="centro-street-names-dev-card" class="sidebar-viz-card" hidden>
           <h2 class="sidebar-viz-card__title">Nomes de ruas (dev)</h2>
-          <p class="sidebar-viz-card__desc">Labels GeoJSON sobre a malha OSM — actual, histórico ou ambos. Use também <code>?streetnames=all</code>.</p>
+          <p class="sidebar-viz-card__desc">Labels GeoJSON sobre a malha OSM — atual, histórico ou ambos. Use também <code>?streetnames=all</code>.</p>
           <label class="sidebar-extras__row layer-row" for="centro-street-names-dev-toggle">
             <input type="checkbox" id="centro-street-names-dev-toggle" checked />
             <span class="sidebar-extras__text">Mostrar nomes históricos de ruas</span>
@@ -189,8 +189,8 @@
           <label class="sidebar-extras__row layer-row" for="centro-street-names-mode">
             <span class="sidebar-extras__text">Modo de label</span>
             <select id="centro-street-names-mode" class="sidebar-extras__select" aria-label="Modo de nomes de ruas">
-              <option value="all">Actual + histórico</option>
-              <option value="atual">Só actual</option>
+              <option value="all">Atual + histórico</option>
+              <option value="atual">Só atual</option>
               <option value="historico">Só histórico</option>
             </select>
           </label>
@@ -212,23 +212,23 @@
       <li class="subterranean-guide__step">
         <span class="subterranean-guide__step-num">01</span>
         <div class="subterranean-guide__step-body">
-          <strong>Reunir clearance do subsolo</strong>
-          <span>Com <em>Fase 7</em> activa, confirme no caderno as três pistas: <code>agua-calada</code>, <code>aresta-fria</code> e <code>peso-fundacao</code>. Só então o toggle <em>Visão subterrânea</em> deixa de estar bloqueado.</span>
+          <strong>Obter liberação de acesso ao subsolo</strong>
+          <span>Com a <em>Fase 7</em> em curso, confirme no caderno as três pistas: <code>agua-calada</code>, <code>aresta-fria</code> e <code>peso-fundacao</code>. Só então o toggle <em>Visão subterrânea</em> deixa de estar bloqueado.</span>
         </div>
       </li>
       <li class="subterranean-guide__step">
         <span class="subterranean-guide__step-num">02</span>
         <div class="subterranean-guide__step-body">
-          <strong>Activar visão subterrânea</strong>
-          <span>Sidebar → tab <em>Visualização</em> → marque <em>Activar visão subterrânea</em>. Tecla <code>S</code> abre ou fecha a sidebar.</span>
+          <strong>Ativar visão subterrânea</strong>
+          <span>Sidebar → aba <em>Visualização</em> → marque <em>Ativar visão subterrânea</em>. Tecla <code>S</code> abre ou fecha a sidebar.</span>
         </div>
       </li>
       <li class="subterranean-guide__step">
         <span class="subterranean-guide__step-num">03</span>
         <div class="subterranean-guide__step-body">
-          <strong>Voar para o subsolo</strong>
-          <span>Inclina o mapa a 70° e centra no corte vertical. O layer 3D aparece com efeito glitch.</span>
-          <button id="subterranean-fly-btn" class="subterranean-guide__btn" type="button">VOAR PARA O SUBSOLO ↗</button>
+          <strong>Ir ao corte subterrâneo</strong>
+          <span>Incline o mapa a 70° e centralize no corte vertical. A camada 3D aparece com efeito de interferência.</span>
+          <button id="subterranean-fly-btn" class="subterranean-guide__btn" type="button">IR AO SUBSOLO ↗</button>
         </div>
       </li>
       <li class="subterranean-guide__step">
@@ -242,7 +242,7 @@
         <span class="subterranean-guide__step-num">05</span>
         <div class="subterranean-guide__step-body">
           <strong>Evidências geológicas (opcional)</strong>
-          <span>Registe os <strong>5 painéis</strong> do corte — rio Anhangabaú, fundação, túnel do metrô, argila e basalto. Passo extra; <em>não</em> bloqueia o avanço para a Fase 8.</span>
+          <span>Registre os <strong>5 painéis</strong> do corte — rio Anhangabaú, fundação, túnel do metrô, argila e basalto. Passo extra; <em>não</em> bloqueia o avanço para a Fase 8.</span>
         </div>
       </li>
       <li class="subterranean-guide__step subterranean-guide__step--final">
@@ -254,7 +254,7 @@
       </li>
     </ol>
     <div class="subterranean-guide__footer">
-      <span class="subterranean-guide__footer-note">O progresso desta missão fica guardado neste dispositivo — podes fechar e continuar depois.</span>
+      <span class="subterranean-guide__footer-note">O progresso desta missão fica salvo neste dispositivo — você pode fechar e retomar depois.</span>
     </div>
   </div>
 

@@ -113,7 +113,7 @@
       if (enabled && !isPhaseUnlocked()) {
         if (!options.silent && typeof window.centroToast === "function") {
           window.centroToast(
-            "Maquete 3D bloqueada. " + (getPhaseLockLabel() || "Avance de fase no ARG."),
+            "Maquete 3D bloqueada. " + (getPhaseLockLabel() || "Avance uma fase no Protocolo."),
             "warn"
           );
         }
@@ -187,7 +187,7 @@
             updateLegendVisibility(false);
             if (typeof window.centroToast === "function") {
               window.centroToast(
-                "Maquete 3D bloqueada. " + (getPhaseLockLabel() || "Avance de fase no ARG."),
+                "Maquete 3D bloqueada. " + (getPhaseLockLabel() || "Avance uma fase no Protocolo."),
                 "warn"
               );
             }
