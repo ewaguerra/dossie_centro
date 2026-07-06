@@ -60,14 +60,28 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
   });
 
-  it('runtime deve referenciar basemap OpenFreeMap (sem osm-style.json local)', async () => {
+  it('runtime deve resolver basemap via basemap-config (nao osm-style.json local)', async () => {
     const res = await fetchPath('/pages/centro/centro-runtime.js');
     assert.strictEqual(res.status, 200);
     assert.ok(
-      res.body.includes('tiles.openfreemap.org/styles/'),
-      'runtime deve apontar para OpenFreeMap'
+      res.body.includes('resolveBasemapStyle'),
+      'runtime deve delegar estilo ao basemap-config'
     );
     assert.ok(!res.body.includes('/osm-style.json'), 'runtime nao deve referenciar osm-style.json');
+  });
+
+  it('deve responder 200 em liberty.json e planet.json local (basemap estatico)', async () => {
+    const styleRes = await fetchPath('/centro/assets/basemap/liberty.json');
+    assert.strictEqual(styleRes.status, 200);
+    assert.ok(
+      styleRes.body.includes('/centro/assets/basemap/planet.json'),
+      'liberty.json deve referenciar planet.json local'
+    );
+    const planetRes = await fetchPath('/centro/assets/basemap/planet.json');
+    assert.strictEqual(planetRes.status, 200);
+    const planet = JSON.parse(planetRes.body);
+    assert.ok(Array.isArray(planet.tiles) && planet.tiles.length > 0, 'planet.json invalido');
+    assert.ok(planet.tiles[0].startsWith('/basemap/planet/'), 'tiles devem usar proxy /basemap/');
   });
 
   it('osm-style.json, tiles e glyphs locais foram removidos com a migra\u00e7\u00e3o para OpenFreeMap', async () => {

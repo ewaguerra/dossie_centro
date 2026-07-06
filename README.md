@@ -237,6 +237,7 @@ O site é **estático** (HTML, JS, CSS, GeoJSON). A Vercel serve os ficheiros; o
 - `/` redirecciona para `/centro/`
 - `/centro/` carrega o mapa e o gate de senha (`joelma`)
 - DevTools → Network: `/pages/centro/…` e `/app/…` respondem 200 (rewrites activos)
+- DevTools → Network: basemap via `/basemap/…` (same-origin; cache Vercel) — **não** depender de CORS externo
 
 **Nota:** `localStorage` é por domínio — progresso no `127.0.0.1` **não** copia para a URL da Vercel (comportamento esperado do ARG).
 
@@ -302,14 +303,17 @@ O Centro consome pistas via `localStorage.protocolo13_caderno_clues`, query `?cl
 | `/vendor/*` | `./vendor/*` |
 | `/landing/`, `/arquivo-morto/`, `/arquivista/` | **404** (repos separados) |
 
-### Basemap
+### Basemap (Vercel)
 
-Estilo em `centro/centro-runtime.js`:
+Produção usa estilo local + proxy same-origin (sem depender de CORS externo):
 
 ```js
-var BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
-// alternativas: positron | bright | dark-matter
+// centro/map/basemap-config.js — resolvido em runtime
+// Vercel / domínio público → /centro/assets/basemap/liberty.json + /basemap/*
+// localhost → OpenFreeMap directo (override: ?basemap=local | ?basemap=online)
 ```
+
+Regenerar estilo após mudança upstream: `npm run sync:basemap-style`
 
 Histórico e cache: [`docs/offline-scope.md`](docs/offline-scope.md). Índice de docs: [`docs/README.md`](docs/README.md).
 

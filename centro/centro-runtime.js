@@ -13,11 +13,16 @@
   var MIN_ZOOM = U.MIN_ZOOM || 13;
   var MAX_ZOOM = U.MAX_ZOOM || 17;
 
-  // OpenFreeMap (https://openfreemap.org) — vector tiles + glyphs + sprite
-  // gratuitos, sem chave de API. liberty = basemap claro + layer building-3d
-  // (maquete estrutural). Alternativas: bright | positron | dark-matter.
-  var BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
-  var BASEMAP_GROUND_COLOR = "#f8f4f0";
+  // Basemap: OpenFreeMap liberty — online em dev local; Vercel usa JSON local
+  // (/centro/assets/basemap/liberty.json) com tiles via proxy /basemap/ (vercel.json).
+  // Override: ?basemap=online | ?basemap=local
+  var basemapApi = window.CENTRO && window.CENTRO.map;
+  var BASEMAP_STYLE =
+    basemapApi && typeof basemapApi.resolveBasemapStyle === "function"
+      ? basemapApi.resolveBasemapStyle()
+      : "https://tiles.openfreemap.org/styles/liberty";
+  var BASEMAP_GROUND_COLOR =
+    (basemapApi && basemapApi.BASEMAP_GROUND_COLOR) || "#f8f4f0";
 
   // Fonte para labels POI: precisa existir no fontstack do basemap. Noto
   // Sans Regular é o default da OpenFreeMap. Implementação em poi-bootstrap.js.

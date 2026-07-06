@@ -3,9 +3,12 @@
 import http.server
 import os
 import sys
+import urllib.error
+import urllib.request
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 ROOT = os.path.dirname(os.path.abspath(__file__))
+BASEMAP_ORIGIN = 'https://tiles.openfreemap.org'
 
 # Superfícies que migraram para repositórios separados — 404 limpo, sem listagem.
 REMOVED_PREFIXES = ('/landing/', '/arquivo-morto/', '/arquivista/')
@@ -33,6 +36,8 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
 
         if is_vendor and is_success:
             self.send_header('Cache-Control', 'public, max-age=31536000, immutable')
+        elif request_path.startswith('/basemap/') and is_success:
+            self.send_header('Cache-Control', 'public, max-age=86400')
         else:
             # no-cache != no-store: o navegador pode guardar a resposta, mas
             # PRECISA revalidar com o servidor (If-Modified-Since / ETag)
@@ -44,8 +49,35 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('X-Content-Type-Options', 'nosniff')
         super().end_headers()
 
+    def _proxy_basemap(self, request_path):
+        upstream_path = request_path[len('/basemap'):]
+        query = ''
+        if '?' in self.path:
+            query = '?' + self.path.split('?', 1)[1]
+        upstream_url = BASEMAP_ORIGIN + upstream_path + query
+        try:
+            req = urllib.request.Request(
+                upstream_url,
+                headers={'User-Agent': 'projeto-centro/0.1 (local basemap proxy)'},
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = resp.read()
+                self.send_response(resp.status)
+                content_type = resp.headers.get('Content-Type', 'application/octet-stream')
+                self.send_header('Content-Type', content_type)
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(data)
+        except urllib.error.HTTPError as err:
+            self.send_error(err.code, f'Basemap upstream: {err.reason}')
+        except OSError as err:
+            self.send_error(502, f'Basemap proxy: {err}')
+
     def do_GET(self):
         request_path = (self.path or '').split('?', 1)[0]
+        if request_path.startswith('/basemap/'):
+            self._proxy_basemap(request_path)
+            return
         if request_path.startswith(REMOVED_PREFIXES):
             self.send_error(404, 'Superficie removida - ver repositorio dedicado')
             return
@@ -99,6 +131,7 @@ if __name__ == '__main__':
     print(f">> Servidor proxy rodando em http://127.0.0.1:{PORT}")
     print(f"   Projeto: {ROOT}")
     print(f"   Paths /pages/centro/ → /centro/, /app/ → /vendor/app/")
+    print(f"   /basemap/* → proxy OpenFreeMap (paridade Vercel)")
     print(f"   /landing/, /arquivo-morto/, /arquivista/ → 404 (repos separados)")
     print(f"   Ctrl+C para parar.")
     try:

@@ -25,14 +25,15 @@ Removidos na migração: `osm-style.json`, `centro/assets/tiles/`, `vendor/mapli
 
 ## Estado atual
 
-### Online (depende de rede)
+### Online (via proxy same-origin na Vercel)
 
 | Recurso | Origem | Tipo |
 |---|---|---|
-| Basemap (tiles + glyphs + sprite) | `https://tiles.openfreemap.org/styles/liberty` | Vector tiles gratuitas (OpenFreeMap) |
-| Style alternativo | `liberty` / `positron` / `bright` / `dark-matter` | Trocável em `BASEMAP_STYLE` do runtime |
+| Basemap (tiles + glyphs + sprite) | `/basemap/*` → proxy OpenFreeMap | Vector tiles (rewrite Vercel + `server.py` local) |
+| Estilo MapLibre | `/centro/assets/basemap/liberty.json` | Gerado por `npm run sync:basemap-style` |
+| Dev local (`localhost`) | `tiles.openfreemap.org` directo | Fallback em `basemap-config.js` |
 
-OpenFreeMap é open-source, sem chave, sem limite. Dados originais OSM (ODbL). [openfreemap.org](https://openfreemap.org/)
+OpenFreeMap é open-source, sem chave. Dados OSM (ODbL). [openfreemap.org](https://openfreemap.org/)
 
 ### Offline garantido (app local)
 

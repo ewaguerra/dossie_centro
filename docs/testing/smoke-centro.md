@@ -5,14 +5,14 @@ Checklist pós-alteração no mapa. Itens parciais também via `node scripts/smo
 ## Pré-requisitos
 
 ```bash
-npm run ci                 # 167/167
+npm run ci                 # 171/171
 python3 server.py          # http://127.0.0.1:8080
 node scripts/smoke-centro.mjs   # assets + console (parcial)
 ```
 
 Abrir: **http://127.0.0.1:8080/centro/**
 
-**Basemap:** OpenFreeMap online (`tiles.openfreemap.org`). Sem rede, o mapa base não carrega; app local (HTML, GeoJSON, ícones) continua servido. Ver [../offline-scope.md](../offline-scope.md).
+**Basemap (Vercel):** estilo local `/centro/assets/basemap/liberty.json` + tiles via proxy same-origin `/basemap/` (rewrite no `vercel.json`). O jogador precisa de internet na 1.ª visita; a Vercel faz cache dos tiles. Dev local (`localhost`) usa OpenFreeMap directo por defeito — testar paridade prod: `?basemap=local`. Ver [../offline-scope.md](../offline-scope.md).
 
 ## Checklist
 
@@ -20,7 +20,7 @@ Abrir: **http://127.0.0.1:8080/centro/**
 |---|---|---|
 | 1 | DevTools Console: sem erros vermelhos de JS | ☐ |
 | 2 | Network: runtime, GeoJSON, ícones SVG → **200** | ☐ |
-| 3 | Basemap vector visível **com internet** | ☐ |
+| 3 | Basemap vector visível (Network: `/basemap/` ou `openfreemap` → **200**) | ☐ |
 | 4 | **4 ícones POI** patrimoniais visíveis | ☐ |
 | 5 | Filtro temático `#poi-legend`: abrir/fechar bloco; marcar/desmarcar oculta camadas | ☐ |
 | 6 | Clique em POI abre popup | ☐ |

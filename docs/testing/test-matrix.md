@@ -1,6 +1,6 @@
 # Matriz de testes — projeto_centro
 
-**Suíte automatizada:** `npm test` → **168 testes** (140 sanity + 28 HTTP) · verificado 2026-07-05
+**Suíte automatizada:** `npm test` → **171 testes** (143 sanity + 28 HTTP) · verificado 2026-07-05
 
 > **Nota:** landing, arquivo-morto e arquivista vivem em repos irmãos — testes abaixo focam no **Centro** servido por este repositório.
 
@@ -31,7 +31,7 @@
 | TC-021 | `/centro/index.html` | 200, `no-cache` |
 | TC-022 | `/vendor/maplibre/maplibre-gl.js` | 200, immutable |
 | TC-023 | GeoJSON + SVG POI | todos 200 |
-| TC-024 | OpenFreeMap no runtime | URL `tiles.openfreemap.org` |
+| TC-024 | Basemap local + proxy `/basemap/` | `liberty.json`, `vercel.json` |
 | TC-024b | Bake antigo removido | `osm-style.json` ≠ 200; tiles locais ≠ 200 |
 | TC-027 | Módulos CSS centro | todos 200 |
 | TC-028 | `/landing/` removido | 404 |
@@ -51,3 +51,24 @@ Ver [smoke-centro.md](./smoke-centro.md).
 ## Acessibilidade manual — TC-010
 
 > Viewport 375×812 · `python3 server.py` · foco visível MVP (não WCAG 2.2 AA completo)
+
+| Página | Foco Tab OK |
+|---|---|
+| `/centro/` | 11/11 |
+
+Landing, Arquivo Morto e Arquivista são testados nos repos irmãos (`dossie_landing_portal`, `dossie_arquivo_morto`, `dossie_arquivista`).
+
+Detalhes de contraste: [../accessibility/contrast-notes.md](../accessibility/contrast-notes.md).
+
+## CI local
+
+Sem GitHub Actions. Rodar `npm run ci` antes de push: [ci-local.md](./ci-local.md).
+
+## Expansão futura
+
+| ID | Caso | Tipo |
+|---|---|---|
+| TC-006 | landing → centro (cross-repo) | e2e |
+| TC-010b | axe-core `/centro/` | a11y |
+
+Ver também: [../offline-scope.md](../offline-scope.md), [../stack.md](../stack.md).

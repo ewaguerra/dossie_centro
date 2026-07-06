@@ -10,7 +10,7 @@ Toda verificação roda **na sua máquina**, antes de `git push`.
 npm run ci
 ```
 
-Equivalente a `npm test` (**168 testes**: 140 sanity + 28 HTTP).
+Equivalente a `npm test` (**171 testes**: 143 sanity + 28 HTTP).
 
 O arquivo `tests/http.test.js` sobe `python3 server.py` na porta **9876** automaticamente — não precisa iniciar o servidor manualmente para a suíte.
 
@@ -18,7 +18,7 @@ O arquivo `tests/http.test.js` sobe `python3 server.py` na porta **9876** automa
 
 ```bash
 npm install          # postinstall sincroniza maplibre + ícones + three
-npm run ci           # deve terminar com 167 pass, 0 fail
+npm run ci           # deve terminar com 171 pass, 0 fail
 git add …
 git commit …
 git push

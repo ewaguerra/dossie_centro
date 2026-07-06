@@ -5,13 +5,26 @@
     { "source": "/pages/centro/:path*", "destination": "/centro/:path*" },
     { "source": "/app/vendor/maplibre/:path*", "destination": "/vendor/maplibre/:path*" },
     { "source": "/app/vendor/:path*", "destination": "/vendor/app/vendor/:path*" },
-    { "source": "/app/:path*", "destination": "/vendor/app/:path*" }
+    { "source": "/app/:path*", "destination": "/vendor/app/:path*" },
+    { "source": "/basemap/:path*", "destination": "https://tiles.openfreemap.org/:path*" }
   ],
   "headers": [
     {
       "source": "/vendor/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/basemap/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+      ]
+    },
+    {
+      "source": "/centro/assets/basemap/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
       ]
     }
   ]

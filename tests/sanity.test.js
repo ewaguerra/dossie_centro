@@ -1656,14 +1656,16 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── Migra\u00e7\u00e3o para OpenFreeMap ─────────────────────────────────
-  it('runtime aponta para OpenFreeMap como basemap (vector tiles gratuitos)', () => {
+  it('runtime resolve basemap via basemap-config (Vercel: local + proxy /basemap/)', () => {
     const runtime = read('centro/centro-runtime.js');
+    const basemapCfg = read('centro/map/basemap-config.js');
+    const html = read('centro/index.html');
     const poiBoot = read('centro/map/poi-bootstrap.js');
-    assert.ok(runtime.includes('BASEMAP_STYLE'), 'constante BASEMAP_STYLE ausente');
-    assert.ok(
-      runtime.includes('tiles.openfreemap.org/styles/'),
-      'runtime deve apontar para OpenFreeMap'
-    );
+    assert.ok(runtime.includes('resolveBasemapStyle'), 'runtime deve usar resolveBasemapStyle');
+    assert.ok(basemapCfg.includes('STYLE_LOCAL'), 'basemap-config deve expor STYLE_LOCAL');
+    assert.ok(basemapCfg.includes('/centro/assets/basemap/liberty.json'), 'STYLE_LOCAL ausente');
+    assert.ok(basemapCfg.includes('tiles.openfreemap.org/styles/liberty'), 'STYLE_ONLINE ausente');
+    assert.ok(html.includes('basemap-config.js'), 'index.html deve carregar basemap-config');
     assert.ok(!runtime.includes('"/osm-style.json"'), 'runtime nao deve usar osm-style.json local');
     assert.ok(
       poiBoot.includes('POI_TEXT_FONT'),
@@ -1672,6 +1674,32 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(
       poiBoot.includes('Noto Sans Regular'),
       'POI labels devem usar Noto Sans (default OpenFreeMap)'
+    );
+  });
+
+  it('liberty.json local reescreve URLs OpenFreeMap para /basemap/', () => {
+    assert.ok(exists('centro/assets/basemap/liberty.json'), 'liberty.json ausente — rode npm run sync:basemap-style');
+    assert.ok(exists('centro/assets/basemap/planet.json'), 'planet.json ausente — rode npm run sync:basemap-style');
+    const style = read('centro/assets/basemap/liberty.json');
+    const planet = read('centro/assets/basemap/planet.json');
+    assert.ok(style.includes('/centro/assets/basemap/planet.json'), 'liberty deve apontar planet.json local');
+    assert.ok(planet.includes('"/basemap/planet/'), 'planet.json deve usar tiles proxied');
+    assert.ok(!style.includes('https://tiles.openfreemap.org'), 'nao deve restar URL absoluta no estilo');
+    assert.ok(!planet.includes('https://tiles.openfreemap.org'), 'nao deve restar URL absoluta no planet');
+    const pkg = JSON.parse(read('package.json'));
+    assert.ok(pkg.scripts && pkg.scripts['sync:basemap-style'], 'npm run sync:basemap-style ausente');
+  });
+
+  it('vercel.json faz proxy /basemap/ para OpenFreeMap (producao Vercel)', () => {
+    const vercel = JSON.parse(read('vercel.json'));
+    const rewrites = vercel.rewrites || [];
+    const basemapRewrite = rewrites.find(function (r) {
+      return r.source === '/basemap/:path*';
+    });
+    assert.ok(basemapRewrite, 'rewrite /basemap/:path* ausente em vercel.json');
+    assert.ok(
+      String(basemapRewrite.destination).includes('tiles.openfreemap.org'),
+      'destino do proxy basemap incorreto'
     );
   });
 
