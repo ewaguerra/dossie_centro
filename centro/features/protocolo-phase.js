@@ -214,6 +214,7 @@
     applyPhaseFromQuery();
     maybeAdvancePhaseFromClues();
     updatePhaseBadge();
+    dispatchArgStateChanged();
   });
 
   window.CENTRO = window.CENTRO || {};

@@ -86,7 +86,7 @@
       "suspect_coordinates_0_0": 0,
       "minzoom": 9,
       "maxzoom": 22,
-      "visible": false,
+      "visible": true,
       "style": {
         "color": "#3b82f6",
         "paint": {

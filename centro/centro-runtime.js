@@ -239,8 +239,16 @@
   }
 
   function applyAllPoiThemeFilters() {
-    var api = ensurePoiFilterApi();
-    if (api) api.applyAll();
+    var phaseApi = window.CENTRO && window.CENTRO.protocoloPhase;
+    var run = function () {
+      var api = ensurePoiFilterApi();
+      if (api) api.applyAll();
+    };
+    if (phaseApi && typeof phaseApi.loadPhaseGates === "function") {
+      phaseApi.loadPhaseGates().then(run);
+      return;
+    }
+    run();
   }
 
   function setupPoiThemeFilter() {
