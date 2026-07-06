@@ -182,6 +182,7 @@
   var buildings3dApi = null;
   var poiFilterApi = null;
   var subterraneanApi = null;
+  var investigationRayApi = null;
   var poiBootstrapApi = null;
   var trianguloOverlayApi = null;
   var sidebarOrchestratorApi = null;
@@ -311,6 +312,29 @@
       document.removeEventListener("centro:subterranean-ready", onReady);
       var readyApi = ensureSubterraneanApi();
       if (readyApi) readyApi.setupToggle();
+    });
+  }
+
+  function ensureInvestigationRayApi() {
+    if (
+      !investigationRayApi &&
+      window.CENTRO &&
+      window.CENTRO.ui &&
+      window.CENTRO.ui.investigationRay
+    ) {
+      investigationRayApi = window.CENTRO.ui.investigationRay.create(function () {
+        return map;
+      });
+    }
+    return investigationRayApi;
+  }
+
+  function setupInvestigationRay() {
+    var api = ensureInvestigationRayApi();
+    if (!api || typeof api.install !== "function") return;
+    api.install();
+    mapReadyPromise.then(function () {
+      if (typeof api.attachToMapContainer === "function") api.attachToMapContainer();
     });
   }
 
@@ -566,6 +590,7 @@
       if (chrome && typeof chrome.install === "function") chrome.install();
       setupBuildings3DToggle();
       setupSubterraneanToggle();
+      setupInvestigationRay();
       setupPoiThemeFilter();
       loadSidebarData();
       initMap();

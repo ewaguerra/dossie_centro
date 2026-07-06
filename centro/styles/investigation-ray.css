@@ -1,0 +1,59 @@
+/** Centro — raio investigativo (spotlight forense que segue o cursor no mapa) */
+
+.centro-investigation-ray {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+  --ray-x: 50%;
+  --ray-y: 50%;
+}
+
+.centro-investigation-ray[hidden] {
+  display: none !important;
+}
+
+.centro-investigation-ray::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 168px at var(--ray-x) var(--ray-y),
+    rgba(248, 244, 240, 0) 0%,
+    rgba(248, 244, 240, 0) 36%,
+    rgba(15, 23, 42, 0.14) 68%,
+    rgba(15, 23, 42, 0.28) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
+.centro-investigation-ray::after {
+  content: "";
+  position: absolute;
+  left: var(--ray-x);
+  top: var(--ray-y);
+  width: 54px;
+  height: 54px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(220, 38, 38, 0.5);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(245, 158, 11, 0.22),
+    inset 0 0 10px rgba(245, 158, 11, 0.1);
+  background:
+    linear-gradient(rgba(220, 38, 38, 0.55), rgba(220, 38, 38, 0.55)) center / 1px 100% no-repeat,
+    linear-gradient(90deg, rgba(220, 38, 38, 0.55), rgba(220, 38, 38, 0.55)) center / 100% 1px no-repeat;
+  opacity: 0.8;
+}
+
+body.subterranean-active .centro-investigation-ray,
+body.centro-access-locked .centro-investigation-ray {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .centro-investigation-ray {
+    display: none !important;
+  }
+}

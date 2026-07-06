@@ -234,6 +234,7 @@ describe('projeto_centro — sanity checks', () => {
       'centro/styles/feature-inspector.css',
       'centro/styles/profile-card.css',
       'centro/styles/jesuit-frame.css',
+      'centro/styles/investigation-ray.css',
       'centro/styles/map-popups.css',
       'centro/styles/responsive.css',
     ];
@@ -509,6 +510,24 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!/onclick\s*=/.test(runtime), 'runtime nao deve gerar onclick inline');
   });
 
+  it('raio investigativo: assets, wiring e coordenadas relativas ao mapa', () => {
+    const html = read('centro/index.html');
+    const rayJs = read('centro/ui/investigation-ray.js');
+    const rayCss = read('centro/styles/investigation-ray.css');
+    const runtime = read('centro/centro-runtime.js');
+    const sub = read('centro/features/subterranean-cutaway.js');
+    const subCss = read('centro/styles/subterranean-cutaway.css');
+    assert.ok(html.includes('investigation-ray.css'), 'CSS do raio no index');
+    assert.ok(html.includes('investigation-ray.js'), 'JS do raio no index');
+    assert.ok(runtime.includes('setupInvestigationRay'), 'runtime instala raio investigativo');
+    assert.ok(rayJs.includes('getBoundingClientRect'), 'raio usa coords relativas ao container');
+    assert.ok(rayJs.includes('requestAnimationFrame'), 'raio usa rAF para suavizar movimento');
+    assert.ok(rayCss.includes('--ray-x'), 'CSS expoe vars do spotlight');
+    assert.ok(sub.includes('map.getContainer'), 'labels subterrâneas ancoradas ao container do mapa');
+    assert.ok(subCss.includes('position: absolute'), 'labels subterrâneas posicionadas no mapa');
+    assert.ok(!subCss.match(/\.subterranean-labels\s*\{[^}]*position:\s*fixed/s), 'labels nao usam fixed');
+  });
+
   it('centro-runtime.js deve conter modulos de inicializacao extraidos do HTML', () => {
     const runtime = read('centro/centro-runtime.js');
     const modules = [
@@ -641,6 +660,7 @@ describe('projeto_centro — sanity checks', () => {
       'centro/styles/feature-inspector.css',
       'centro/styles/profile-card.css',
       'centro/styles/jesuit-frame.css',
+      'centro/styles/investigation-ray.css',
       'centro/styles/map-popups.css',
       'centro/styles/responsive.css',
       'centro/styles/centro-chrome.css',

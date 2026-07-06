@@ -785,19 +785,25 @@ import * as THREE from "/vendor/three/three.module.min.js";
 
   // ── Rótulos flutuantes no mapa ───────────────────────────────────────────
 
-  function ensureLabelsHost() {
+  function ensureLabelsHost(map) {
     var host = document.getElementById(LABELS_ID);
-    if (host) return host;
-    host = document.createElement("div");
-    host.id        = LABELS_ID;
-    host.className = "subterranean-labels";
-    host.setAttribute("aria-hidden", "true");
-    document.body.appendChild(host);
+    if (!host) {
+      host = document.createElement("div");
+      host.id        = LABELS_ID;
+      host.className = "subterranean-labels";
+      host.setAttribute("aria-hidden", "true");
+    }
+    var container = map && map.getContainer ? map.getContainer() : null;
+    if (container && host.parentElement !== container) {
+      container.appendChild(host);
+    } else if (!host.parentElement) {
+      document.body.appendChild(host);
+    }
     return host;
   }
 
   function updateLabels(map, enabled) {
-    var host = ensureLabelsHost();
+    var host = ensureLabelsHost(map);
     host.hidden = !enabled;
     if (!enabled) return;
     host.innerHTML = "";
@@ -820,6 +826,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
     var getMap       = ctx.getMap;
     var clickHandler = null;
     var moveHandler  = null;
+    var hoverHandler = null;
     var activeLayer  = null;
     var enabled      = false;
 
@@ -874,7 +881,14 @@ import * as THREE from "/vendor/three/three.module.min.js";
         if (item) markItemFound(item);
       };
       moveHandler = function () { updateLabels(map, enabled); };
+      hoverHandler = function (e) {
+        if (!enabled || !activeLayer) return;
+        var soul = activeLayer.pickSoul(e.point);
+        var item = soul ? null : activeLayer.pickItem(e.point);
+        map.getCanvas().style.cursor = soul || item ? "crosshair" : "";
+      };
       map.on("click", clickHandler);
+      map.on("mousemove", hoverHandler);
       map.on("move",  moveHandler);
       map.on("zoom",  moveHandler);
       map.on("pitch", moveHandler);
@@ -884,11 +898,13 @@ import * as THREE from "/vendor/three/three.module.min.js";
     function unbindInteraction(map) {
       if (!clickHandler) return;
       map.off("click", clickHandler);
+      map.off("mousemove", hoverHandler);
       map.off("move",  moveHandler);
       map.off("zoom",  moveHandler);
       map.off("pitch", moveHandler);
       map.off("rotate", moveHandler);
-      clickHandler = moveHandler = null;
+      map.getCanvas().style.cursor = "";
+      clickHandler = moveHandler = hoverHandler = null;
     }
 
     function syncToggleUI(nextEnabled) {

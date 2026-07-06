@@ -159,10 +159,15 @@ body.subterranean-active #map::before {
 }
 
 .subterranean-labels {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 35;
   pointer-events: none;
+}
+
+#map .subterranean-labels {
+  position: absolute;
+  inset: 0;
 }
 
 .subterranean-label {
