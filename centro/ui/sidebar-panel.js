@@ -72,8 +72,6 @@
             ? " (bloqueada — Requer pista no Caderno)"
             : " (bloqueada — Disponível na fase ARG)";
       cb.setAttribute("aria-label", (ly.title || ly.id) + lockHint);
-    } else if (ly.visible !== false) {
-      cb.checked = true;
     }
 
     var span = document.createElement("span");

@@ -141,6 +141,15 @@
           if (statusEl) statusEl.style.display = "none";
           renderSidebarPanel(panel, data.groups, data.sidebarLayers || data.layers);
           wireLayerCheckboxes(panel);
+          if (typeof ctx.whenMapReady === "function") {
+            ctx.whenMapReady(function () {
+              if (typeof window.CENTRO.scheduleBasemapOnlyBoot === "function") {
+                window.CENTRO.scheduleBasemapOnlyBoot();
+              } else if (typeof window.CENTRO.applyBasemapOnlyView === "function") {
+                window.CENTRO.applyBasemapOnlyView();
+              }
+            });
+          }
           if (phaseApi && typeof phaseApi.updatePhaseBadge === "function") {
             phaseApi.updatePhaseBadge();
           }

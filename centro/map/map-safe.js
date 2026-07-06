@@ -65,10 +65,52 @@
     }
   }
 
+  function tintForensicDiscSvg(svgText, strokeColor) {
+    return String(svgText || "").replace(/stroke="#57534e"/g, 'stroke="' + strokeColor + '"');
+  }
+
+  function svgTextToImage(svgText) {
+    return new Promise(function (resolve, reject) {
+      var blob = new Blob([svgText], { type: "image/svg+xml" });
+      var url = URL.createObjectURL(blob);
+      var image = new Image();
+      image.onload = function () {
+        URL.revokeObjectURL(url);
+        resolve(image);
+      };
+      image.onerror = function () {
+        URL.revokeObjectURL(url);
+        reject(new Error("Falha ao rasterizar SVG tintado"));
+      };
+      image.src = url;
+    });
+  }
+
+  async function ensureEraThemedIcons(mapInstance, iconPath, baseImageId, eras) {
+    if (!mapInstance || !iconPath || !baseImageId || !eras || !eras.length) return;
+    var response = await fetch(iconPath);
+    if (!response.ok) {
+      throw new Error("Falha ao carregar SVG para epocas: " + iconPath + " -> " + response.status);
+    }
+    var svgText = await response.text();
+    for (var i = 0; i < eras.length; i++) {
+      var era = eras[i];
+      if (!era || !era.id || !era.color) continue;
+      var imageId = baseImageId + "--" + era.id;
+      if (mapInstance.hasImage(imageId)) continue;
+      var tintedSvg = tintForensicDiscSvg(svgText, era.color);
+      var imageData = await svgTextToImage(tintedSvg);
+      if (!mapInstance.hasImage(imageId)) {
+        mapInstance.addImage(imageId, imageData);
+      }
+    }
+  }
+
   window.CENTRO = window.CENTRO || {};
   window.CENTRO.map = window.CENTRO.map || {};
   window.CENTRO.map.ensureSource = ensureSource;
   window.CENTRO.map.ensureLayer = ensureLayer;
   window.CENTRO.map.ensureImage = ensureImage;
+  window.CENTRO.map.ensureEraThemedIcons = ensureEraThemedIcons;
   window.CENTRO.map.bindLayerEventOnce = bindLayerEventOnce;
 })();

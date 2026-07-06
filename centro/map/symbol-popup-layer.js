@@ -40,24 +40,29 @@
     }
 
     ensureSource(mapInstance, config.sourceId, config.source);
-    await ensureImage(mapInstance, config.imageId, config.iconPath);
+    if (!config.skipBaseImage) {
+      await ensureImage(mapInstance, config.imageId, config.iconPath);
+    }
 
     ensureLayer(mapInstance, {
       id: config.iconLayerId,
       type: "symbol",
       source: config.sourceId,
-      layout: config.iconLayout,
+      layout: Object.assign({}, config.iconLayout, { visibility: "none" }),
       paint: config.iconPaint,
     });
 
     if (config.label && config.label.enabled) {
-      ensureLayer(mapInstance, {
+      var labelLayer = {
         id: config.label.layerId,
         type: "symbol",
         source: config.sourceId,
         layout: config.label.layout,
         paint: config.label.paint,
-      });
+      };
+      if (config.label.filter) labelLayer.filter = config.label.filter;
+      labelLayer.layout = Object.assign({}, config.label.layout, { visibility: "none" });
+      ensureLayer(mapInstance, labelLayer);
     }
 
     var popupCfg = config.popup || {};

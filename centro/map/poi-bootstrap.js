@@ -45,18 +45,54 @@
       return !!(style && style.glyphs);
     }
 
+    function getClassifier() {
+      return window.CENTRO && window.CENTRO.poiEraClassifier;
+    }
+
+    function themeUsesEraIconImages(themeId) {
+      var classifier = getClassifier();
+      return !!(
+        themeId &&
+        classifier &&
+        typeof classifier.themeUsesEraHalo === "function" &&
+        classifier.themeUsesEraHalo(themeId)
+      );
+    }
+
     function getMapIconHaloPaint(themeId) {
-      var classifier = window.CENTRO && window.CENTRO.poiEraClassifier;
+      var iconsRegistry = window.MAPA_SP_ICONS;
+      var paper = (iconsRegistry && iconsRegistry.settings && iconsRegistry.settings.paper) || "#fdfbf7";
+      if (themeUsesEraIconImages(themeId)) {
+        return {
+          "icon-halo-color": paper,
+          "icon-halo-width": 1.5,
+          "icon-halo-blur": 0.25,
+        };
+      }
+      var classifier = getClassifier();
       if (classifier && typeof classifier.buildSubFilterPaint === "function" && themeId) {
         return classifier.buildSubFilterPaint(themeId);
       }
-      var iconsRegistry = window.MAPA_SP_ICONS;
-      var paper = (iconsRegistry && iconsRegistry.settings && iconsRegistry.settings.paper) || "#fdfbf7";
       return {
         "icon-halo-color": paper,
         "icon-halo-width": 2,
         "icon-halo-blur": 0.5,
       };
+    }
+
+    function getMapLabelPaint(themeId) {
+      var classifier = window.CENTRO && window.CENTRO.poiEraClassifier;
+      var base = {
+        "text-color": "#1a1a1a",
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 0.5,
+      };
+      if (classifier && typeof classifier.buildSubFilterLabelPaint === "function" && themeId) {
+        var eraPaint = classifier.buildSubFilterLabelPaint(themeId);
+        if (eraPaint) return Object.assign(base, eraPaint);
+      }
+      return base;
     }
 
     function enrichSourceData(themeId, sourceData) {
@@ -96,23 +132,29 @@
       }
 
       var labelConfig = null;
-      if (titleProp && styleSupportsTextLabels(mapInstance)) {
+      if (titleProp) {
+        if (!styleSupportsTextLabels(mapInstance)) {
+          console.warn(
+            "[CENTRO] Estilo sem glyphs — labels POI podem falhar:",
+            labelLayerId
+          );
+        }
         labelConfig = {
           layerId: labelLayerId,
           enabled: true,
+          filter: ["all", ["has", titleProp], ["!=", ["to-string", ["get", titleProp]], ""]],
           layout: {
-            "text-field": ["get", titleProp],
+            "text-field": ["to-string", ["get", titleProp]],
             "text-font": POI_TEXT_FONT,
-            "text-size": 10,
-            "text-offset": [0, 2],
+            "text-size": 11,
+            "text-offset": [0, 2.2],
             "text-anchor": "top",
+            "text-allow-overlap": true,
+            "text-ignore-placement": true,
+            "text-optional": false,
+            "text-max-width": 18,
           },
-          paint: {
-            "text-color": "#1a1a1a",
-            "text-halo-color": "#ffffff",
-            "text-halo-width": 1.5,
-            "text-halo-blur": 0.5,
-          },
+          paint: getMapLabelPaint(themeId),
         };
       }
 
@@ -129,14 +171,31 @@
 
       sourceData = enrichSourceData(themeId, sourceData);
 
+      var useEraIconImages = themeUsesEraIconImages(themeId);
+      var classifier = getClassifier();
+      if (useEraIconImages) {
+        var ensureEraIcons = getMapHelper("ensureEraThemedIcons");
+        if (typeof ensureEraIcons === "function" && classifier && typeof classifier.getEras === "function") {
+          await ensureEraIcons(mapInstance, iconPath, imageId, classifier.getEras());
+        }
+      }
+
+      var iconImageLayout =
+        useEraIconImages &&
+        classifier &&
+        typeof classifier.buildEraIconImageMatch === "function"
+          ? classifier.buildEraIconImageMatch(imageId)
+          : imageId;
+
       return addSymbol(mapInstance, {
         sourceId: sourceId,
         iconLayerId: iconLayerId,
         source: { type: "geojson", data: sourceData },
         imageId: imageId,
         iconPath: iconPath,
+        skipBaseImage: useEraIconImages,
         iconLayout: {
-          "icon-image": imageId,
+          "icon-image": iconImageLayout,
           "icon-size": 0.82,
           "icon-allow-overlap": true,
           "icon-anchor": "center",
@@ -280,6 +339,7 @@
           iconLayerId:
             (poi.MONUMENTOS_LAYERS && poi.MONUMENTOS_LAYERS.iconLayerId) || "monumentos-icon",
           titleProp: "nm_obra",
+          addrProp: "dc_localizacao",
         },
         {
           id: "poi-turistico",

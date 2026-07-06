@@ -338,7 +338,9 @@ describe('projeto_centro — sanity checks', () => {
     const chrome = read('centro/ui/centro-chrome.js');
     assert.ok(chrome.includes('setupSidebarTabs'), 'setupSidebarTabs no centro-chrome');
     assert.ok(chrome.includes('activateSidebarTab'), 'activateSidebarTab no centro-chrome');
-    assert.ok(chrome.includes('sidebar-tab-camadas'), 'tab camadas default ausente');
+    assert.ok(chrome.includes('sidebar-tab-fases'), 'tab 13 Almas default ausente');
+    assert.ok(html.includes('id="sidebar-tab-fases"') && html.includes('aria-selected="true"'), '13 Almas activa no HTML');
+    assert.ok(html.includes('id="sidebar-panel-fases"') && !html.match(/id="sidebar-panel-fases"[^>]*hidden/), 'painel 13 Almas visivel por defeito');
     assert.ok(chrome.includes('syncSubterraneanGuideAccess'), 'guia subsolo sincroniza com fase ARG');
     assert.ok(chrome.includes('GUIDE_MIN_PHASE'), 'guia subsolo exige fase minima');
     assert.ok(chrome.includes('openSubterraneanGuide'), 'API openSubterraneanGuide presente');
@@ -422,18 +424,39 @@ describe('projeto_centro — sanity checks', () => {
       assert.ok(match, 'disco forense com stroke de categoria ausente em ' + path);
       return match[1];
     }
+    const eraNeutral = '#57534e';
+    assert.strictEqual(ringStroke('centro/assets/icons/icon-memoria.svg'), eraNeutral, 'memoria usa tinta neutra (halo por epoca)');
+    assert.strictEqual(ringStroke('centro/assets/icons/icon-acervo.svg'), eraNeutral, 'acervo usa tinta neutra (halo por epoca)');
+    assert.strictEqual(ringStroke('centro/assets/icons/icon-monumentos.svg'), eraNeutral, 'monumentos usa tinta neutra (halo por epoca)');
     const strokes = [
-      ringStroke('centro/assets/icons/icon-memoria.svg'),
-      ringStroke('centro/assets/icons/icon-acervo.svg'),
       ringStroke('centro/assets/icons/icon-arqueologia.svg'),
-      ringStroke('centro/assets/icons/icon-monumentos.svg'),
+      ringStroke('centro/assets/icons/icon-turismo.svg'),
       ringStroke('centro/assets/icons/icon-pista.svg'),
       ringStroke('centro/assets/icons/icon-droplets.svg'),
     ];
     const unique = new Set(strokes);
-    assert.strictEqual(unique.size, strokes.length, 'cada icone deve ter cor unica: ' + strokes.join(', '));
-    assert.strictEqual(strokes[4], '#eab308', 'pistas deve ser ouro');
-    assert.strictEqual(strokes[3], '#be123c', 'monumentos deve ser carmesim');
+    assert.strictEqual(unique.size, strokes.length, 'icones tematicos fixos devem ter cor unica: ' + strokes.join(', '));
+    assert.strictEqual(strokes[2], '#eab308', 'pistas deve ser ouro');
+    const icons = read('vendor/app/config/map-icons.js');
+    const monumentosMatch = icons.match(/monumentos:\s*\{[\s\S]*?color:\s*"([^"]+)"/);
+    assert.ok(monumentosMatch, 'entrada monumentos em map-icons');
+    assert.strictEqual(monumentosMatch[1], '#be123c', 'legenda monumentos mantem carmesim');
+  });
+
+  it('monumentos POI: titulos nm_obra, epoca no geojson e halo/label por era', () => {
+    const geo = JSON.parse(read('centro/data/context/centro_monumentos__point.geojson'));
+    const missing = geo.features.filter((f) => !f.properties || !f.properties.nm_obra);
+    assert.strictEqual(missing.length, 0, 'todas as obras devem ter nm_obra');
+    const poiBoot = read('centro/map/poi-bootstrap.js');
+    const eraCls = read('centro/features/poi-era-classifier.js');
+    assert.ok(poiBoot.includes('nm_obra'), 'bootstrap usa nm_obra como titulo');
+    assert.ok(poiBoot.includes('ensureEraThemedIcons'), 'bootstrap registra icones tintados por epoca');
+    assert.ok(poiBoot.includes('buildEraIconImageMatch'), 'bootstrap usa icon-image por poi_era');
+    assert.ok(poiBoot.includes('text-allow-overlap'), 'labels POI permitem overlap');
+    assert.ok(!poiBoot.includes('titleProp && styleSupportsTextLabels'), 'labels nao dependem de guard glyphs');
+    assert.ok(poiBoot.includes('getMapLabelPaint'), 'labels POI usam paint por epoca');
+    assert.ok(eraCls.includes('buildSubFilterLabelPaint'), 'classifier expoe paint de label por epoca');
+    assert.ok(eraCls.includes('tx_data_implantacao'), 'monumentos classificados por tx_data_implantacao');
   });
 
   it('icones POI usam Lucide stroke puro (fill none, como botoes OP)', () => {
@@ -1590,11 +1613,10 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── Contraste WCAG labels POI ───────────────────────────────────
-  it('poi-bootstrap.js: labels POI usam texto escuro com halo branco', () => {
+  it('poi-bootstrap.js: labels POI usam texto escuro e halo por epoca', () => {
     const poiBoot = read('centro/map/poi-bootstrap.js');
     assert.ok(poiBoot.includes('"text-color": "#1a1a1a"'), 'texto escuro ausente');
-    assert.ok(poiBoot.includes('"text-halo-color": "#ffffff"'), 'halo branco ausente');
-    assert.ok(/"text-halo-width":\s*1\.5/.test(poiBoot), 'halo width 1.5');
+    assert.ok(poiBoot.includes('getMapLabelPaint'), 'paint de label por tema/epoca');
     assert.ok(!/"text-color":\s*"#fff"/.test(poiBoot), 'nao deve manter branco antigo');
   });
 
@@ -2430,7 +2452,10 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('setupArgStateListener'), 'setupArgStateListener presente');
     assert.ok(runtime.includes('ensureArgResyncApi'), 'runtime instancia argResync');
     assert.ok(argResync.includes('centro:arg-state-changed'), 'arg-resync escuta evento');
-    assert.ok(argResync.includes('syncTriangulo'), 'triângulo resync via ctx.syncTriangulo');
+    assert.ok(runtime.includes('applyBasemapOnlyView'), 'runtime expõe applyBasemapOnlyView');
+    assert.ok(runtime.includes('scheduleBasemapOnlyBoot'), 'runtime agenda limpeza pós-boot');
+    const sidebarOrch = read('centro/ui/sidebar-orchestrator.js');
+    assert.ok(sidebarOrch.includes('scheduleBasemapOnlyBoot') || sidebarOrch.includes('applyBasemapOnlyView'), 'sidebar re-aplica basemap only após carregar');
     assert.ok(triOverlay.includes('remove(mapInstance)'), 'triângulo remove quando fase < 11');
     assert.ok(triOverlay.includes('isFeaturePhaseUnlocked("triangulo-historico")'), 'gate triangulo no overlay');
     assert.ok(argResync.includes('protocolo13_caderno_clues'), 'storage listener caderno');

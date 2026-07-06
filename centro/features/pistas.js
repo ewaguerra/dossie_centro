@@ -150,18 +150,11 @@
     if (!toggle || typeof getMap !== "function") return;
     pistasGetMap = getMap;
 
-    var visible = true;
-    try {
-      var stored = window.localStorage && window.localStorage.getItem(PISTAS_RSB_STORAGE_KEY);
-      if (stored === "0") visible = false;
-      if (stored === "1") visible = true;
-    } catch (_e) {
-      // ignora
-    }
+    var visible = false;
     if (!isPistasRsbUnlocked()) visible = false;
     toggle.checked = visible;
     syncPistasRsbToggleUI(toggle, getMap);
-    if (visible) setPistasRsbVisibility(getMap(), true);
+    setPistasRsbVisibility(getMap(), visible);
 
     toggle.addEventListener("change", function () {
       if (!isPistasRsbUnlocked()) {

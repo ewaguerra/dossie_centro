@@ -326,11 +326,9 @@ import * as THREE from "/vendor/three/three.module.min.js";
     return "Visão subterrânea liberada.";
   }
 
-  function getInitialEnabled() {
-    if (isMasterMode()) return true;
-    try { return window.localStorage && window.localStorage.getItem(ENABLED_STORAGE_KEY) === "1"; }
-    catch (_e) { return false; }
-  }
+    function getInitialEnabled() {
+      return false;
+    }
 
   function persistEnabled(enabled) {
     try { if (window.localStorage) window.localStorage.setItem(ENABLED_STORAGE_KEY, enabled ? "1" : "0"); }

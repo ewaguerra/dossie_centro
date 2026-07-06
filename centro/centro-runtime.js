@@ -251,6 +251,93 @@
     run();
   }
 
+  function syncSidebarCheckboxesToBasemapOnly() {
+    var panel = document.getElementById("panel");
+    if (!panel) return;
+    panel.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+      cb.checked = false;
+    });
+    panel.querySelectorAll(".poi-legend__item--theme").forEach(function (row) {
+      row.classList.add("poi-legend__item--off");
+    });
+    panel.querySelectorAll(".poi-legend__sub-item").forEach(function (row) {
+      row.classList.add("poi-legend__sub-item--off");
+    });
+    var legend = document.getElementById("buildings-legend");
+    if (legend) legend.hidden = true;
+  }
+
+  function hideAllOverlayLayersSync(mapRef) {
+    if (!mapRef) return;
+    var icons = window.MAPA_SP_ICONS;
+    if (icons && typeof icons.getThemeFilters === "function") {
+      var themes = icons.getThemeFilters();
+      for (var ti = 0; ti < themes.length; ti++) {
+        var layerIds = themes[ti].layerIds || [];
+        for (var li = 0; li < layerIds.length; li++) {
+          var layerId = layerIds[li];
+          if (mapRef.getLayer(layerId)) {
+            mapRef.setLayoutProperty(layerId, "visibility", "none");
+          }
+        }
+      }
+    }
+    var pistasApi = window.CENTRO && window.CENTRO.pistas;
+    if (pistasApi && pistasApi.POI_LAYERS) {
+      var pistaLayers = pistasApi.POI_LAYERS;
+      var pistaKeys = Object.keys(pistaLayers);
+      for (var pi = 0; pi < pistaKeys.length; pi++) {
+        var pistaLayerId = pistaLayers[pistaKeys[pi]];
+        if (mapRef.getLayer(pistaLayerId)) {
+          mapRef.setLayoutProperty(pistaLayerId, "visibility", "none");
+        }
+      }
+    }
+    if (mapRef.getLayer("building-3d")) {
+      mapRef.setLayoutProperty("building-3d", "visibility", "none");
+    }
+    if (activeLayers && activeLayers.size) {
+      activeLayers.forEach(function (layerId) {
+        removeLayerFromMap(layerId);
+      });
+    }
+  }
+
+  function applyBasemapOnlyView(mapInstance) {
+    var mapRef = mapInstance || map;
+    syncSidebarCheckboxesToBasemapOnly();
+    hideAllOverlayLayersSync(mapRef);
+
+    var pistasApi = window.CENTRO && window.CENTRO.pistas;
+    if (pistasApi && typeof pistasApi.setPistasRsbVisibility === "function" && mapRef) {
+      pistasApi.setPistasRsbVisibility(mapRef, false);
+    }
+
+    setBuildings3DEnabled(false, { persist: false, silent: true });
+    var b3d = ensureBuildings3dApi();
+    if (b3d && typeof b3d.syncToggleUI === "function") b3d.syncToggleUI(false);
+
+    setSubterraneanEnabled(false, { persist: false, silent: true, noFly: true });
+    var sub = ensureSubterraneanApi();
+    if (sub && typeof sub.syncToggleUI === "function") sub.syncToggleUI(false);
+
+    var tri = ensureTrianguloOverlayApi();
+    if (tri && typeof tri.remove === "function" && mapRef) tri.remove(mapRef);
+
+    var poiApi = ensurePoiFilterApi();
+    if (poiApi && typeof poiApi.applyAll === "function") poiApi.applyAll();
+  }
+
+  function scheduleBasemapOnlyBoot(mapInstance) {
+    applyBasemapOnlyView(mapInstance);
+    mapReadyPromise.then(function () {
+      applyBasemapOnlyView(mapInstance || map);
+      window.setTimeout(function () {
+        applyBasemapOnlyView(mapInstance || map);
+      }, 0);
+    });
+  }
+
   function setupPoiThemeFilter() {
     var api = ensurePoiFilterApi();
     if (api) api.setup();
@@ -383,10 +470,9 @@
               return mapInstance;
             });
           }
-          applyAllPoiThemeFilters();
         },
         onPistasError: function () {
-          applyAllPoiThemeFilters();
+          /* POI boot continua; limpeza no scheduleBasemapOnlyBoot */
         },
         applyAllPoiThemeFilters: applyAllPoiThemeFilters,
         wireSidebarMobileButtons: function () {
@@ -397,6 +483,8 @@
         },
         initBuildings3DState: initBuildings3DState,
         initSubterraneanState: initSubterraneanState,
+        applyBasemapOnlyView: applyBasemapOnlyView,
+        scheduleBasemapOnlyBoot: scheduleBasemapOnlyBoot,
         mapReadyResolve: mapReadyResolve,
       });
     }
@@ -585,6 +673,11 @@
 
   function bootstrap() {
     function startCentro() {
+      var gate = window.CENTRO && window.CENTRO.accessGate;
+      if (gate && typeof gate.resetFreshMapPreferences === "function") {
+        gate.resetFreshMapPreferences();
+      }
+
       setupCentroUiFromModules();
       setupMissionsOrchestrator();
       setupArgStateListener();
@@ -611,6 +704,10 @@
     }
     startCentro();
   }
+
+  window.CENTRO = window.CENTRO || {};
+  window.CENTRO.applyBasemapOnlyView = applyBasemapOnlyView;
+  window.CENTRO.scheduleBasemapOnlyBoot = scheduleBasemapOnlyBoot;
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", bootstrap);

@@ -93,27 +93,27 @@
     </div>
     <div id="sidebar-status" class="sidebar-status">Carregando…</div>
     <div class="sidebar-tabs" role="tablist" aria-label="Painéis do dossiê">
-      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-fases"
-              aria-controls="sidebar-panel-fases" aria-selected="false" type="button"
+      <button class="sidebar-tab sidebar-tab--compact sidebar-tab--active" role="tab" id="sidebar-tab-fases"
+              aria-controls="sidebar-panel-fases" aria-selected="true" type="button"
               aria-label="13 Almas — progresso ARG">13 Almas</button>
       <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-opcoes"
               aria-controls="sidebar-panel-opcoes" aria-selected="false" type="button"
               aria-label="Visualização — modos 3D e subterrâneo">Visualização</button>
-      <button class="sidebar-tab sidebar-tab--compact sidebar-tab--active" role="tab" id="sidebar-tab-camadas"
-              aria-controls="sidebar-panel-camadas" aria-selected="true" type="button"
+      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-camadas"
+              aria-controls="sidebar-panel-camadas" aria-selected="false" type="button"
               aria-label="Território — camadas territoriais">Território</button>
       <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-pois"
               aria-controls="sidebar-panel-pois" aria-selected="false" type="button"
               aria-label="Evidências — ícones e pistas no mapa">Evidências</button>
     </div>
-    <div id="sidebar-panel-camadas" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-camadas">
+    <div id="sidebar-panel-camadas" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-camadas" hidden>
       <p class="sidebar-tab-intro">Operador: interpole camadas de superfície — bairros, rios soterrados, zoneamento, risco. Marque o que ainda resiste no mapa-base. Nódulos clicáveis → aba Evidências.</p>
       <div id="layers-panel" class="layers-list"></div>
     </div>
     <div id="sidebar-panel-pois" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-pois" hidden>
       <p class="sidebar-tab-intro">Sinais recuperados no terreno: património, turismo, pistas da Rua São Bento. Filtre por temática — decodifique o que importa, silencie o ruído abaixo.</p>
       <label class="sidebar-extras__row layer-row sidebar-pistas-toggle" for="centro-pistas-rsb-toggle">
-        <input type="checkbox" id="centro-pistas-rsb-toggle" checked />
+        <input type="checkbox" id="centro-pistas-rsb-toggle" />
         <span class="sidebar-extras__text">Exibir rastros RSB no mapa (Rua São Bento)</span>
       </label>
       <div id="poi-legend" class="poi-legend poi-legend--full">
@@ -132,7 +132,7 @@
         </details>
       </div>
     </div>
-    <div id="sidebar-panel-fases" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-fases" hidden>
+    <div id="sidebar-panel-fases" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-fases">
       <p class="sidebar-tab-intro">Registo das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.</p>
       <button id="subterranean-guide-open-fases" class="subterranean-guide-open-btn subterranean-guide-open-btn--fases" type="button" hidden>Abrir guia da missão ↗</button>
       <div id="phases-panel" class="phases-list" role="list" aria-label="13 almas do Protocolo 13 Almas"></div>

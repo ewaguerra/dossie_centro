@@ -63,12 +63,7 @@
       });
     }
 
-    var mm = window.CENTRO && window.CENTRO.masterMode;
-    if (mm && typeof mm.isActive === "function" && mm.isActive() && typeof mm.activateAllSidebarLayers === "function") {
-      mm.activateAllSidebarLayers(panel, whenMapReady);
-    } else {
-      bootstrapCheckedLayers(panel, whenMapReady);
-    }
+    bootstrapCheckedLayers(panel, whenMapReady);
   }
 
   window.CENTRO = window.CENTRO || {};

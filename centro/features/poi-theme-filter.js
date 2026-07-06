@@ -7,7 +7,7 @@
 
   var STORAGE_KEY = "centroPoiThemeFilter";
   var OPEN_STORAGE_KEY = "centroPoiLegendOpen";
-  var STATE_VERSION = 2;
+  var STATE_VERSION = 3;
 
   function getProtocoloPhase() {
     return window.CENTRO && window.CENTRO.protocoloPhase;
@@ -39,20 +39,22 @@
     return icons.getThemeFilters();
   }
 
-  function defaultSubsForTheme(theme) {
+  function defaultSubsForTheme(theme, allOn) {
     var subs = {};
     var list = theme.subFilters || [];
-    for (var i = 0; i < list.length; i++) subs[list[i].id] = true;
+    for (var i = 0; i < list.length; i++) subs[list[i].id] = allOn === true;
     return subs;
   }
 
-  function buildDefaultState(themes) {
+  function buildDefaultState(themes, options) {
+    options = options || {};
+    var defaultOn = options.allOn === true;
     var state = { _v: STATE_VERSION };
     for (var i = 0; i < themes.length; i++) {
       var theme = themes[i];
       state[theme.id] = {
-        on: true,
-        subs: defaultSubsForTheme(theme),
+        on: defaultOn,
+        subs: defaultSubsForTheme(theme, defaultOn),
       };
     }
     return state;
@@ -96,39 +98,7 @@
     var getMap = ctx.getMap;
 
     function loadState() {
-      var themes = getThemes();
-      var state = buildDefaultState(themes);
-      var mm = window.CENTRO && window.CENTRO.masterMode;
-      if (mm && typeof mm.isActive === "function" && mm.isActive()) {
-        return state;
-      }
-      try {
-        var raw = window.localStorage && window.localStorage.getItem(STORAGE_KEY);
-        if (!raw) return state;
-        var parsed = JSON.parse(raw);
-        if (!parsed || typeof parsed !== "object") return state;
-        if (parsed._v === STATE_VERSION) {
-          for (var i = 0; i < themes.length; i++) {
-            var theme = themes[i];
-            var entry = parsed[theme.id];
-            if (!entry || typeof entry !== "object") continue;
-            if (typeof entry.on === "boolean") state[theme.id].on = entry.on;
-            if (entry.subs && typeof entry.subs === "object") {
-              var subIds = Object.keys(state[theme.id].subs);
-              for (var j = 0; j < subIds.length; j++) {
-                var subId = subIds[j];
-                if (typeof entry.subs[subId] === "boolean") {
-                  state[theme.id].subs[subId] = entry.subs[subId];
-                }
-              }
-            }
-          }
-          return state;
-        }
-        return migrateLegacyState(parsed, themes);
-      } catch (_e) {
-        return state;
-      }
+      return buildDefaultState(getThemes());
     }
 
     function saveState(state) {
@@ -215,9 +185,9 @@
       var state = loadState();
       for (var i = 0; i < themes.length; i++) {
         var theme = themes[i];
-        var themeState = state[theme.id] || { on: true, subs: {} };
+        var themeState = state[theme.id] || { on: false, subs: {} };
         var phaseOk = isThemeUnlocked(theme.id);
-        var userWants = themeState.on !== false;
+        var userWants = themeState.on === true;
         var visible = phaseOk && userWants;
         var enabledIds = enabledSubIds(theme, themeState);
         var filter = visible ? buildLayerFilter(theme, enabledIds) : null;
@@ -251,7 +221,8 @@
       var subToggle = document.createElement("input");
       subToggle.type = "checkbox";
       subToggle.className = "poi-legend__sub-toggle";
-      subToggle.checked = themeState.subs[sub.id] !== false;
+      subToggle.checked =
+        themeState.on === true && themeState.subs[sub.id] === true;
       subToggle.setAttribute(
         "aria-label",
         (theme.label || theme.id) + " — " + (sub.label || sub.id)
@@ -292,7 +263,7 @@
       for (var i = 0; i < themes.length; i++) {
         (function (theme) {
           if (!state[theme.id]) {
-            state[theme.id] = { on: true, subs: defaultSubsForTheme(theme) };
+            state[theme.id] = { on: false, subs: defaultSubsForTheme(theme, false) };
           }
 
           var group = document.createElement("div");
@@ -306,7 +277,7 @@
           var toggle = document.createElement("input");
           toggle.type = "checkbox";
           toggle.className = "poi-legend__toggle";
-          toggle.checked = state[theme.id].on !== false;
+          toggle.checked = state[theme.id].on === true;
           toggle.setAttribute("aria-label", theme.label);
 
           row.classList.toggle("poi-legend__item--off", !toggle.checked);
@@ -384,6 +355,18 @@
               return;
             }
             state[theme.id].on = toggle.checked;
+            if (toggle.checked) {
+              var subKeys = Object.keys(state[theme.id].subs);
+              for (var sk = 0; sk < subKeys.length; sk++) {
+                state[theme.id].subs[subKeys[sk]] = true;
+              }
+              var subToggles = group.querySelectorAll(".poi-legend__sub-toggle");
+              for (var st = 0; st < subToggles.length; st++) {
+                subToggles[st].checked = true;
+                var subRow = subToggles[st].closest(".poi-legend__sub-item");
+                if (subRow) subRow.classList.remove("poi-legend__sub-item--off");
+              }
+            }
             row.classList.toggle("poi-legend__item--off", !toggle.checked);
             syncThemeRowUI(group, theme, state);
             saveState(state);

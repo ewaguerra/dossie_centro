@@ -33,12 +33,25 @@
     return false;
   }
 
+  function resetFreshMapPreferences() {
+    try {
+      if (!window.localStorage) return;
+      window.localStorage.removeItem("centroPoiThemeFilter");
+      window.localStorage.removeItem("centroPistasRsbVisible");
+      window.localStorage.removeItem("centroBuildings3D");
+      window.localStorage.removeItem("centroSubterraneanEnabled");
+    } catch (_e) {
+      /* ignora */
+    }
+  }
+
   function grantAccess() {
     try {
       if (window.localStorage) window.localStorage.setItem(STORAGE_KEY, "1");
     } catch (_e) {
       /* ignora */
     }
+    resetFreshMapPreferences();
   }
 
   function getElements() {
@@ -115,6 +128,7 @@
     isGranted: isGranted,
     shouldSkipGate: shouldSkipGate,
     grantAccess: grantAccess,
+    resetFreshMapPreferences: resetFreshMapPreferences,
     install: install,
   };
 })();

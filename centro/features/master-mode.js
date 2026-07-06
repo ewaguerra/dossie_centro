@@ -143,23 +143,8 @@
 
   function syncReviewConsumers(ctx) {
     if (!isActive()) return;
-    ctx = ctx || {};
-    enablePistasRsb();
-    enableBuildings3d(ctx);
-    enableSubterranean(ctx);
-    openPoiLegend();
-
-    var poiApi =
-      ctx && typeof ctx.ensurePoiFilterApi === "function" ? ctx.ensurePoiFilterApi() : null;
-    if (!poiApi && window.CENTRO && window.CENTRO.poiThemeFilter) {
-      poiApi = window.CENTRO.poiThemeFilter.create({
-        getMap: function () {
-          return window.CENTRO && window.CENTRO._mapInstance;
-        },
-        mapReadyPromise: ctx && ctx.mapReadyPromise ? ctx.mapReadyPromise : Promise.resolve(),
-      });
-    }
-    if (poiApi && typeof poiApi.applyAll === "function") poiApi.applyAll();
+    // Modo mestre desbloqueia fases/pistas (bootstrapReviewUnlocks), mas não liga
+    // camadas no mapa — o operador marca manualmente na sidebar.
   }
 
   function install(ctx) {

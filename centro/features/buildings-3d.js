@@ -48,17 +48,7 @@
     }
 
     function getInitialEnabled() {
-      try {
-        var stored = window.localStorage && window.localStorage.getItem(STORAGE_KEY);
-        if (stored === "1") return true;
-        if (stored === "0") return false;
-      } catch (_e) {
-        // ignora
-      }
-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return false;
-      }
-      return true;
+      return false;
     }
 
     function renderLegend() {

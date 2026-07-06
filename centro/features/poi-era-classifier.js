@@ -175,8 +175,22 @@
     expression.push("#78716c");
     return {
       "icon-halo-color": expression,
-      "icon-halo-width": 3,
-      "icon-halo-blur": 0.35,
+      "icon-halo-width": 4.5,
+      "icon-halo-blur": 0.15,
+    };
+  }
+
+  function buildEraTextHaloPaint(propertyKey) {
+    propertyKey = propertyKey || "poi_era";
+    var expression = ["match", ["get", propertyKey]];
+    for (var i = 0; i < ERAS.length; i++) {
+      expression.push(ERAS[i].id, ERAS[i].color);
+    }
+    expression.push("#78716c");
+    return {
+      "text-halo-color": expression,
+      "text-halo-width": 2,
+      "text-halo-blur": 0.35,
     };
   }
 
@@ -198,12 +212,43 @@
     };
   }
 
+  function buildEraIconImageMatch(baseImageId, propertyKey) {
+    propertyKey = propertyKey || "poi_era";
+    var expression = ["match", ["get", propertyKey]];
+    for (var i = 0; i < ERAS.length; i++) {
+      expression.push(ERAS[i].id, baseImageId + "--" + ERAS[i].id);
+    }
+    expression.push(baseImageId + "--sem-data");
+    return expression;
+  }
+
   function buildSubFilterPaint(themeId) {
     var rule = THEME_RULES[themeId];
     if (rule && rule.strategy === "typology") {
       return buildTypologyHaloPaint(themeId, "poi_typology");
     }
     return buildEraHaloPaint("poi_era");
+  }
+
+  function buildSubFilterLabelPaint(themeId) {
+    var rule = THEME_RULES[themeId];
+    if (rule && rule.strategy === "typology") {
+      var typologyPaint = buildTypologyHaloPaint(themeId, "poi_typology");
+      return {
+        "text-halo-color": typologyPaint["icon-halo-color"],
+        "text-halo-width": 2,
+        "text-halo-blur": 0.35,
+      };
+    }
+    if (rule && rule.strategy !== "typology") {
+      return buildEraTextHaloPaint("poi_era");
+    }
+    return null;
+  }
+
+  function themeUsesEraHalo(themeId) {
+    var rule = THEME_RULES[themeId];
+    return !!(rule && rule.strategy !== "typology");
   }
 
   window.CENTRO = window.CENTRO || {};
@@ -215,6 +260,9 @@
     classifyFeature: classifyFeature,
     enrichGeojson: enrichGeojson,
     buildSubFilterPaint: buildSubFilterPaint,
+    buildSubFilterLabelPaint: buildSubFilterLabelPaint,
+    buildEraIconImageMatch: buildEraIconImageMatch,
+    themeUsesEraHalo: themeUsesEraHalo,
     classifyYear: classifyYear,
     extractYear: extractYear,
   };

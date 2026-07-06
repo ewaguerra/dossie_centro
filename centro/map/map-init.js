@@ -168,10 +168,6 @@
         ensureMapGroundReadable(mapInstance);
         console.log("[CENTRO] Mapa carregado com layout original");
 
-        if (typeof ctx.syncTriangulo === "function") {
-          await ctx.syncTriangulo(mapInstance);
-        }
-
         var poiHooks = {
           onPistasLoaded:
             typeof ctx.onPistasLoaded === "function"
@@ -220,12 +216,17 @@
           ctx.wireSidebarMobileButtons();
         }
 
+        if (typeof ctx.initBuildings3DState === "function") ctx.initBuildings3DState();
+        if (typeof ctx.initSubterraneanState === "function") ctx.initSubterraneanState();
+        if (typeof ctx.scheduleBasemapOnlyBoot === "function") {
+          ctx.scheduleBasemapOnlyBoot(mapInstance);
+        } else if (typeof ctx.applyBasemapOnlyView === "function") {
+          ctx.applyBasemapOnlyView(mapInstance);
+        }
+
         if (typeof ctx.mapReadyResolve === "function") {
           ctx.mapReadyResolve();
         }
-
-        if (typeof ctx.initBuildings3DState === "function") ctx.initBuildings3DState();
-        if (typeof ctx.initSubterraneanState === "function") ctx.initSubterraneanState();
       });
 
       return mapInstance;

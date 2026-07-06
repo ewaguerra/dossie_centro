@@ -118,7 +118,7 @@
           focusTabAt(next);
         });
       });
-      var defaultTab = document.getElementById("sidebar-tab-camadas");
+      var defaultTab = document.getElementById("sidebar-tab-fases");
       if (defaultTab) activateSidebarTab(defaultTab.id);
     }
 
