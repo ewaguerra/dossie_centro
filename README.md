@@ -4,6 +4,8 @@ Mapa interativo do centro de São Paulo — cartografia forense do ARG **Protoco
 
 Este repositório contém **só o mapa** (`/centro/`). Landing, Arquivo Morto e Arquivista vivem em outros repositórios privados.
 
+**Repositório:** [github.com/ewaguerra/dossie_centro](https://github.com/ewaguerra/dossie_centro)
+
 **Hospedagem:** o mapa será publicado na **[Vercel](https://vercel.com/)** (site estático, sem instalar nada no PC para jogar).
 
 ---
@@ -72,7 +74,7 @@ Para **desenvolver ou testar** localmente — **não é necessário para jogar o
 
 1. Descarregue ou clone este repositório.
 2. Entre na pasta que contém o ficheiro `server.py`  
-   (ex.: `dossie_1-main`).
+   (ex.: pasta `dossie_centro` após clonar o repo).
 
 ---
 
