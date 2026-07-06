@@ -10,7 +10,7 @@ Toda verificação roda **na sua máquina**, antes de `git push`.
 npm run ci
 ```
 
-Equivalente a `npm test` (**171 testes**: 143 sanity + 28 HTTP).
+Equivalente a `npm test` (**173 testes**: 144 sanity + 29 HTTP).
 
 O arquivo `tests/http.test.js` sobe `python3 server.py` na porta **9876** automaticamente — não precisa iniciar o servidor manualmente para a suíte.
 
@@ -18,7 +18,7 @@ O arquivo `tests/http.test.js` sobe `python3 server.py` na porta **9876** automa
 
 ```bash
 npm install          # postinstall sincroniza maplibre + ícones + three
-npm run ci           # deve terminar com 171 pass, 0 fail
+npm run ci           # deve terminar com 173 pass, 0 fail
 git add …
 git commit …
 git push
@@ -49,7 +49,8 @@ Se o repositório tornar-se público no futuro, Actions gratuitos para projetos 
 ## O que a suíte cobre
 
 - Parse HTML/JS/CSS do Centro
-- Integridade catálogo (20 camadas, phase-gates, layer-unlocks)
+- Integridade catálogo (**21 camadas**, phase-gates, layer-unlocks)
+- Boot híbrido (`runMapBootPolicy`, POI `loadState` v3)
 - HTTP 200 + cache headers via `server.py`
 - Proibição `setHTML` no runtime
 - Superfícies removidas (`/landing/` etc.) → 404

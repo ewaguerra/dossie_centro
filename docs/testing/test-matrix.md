@@ -1,6 +1,6 @@
 # Matriz de testes — projeto_centro
 
-**Suíte automatizada:** `npm test` → **171 testes** (143 sanity + 28 HTTP) · verificado 2026-07-05
+**Suíte automatizada:** `npm test` → **173 testes** (144 sanity + 29 HTTP) · verificado 2026-07-06
 
 > **Nota:** landing, arquivo-morto e arquivista vivem em repos irmãos — testes abaixo focam no **Centro** servido por este repositório.
 
@@ -12,17 +12,17 @@
 | TC-003 | Centro scripts locais | `centro/index.html` | `npm test` |
 | TC-004 | Runtime parseável | `centro-runtime.js` | `npm test` |
 | TC-011 | Sem JS inline no centro | `centro/index.html` | `npm test` |
-| TC-013 | addPOILayer idempotente | `centro-runtime.js` | `npm test` |
+| TC-013 | addPOILayer idempotente | `poi-bootstrap.js` | `npm test` |
 | TC-014 | Sem bundle Lucide no runtime | HTML + runtime | `npm test` |
 | TC-016 | Listeners UI sidebar/nav | `centro-runtime.js` | `npm test` |
 | TC-029 | centroToast sem inline | `centro-runtime.js` | `npm test` |
 | TC-035 | Filtro temático POI na sidebar | `#poi-legend`, `getThemeFilters` | `npm test` |
-| TC-036 | Persistência filtro POI | `POI_THEME_STORAGE_KEY` | `npm test` |
+| TC-036 | Persistência filtro POI v3 | `loadState` + `localStorage` | `npm test` |
 | TC-037 | Ícones Lucide SVG distintos | `centro/assets/icons/` | `npm test` |
 | TC-038 | resolveLayerIcon + halo | `map-icons.js`, runtime | `npm test` |
-| TC-039 | Sidebar 4 tabs + 13 Almas | `centro/index.html` | `npm test` |
+| TC-039 | Sidebar 4 tabs + default 13 Almas | `centro-chrome.js` | `npm test` |
 | TC-040 | phase-gates.json v2 | `phase-gates.json` + features | `npm test` |
-| TC-041 | resyncArgStateConsumers (triângulo + storage) | `centro-runtime.js` | `npm test` |
+| TC-041 | Boot híbrido + arg-resync triângulo | `runMapBootPolicy`, `arg-resync.js` | `npm test` |
 
 ## Automatizados (HTTP — server.py porta 9876)
 
@@ -43,10 +43,11 @@ Ver [smoke-centro.md](./smoke-centro.md).
 | ID | Caso | Prioridade |
 |---|---|---|
 | TC-030 | Console limpo | Alta |
-| TC-031 | POIs + filtro temático | Alta |
+| TC-031 | POIs + filtro temático (tema + épocas) | Alta |
 | TC-032 | flyTo OP:* | Média |
-| TC-033 | Sidebar 4 tabs + catálogo 20 camadas | Média |
-| TC-034 | Triângulo após `?phase=11` sem reload | Média |
+| TC-033 | Sidebar 4 tabs + catálogo **21 camadas** | Média |
+| TC-034 | Triângulo após `?phase=11` sem wipe de overlays | Média |
+| TC-035 | Fresh boot: senha → mapa limpo; reload → prefs mantidas | Alta |
 
 ## Acessibilidade manual — TC-010
 

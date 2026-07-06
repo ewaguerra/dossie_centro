@@ -69,7 +69,7 @@ centro-runtime.js
 
 **API:** `CENTRO.trianguloOverlay.sync(map, { ensureSource, ensureLayer, getCatalogInsertBeforeId })`.
 
-**Ganho:** ~80 linhas. **Risco:** baixo. **Testes:** assert export + chamada em `resyncArgStateConsumers`.
+**Ganho:** ~80 linhas. **Risco:** baixo. **Testes:** assert export + chamada em `arg-resync.resync()`.
 
 ---
 
@@ -96,7 +96,7 @@ centro-runtime.js
 
 | Move | De | Para |
 |------|-----|------|
-| `resyncArgStateConsumers` | runtime | arg-resync |
+| `arg-resync.resync()` | runtime | arg-resync |
 | `setupArgStateListener` | runtime | arg-resync |
 
 **API:** `CENTRO.argResync.install({ loadSidebar, syncTriangulo, ensure*Api })`.
@@ -162,7 +162,7 @@ flowchart LR
 
 ## Critérios de aceitação (cada fase)
 
-- [ ] `npm run ci` verde (167 testes)
+- [x] `npm run ci` verde (**173** testes)
 - [ ] Nenhum `setHTML` novo
 - [ ] `centro/index.html` script order documentado em `map-init-flow.md`
 - [ ] Export registado em `window.CENTRO.*`

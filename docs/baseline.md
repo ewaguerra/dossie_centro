@@ -2,7 +2,7 @@
 
 > Snapshot de referência para comparar regressões futuras.
 
-**Atualizado:** 2026-05-22
+**Atualizado:** 2026-07-06
 
 ## Comandos
 
@@ -17,8 +17,8 @@ python3 server.py 8080
 |---|---|
 | Comando | `npm run ci` / `npm test` |
 | Arquivos | `tests/sanity.test.js`, `tests/http.test.js` |
-| Total | **106** |
-| Passando | **106** |
+| Total | **173** (144 sanity + 29 HTTP) |
+| Passando | **173** |
 
 ## Greps de baseline
 
@@ -30,14 +30,17 @@ python3 server.py 8080
 | `BASEMAP_STYLE` | contém `openfreemap.org` |
 | `osm-style.json` na raiz | ausente |
 | Bundle `lucide` no HTML centro | ausente |
+| `scheduleBasemapOnlyBoot` | ausente |
+| Sidebar wired | **21 camadas** (10 processed + 11 context) |
 
 ## Funcionalidades congeladas neste baseline
 
-- 4 POI patrimoniais (symbol + SVG)
-- Pistas Rua São Bento (symbol layer)
-- Filtro temático `#poi-legend` + `centroPoiThemeFilter`
+- POIs patrimoniais via `addPOILayer` + filtro temático Evidências (schema v3, sub-filtros época)
+- Pistas Rua São Bento (toggle dedicado)
+- Boot híbrido: fresh boot limpo; visitas seguintes restauram prefs
 - Basemap OpenFreeMap liberty
 - MapLibre 5.x em `vendor/maplibre/`
+- Tab sidebar default: **13 Almas**
 
 ## Docs relacionadas
 

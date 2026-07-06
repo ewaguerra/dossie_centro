@@ -49,7 +49,7 @@
           "Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver clearance para ver o que a cidade enterrou."
       },
       meta: {
-        layers: "20 camadas",
+        layers: "21 camadas",
         sections: "3 secções",
         themes: "6 temas evidência"
       },

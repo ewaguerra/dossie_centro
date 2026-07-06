@@ -4,7 +4,7 @@
 > consumidor de runtime, quem é artefato de pipeline, e por que algumas
 > coisas parecem "fora do lugar" mas estão lá por contrato.
 
-**Atualizado:** 2026-05-23 · gates DATA-ORG B1–B5 concluídos · síntese final:
+**Atualizado:** 2026-07-06 · gates DATA-ORG B1–B5 concluídos · boot híbrido Onda A · síntese final:
 [`data-org-summary-c.md`](data-org-summary-c.md) ·
 base de evidência: auditoria empírica (`find -printf`, `jq .features|length`,
 `git log`) + catálogos commitados em `centro/data/catalog/`.
@@ -55,7 +55,7 @@ ARG e validar coverage.
 | `groups.json` | 5 grupos da sidebar (urbanístico, ZEIS, hidrografia…) | `catalog-load.js` |
 | `context-layers.json` | 15 camadas contextuais inventariadas (OSM, patrimônio, geotécnica, declividade) | `catalog-load.js` |
 | `context-groups.json` | grupos das contextuais | `catalog-load.js` |
-| `context-wired.json` | **subset** de 14 IDs efetivamente wired na sidebar | `catalog-load.js` |
+| `context-wired.json` | **subset** de **11 IDs** efetivamente wired na sidebar | `catalog-load.js` |
 | `layer-unlocks.json` | mapa `layerId → [clueId, …]` para gates do Caderno do Arquivista | `layer-unlocks.js` |
 | `phase-gates.json` | mapa `layerId → fase mínima` para gates ARG | `protocolo-phase.js` |
 
@@ -182,35 +182,37 @@ Sidebar processed (10 camadas)
   → addCatalogLayerToMap → ensureSource(geojson)
   → fetch processed/*.geojson SOB DEMANDA (apenas se checkbox marcada)
 
-Sidebar context (14 camadas wired)
+Sidebar context (11 camadas wired)
   context-layers.json filtrado por context-wired.json
   → mesmo pipeline acima
-  → fetch context/*.geojson SOB DEMANDA
+  → fetch context/*.geojson ou geojson/heavy/*.geojson SOB DEMANDA
 
-Default visibility (auto-load)
-  ly.visible !== false em sidebar-panel.js (linha 67)
-  → checkbox renderizada marcada
-  → sidebar-events.js dispara 'change' no map.load
-  → fetch IMEDIATO no boot
+Boot / default visibility (2026-07)
+  Checkboxes Território renderizam desmarcados (sidebar-panel.js não usa ly.visible).
+  Fresh boot (1ª senha): runMapBootPolicy → applyBasemapOnlyView — nada auto-carregado.
+  Visitas seguintes: jogador reactiva camadas; estado não persiste entre sessões
+  (excepto toggles Evidências/Visualização via localStorage).
 
-POIs patrimoniais (sempre visíveis)
-  initMap → addPOILayer → poi-icons.js
-  → carrega memoria_paulistana, acervo_tombado, bem_arqueologico, monumentos
+POIs patrimoniais (Evidências — toggle + sub-filtros)
+  initMap → addPOILayer → poi-bootstrap.js (layers visibility none no create)
+  → poi-theme-filter.applyAll() após runMapBootPolicy
   → DUPLICATE: as mesmas 4 layers também estão em context-wired
     (decisão registrada — ver §4 e GEO-POI-DEDUP futuro)
 
-Pistas Rua São Bento (sempre visíveis)
+Pistas Rua São Bento (toggle dedicado)
   initMap → addPistasLayer → centro/features/pistas.js
   → consome centro/assets/pistas/rua-sao-bento-pistas.json
+  → visibilidade via #centro-pistas-rsb-toggle + centroPistasRsbVisible
 
 Triângulo histórico, buildings 3D, subterrâneo
-  initMap → módulos próprios em centro/features/
-  → fora do catálogo
+  runMapBootPolicy / restoreSavedMapPreferences / arg-resync.resync()
+  → módulos em centro/features/ e centro/map/triangulo-overlay.js
+  → fora do catálogo checkbox Território
 ```
 
-**Implicação prática:** mudar `visible: true → false` em
-`context-layers.json` corta o fetch inicial, mas não impede que o jogador
-ative manualmente. É o mecanismo correto para "default off".
+**Implicação prática:** o campo `visible` em `layers.json` / `context-layers.json` é
+**metadata** (documentação, testes DATA-ORG). O runtime **não** auto-marca checkboxes
+no boot — ver boot híbrido em `AGENT.md` §5.5.
 
 ---
 
@@ -359,13 +361,14 @@ Por isso **`rebuild:all` não existe** neste repo. Apagar todo
 
 ## 6. Riscos conhecidos
 
-### 6.1 Peso por arquivo (top 3 = 83% do total GeoJSON)
+### 6.1 Peso por arquivo (heavy wired na sidebar)
 
-| Arquivo | Tamanho | Features | Status atual |
+| Arquivo | Tamanho (approx.) | Features | Status actual |
 |---|---:|---:|---|
-| `15_osm_enderecos__point` | 7,44 MiB | 23.932 | `visible: false`, `weightClass: heavy`, `loadPolicy: manual` |
-| `15_osm_ruas__line` | 4,12 MiB | 10.108 | `visible: false`, `weightClass: heavy`, `loadPolicy: manual` |
-| `centro_bem_tombado__polygon` | 3,10 MiB | 2.974 | `visible: false`, `weightClass: heavy`, `loadPolicy: manual` |
+| `15_osm_enderecos__point` | 7,4 MiB | 23.932 | `weightClass: heavy`, manual toggle |
+| `15_osm_ruas__line` | 4,1 MiB | 10.108 | `weightClass: heavy`, manual toggle |
+| `centro_quadras_fiscais__polygon` | 3,2 MiB | — | wired context; `geojson/heavy/` |
+| `centro_bem_tombado__polygon` | 3,1 MiB | 2.974 | `weightClass: heavy`, manual toggle |
 
 Metadados `weightClass` / `loadPolicy` registrados em `context-layers.json` (gate
 DATA-ORG-B3B-metadata). Runtime ainda não consome esses campos — `visible: false`
