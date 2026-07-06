@@ -131,6 +131,23 @@
           ),
           deps.getInsertBeforeId()
         );
+
+        var streetOverlay = window.CENTRO && window.CENTRO.streetLabelsOverlay;
+        if (
+          streetOverlay &&
+          typeof streetOverlay.isBoundToOsmRuasLayer === "function" &&
+          streetOverlay.isBoundToOsmRuasLayer(cfg.id) &&
+          typeof streetOverlay.sync === "function"
+        ) {
+          await streetOverlay.sync(map, {
+            enabled: true,
+            deps: {
+              ensureSource: deps.ensureSource,
+              ensureLayer: deps.ensureLayer,
+              getInsertBeforeId: deps.getInsertBeforeId,
+            },
+          });
+        }
       }
 
       deps.activeLayers.add(cfg.id);
@@ -153,6 +170,17 @@
   function removeCatalogLayerFromMap(layerId, deps) {
     var map = deps.map;
     if (!map || !map.getLayer) return;
+
+    var streetOverlay = window.CENTRO && window.CENTRO.streetLabelsOverlay;
+    if (
+      streetOverlay &&
+      typeof streetOverlay.isBoundToOsmRuasLayer === "function" &&
+      streetOverlay.isBoundToOsmRuasLayer(layerId) &&
+      typeof streetOverlay.remove === "function"
+    ) {
+      streetOverlay.remove(map);
+    }
+
     var fill = layerId + "-fill";
     if (map.getLayer(fill)) map.removeLayer(fill);
     if (map.getLayer(layerId)) map.removeLayer(layerId);

@@ -31,6 +31,12 @@
 
       if (typeof ctx.syncTriangulo === "function") ctx.syncTriangulo();
 
+      var streetNames = window.CENTRO && window.CENTRO.streetNames;
+      if (streetNames && typeof streetNames.syncPhaseGate === "function") {
+        var mapInstance = typeof ctx.getMap === "function" ? ctx.getMap() : null;
+        streetNames.syncPhaseGate(mapInstance);
+      }
+
       var mm = window.CENTRO && window.CENTRO.masterMode;
       if (mm && typeof mm.isActive === "function" && mm.isActive() && typeof mm.syncReviewConsumers === "function") {
         mm.syncReviewConsumers(ctx);

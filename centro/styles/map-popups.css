@@ -61,17 +61,24 @@
   line-height: 1.4;
 }
 
-/* ── Memória Paulistana — texto da placa ────────────────────────────── */
+/* ── Memória Paulistana — texto da placa (cor do tema / época) ─────── */
 .memoria-enunciado {
-  margin: 0.5rem 0 0.75rem;
-  padding: 0.65rem 0.9rem;
-  border-left: 3px solid #2563eb;
-  border-radius: 0 4px 4px 0;
-  background: rgba(37, 99, 235, 0.05);
-  font-size: 0.85rem;
-  color: #1e293b;
-  line-height: 1.65;
+  margin: 0.35rem 0 0.65rem;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--quote-accent, var(--card-accent, #d97706)) 22%, var(--centro-paper-border));
+  border-left-width: 3px;
+  border-left-color: var(--quote-accent, var(--card-accent, #d97706));
+  border-radius: 4px;
+  background: color-mix(
+    in srgb,
+    var(--quote-accent, var(--card-accent, #d97706)) 7%,
+    var(--centro-paper-elev)
+  );
+  font-size: 0.84rem;
+  color: var(--centro-ink-mid);
+  line-height: 1.72;
   font-style: italic;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 /* ── Rio / Rua — card de hidrografia e vias OSM ────────────────────── */
@@ -678,23 +685,672 @@ a.as-sponsor__nome:hover {
 }
 
 /* ── POI popup (memória, acervo, monumentos, arqueologia) ──────────── */
+
+/* Shell MapLibre — frame dossiê + botão fechar grande */
+.maplibregl-popup.evidence-popup {
+  z-index: calc(var(--z-popup, 600) + 2);
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.32));
+}
+
+.maplibregl-popup.evidence-popup .maplibregl-popup-content {
+  background: var(--centro-paper, #fdfbf7) !important;
+  border: 1px solid var(--centro-paper-border, #dcd3c6) !important;
+  border-top: 4px solid var(--card-accent, var(--color-brand, #d97706)) !important;
+  border-radius: 6px !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.65),
+    inset 0 1px 0 color-mix(in srgb, var(--card-accent, #d97706) 12%, transparent) !important;
+  color: var(--centro-ink-mid, #3d3830) !important;
+  font-family: var(--font-mono);
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.maplibregl-popup.evidence-popup .maplibregl-popup-close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--centro-paper-border, #dcd3c6);
+  border-radius: 4px;
+  background: var(--centro-paper-elev, #f4f0e6);
+  color: var(--centro-ink, #1a1a1a);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.12s ease;
+}
+
+.maplibregl-popup.evidence-popup .maplibregl-popup-close-button:hover {
+  background: color-mix(in srgb, var(--card-accent, #d97706) 14%, var(--centro-paper-elev));
+  border-color: color-mix(in srgb, var(--card-accent, #d97706) 45%, var(--centro-paper-border));
+  color: var(--centro-ink);
+}
+
+.maplibregl-popup.evidence-popup .maplibregl-popup-close-button:active {
+  transform: scale(0.96);
+}
+
+.maplibregl-popup.evidence-popup .maplibregl-popup-close-button:focus-visible {
+  outline: 2px solid var(--card-accent, var(--color-brand));
+  outline-offset: 2px;
+}
+
+.maplibregl-popup.evidence-popup .maplibregl-popup-tip {
+  border-top-color: var(--centro-paper, #fdfbf7) !important;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.08));
+}
+
+/* Fallback genérico (tooltips arquivo superficial, etc.) */
 .maplibregl-popup-content {
   background: var(--centro-paper, #fdfbf7) !important;
   border: 1px solid var(--centro-paper-border, #dcd3c6) !important;
-  border-top: 3px solid var(--centro-accent, #dc2626) !important;
-  border-radius: 2px !important;
-  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.45) !important;
+  border-top: 3px solid var(--card-accent, var(--color-brand, #d97706)) !important;
+  border-radius: 4px !important;
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.4) inset !important;
   color: var(--centro-ink-mid, #3d3830) !important;
   font-family: var(--font-mono);
+  padding: 0 !important;
+  overflow: hidden;
 }
 
 .maplibregl-popup-tip {
   border-top-color: var(--centro-paper, #fdfbf7) !important;
 }
 
+/* ── Evidence card (React Bits SpotlightCard + GlareHover + FadeContent) ── */
+
+.evidence-card {
+  position: relative;
+  overflow: hidden;
+  padding: 44px 18px 18px 20px;
+  max-width: 320px;
+  --evidence-text-scale: 1;
+  --mouse-x: 50%;
+  --mouse-y: 35%;
+  --spotlight-color: rgba(245, 158, 11, 0.18);
+  --card-accent: var(--color-brand, #d97706);
+  border-left: 3px solid color-mix(in srgb, var(--card-accent) 40%, var(--centro-paper-border));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card-accent) 5%, var(--centro-paper)) 0%,
+      var(--centro-paper) 48px
+    );
+}
+
+.evidence-card::after {
+  content: "";
+  position: absolute;
+  inset: 8px 8px 8px auto;
+  width: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--centro-paper-border) 80%, transparent) 20%,
+    color-mix(in srgb, var(--centro-paper-border) 80%, transparent) 80%,
+    transparent
+  );
+  opacity: 0.6;
+}
+
+.evidence-card__spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    circle 120px at var(--mouse-x) var(--mouse-y),
+    var(--spotlight-color),
+    transparent 72%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.evidence-card:hover .evidence-card__spotlight,
+.evidence-card:focus-within .evidence-card__spotlight {
+  opacity: 0.85;
+}
+
+.evidence-card__glare {
+  position: absolute;
+  inset: -40% -60%;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 58%
+  );
+  transform: translateX(-120%) rotate(8deg);
+  opacity: 0;
+}
+
+.evidence-card--enter {
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+}
+
+.evidence-card--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.evidence-card--visible .evidence-card__glare {
+  animation: evidence-card-glare 0.85s ease 0.12s 1 forwards;
+}
+
+@keyframes evidence-card-glare {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%) rotate(8deg);
+  }
+  20% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%) rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evidence-card--enter,
+  .evidence-card--visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .evidence-card__glare {
+    display: none;
+  }
+
+  .evidence-card__spotlight {
+    display: none;
+  }
+}
+
+.evidence-card__header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-bottom: 8px;
+}
+
+.evidence-card__eyebrow {
+  flex: 1 1 100%;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--centro-ink-faint);
+  font-family: var(--font-code, var(--font-mono));
+  line-height: 1.35;
+}
+
+/* ShinyText — React Bits */
+.evidence-card__eyebrow-shiny {
+  background: linear-gradient(
+    110deg,
+    var(--centro-ink-faint) 0%,
+    var(--card-accent, var(--color-brand)) 38%,
+    rgba(255, 255, 255, 0.95) 50%,
+    var(--card-accent, var(--color-brand)) 62%,
+    var(--centro-ink-faint) 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: evidence-shiny-text 2.6s linear infinite;
+}
+
+@keyframes evidence-shiny-text {
+  to {
+    background-position: 220% center;
+  }
+}
+
+/* SplitText-lite — título palavra a palavra */
+.evidence-card__title-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  filter: blur(5px);
+}
+
+.evidence-card--visible .evidence-card__title-char {
+  animation: evidence-char-in 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--char-i, 0) * 22ms + 80ms);
+}
+
+@keyframes evidence-char-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* BlurText — enunciado / citação */
+.evidence-card__quote--blur-in {
+  opacity: 0;
+  filter: blur(8px);
+}
+
+.evidence-card--visible .evidence-card__quote--blur-in {
+  animation: evidence-quote-blur-in 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+@keyframes evidence-quote-blur-in {
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* ElectricBorder — missão ARG + arquivo superficial */
+.electric-border {
+  --electric-color: rgba(220, 38, 38, 0.75);
+  position: relative;
+  isolation: isolate;
+}
+
+.electric-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--electric-angle, 0deg),
+    transparent 0deg,
+    var(--electric-color) 48deg,
+    rgba(255, 255, 255, 0.55) 72deg,
+    transparent 120deg,
+    var(--electric-color) 200deg,
+    transparent 280deg
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: evidence-electric-spin 3.2s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.electric-border::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    color-mix(in srgb, var(--electric-color) 28%, transparent),
+    transparent 68%
+  );
+  filter: blur(8px);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: -1;
+  animation: evidence-electric-pulse 2.4s ease-in-out infinite alternate;
+}
+
+@property --electric-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes evidence-electric-spin {
+  to {
+    --electric-angle: 360deg;
+  }
+}
+
+@keyframes evidence-electric-pulse {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 0.55;
+  }
+}
+
+.evidence-card--sidebar {
+  max-width: none;
+}
+
+.sidebar-viz-card.evidence-card {
+  padding: 12px;
+}
+
+.sidebar-viz-card.electric-border {
+  overflow: visible;
+}
+
+.arquivo-superficial-card {
+  --electric-color: rgba(220, 38, 38, 0.8);
+}
+
+.arquivo-superficial-card:not(.electric-border) {
+  box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evidence-card__eyebrow-shiny {
+    animation: none;
+    background: none;
+    color: var(--card-accent, var(--color-brand));
+    -webkit-background-clip: unset;
+    background-clip: unset;
+  }
+
+  .evidence-card__title-char {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+
+  .evidence-card__quote--blur-in {
+    opacity: 1;
+    filter: none;
+    animation: none;
+  }
+
+  .electric-border::before,
+  .electric-border::after {
+    animation: none;
+  }
+
+  .electric-border::before {
+    opacity: 0.35;
+    --electric-angle: 45deg;
+  }
+}
+
+.evidence-card__badge {
+  flex: 0 0 auto;
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--badge-color, #78716c) 45%, transparent);
+  background: color-mix(in srgb, var(--badge-color, #78716c) 12%, transparent);
+  color: var(--badge-color, #57534e);
+  font-size: calc(0.58rem * var(--evidence-text-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.evidence-card__text-tools {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  margin: 0 0 0.55rem;
+}
+
+.evidence-card__text-tools-label {
+  margin-right: auto;
+  font-size: calc(0.62rem * var(--evidence-text-scale, 1));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--centro-ink-faint);
+  font-family: var(--font-mono);
+}
+
+.evidence-card__text-btn {
+  min-width: 2rem;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--centro-paper-border);
+  border-radius: 4px;
+  background: var(--centro-paper);
+  color: var(--centro-ink);
+  font-family: var(--font-mono);
+  font-size: calc(0.72rem * var(--evidence-text-scale, 1));
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.evidence-card__text-btn:hover {
+  border-color: color-mix(in srgb, var(--card-accent, #7c3aed) 35%, var(--centro-paper-border));
+  color: var(--card-accent, #7c3aed);
+}
+
+.evidence-card__text-btn:focus-visible {
+  outline: 2px solid var(--card-accent, #7c3aed);
+  outline-offset: 2px;
+}
+
+.evidence-card__title {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  font-size: calc(1.02rem * var(--evidence-text-scale, 1));
+  font-weight: 700;
+  line-height: 1.32;
+  color: var(--centro-ink);
+  letter-spacing: 0.02em;
+  font-family: var(--font-code, var(--font-mono));
+  border-bottom: 1px solid color-mix(in srgb, var(--card-accent) 18%, var(--centro-paper-border));
+}
+
+.evidence-card__body {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: calc(0.88rem * var(--evidence-text-scale, 1));
+  line-height: 1.55;
+  color: var(--centro-ink-muted);
+  font-family: var(--font-ui, sans-serif);
+}
+
+.evidence-card__quote {
+  position: relative;
+  z-index: 1;
+}
+
+.evidence-card__meta {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 0;
+  font-size: calc(0.74rem * var(--evidence-text-scale, 1));
+  letter-spacing: 0.04em;
+  color: var(--centro-ink-faint);
+  font-family: var(--font-mono);
+}
+
+.evidence-card__media {
+  position: relative;
+  z-index: 1;
+  margin: 10px 0 0;
+}
+
+.evidence-card__img {
+  width: 100%;
+  border-radius: 3px;
+  display: block;
+  border: 1px solid var(--centro-paper-border);
+}
+
+.evidence-card__source {
+  position: relative;
+  z-index: 1;
+}
+
+.evidence-card--theme-memoria-paulistana {
+  --card-accent: #d97706;
+}
+
+.evidence-card--theme-acervo-tombado {
+  --card-accent: #7c3aed;
+}
+
+.evidence-card--theme-bem-arqueologico {
+  --card-accent: #b45309;
+}
+
+.evidence-card--theme-monumentos {
+  --card-accent: #dc2626;
+}
+
+.evidence-card--theme-poi-turistico {
+  --card-accent: #059669;
+}
+
+.evidence-card--theme-pistas {
+  --card-accent: #2563eb;
+}
+
+.evidence-card--theme-linha-tempo {
+  --card-accent: #7c3aed;
+}
+
+.timeline-popup__street {
+  margin-top: -4px;
+  margin-bottom: 10px;
+}
+
+.timeline-popup__head--single {
+  margin: 0 0 10px;
+}
+
+.timeline-popup__detail {
+  margin: 0;
+}
+
+.timeline-popup__thread-hint {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.timeline-popup__summary {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  color: var(--centro-ink-muted);
+}
+
+.timeline-popup__list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 0.35rem;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.timeline-popup__item {
+  display: flex;
+  gap: 0.65rem;
+  position: relative;
+  padding: 0 0 0.85rem 0;
+}
+
+.timeline-popup__item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0.35rem;
+  top: 0.75rem;
+  bottom: 0;
+  width: 2px;
+  background: color-mix(in srgb, var(--card-accent) 25%, transparent);
+}
+
+.timeline-popup__marker {
+  flex: 0 0 0.75rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: 0.2rem;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--card-accent) 40%, transparent);
+}
+
+.timeline-popup__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-popup__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.2rem;
+}
+
+.timeline-popup__year {
+  font-size: calc(0.82rem * var(--evidence-text-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--centro-ink);
+}
+
+.timeline-popup__theme {
+  font-size: calc(0.72rem * var(--evidence-text-scale, 1));
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--centro-ink-muted);
+}
+
+.timeline-popup__title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--centro-ink);
+}
+
+.timeline-popup__detail {
+  margin: 0.15rem 0 0;
+  font-size: 0.74rem;
+  line-height: 1.35;
+  color: var(--centro-ink-mid);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .poi-popup {
   font-family: var(--font-mono);
-  max-width: 260px;
+  max-width: 320px;
   line-height: 1.4;
   color: var(--centro-ink-mid);
 }
@@ -714,7 +1370,7 @@ a.as-sponsor__nome:hover {
 /* ── Pista popup (Rua São Bento histórica) ─────────────────────────── */
 .pista-popup {
   font-family: var(--font-mono);
-  max-width: 260px;
+  max-width: 320px;
   color: var(--centro-ink-mid);
 }
 
@@ -734,13 +1390,13 @@ a.as-sponsor__nome:hover {
 
 .pista-popup__img {
   width: 100%;
-  border-radius: 2px;
+  border-radius: 3px;
   display: block;
   border: 1px solid var(--centro-paper-border);
 }
 
 .pista-popup__source {
-  margin: 4px 0 0;
+  margin: 8px 0 0;
   font-size: 10px;
   color: var(--centro-ink-faint);
 }

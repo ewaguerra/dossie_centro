@@ -12,6 +12,7 @@
     "bem-arqueologico": "icon-arqueologia.svg",
     monumentos: "icon-monumentos.svg",
     "poi-turistico": "icon-turismo.svg",
+    "linha-tempo": "icon-linha-tempo.svg",
   };
 
   var PISTAS_JSON_PATH = "/centro/assets/pistas/rua-sao-bento-pistas.json";
@@ -85,8 +86,8 @@
       var base = {
         "text-color": "#1a1a1a",
         "text-halo-color": "#ffffff",
-        "text-halo-width": 1.5,
-        "text-halo-blur": 0.5,
+        "text-halo-width": 2.5,
+        "text-halo-blur": 0.35,
       };
       if (classifier && typeof classifier.buildSubFilterLabelPaint === "function" && themeId) {
         var eraPaint = classifier.buildSubFilterLabelPaint(themeId);
@@ -146,19 +147,34 @@
           layout: {
             "text-field": ["to-string", ["get", titleProp]],
             "text-font": POI_TEXT_FONT,
-            "text-size": 11,
-            "text-offset": [0, 2.2],
+            "text-size": 12,
+            "text-offset": [0, 2.4],
             "text-anchor": "top",
             "text-allow-overlap": false,
             "text-ignore-placement": false,
             "text-optional": true,
-            "text-max-width": 18,
-            "text-padding": 2,
-            "visibility": "none",
+            "text-max-width": 14,
+            "text-padding": 4,
+            "text-letter-spacing": 0.02,
+            visibility: "none",
           },
           paint: getMapLabelPaint(themeId),
           minzoom: 15,
         };
+        if (themeId === "linha-tempo") {
+          labelConfig.layout["text-field"] = [
+            "case",
+            [
+              "all",
+              ["has", "evidence_year"],
+              ["!=", ["to-string", ["get", "evidence_year"]], ""],
+            ],
+            ["concat", ["to-string", ["get", "evidence_year"]], " · ", ["get", "nm_titulo"]],
+            ["get", "nm_titulo"],
+          ];
+          labelConfig.layout["text-size"] = 11;
+          labelConfig.minzoom = 16;
+        }
       }
 
       var sourceData = dataPath;
@@ -190,6 +206,76 @@
           ? classifier.buildEraIconImageMatch(imageId)
           : imageId;
 
+      var popupConfig =
+        themeId === "linha-tempo"
+          ? {
+              factoryKey: "createTimelinePopupNode",
+              buildArgs: function (properties) {
+                var seq = properties.sequence || 0;
+                var seqTotal = properties.sequence_total || 0;
+                var threadHint = "";
+                if (seq > 0 && seq < seqTotal) {
+                  threadHint = "Fio cronológico continua no próximo marco desta rua.";
+                } else if (seqTotal > 1 && seq === seqTotal) {
+                  threadHint = "Último marco cronológico deste logradouro.";
+                }
+                return [
+                  {
+                    title: properties.nm_titulo || "Evidência",
+                    streetDisplay: properties.street_display || "",
+                    address: properties.evidence_address || "",
+                    detail: properties.evidence_detail || "",
+                    year: properties.evidence_year || null,
+                    sourceThemeId: properties.source_theme_id || "",
+                    sequence: seq,
+                    sequenceTotal: seqTotal,
+                    threadHint: threadHint,
+                    themeId: "linha-tempo",
+                    eraId: properties.poi_era || "",
+                  },
+                ];
+              },
+              popupOptions: { maxWidth: "420px", offset: 24 },
+            }
+          : {
+              factoryKey: "createPoiPopupNode",
+              buildArgs: function (properties) {
+                var name = titleProp ? properties[titleProp] || "POI" : "POI";
+                var secondary = descProp
+                  ? properties[descProp] || ""
+                  : addrProp
+                    ? properties[addrProp] || ""
+                    : "";
+                var address = addrProp ? properties[addrProp] || "" : "";
+                if (descProp && properties[descProp]) {
+                  address = addrProp ? properties[addrProp] || "" : "";
+                }
+                var meta = {
+                  title: name,
+                  secondary: secondary,
+                  address: address,
+                  themeId: themeId,
+                  eraId: properties.poi_era || properties.poi_typology || "",
+                };
+                if (themeId === "memoria-paulistana") {
+                  var mpImages =
+                    window.CENTRO &&
+                    window.CENTRO.memoriaPaulistanaImages;
+                  if (mpImages && typeof mpImages.lookup === "function") {
+                    var imgEntry = mpImages.lookup(properties.cd_identificador);
+                    if (imgEntry) {
+                      meta.imageUrl = imgEntry.imageUrl || "";
+                      meta.wikiUrl = imgEntry.wikiUrl || "";
+                      meta.wikiTitle = imgEntry.wikiTitle || "";
+                      meta.imageCredit = imgEntry.attribution || "";
+                    }
+                  }
+                }
+                return [meta];
+              },
+              popupOptions: { maxWidth: "340px", offset: 20 },
+            };
+
       return addSymbol(mapInstance, {
         sourceId: sourceId,
         iconLayerId: iconLayerId,
@@ -207,19 +293,7 @@
         },
         iconPaint: getMapIconHaloPaint(themeId),
         label: labelConfig,
-        popup: {
-          factoryKey: "createPoiPopupNode",
-          buildArgs: function (properties) {
-            var name = titleProp ? properties[titleProp] || "POI" : "POI";
-            var secondary = descProp
-              ? properties[descProp] || ""
-              : addrProp
-                ? properties[addrProp] || ""
-                : "";
-            return [name, secondary];
-          },
-          popupOptions: {},
-        },
+        popup: popupConfig,
         interactionLayerIds: interactionLayerIds,
         onGuardFail: function () {
           console.warn(
@@ -230,6 +304,39 @@
               " dataPath=" +
               dataPath
           );
+        },
+      });
+    }
+
+    async function addTimelineThreadLayer(mapInstance, poiRegistry) {
+      var threadFile = poiRegistry && poiRegistry.LINHA_TEMPO_THREAD_LAYER_FILE;
+      var layers = poiRegistry && poiRegistry.LINHA_TEMPO_LAYERS;
+      if (!threadFile || !layers) return;
+
+      var fetchLayer = getMapHelper("fetchLayerGeojson");
+      var ensureSource = getMapHelper("ensureSource");
+      var ensureLayer = getMapHelper("ensureLayer");
+      if (typeof fetchLayer !== "function" || typeof ensureSource !== "function") {
+        console.warn("[CENTRO] addTimelineThreadLayer: helpers ausentes");
+        return;
+      }
+      if (typeof ensureLayer !== "function") {
+        console.warn("[CENTRO] addTimelineThreadLayer: ensureLayer ausente");
+        return;
+      }
+
+      var lineData = await fetchLayer(threadFile);
+      ensureSource(mapInstance, layers.threadSourceId, { type: "geojson", data: lineData });
+      ensureLayer(mapInstance, {
+        id: layers.threadLayerId,
+        type: "line",
+        source: layers.threadSourceId,
+        layout: { visibility: "none", "line-join": "round", "line-cap": "round" },
+        paint: {
+          "line-color": "#7c3aed",
+          "line-width": 2.5,
+          "line-opacity": 0.72,
+          "line-dasharray": [1.2, 1.1],
         },
       });
     }
@@ -293,7 +400,7 @@
           guard: function (properties) {
             return pistaItemFromProperties(properties) !== null;
           },
-          popupOptions: { offset: 25, maxWidth: "300px" },
+          popupOptions: { offset: 25, maxWidth: "340px" },
         },
         interactionLayerIds: interactionLayerIds,
         returnFeatureCount: true,
@@ -358,6 +465,17 @@
           titleProp: "name",
           descProp: "category",
         },
+        {
+          id: "linha-tempo",
+          layerFile: poi.LINHA_TEMPO_LAYER_FILE,
+          sourceId:
+            (poi.LINHA_TEMPO_LAYERS && poi.LINHA_TEMPO_LAYERS.sourceId) ||
+            "linha-tempo-source",
+          iconLayerId:
+            (poi.LINHA_TEMPO_LAYERS && poi.LINHA_TEMPO_LAYERS.iconLayerId) ||
+            "linha-tempo-icon",
+          titleProp: "nm_titulo",
+        },
       ];
     }
 
@@ -375,6 +493,14 @@
       }
 
       var poiConfigs = buildPoiConfigs(poi);
+      var mpImages = window.CENTRO && window.CENTRO.memoriaPaulistanaImages;
+      if (mpImages && typeof mpImages.load === "function") {
+        try {
+          await mpImages.load();
+        } catch (e) {
+          console.warn("[CENTRO] memoria-paulistana-images.json indisponível", e.message);
+        }
+      }
       for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
         var poiCfg = poiConfigs[poiIndex];
         var iconPath = resolvePatrimonioIconPath(poiCfg.id);
@@ -395,6 +521,9 @@
           poiLayerArgs.layerFile = poiCfg.layerFile;
         }
         try {
+          if (poiCfg.id === "linha-tempo") {
+            await addTimelineThreadLayer(mapInstance, poi);
+          }
           await addPOILayer(mapInstance, poiLayerArgs);
         } catch (e) {
           console.warn("[CENTRO] Erro POI layer", poiCfg.iconLayerId, e.message);
@@ -403,7 +532,7 @@
           }
         }
       }
-      console.log("[CENTRO] 5 POI layers adicionados (fluxo único)");
+      console.log("[CENTRO] " + poiConfigs.length + " POI layers adicionados (fluxo único)");
 
       try {
         var response = await fetch(PISTAS_JSON_PATH);

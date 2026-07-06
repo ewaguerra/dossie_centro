@@ -1,0 +1,5506 @@
+{
+  "version": 2,
+  "generatedAt": "2026-07-06T05:51:30.362Z",
+  "minEvidences": 2,
+  "eraOrder": [
+    "colonial-imperio",
+    "republica-velha",
+    "modernismo",
+    "populista",
+    "ditadura",
+    "democracia",
+    "sem-data"
+  ],
+  "streets": {
+    "avenida-brigadeiro-luis-antonio": {
+      "streetKey": "avenida-brigadeiro-luis-antonio",
+      "streetDisplay": "Avenida Brigadeiro Luís Antônio",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "ditadura",
+        "sem-data"
+      ],
+      "yearRange": "1969",
+      "evidences": [
+        {
+          "eventId": "avenida-brigadeiro-luis-antonio--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "501",
+          "title": "Teatro Bandeirantes",
+          "detail": "Foi utilizado entre 1969 e 1980 para produções da emissora de TV de mesmo nome, com destaque para os shows de MPB, como a apresentação do disco Falso Brilhante de Elis Regina entre 1975 e 1977",
+          "address": "Av. Brigadeiro Luís Antonio, 1401",
+          "eraId": "ditadura",
+          "year": 1969,
+          "coords": [
+            -46.64406145,
+            -23.5614198
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "avenida-brigadeiro-luis-antonio--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "5",
+          "title": "Auditoria da Justiça Militar",
+          "detail": "Tentando legitimar ações repressivas, o regime militar fingia julgar aqui crimes contra a segurança nacional. Foi quando acusados formalizaram as primeiras denúncias de violações de direitos pela Ditadura",
+          "address": "Av. Brigadeiro Luís Antônio, 1249",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.64309219,
+            -23.56029327
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-avanhandava": {
+      "streetKey": "rua-avanhandava",
+      "streetDisplay": "Rua Avanhandava",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "ditadura"
+      ],
+      "yearRange": "1968",
+      "evidences": [
+        {
+          "eventId": "rua-avanhandava--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "6",
+          "title": "Bar Jogral",
+          "detail": "Aberto pelo compositor Luís Carlos Paraná, funcionou aqui entre 1968 e 1971 e foi reduto de músicos e boêmios, entre eles, Paulo Vanzolini e Trio Mocotó",
+          "address": "R. Avanhandava, 16",
+          "eraId": "ditadura",
+          "year": 1968,
+          "coords": [
+            -46.64537,
+            -23.54992002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-avanhandava--002",
+          "themeId": "poi-turistico",
+          "featureId": "museu-judaico-de-sao-paulo",
+          "title": "Museu Judaico de São Paulo",
+          "detail": "Museu / memória",
+          "address": "",
+          "eraId": "museu_memoria",
+          "year": null,
+          "coords": [
+            -46.64560551538462,
+            -23.550767746153845
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-maria-antonia": {
+      "streetKey": "rua-maria-antonia",
+      "streetDisplay": "Rua Maria Antônia",
+      "evidenceCount": 3,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "ditadura"
+      ],
+      "yearRange": "1815–1968",
+      "evidences": [
+        {
+          "eventId": "rua-maria-antonia--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "164",
+          "title": "Maria Antônia da Silva Ramos",
+          "detail": "Dona de uma chácara na região, Maria Antônia (1815-1902) vendeu, em 1879, parte de suas terras à Igreja Presbiteriana para a construção do prédio da Escola Americana, um dos empreendimentos que originaram Higienópolis",
+          "address": "R. Maria Antônia, 403",
+          "eraId": "colonial-imperio",
+          "year": 1815,
+          "coords": [
+            -46.65199845,
+            -23.54559702
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-maria-antonia--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "328",
+          "title": "Bar do Zé",
+          "detail": "Na batalha da Maria Antônia, em 1968, conflito entre estudantes da USP e do Mackenzie, o bar foi usado como esconderijo por aqueles ligados ao movimento de esquerda na época",
+          "address": "R. Maria Antônia, 216",
+          "eraId": "ditadura",
+          "year": 1968,
+          "coords": [
+            -46.65051,
+            -23.54662002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-maria-antonia--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "8",
+          "title": "Batalha da Maria Antônia",
+          "detail": "Ocorreu nesta rua, em 1968, o confronto entre estudantes do Mackenzie e da USP que resultou na morte do secundarista José Carlos Guimarães, assassinado por membros do comando de caça aos comunistas",
+          "address": "R. Maria Antônia, 294",
+          "eraId": "ditadura",
+          "year": 1968,
+          "coords": [
+            -46.65111,
+            -23.54610002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "rua-florencio-de-abreu": {
+      "streetKey": "rua-florencio-de-abreu",
+      "streetDisplay": "Rua Florêncio de Abreu",
+      "evidenceCount": 4,
+      "themeCount": 2,
+      "eras": [
+        "democracia",
+        "republica-velha",
+        "sem-data"
+      ],
+      "yearRange": "1892–1898",
+      "evidences": [
+        {
+          "eventId": "rua-florencio-de-abreu--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "125",
+          "title": "Sítio Arqueológico Florêncio de Abreu",
+          "detail": "Escavado em 1992, continha em sua maioria peças do século 19, como louças inglesas, francesas e objetos do cotidiano da casa do Dr. Eulálio da Costa Carvalho, construída em 1892. Posteriormente, o imóvel sediou o Laboratório Farmacêutico do Estad",
+          "address": "R. Florêncio de Abreu, 217, 223",
+          "eraId": "democracia",
+          "year": 1892,
+          "coords": [
+            -46.63311,
+            -23.54220002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-florencio-de-abreu--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "306",
+          "title": "A Salubridade e a Casa da Boia",
+          "detail": "Natural de Alepo (Síria), Rizkallah Jorge Tahan fundou em 1898 a empresa, que começou vendendo produtos de decoração em cobre e mais tarde se consagrou pela venda de materiais sanitários, impulsionada pelas condições de salubridade da cidade à é",
+          "address": "R. Florêncio de Abreu, 123",
+          "eraId": "republica-velha",
+          "year": 1898,
+          "coords": [
+            -46.63333,
+            -23.54297002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-florencio-de-abreu--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "16",
+          "title": "Caminho das Minas",
+          "detail": "Começava aqui o caminho muito usado para acessar as Minas Gerais no século 18",
+          "address": "R. Florêncio de Abreu, 2",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63370831,
+            -23.54390497
+          ],
+          "sequence": 3,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-florencio-de-abreu--004",
+          "themeId": "poi-turistico",
+          "featureId": "centro-cultural-correios",
+          "title": "Centro Cultural Correios",
+          "detail": "Ponto de interesse",
+          "address": "",
+          "eraId": "outro",
+          "year": null,
+          "coords": [
+            -46.6329984,
+            -23.5388625
+          ],
+          "sequence": 4,
+          "sequenceTotal": 4
+        }
+      ]
+    },
+    "rua-da-gloria": {
+      "streetKey": "rua-da-gloria",
+      "streetDisplay": "Rua Da Glória",
+      "evidenceCount": 4,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "modernismo",
+        "sem-data"
+      ],
+      "yearRange": "1820–1940",
+      "evidences": [
+        {
+          "eventId": "rua-da-gloria--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "429",
+          "title": "Santa Casa de Misericórdia",
+          "detail": "A partir dos anos 1820, a irmandade filantrópica manteve nesta esquina sede e hospital, num edifício posteriormente demolido. Na década de 1880 mudou-se para a Vila Buarque",
+          "address": "R. da Glória, 195",
+          "eraId": "colonial-imperio",
+          "year": 1820,
+          "coords": [
+            -46.6339,
+            -23.55489002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-da-gloria--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "64",
+          "title": "Escola de Samba Lavapés",
+          "detail": "Agremiação ativa mais antiga da cidade, surgiu de rodas de música que ocorriam nestas esquinas nos anos 1930",
+          "address": "R. da Glória, 973",
+          "eraId": "modernismo",
+          "year": 1930,
+          "coords": [
+            -46.63128769,
+            -23.55984838
+          ],
+          "sequence": 2,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-da-gloria--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "168",
+          "title": "Paulistano da Glória",
+          "detail": "Fundado por Augusta Geralda, mãe do sambista Geraldo Filme, como uma associação de domésticas, o cordão carnavalesco funcionou aqui dos anos 1940 a 1980, transformado em escola de samba e salão de baile",
+          "address": "R. da Glória, 132",
+          "eraId": "modernismo",
+          "year": 1940,
+          "coords": [
+            -46.63438,
+            -23.55434002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-da-gloria--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "18",
+          "title": "Caminho de Santos",
+          "detail": "Começava aqui o percurso que ligava São Paulo a Santos no período colonial. Antes uma trilha indígena, foi usada pelos portugueses para chegar ao planalto. Originou a Estrada Velha de Santos",
+          "address": "R. da Glória, 21",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63433118,
+            -23.55323504
+          ],
+          "sequence": 4,
+          "sequenceTotal": 4
+        }
+      ]
+    },
+    "rua-tres-rios": {
+      "streetKey": "rua-tres-rios",
+      "streetDisplay": "Rua Três Rios",
+      "evidenceCount": 4,
+      "themeCount": 2,
+      "eras": [
+        "populista",
+        "sem-data"
+      ],
+      "yearRange": "1953",
+      "evidences": [
+        {
+          "eventId": "rua-tres-rios--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "26",
+          "title": "Casa do Povo",
+          "detail": "Erguida pela comunidade judaica em 1953, em memória às vítimas do nazismo, sediou a escola Scholem Aleichem e o teatro TAIB. Firmou-se como lugar de resistência à Ditadura e de experimentação cultural",
+          "address": "R. Três Rios, 252",
+          "eraId": "populista",
+          "year": 1953,
+          "coords": [
+            -46.63659,
+            -23.52926002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-tres-rios--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "439",
+          "title": "Primeiro campo de futebol oficial",
+          "detail": "Aqui, no final do século 19, Charles Miller adaptou um campo de críquete para o futebol, seguindo as normas oficiais da época. O local foi utilizado por pouco mais de cinco anos, até o parcelamento da Chácara Dulley",
+          "address": "R. Três Rios, 362",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63717,
+            -23.52833002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-tres-rios--003",
+          "themeId": "poi-turistico",
+          "featureId": "casa-do-povo",
+          "title": "Casa do Povo",
+          "detail": "Ponto de interesse",
+          "address": "",
+          "eraId": "outro",
+          "year": null,
+          "coords": [
+            -46.636584,
+            -23.52909
+          ],
+          "sequence": 3,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-tres-rios--004",
+          "themeId": "poi-turistico",
+          "featureId": "oficina-cultural-oswald-de-andrade",
+          "title": "Oficina Cultural Oswald de Andrade",
+          "detail": "Ponto de interesse",
+          "address": "",
+          "eraId": "outro",
+          "year": null,
+          "coords": [
+            -46.63779460833334,
+            -23.529364675
+          ],
+          "sequence": 4,
+          "sequenceTotal": 4
+        }
+      ]
+    },
+    "rua-dos-aflitos": {
+      "streetKey": "rua-dos-aflitos",
+      "streetDisplay": "Rua Dos Aflitos",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "sem-data"
+      ],
+      "yearRange": "",
+      "evidences": [
+        {
+          "eventId": "rua-dos-aflitos--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "29",
+          "title": "Cemitério dos Aflitos",
+          "detail": "O local, onde eram enterrados pobres, escravizados, criminosos e indígenas, funcionou nesta quadra nos séculos 18 e 19",
+          "address": "R. dos Aflitos, 70",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63466094,
+            -23.55610814
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-dos-aflitos--002",
+          "themeId": "poi-turistico",
+          "featureId": "capela-nossa-senhora-dos-aflitos",
+          "title": "Capela Nossa Senhora dos Aflitos",
+          "detail": "Património religioso",
+          "address": "",
+          "eraId": "igreja_religiosidade",
+          "year": null,
+          "coords": [
+            -46.63464829,
+            -23.55612772
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-senador-paulo-egidio": {
+      "streetKey": "rua-senador-paulo-egidio",
+      "streetDisplay": "Rua Senador Paulo Egídio",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "ditadura"
+      ],
+      "yearRange": "1829–1983",
+      "evidences": [
+        {
+          "eventId": "rua-senador-paulo-egidio--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "31",
+          "title": "Chafariz São Francisco",
+          "detail": "Em 1829, com o aumento da população no centro, a Câmara se vê pressionada a tornar públicos os chafarizes, como o que existia aqui e que servia apenas os franciscanos e estudantes de direito",
+          "address": "R. Senador Paulo Egídio, 64, 70, 72 (Lg. São Francisco)",
+          "eraId": "colonial-imperio",
+          "year": 1829,
+          "coords": [
+            -46.63643,
+            -23.54952002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-senador-paulo-egidio--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "356",
+          "title": "Assassinato de Joílson de Jesus",
+          "detail": "Nesta rua, em dezembro de 1983, o menino negro de 15 anos, que há dias estava sem comer, foi espancado até a morte por um procurador que o acusou de roubar uma corrente de ouro, assassinando-o sem provas ou direito de defesa",
+          "address": "R. Senador Paulo Egídio, 72",
+          "eraId": "ditadura",
+          "year": 1983,
+          "coords": [
+            -46.6363,
+            -23.54942002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-direita": {
+      "streetKey": "rua-direita",
+      "streetDisplay": "Rua Direita",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "sem-data"
+      ],
+      "yearRange": "",
+      "evidences": [
+        {
+          "eventId": "rua-direita--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "34",
+          "title": "Cine Alhambra",
+          "detail": "Um dos poucos edifícios de cinema remanescentes do período mudo; sua arquitetura orientalizada, salão de chá e minicampo de golf do jardim criavam um ambiente exótico, apreciado pela elite paulistana",
+          "address": "R. Direita, 231",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63585,
+            -23.54842002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-direita--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "192",
+          "title": "Rua Direita",
+          "detail": "Aberta ainda no século 16, é uma das mais antigas da cidade. Era assim conhecida por sua localização à direita das igrejas de Santo Antônio, na atual Praça do Patriarca, e da Misericórdia, que ficava neste local",
+          "address": "R. Direita, 132",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63486276,
+            -23.5485675
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-consolacao": {
+      "streetKey": "rua-consolacao",
+      "streetDisplay": "Rua da Consolação",
+      "evidenceCount": 6,
+      "themeCount": 2,
+      "eras": [
+        "colonial-imperio",
+        "republica-velha",
+        "modernismo",
+        "populista"
+      ],
+      "yearRange": "1887–1959",
+      "evidences": [
+        {
+          "eventId": "rua-consolacao--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "418",
+          "title": "Chácara Velha",
+          "detail": "Aqui se localizava a sede da Chácara Velha, um complexo de casarões ocupados pela família Souza Queiroz. Serviu provisoriamente como sede do Instituto Ana Rosa até 1887, e foi desapropriado em 1937 para se construir a nova Biblioteca Municipal",
+          "address": "R. da Consolação, 94 c/ Av. São Luís",
+          "eraId": "colonial-imperio",
+          "year": 1887,
+          "coords": [
+            -46.64206,
+            -23.54784002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "rua-consolacao--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "507",
+          "title": "Dispensário-Modelo Clemente Ferreira",
+          "detail": "A instituição dedicava assistência a enfermos e foi decisiva para o combate à tuberculose. Em 1913, o Dispensário foi transferido para cá, em meio a protestos de vizinhos temendo o contágio da doença",
+          "address": "R. da Consolação, 717",
+          "eraId": "republica-velha",
+          "year": 1913,
+          "coords": [
+            -46.64819306,
+            -23.54786342
+          ],
+          "sequence": 2,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "rua-consolacao--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "496",
+          "title": "Primeira Indústria Brasileira de Televisores",
+          "detail": "Criada em 1943 pelo imigrante Bernardo Kocubej, a Invictus começou produzindo rádios. Em 1951, fabricou a primeira TV nacional. Esteve neste endereço de 1956 a 1975, quando encerrou suas atividades",
+          "address": "R. da Consolação, 1601",
+          "eraId": "modernismo",
+          "year": 1943,
+          "coords": [
+            -46.65595051,
+            -23.5513594
+          ],
+          "sequence": 3,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "rua-consolacao--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "35",
+          "title": "Cine Belas Artes",
+          "detail": "Dedicado ao cinema desde 1954, este espaço passou a ser chamado Cine Belas Artes em 1967 e sediou a cinemateca nos anos 1970. Ponto de encontro, preserva uma programação alternativa",
+          "address": "R. da Consolação, 2423",
+          "eraId": "populista",
+          "year": 1954,
+          "coords": [
+            -46.66256,
+            -23.55561002
+          ],
+          "sequence": 4,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "rua-consolacao--005",
+          "themeId": "memoria-paulistana",
+          "featureId": "502",
+          "title": "Teatro Record",
+          "detail": "Famosa casa de shows inaugurada em 1959, palco de atrações da Jovem Guarda e de grandes festivais da MPB, gênero musical que contribuiu para difundir nos anos 1960. Destruído por incêndio em 1969",
+          "address": "R. da Consolação, 1992",
+          "eraId": "populista",
+          "year": 1959,
+          "coords": [
+            -46.65951159,
+            -23.55284305
+          ],
+          "sequence": 5,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "rua-consolacao--006",
+          "themeId": "acervo-tombado",
+          "featureId": "5018",
+          "title": "CONJUNTO DE ESCULTURAS/TÚMULOS DO CEMITÉRIO DA CONSOLAÇÃO (ANEXO I DA RESOLUÇÃO 08/2017)",
+          "detail": "RES. 08/2017",
+          "address": "R DA CONSOLACAO, 1660",
+          "eraId": "republica-velha",
+          "year": null,
+          "coords": [
+            -46.65729291,
+            -23.55062375
+          ],
+          "sequence": 6,
+          "sequenceTotal": 6
+        }
+      ]
+    },
+    "praca-franklin-roosevelt": {
+      "streetKey": "praca-franklin-roosevelt",
+      "streetDisplay": "Praça Franklin Roosevelt",
+      "evidenceCount": 3,
+      "themeCount": 2,
+      "eras": [
+        "populista",
+        "democracia"
+      ],
+      "yearRange": "1962–2002",
+      "evidences": [
+        {
+          "eventId": "praca-franklin-roosevelt--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "36",
+          "title": "Cine Bijou",
+          "detail": "Inaugurado neste local, em 1962, foi ponto de encontro de movimentos de resistência à ditadura militar brasileira, onde se exibiam produções consideradas subversivas pelo regime",
+          "address": "Pc. Franklin Roosevelt, 172",
+          "eraId": "populista",
+          "year": 1962,
+          "coords": [
+            -46.64613,
+            -23.54842002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "praca-franklin-roosevelt--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "108",
+          "title": "Satyrianas",
+          "detail": "Festival de teatro que celebra a primavera por 78 horas contínuas, concentra-se nesta praça e se espalha pelo entorno desde 2002",
+          "address": "Pc. Franklin Roosevelt, 214, 222",
+          "eraId": "democracia",
+          "year": 2002,
+          "coords": [
+            -46.64601,
+            -23.54803002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "praca-franklin-roosevelt--003",
+          "themeId": "poi-turistico",
+          "featureId": "praca-franklin-roosevelt",
+          "title": "Praça Franklin Roosevelt",
+          "detail": "Praça / espaço público",
+          "address": "",
+          "eraId": "praca_espaco_publico",
+          "year": null,
+          "coords": [
+            -46.64670835974026,
+            -23.54854523766234
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "avenida-paulista": {
+      "streetKey": "avenida-paulista",
+      "streetDisplay": "Avenida Paulista",
+      "evidenceCount": 11,
+      "themeCount": 3,
+      "eras": [
+        "colonial-imperio",
+        "republica-velha",
+        "populista",
+        "ditadura",
+        "democracia",
+        "modernismo",
+        "sem-data"
+      ],
+      "yearRange": "1873–2015",
+      "evidences": [
+        {
+          "eventId": "avenida-paulista--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "415",
+          "title": "Ernesto Dias de Castro",
+          "detail": "Esta casa foi projetada para servir de residência para o engenheiro civil (1873-1955) formado pela Escola Politécnica de São Paulo, que atuou na Diretoria de Obras da cidade, tendo também atuação comercial",
+          "address": "Av. Paulista, 37",
+          "eraId": "colonial-imperio",
+          "year": 1873,
+          "coords": [
+            -46.6452,
+            -23.57114002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "290",
+          "title": "Mansão Matarazzo",
+          "detail": "A casa da família foi erguida em 1896 e reformada várias vezes ao longo do século 20. Palco de inúmeras reuniões sociais da alta sociedade paulistana, foi demolida nos anos 90 em meio à disputa pela sua preservação, contestada por seus proprietá",
+          "address": "Av. Paulista, 1230",
+          "eraId": "republica-velha",
+          "year": 1896,
+          "coords": [
+            -46.65283,
+            -23.56419002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "317",
+          "title": "Roberto Burle Marx",
+          "detail": "O paisagista, botânico e artista (1909 -1994) nasceu num casarão nesta quadra. Marcou a arquitetura brasileira ao conceber jardins em projetos de Niemeyer e Rino Levi, com uso pioneiro de espécies tropicais",
+          "address": "Av. Paulista, 1853",
+          "eraId": "republica-velha",
+          "year": 1909,
+          "coords": [
+            -46.65872,
+            -23.56033002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "444",
+          "title": "Madame Rosita",
+          "detail": "Aqui, entre as décadas de 1960 a 1990, funcionou a elegante casa de moda feminina, especialista em peles. Antes num ateliê na República, a loja acompanhou sua clientela de alto padrão ao mudar-se para esta avenida",
+          "address": "Av. Paulista, 2295",
+          "eraId": "populista",
+          "year": 1960,
+          "coords": [
+            -46.66167,
+            -23.55739002
+          ],
+          "sequence": 4,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--005",
+          "themeId": "memoria-paulistana",
+          "featureId": "51",
+          "title": "Cine Rio",
+          "detail": "Inaugurado em 1963, é símbolo da resistência dos cinemas de rua. Seu valor à cidade mobilizou frequentadores e poder público, impedindo que fechasse nos anos 2000",
+          "address": "Av. Paulista, 2073",
+          "eraId": "populista",
+          "year": 1963,
+          "coords": [
+            -46.66036178,
+            -23.55927527
+          ],
+          "sequence": 5,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--006",
+          "themeId": "memoria-paulistana",
+          "featureId": "40",
+          "title": "Cine Gazetinha",
+          "detail": "Foi com a projeção do romance francês “Um Homem, Uma Mulher”, de Claude Lelouch, que o Gazetinha abriu as portas aqui em 1967. Fechou em 1999 e em 2005 foi reinaugurado, passando a se chamar Reserva Cultural",
+          "address": "Av. Paulista, 900",
+          "eraId": "ditadura",
+          "year": 1967,
+          "coords": [
+            -46.65121,
+            -23.56551002
+          ],
+          "sequence": 6,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--007",
+          "themeId": "memoria-paulistana",
+          "featureId": "225",
+          "title": "Morte de Márcia Prado",
+          "detail": "Em janeiro de 2009, Márcia foi atropelada aqui, por um motorista de ônibus, antes de haver ciclovias na Paulista. Sua morte trouxe visibilidade para o cicloativismo",
+          "address": "Av. Paulista, 1230",
+          "eraId": "democracia",
+          "year": 2009,
+          "coords": [
+            -46.6531324,
+            -23.56401862
+          ],
+          "sequence": 7,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--008",
+          "themeId": "memoria-paulistana",
+          "featureId": "353",
+          "title": "Jornadas de Junho",
+          "detail": "Em 2013, um aumento da tarifa dos transportes levou o Movimento Passe Livre a organizar manifestações na Paulista e outros locais, as quais culminaram num dos maiores movimentos nacionais de protestos na história das lutas populares do país",
+          "address": "Av. Paulista, 1578",
+          "eraId": "democracia",
+          "year": 2013,
+          "coords": [
+            -46.65596,
+            -23.56151002
+          ],
+          "sequence": 8,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--009",
+          "themeId": "monumentos",
+          "featureId": "324",
+          "title": "Sem Título",
+          "detail": "Implantado em 2015 · Escultura Abstrata · aço pintado",
+          "address": "Av. Paulista 1111",
+          "eraId": "democracia",
+          "year": 2015,
+          "coords": [
+            -46.65295621,
+            -23.56462238
+          ],
+          "sequence": 9,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--010",
+          "themeId": "acervo-tombado",
+          "featureId": "5006",
+          "title": "COLEÇÃO DE ARTE DO MASP",
+          "detail": "RES. 05/1991",
+          "address": "AV PAULISTA, 1578",
+          "eraId": "modernismo",
+          "year": null,
+          "coords": [
+            -46.65591059,
+            -23.56147511
+          ],
+          "sequence": 10,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "avenida-paulista--011",
+          "themeId": "memoria-paulistana",
+          "featureId": "230",
+          "title": "Casarões da Paulista",
+          "detail": "Junto com o Liceu Pasteur, a Escola Rodrigues Alves e a Casa das Rosas, esse é um dos remanescentes da primeira ocupação da avenida, aberta no final do século 19",
+          "address": "Av. Paulista, 867",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.65874683,
+            -23.55971719
+          ],
+          "sequence": 11,
+          "sequenceTotal": 11
+        }
+      ]
+    },
+    "avenida-ipiranga": {
+      "streetKey": "avenida-ipiranga",
+      "streetDisplay": "Avenida Ipiranga",
+      "evidenceCount": 5,
+      "themeCount": 2,
+      "eras": [
+        "colonial-imperio",
+        "modernismo",
+        "ditadura"
+      ],
+      "yearRange": "1866–1960",
+      "evidences": [
+        {
+          "eventId": "avenida-ipiranga--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "309",
+          "title": "Basílio Jafet",
+          "detail": "O empresário imigrante de origem libanesa (1866–1947) foi um dos idealizadores da fundação do Hospital Sírio-libanês e benemérito do Clube Atlético Monte Líbano. Este edifício, que o homenageia, foi ocupado em 2012 pelo movimento MMCR",
+          "address": "Av. Ipiranga, 879",
+          "eraId": "colonial-imperio",
+          "year": 1866,
+          "coords": [
+            -46.6401,
+            -23.54183002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "avenida-ipiranga--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "41",
+          "title": "Cine Ipiranga",
+          "detail": "Foi inaugurado neste local em 1943, inspirado nas grandes salas de cinema alemãs. Era considerada uma obra de engenharia inovadora nos anos 1940, e das mais elegantes salas da cidade",
+          "address": "Av. Ipiranga, 786",
+          "eraId": "modernismo",
+          "year": 1940,
+          "coords": [
+            -46.64055,
+            -23.54283002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "avenida-ipiranga--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "43",
+          "title": "Cine Marabá",
+          "detail": "Inaugurado neste local, em 1944, na então cinelândia paulistana, recebeu pré-estréias da antiga Companhia Vera Cruz. Foi restaurado pela empresa PlayArte Cinemas e reaberto em 2009",
+          "address": "Av. Ipiranga, 757",
+          "eraId": "modernismo",
+          "year": 1944,
+          "coords": [
+            -46.64099,
+            -23.54263002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "avenida-ipiranga--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "138",
+          "title": "Banda Redonda",
+          "detail": "A banda carnavalesca fundada pelo dramaturgo Plínio Marcos realiza a abertura da semana do Carnaval desde 1974 aqui, onde ficava o Bar Redondo, reduto da intelectualidade boêmia dos anos 1960 e 1970",
+          "address": "Av. Ipiranga, 81",
+          "eraId": "ditadura",
+          "year": 1960,
+          "coords": [
+            -46.64603,
+            -23.54676002
+          ],
+          "sequence": 4,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "avenida-ipiranga--005",
+          "themeId": "poi-turistico",
+          "featureId": "edificio-italia",
+          "title": "Edifício Itália",
+          "detail": "Arquitetura / mirante",
+          "address": "",
+          "eraId": "arquitetura_mirante",
+          "year": null,
+          "coords": [
+            -46.6436337,
+            -23.5453075
+          ],
+          "sequence": 5,
+          "sequenceTotal": 5
+        }
+      ]
+    },
+    "rua-augusta": {
+      "streetKey": "rua-augusta",
+      "streetDisplay": "Rua Augusta",
+      "evidenceCount": 7,
+      "themeCount": 1,
+      "eras": [
+        "populista",
+        "ditadura",
+        "democracia"
+      ],
+      "yearRange": "1947–2008",
+      "evidences": [
+        {
+          "eventId": "rua-augusta--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "42",
+          "title": "Cine Majestic",
+          "detail": "Inaugurado neste local em 1947, participou da ascensão da Rua Augusta como espaço de sociabilidade nos anos 1960 e da retomada do cinema brasileiro após o fim da Embrafilme em 1990",
+          "address": "R. Augusta, 1475",
+          "eraId": "populista",
+          "year": 1947,
+          "coords": [
+            -46.65844172,
+            -23.55655692
+          ],
+          "sequence": 1,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "rua-augusta--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "431",
+          "title": "Rastro",
+          "detail": "O perfume, ícone do mercado de luxo brasileiro nos anos 1960 e 1970, levava o nome da marca de seu criador, o artista e empresário Aparício Basílio da Silva, que tinha aqui uma loja e galeria homônima",
+          "address": "R. Augusta, 2223",
+          "eraId": "populista",
+          "year": 1960,
+          "coords": [
+            -46.65896,
+            -23.55695002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "rua-augusta--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "178",
+          "title": "Nova Babilônia",
+          "detail": "Nascida como boate Big Valley em 1966, tornou-se boate Nova Babilônia nos anos 1980, ficando conhecida pela prostituição, característica da rua Augusta à época, até os anos 2010, quando fechou",
+          "address": "R. Augusta, 781",
+          "eraId": "ditadura",
+          "year": 1966,
+          "coords": [
+            -46.65336061,
+            -23.55248536
+          ],
+          "sequence": 3,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "rua-augusta--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "49",
+          "title": "Cine Orly",
+          "detail": "Inaugurado em 1969, tornou-se CineSesc no final dos anos 1970. No bar localizado dentro da sala de exibição, se assistiram a mostras, festivais e filmes independentes dos mais diversos países",
+          "address": "R. Augusta, 2075",
+          "eraId": "ditadura",
+          "year": 1969,
+          "coords": [
+            -46.66248,
+            -23.56040002
+          ],
+          "sequence": 4,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "rua-augusta--005",
+          "themeId": "memoria-paulistana",
+          "featureId": "182",
+          "title": "Balneário",
+          "detail": "O estabelecimento acompanhou a dinâmica da Augusta nos anos 1980 e 1990 como “sauna for men” e “american bar”, até que a rua passou a receber mais jovens em baladas e sofreu um boom imobiliário",
+          "address": "R. Augusta, 783",
+          "eraId": "ditadura",
+          "year": 1980,
+          "coords": [
+            -46.6533,
+            -23.55246002
+          ],
+          "sequence": 5,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "rua-augusta--006",
+          "themeId": "memoria-paulistana",
+          "featureId": "121",
+          "title": "Nation Disco Clube",
+          "detail": "Marco da cena clubber paulistana, funcionou no subsolo desta galeria de 1988 a 1991. Reuniu um público jovem e formador de opinião sobre música, arte, teatro e moda",
+          "address": "R. Augusta, 2203",
+          "eraId": "democracia",
+          "year": 1988,
+          "coords": [
+            -46.6634368,
+            -23.56129591
+          ],
+          "sequence": 6,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "rua-augusta--007",
+          "themeId": "memoria-paulistana",
+          "featureId": "139",
+          "title": "Studio SP",
+          "detail": "A casa de shows, um ícone do chamado Baixo Augusta, funcionou aqui a partir de 2008 até encerrar suas atividades, em 2013. Seu palco lançou e projetou grande parte dos artistas da nova música brasileira",
+          "address": "R. Augusta, 591",
+          "eraId": "democracia",
+          "year": 2008,
+          "coords": [
+            -46.65165,
+            -23.55182002
+          ],
+          "sequence": 7,
+          "sequenceTotal": 7
+        }
+      ]
+    },
+    "rua-rego-freitas": {
+      "streetKey": "rua-rego-freitas",
+      "streetDisplay": "Rua Rego Freitas",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "democracia"
+      ],
+      "yearRange": "2009",
+      "evidences": [
+        {
+          "eventId": "rua-rego-freitas--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "45",
+          "title": "Cine Matilha",
+          "detail": "Cinema Independente, desde sua abertura em 2009 é importante espaço democrático de discussão de pautas ligadas aos direitos humanos e ambientais, abrigando movimentos artísticos de resistência",
+          "address": "R. Rego Freitas, 542",
+          "eraId": "democracia",
+          "year": 2009,
+          "coords": [
+            -46.64675,
+            -23.54672002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-rego-freitas--002",
+          "themeId": "poi-turistico",
+          "featureId": "matilha-cultural",
+          "title": "Matilha Cultural",
+          "detail": "Ponto de interesse",
+          "address": "",
+          "eraId": "outro",
+          "year": null,
+          "coords": [
+            -46.646920938461534,
+            -23.54669953846154
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "avenida-sao-joao": {
+      "streetKey": "avenida-sao-joao",
+      "streetDisplay": "Avenida São João",
+      "evidenceCount": 6,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "modernismo",
+        "populista",
+        "sem-data"
+      ],
+      "yearRange": "1897–1957",
+      "evidences": [
+        {
+          "eventId": "avenida-sao-joao--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "147",
+          "title": "Palhaço Piolin",
+          "detail": "Abelardo Pinto \"Piolin\" (1897-1973) já era palhaço conhecido quando ergueu seu circo neste largo em 1925. Os modernistas, que o viam como genuíno artista popular, imortalizaram sua história em textos",
+          "address": "Av. São João, 473",
+          "eraId": "republica-velha",
+          "year": 1897,
+          "coords": [
+            -46.63867233,
+            -23.54342537
+          ],
+          "sequence": 1,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "avenida-sao-joao--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "57",
+          "title": "Conservatório Dramático Musical",
+          "detail": "Fundado em 1906 e ativo até meados dos anos 1940, teve professores como Mário de Andrade e é considerado a primeira escola de teatro do Brasil",
+          "address": "Av. São João, 281",
+          "eraId": "republica-velha",
+          "year": 1906,
+          "coords": [
+            -46.63719603,
+            -23.54426692
+          ],
+          "sequence": 2,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "avenida-sao-joao--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "46",
+          "title": "Cine Metro",
+          "detail": "Foi inaugurada aqui, em 1938, a primeira sala de cinema da cidade pertencente a uma produtora de Hollywood, a Metro Goldwyn Mayer. Aqui também foi instalado o primeiro ar-condicionado da cidade",
+          "address": "Av. São João, 791",
+          "eraId": "modernismo",
+          "year": 1938,
+          "coords": [
+            -46.64144444,
+            -23.5418889
+          ],
+          "sequence": 3,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "avenida-sao-joao--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "52",
+          "title": "Cine UFA-Palace",
+          "detail": "Ligado à produtora alemã que exibiu seus filmes aqui, seu nome foi alterado para Art Palácio em 1939, por causa da 2ª Guerra Mundial. Projeto de Rino Levi, era a sala favorita de Mazzaropi, que nela lançava seus filmes",
+          "address": "Av. São João, 419",
+          "eraId": "modernismo",
+          "year": 1939,
+          "coords": [
+            -46.63846289,
+            -23.54354277
+          ],
+          "sequence": 4,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "avenida-sao-joao--005",
+          "themeId": "memoria-paulistana",
+          "featureId": "48",
+          "title": "Cine Olido",
+          "detail": "Inaugurado neste local, em 1957, no auge da cinelândia paulistana, foi o primeiro da cidade a funcionar dentro de uma galeria comercial e a vender ingressos numerados e antecipados",
+          "address": "Av. São João, 473",
+          "eraId": "populista",
+          "year": 1957,
+          "coords": [
+            -46.63929016,
+            -23.5440219
+          ],
+          "sequence": 5,
+          "sequenceTotal": 6
+        },
+        {
+          "eventId": "avenida-sao-joao--006",
+          "themeId": "memoria-paulistana",
+          "featureId": "106",
+          "title": "Sampa",
+          "detail": "Hino popular de São Paulo, composto por Caetano Veloso, tornou célebre esta esquina, da qual o cantor foi vizinho quando morou na cidade",
+          "address": "Av. São João, 677",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.64046,
+            -23.54231002
+          ],
+          "sequence": 6,
+          "sequenceTotal": 6
+        }
+      ]
+    },
+    "rua-roberto-simonsen": {
+      "streetKey": "rua-roberto-simonsen",
+      "streetDisplay": "Rua Roberto Símonsen",
+      "evidenceCount": 3,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "republica-velha",
+        "sem-data"
+      ],
+      "yearRange": "1797–1909",
+      "evidences": [
+        {
+          "eventId": "rua-roberto-simonsen--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "163",
+          "title": "Marquesa de Santos",
+          "detail": "Domitila de Castro Canto e Melo (1797-1867) adquiriu este imóvel em 1834 e o transformou em uma das residências mais nobres da cidade, onde viveu até o fim de sua vida",
+          "address": "R. Roberto Símonsen, 136",
+          "eraId": "colonial-imperio",
+          "year": 1797,
+          "coords": [
+            -46.63222,
+            -23.54859002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-roberto-simonsen--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "270",
+          "title": "Edifício da Associação das Classes Laboriosas",
+          "detail": "Construído em 1909, abrigou a sede da Associação das Classes Laboriosas. Foi importante espaço de atividade operária e sindical no século 20, abrigando comícios, negociações durante greves, peças teatrais, entre outros",
+          "address": "R. Roberto Simonsen, 22",
+          "eraId": "republica-velha",
+          "year": 1909,
+          "coords": [
+            -46.63194,
+            -23.54960002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-roberto-simonsen--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "61",
+          "title": "Descida das lavadeiras",
+          "detail": "O Beco do Pinto, também chamado Beco do Colégio, foi importante acesso à várzea do rio Tamanduateí para lavadeiras, pescadores e carregadores de água até o século 19",
+          "address": "R. Roberto Símonsen, 136",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63223,
+            -23.54844002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "rua-libero-badaro": {
+      "streetKey": "rua-libero-badaro",
+      "streetDisplay": "Rua Líbero Badaró",
+      "evidenceCount": 5,
+      "themeCount": 2,
+      "eras": [
+        "republica-velha"
+      ],
+      "yearRange": "1911–1926",
+      "evidences": [
+        {
+          "eventId": "rua-libero-badaro--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "241",
+          "title": "Plano Bouvard",
+          "detail": "Esta escadaria fazia parte do parque de Joseph Bouvard no Anhangabaú, projetado em 1911, obra de modernização da cidade à imagem de Paris, ao gosto da elite cafeeira",
+          "address": "R. Libero Badaró, 367",
+          "eraId": "republica-velha",
+          "year": 1911,
+          "coords": [
+            -46.63625056,
+            -23.5460276
+          ],
+          "sequence": 1,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "rua-libero-badaro--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "66",
+          "title": "Exposição de Anita Malfatti",
+          "detail": "Ocorreu neste local, em 1917, a histórica mostra de pintura, que inspirou a semana de arte moderna",
+          "address": "R. Líbero Badaró, 332",
+          "eraId": "republica-velha",
+          "year": 1917,
+          "coords": [
+            -46.63631061,
+            -23.54673478
+          ],
+          "sequence": 2,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "rua-libero-badaro--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "74",
+          "title": "Garçonnière de Oswald de Andrade",
+          "detail": "O apartamento serviu como espaço de convivência entre artistas e intelectuais que, mais tarde, formaram o núcleo da Semana de Arte Moderna de 1922",
+          "address": "R. Líbero Badaró, 446",
+          "eraId": "republica-velha",
+          "year": 1922,
+          "coords": [
+            -46.63579489,
+            -23.5458185
+          ],
+          "sequence": 3,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "rua-libero-badaro--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "158",
+          "title": "Edifício Sampaio Moreira",
+          "detail": "Concluído entre 1926 e 1927, é considerado um dos primeiros arranha-céus paulistanos. Foi o prédio mais alto da cidade até a inauguração do Edifício Martinelli, ainda em obras, em 1929",
+          "address": "R. Libero Badaró, 346",
+          "eraId": "republica-velha",
+          "year": 1926,
+          "coords": [
+            -46.63627207,
+            -23.54666793
+          ],
+          "sequence": 4,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "rua-libero-badaro--005",
+          "themeId": "poi-turistico",
+          "featureId": "edificio-sampaio-moreira",
+          "title": "Edifício Sampaio Moreira",
+          "detail": "Arquitetura / mirante",
+          "address": "",
+          "eraId": "arquitetura_mirante",
+          "year": null,
+          "coords": [
+            -46.63617396666667,
+            -23.546725388888888
+          ],
+          "sequence": 5,
+          "sequenceTotal": 5
+        }
+      ]
+    },
+    "praca-antonio-prado": {
+      "streetKey": "praca-antonio-prado",
+      "streetDisplay": "Praça Antônio Prado",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "colonial-imperio",
+        "democracia"
+      ],
+      "yearRange": "1725–2016",
+      "evidences": [
+        {
+          "eventId": "praca-antonio-prado--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "78",
+          "title": "Igreja N Sra do Rosário dos Homens Pretos",
+          "detail": "Ficava aqui de 1725 até 1903, quando foi demolida e mais tarde reerguida no Largo do Paissandu",
+          "address": "Pc. Antônio Prado, 48",
+          "eraId": "colonial-imperio",
+          "year": 1725,
+          "coords": [
+            -46.63447,
+            -23.54552002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-antonio-prado--002",
+          "themeId": "monumentos",
+          "featureId": "216",
+          "title": "Monumento a Zumbi",
+          "detail": "Implantado em 2016 · Estátua · Bronze granito e pedra",
+          "address": "Praça Antônio Prado, 33",
+          "eraId": "democracia",
+          "year": 2016,
+          "coords": [
+            -46.6346123,
+            -23.54566647
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "largo-do-paissandu": {
+      "streetKey": "largo-do-paissandu",
+      "streetDisplay": "Largo Do Paissandú",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "populista",
+        "sem-data"
+      ],
+      "yearRange": "1955",
+      "evidences": [
+        {
+          "eventId": "largo-do-paissandu--001",
+          "themeId": "monumentos",
+          "featureId": "192",
+          "title": "Mãe Preta",
+          "detail": "Implantado em 1955 · Estátua · bronze e granito",
+          "address": "Largo do Paissandu",
+          "eraId": "populista",
+          "year": 1955,
+          "coords": [
+            -46.63832502,
+            -23.54302621
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "largo-do-paissandu--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "80",
+          "title": "Invenção do Bauru",
+          "detail": "Casimiro Pinto Neto, aluno da Faculdade de direito do Largo São Francisco, tinha o apelido de sua terra natal, bauru, e criou aqui o famoso sanduíche",
+          "address": "Largo do Paissandú, 27",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63882,
+            -23.54288002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-dona-veridiana": {
+      "streetKey": "rua-dona-veridiana",
+      "streetDisplay": "Rua Dona Veridiana",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "ditadura"
+      ],
+      "yearRange": "1825–1963",
+      "evidences": [
+        {
+          "eventId": "rua-dona-veridiana--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "122",
+          "title": "Roda dos Expostos",
+          "detail": "De 1825 a 1950 funcionou aqui, junto aos muros da Santa Casa de Misericórdia, uma roda onde eram deixadas crianças cujas famílias não as podiam criar. Por ela passaram 4.580 crianças",
+          "address": "R. Dona Veridiana, 298",
+          "eraId": "colonial-imperio",
+          "year": 1825,
+          "coords": [
+            -46.651,
+            -23.54199002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-dona-veridiana--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "82",
+          "title": "João Sebastião Bar",
+          "detail": "Foi importante ponto de encontro de artistas da Bossa Nova entre 1964 e 1967. Abrigou alguns dos primeiros shows de Chico Buarque e o primeiro happening do Brasil, concebido por Wesley Duke Lee em 1963",
+          "address": "R. Dona Veridiana, 661",
+          "eraId": "ditadura",
+          "year": 1963,
+          "coords": [
+            -46.65198,
+            -23.54513002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-da-liberdade": {
+      "streetKey": "praca-da-liberdade",
+      "streetDisplay": "Praça Da Liberdade",
+      "evidenceCount": 4,
+      "themeCount": 3,
+      "eras": [
+        "ditadura",
+        "democracia",
+        "sem-data"
+      ],
+      "yearRange": "1976–1995",
+      "evidences": [
+        {
+          "eventId": "praca-da-liberdade--001",
+          "themeId": "monumentos",
+          "featureId": "142",
+          "title": "Governador Abreu Sodré",
+          "detail": "Implantado em 1976 · Cabeça estela · bronze e concreto",
+          "address": "Praça da Liberdade",
+          "eraId": "ditadura",
+          "year": 1976,
+          "coords": [
+            -46.63555014,
+            -23.55525762
+          ],
+          "sequence": 1,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "praca-da-liberdade--002",
+          "themeId": "monumentos",
+          "featureId": "341",
+          "title": "Tsuyoshi Mizumoto",
+          "detail": "Implantado em 1995 · Cabeça · bronze e concreto",
+          "address": "Praça da Liberdade",
+          "eraId": "democracia",
+          "year": 1995,
+          "coords": [
+            -46.63543697,
+            -23.55534984
+          ],
+          "sequence": 2,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "praca-da-liberdade--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "84",
+          "title": "Largo da Forca",
+          "detail": "Execuções de condenados foram conduzidas aqui nos séculos 18 e 19",
+          "address": "Pc. da Liberdade-Japão",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63561,
+            -23.55534002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "praca-da-liberdade--004",
+          "themeId": "poi-turistico",
+          "featureId": "praca-da-liberdade",
+          "title": "Praça da Liberdade",
+          "detail": "Praça / espaço público",
+          "address": "",
+          "eraId": "praca_espaco_publico",
+          "year": null,
+          "coords": [
+            -46.635290749999996,
+            -23.55523715
+          ],
+          "sequence": 4,
+          "sequenceTotal": 4
+        }
+      ]
+    },
+    "largo-do-arouche": {
+      "streetKey": "largo-do-arouche",
+      "streetDisplay": "Largo Do Arouche",
+      "evidenceCount": 12,
+      "themeCount": 3,
+      "eras": [
+        "republica-velha",
+        "modernismo",
+        "populista",
+        "ditadura",
+        "democracia",
+        "sem-data"
+      ],
+      "yearRange": "1893–1992",
+      "evidences": [
+        {
+          "eventId": "largo-do-arouche--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "260",
+          "title": "Cocheira Anglo-Franceza",
+          "detail": "Inaugurada aqui em 1893, abrigou o primeiro hospital veterinário da cidade, o Royal Derby, dedicado especialmente ao cuidado com cavalos, que também podiam ficar hospedados no local",
+          "address": "Largo do Arouche, 77",
+          "eraId": "republica-velha",
+          "year": 1893,
+          "coords": [
+            -46.64494,
+            -23.54170002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--002",
+          "themeId": "monumentos",
+          "featureId": "4",
+          "title": "A menina e o bezerro",
+          "detail": "Implantado em 1922 · Grupo escultórico · mármore Carrara e granito",
+          "address": "Largo do Arouche",
+          "eraId": "republica-velha",
+          "year": 1922,
+          "coords": [
+            -46.6455658,
+            -23.54140327
+          ],
+          "sequence": 2,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--003",
+          "themeId": "monumentos",
+          "featureId": "190",
+          "title": "Luiz Gama",
+          "detail": "Implantado em 1931 · Busto · bronze e granito",
+          "address": "Largo do Arouche",
+          "eraId": "modernismo",
+          "year": 1931,
+          "coords": [
+            -46.64499822,
+            -23.541302
+          ],
+          "sequence": 3,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--004",
+          "themeId": "monumentos",
+          "featureId": "94",
+          "title": "Depois do Banho",
+          "detail": "Implantado em 1941 · Estátua · bronze e granito",
+          "address": "Largo do Arouche",
+          "eraId": "modernismo",
+          "year": 1941,
+          "coords": [
+            -46.64544188,
+            -23.54103985
+          ],
+          "sequence": 4,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--005",
+          "themeId": "monumentos",
+          "featureId": "38",
+          "title": "Augusto de Prima Porta",
+          "detail": "Implantado em 1948 · Estátua · bronze e granito",
+          "address": "Largo do Arouche",
+          "eraId": "populista",
+          "year": 1948,
+          "coords": [
+            -46.6451887,
+            -23.54040265
+          ],
+          "sequence": 5,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--006",
+          "themeId": "memoria-paulistana",
+          "featureId": "87",
+          "title": "Operação Tarântula",
+          "detail": "Ocupado desde os anos 1950 pela comunidade LGBT+ com festas, encontros e outros eventos de resistência, em 1987 o Arouche foi palco da ação policial, que violou aqui direitos de trans e travestis",
+          "address": "Largo do Arouche",
+          "eraId": "populista",
+          "year": 1950,
+          "coords": [
+            -46.64544,
+            -23.54122002
+          ],
+          "sequence": 6,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--007",
+          "themeId": "monumentos",
+          "featureId": "349",
+          "title": "Vicente de Carvalho",
+          "detail": "Implantado em 1959 · Busto · bronze e granito",
+          "address": "Largo do Arouche",
+          "eraId": "populista",
+          "year": 1959,
+          "coords": [
+            -46.64529093,
+            -23.54099901
+          ],
+          "sequence": 7,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--008",
+          "themeId": "monumentos",
+          "featureId": "13",
+          "title": "Afonso D’Escragnolle Taunay",
+          "detail": "Implantado em 1965 · Herma · bronze e granito",
+          "address": "Largo do Arouche",
+          "eraId": "ditadura",
+          "year": 1965,
+          "coords": [
+            -46.64537247,
+            -23.54079803
+          ],
+          "sequence": 8,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--009",
+          "themeId": "monumentos",
+          "featureId": "182",
+          "title": "José Pedro Leite Cordeiro",
+          "detail": "Implantado em 1986 · Herma · bronze e granito",
+          "address": "Largo do Arouche",
+          "eraId": "democracia",
+          "year": 1986,
+          "coords": [
+            -46.64541701,
+            -23.54092227
+          ],
+          "sequence": 9,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--010",
+          "themeId": "monumentos",
+          "featureId": "295",
+          "title": "Progresso",
+          "detail": "Implantado em 1992 · Escultura Abstrata · chapas de ferro pintadas",
+          "address": "Largo do Arouche",
+          "eraId": "democracia",
+          "year": 1992,
+          "coords": [
+            -46.64637458,
+            -23.54163483
+          ],
+          "sequence": 10,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--011",
+          "themeId": "acervo-tombado",
+          "featureId": "5020",
+          "title": "ACERVO DA ACADEMIA PAULISTA DE LETRAS",
+          "detail": "não consta",
+          "address": "LG DO AROUCHE, 302, 312, 324",
+          "eraId": "republica-velha",
+          "year": null,
+          "coords": [
+            -46.64581208,
+            -23.54077902
+          ],
+          "sequence": 11,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-do-arouche--012",
+          "themeId": "monumentos",
+          "featureId": "25",
+          "title": "Amor Materno",
+          "detail": "Data: 19-- · Estátua · mármore e granito",
+          "address": "Largo do Arouche",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.64541256,
+            -23.54160392
+          ],
+          "sequence": 12,
+          "sequenceTotal": 12
+        }
+      ]
+    },
+    "rua-quinze-novembro": {
+      "streetKey": "rua-quinze-novembro",
+      "streetDisplay": "Rua Quinze de Novembro",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "colonial-imperio"
+      ],
+      "yearRange": "1837",
+      "evidences": [
+        {
+          "eventId": "rua-quinze-novembro--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "89",
+          "title": "Militão Augusto de Azevedo",
+          "detail": "Entre 1875 a 1885, aqui, em seu ateliê Photographia Americana, o fotógrafo (1837-1905) retratou a população e os cenários da época, criando um importante acervo sobre o século 19",
+          "address": "R. XV de Novembro, 317",
+          "eraId": "colonial-imperio",
+          "year": 1837,
+          "coords": [
+            -46.63441847,
+            -23.54618474
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-quinze-novembro--002",
+          "themeId": "poi-turistico",
+          "featureId": "mub3---museu-da-bolsa-do-brasil",
+          "title": "Mub3 – Museu da Bolsa do Brasil",
+          "detail": "Museu / memória",
+          "address": "",
+          "eraId": "museu_memoria",
+          "year": null,
+          "coords": [
+            -46.6343972,
+            -23.5465253
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-major-diogo": {
+      "streetKey": "rua-major-diogo",
+      "streetDisplay": "Rua Major Diogo",
+      "evidenceCount": 3,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "populista",
+        "ditadura"
+      ],
+      "yearRange": "1878–1980",
+      "evidences": [
+        {
+          "eventId": "rua-major-diogo--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "254",
+          "title": "Grupo Escolar Bella Vista",
+          "detail": "Aqui se doou em 1878 uma quadra da Chácara Bixiga para a construção do hospital da Santa Casa, que se fixou em outro local. Assim, em 1900, foi construída no terreno a 1ª escola-modelo do Estado, exemplo para outros Grupos Escolares da capital",
+          "address": "R. Major Diogo, 200",
+          "eraId": "colonial-imperio",
+          "year": 1878,
+          "coords": [
+            -46.64332,
+            -23.55288002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-major-diogo--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "110",
+          "title": "Teatro Brasileiro de Comédia",
+          "detail": "O TBC foi fundado aqui em 1948 por Franco Zampari, inaugurando o chamado novo profissionalismo no Teatro Moderno. Estreou com as peças \"La Voix Humaine\" e \"A Mulher do Próximo\"",
+          "address": "R. Major Diogo, 311, 315",
+          "eraId": "populista",
+          "year": 1948,
+          "coords": [
+            -46.64307,
+            -23.55389002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-major-diogo--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "91",
+          "title": "Palácio das Princesas",
+          "detail": "Brenda Lee adquiriu este imóvel em 1984 e nele criou uma casa de apoio à população travesti da cidade, onde oferecia assistência na luta contra a violência do Estado e no combate ao HIV nos anos 1980",
+          "address": "R. Major Diogo, 779",
+          "eraId": "ditadura",
+          "year": 1980,
+          "coords": [
+            -46.64266,
+            -23.55809002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "rua-rui-barbosa": {
+      "streetKey": "rua-rui-barbosa",
+      "streetDisplay": "Rua Rui Barbosa",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "populista",
+        "sem-data"
+      ],
+      "yearRange": "1963",
+      "evidences": [
+        {
+          "eventId": "rua-rui-barbosa--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "93",
+          "title": "Pato N´Água",
+          "detail": "Walter Gomes de Oliveira fez história como apitador de bateria da Vai-Vai; o samba \"Silêncio no Bexiga\", de Geraldo Filme, foi uma homenagem após sua morte, em 1963, em episódio não esclarecido",
+          "address": "R. Rui Barbosa, 588",
+          "eraId": "populista",
+          "year": 1963,
+          "coords": [
+            -46.645203,
+            -23.56073202
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-rui-barbosa--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "256",
+          "title": "Cine Rex",
+          "detail": "Neste local funcionaram diversos espaços culturais: o cinema, nos anos 40, depois o Teatro Aquarius, nos anos 60, e por fim o Teatro Zaccaro, nos anos 80 e 90, palco do programa de TV Perdidos",
+          "address": "R. Rui Barbosa, 266 c/ R. Conselheiro Carrão",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.64554,
+            -23.55788002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "avenida-sao-luis": {
+      "streetKey": "avenida-sao-luis",
+      "streetDisplay": "Avenida São Luis",
+      "evidenceCount": 4,
+      "themeCount": 1,
+      "eras": [
+        "populista",
+        "ditadura"
+      ],
+      "yearRange": "1960–1966",
+      "evidences": [
+        {
+          "eventId": "avenida-sao-luis--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "268",
+          "title": "Cine Metrópole",
+          "detail": "Nos anos 1960, quando foi inaugurado, se reuniam aqui intelectuais e cinéfilos para assistir as estreias de filmes de sucesso mundial. Foi pioneiro na realização da sessão da meia-noite",
+          "address": "Av. São Luís, 187",
+          "eraId": "populista",
+          "year": 1960,
+          "coords": [
+            -46.64259,
+            -23.54637002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "avenida-sao-luis--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "300",
+          "title": "Edifício Itália",
+          "detail": "Projeto do arquiteto Franz Heep para a nova sede do Circolo Italiano, foi inaugurado em 1965. Contando com 46 pavimentos, é considerado um dos edifícios mais altos da cidade e um dos marcos da arquitetura moderna em São Paulo",
+          "address": "Av. São Luís, 50",
+          "eraId": "ditadura",
+          "year": 1965,
+          "coords": [
+            -46.64363,
+            -23.54535002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "avenida-sao-luis--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "271",
+          "title": "Piso Paulista",
+          "detail": "O piso paulista surgiu em um concurso cultural, em 1965. Sua criadora, Mirthes Bernardes, não imaginava que seu desenho se tornaria símbolo da cidade. Ela morreria em 2020, sem receber o devido",
+          "address": "Av. São Luís, 50",
+          "eraId": "ditadura",
+          "year": 1965,
+          "coords": [
+            -46.6434,
+            -23.54565002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "avenida-sao-luis--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "96",
+          "title": "Ponto de Encontro",
+          "detail": "Bar frequentado por jovens estudantes e artistas como Chico Buarque e Gilberto Gil. Aqui, Plinio Marcos estreou, em 1966, sua primeira peça como profissional: “Dois Perdidos Numa Noite Suja”",
+          "address": "Av. São Luis, 187",
+          "eraId": "ditadura",
+          "year": 1966,
+          "coords": [
+            -46.64259,
+            -23.54634002
+          ],
+          "sequence": 4,
+          "sequenceTotal": 4
+        }
+      ]
+    },
+    "rua-boa-vista": {
+      "streetKey": "rua-boa-vista",
+      "streetDisplay": "Rua Boa Vista",
+      "evidenceCount": 3,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "republica-velha"
+      ],
+      "yearRange": "1711–1922",
+      "evidences": [
+        {
+          "eventId": "rua-boa-vista--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "162",
+          "title": "Boa Vista",
+          "detail": "Desta rua, denominada Boa Vista desde 1711, se podia ver por completo, as atuais zonas norte e leste, da Várzea do Carmo até as encostas da Serra da Cantareira",
+          "address": "R. Boa Vista, 62",
+          "eraId": "colonial-imperio",
+          "year": 1711,
+          "coords": [
+            -46.63326,
+            -23.54727002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-boa-vista--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "99",
+          "title": "Primeira Projeção Cinematográfica da Cidade",
+          "detail": "Ocorreu aqui, no Teatro Apolo, em 9 de janeiro de 1898, com o uso de um aparelho cinematographo",
+          "address": "R. Boa Vista, 127",
+          "eraId": "republica-velha",
+          "year": 1898,
+          "coords": [
+            -46.63354723,
+            -23.54645557
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-boa-vista--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "480",
+          "title": "Escritório Técnico de Ramos de Azevedo",
+          "detail": "Aqui instalou-se, em 1922, no 2° e 6° andares, uma das sedes do escritório a frente de grandes obras do começo do século 20, como o Theatro Municipal e a Escola Caetano de Campos. Funcionou até 1980",
+          "address": "R. Boa Vista, 128 ao 136",
+          "eraId": "republica-velha",
+          "year": 1922,
+          "coords": [
+            -46.6333429,
+            -23.54663869
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "rua-nestor-pestana": {
+      "streetKey": "rua-nestor-pestana",
+      "streetDisplay": "Rua Nestor Pestana",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "republica-velha"
+      ],
+      "yearRange": "1895",
+      "evidences": [
+        {
+          "eventId": "rua-nestor-pestana--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "113",
+          "title": "Velódromo Paulista",
+          "detail": "Construído em 1895 para provas ciclísticas e depois adaptado para o futebol, foi demolido em 1916 para a abertura desta rua. É considerado o primeiro estádio esportivo da cidade",
+          "address": "R. Nestor Pestana, 163",
+          "eraId": "republica-velha",
+          "year": 1895,
+          "coords": [
+            -46.64540976,
+            -23.54905011
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-nestor-pestana--002",
+          "themeId": "acervo-tombado",
+          "featureId": "5014",
+          "title": "ACERVO DOCUMENTAL DO TEATRO CULTURA ARTÍSTICA",
+          "detail": "RES. 14/2011",
+          "address": "R NESTOR PESTANA, 196",
+          "eraId": "republica-velha",
+          "year": null,
+          "coords": [
+            -46.645847,
+            -23.54909302
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-da-se": {
+      "streetKey": "praca-da-se",
+      "streetDisplay": "Praça Da Sé",
+      "evidenceCount": 20,
+      "themeCount": 3,
+      "eras": [
+        "republica-velha",
+        "modernismo",
+        "populista",
+        "ditadura",
+        "democracia",
+        "sem-data"
+      ],
+      "yearRange": "1928–2004",
+      "evidences": [
+        {
+          "eventId": "praca-da-se--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "266",
+          "title": "Edifício Rolim",
+          "detail": "No último andar deste prédio, construído em 1928, era a redação do jornal panfletário e irreverente “O Homem do Povo” fundado por Oswald de Andrade e Patrícia Galvão. Por conta das posições políticas a publicação foi fechada",
+          "address": "Pc. da Sé, 87",
+          "eraId": "republica-velha",
+          "year": 1928,
+          "coords": [
+            -46.63296442,
+            -23.54901078
+          ],
+          "sequence": 1,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--002",
+          "themeId": "monumentos",
+          "featureId": "201",
+          "title": "Marco Zero",
+          "detail": "Implantado em 1934 · Marco quilométrico · mármore  bronze e granito",
+          "address": "Praça da Sé",
+          "eraId": "modernismo",
+          "year": 1934,
+          "coords": [
+            -46.63399862,
+            -23.55041013
+          ],
+          "sequence": 2,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--003",
+          "themeId": "monumentos",
+          "featureId": "274",
+          "title": "Padre José de Anchieta Apóstolo do Brasil",
+          "detail": "Implantado em 1954 · Estátua · bronze e granito",
+          "address": "Praça da Sé",
+          "eraId": "populista",
+          "year": 1954,
+          "coords": [
+            -46.63377942,
+            -23.54992082
+          ],
+          "sequence": 3,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--004",
+          "themeId": "monumentos",
+          "featureId": "78",
+          "title": "Condor",
+          "detail": "Implantado em 1978 · Escultura Abstrata · bronze",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1978,
+          "coords": [
+            -46.63284763,
+            -23.55083481
+          ],
+          "sequence": 4,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--005",
+          "themeId": "monumentos",
+          "featureId": "8",
+          "title": "Abertura",
+          "detail": "Implantado em 1979 · Escultura Abstrata · aço corten",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63334776,
+            -23.55010416
+          ],
+          "sequence": 5,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--006",
+          "themeId": "monumentos",
+          "featureId": "95",
+          "title": "Diálogo",
+          "detail": "Implantado em 1979 · Escultura Abstrata · chapas de aço pintadas",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63331783,
+            -23.55098772
+          ],
+          "sequence": 6,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--007",
+          "themeId": "monumentos",
+          "featureId": "111",
+          "title": "Emblema de São Paulo",
+          "detail": "Implantado em 1979 · Escultura Abstrata · concreto armado e bronze",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63278907,
+            -23.55023392
+          ],
+          "sequence": 7,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--008",
+          "themeId": "monumentos",
+          "featureId": "113",
+          "title": "Espaço Cósmico",
+          "detail": "Implantado em 1979 · Escultura Abstrata · aço inox e granito",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63296024,
+            -23.55095924
+          ],
+          "sequence": 8,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--009",
+          "themeId": "monumentos",
+          "featureId": "133",
+          "title": "Garatuja",
+          "detail": "Implantado em 1979 · Escultura Abstrata · aço pintado",
+          "address": "Praça da Sé (piso das bilheterias da Estação Sé)",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63343949,
+            -23.55025066
+          ],
+          "sequence": 9,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--010",
+          "themeId": "monumentos",
+          "featureId": "252",
+          "title": "Nuvem Sobre a Cidade",
+          "detail": "Implantado em 1979 · Escultura Abstrata · aço inox",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63254821,
+            -23.55102714
+          ],
+          "sequence": 10,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--011",
+          "themeId": "monumentos",
+          "featureId": "266",
+          "title": "Os Pássaros",
+          "detail": "Implantado em 1979 · Escultura Abstrata · bronze e granito",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63313936,
+            -23.55119368
+          ],
+          "sequence": 11,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--012",
+          "themeId": "monumentos",
+          "featureId": "321",
+          "title": "Sem Título",
+          "detail": "Implantado em 1979 · Escultura Abstrata · granito aço e concreto",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63265608,
+            -23.55156033
+          ],
+          "sequence": 12,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--013",
+          "themeId": "monumentos",
+          "featureId": "337",
+          "title": "Totem Da Construção (antes estava Totem da Sé)",
+          "detail": "Implantado em 1979 · Escultura Abstrata · argamassa armada e concreto",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.63368471,
+            -23.55067395
+          ],
+          "sequence": 13,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--014",
+          "themeId": "monumentos",
+          "featureId": "354",
+          "title": "Vôo",
+          "detail": "Implantado em 1979 · Escultura Abstrata · aço inox e concreto",
+          "address": "Praça da Sé",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.6326085,
+            -23.55043665
+          ],
+          "sequence": 14,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--015",
+          "themeId": "monumentos",
+          "featureId": "320",
+          "title": "Sem Título",
+          "detail": "Implantado em 1998 · Escultura Abstrata · concreto e ferro",
+          "address": "Praça da Sé",
+          "eraId": "democracia",
+          "year": 1998,
+          "coords": [
+            -46.63221469,
+            -23.55042507
+          ],
+          "sequence": 15,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--016",
+          "themeId": "monumentos",
+          "featureId": "319",
+          "title": "Sem Título",
+          "detail": "Implantado em 2000 · Escultura Abstrata · aço inox e granito",
+          "address": "Praça da Sé",
+          "eraId": "democracia",
+          "year": 2000,
+          "coords": [
+            -46.63378734,
+            -23.55105269
+          ],
+          "sequence": 16,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--017",
+          "themeId": "memoria-paulistana",
+          "featureId": "117",
+          "title": "Chacina da Sé",
+          "detail": "As noites de 19 e 22 de agosto de 2004 ficaram marcadas pela execução, neste local, de sete pessoas em situação de rua, todas com golpes na cabeça",
+          "address": "Pc. da Sé",
+          "eraId": "democracia",
+          "year": 2004,
+          "coords": [
+            -46.63378845,
+            -23.55083054
+          ],
+          "sequence": 17,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--018",
+          "themeId": "monumentos",
+          "featureId": "318",
+          "title": "Sem Título",
+          "detail": "Data: 19-- · Escultura Abstrata · mármore",
+          "address": "Praça da Sé",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63278976,
+            -23.5513916
+          ],
+          "sequence": 18,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--019",
+          "themeId": "poi-turistico",
+          "featureId": "catedral-da-se",
+          "title": "Catedral Metropolitana de São Paulo",
+          "detail": "Património religioso",
+          "address": "",
+          "eraId": "igreja_religiosidade",
+          "year": null,
+          "coords": [
+            -46.63435966666667,
+            -23.551232885185186
+          ],
+          "sequence": 19,
+          "sequenceTotal": 20
+        },
+        {
+          "eventId": "praca-da-se--020",
+          "themeId": "poi-turistico",
+          "featureId": "praca-da-se",
+          "title": "Praça da Sé",
+          "detail": "Praça / espaço público",
+          "address": "",
+          "eraId": "praca_espaco_publico",
+          "year": null,
+          "coords": [
+            -46.633219385000004,
+            -23.55054228
+          ],
+          "sequence": 20,
+          "sequenceTotal": 20
+        }
+      ]
+    },
+    "rua-conselheiro-crispiniano": {
+      "streetKey": "rua-conselheiro-crispiniano",
+      "streetDisplay": "Rua Conselheiro Crispiniano",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "democracia",
+        "sem-data"
+      ],
+      "yearRange": "2009",
+      "evidences": [
+        {
+          "eventId": "rua-conselheiro-crispiniano--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "129",
+          "title": "Sítio Arqueológico Praça das Artes",
+          "detail": "Escavado em 2009, possui em sua maioria peças do século 19, como garrafas, panelas de barro, louça fina e objetos do cotidiano",
+          "address": "R. Conselheiro Crispiniano, 354",
+          "eraId": "democracia",
+          "year": 2009,
+          "coords": [
+            -46.6381,
+            -23.54407002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-conselheiro-crispiniano--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "382",
+          "title": "Pixo protesto",
+          "detail": "Numa das empenas deste edifício é possível visualizar os pixos dos grupos Locuras e Loucos da 7, além de uma frase que marca a união entre dois tipos de reivindicação à cidade: a pixação e os movimentos de moradia",
+          "address": "R. Conselheiro Crispiniano, 344",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63832,
+            -23.54445002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-da-graca": {
+      "streetKey": "rua-da-graca",
+      "streetDisplay": "Rua Da Graça",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "republica-velha"
+      ],
+      "yearRange": "1912",
+      "evidences": [
+        {
+          "eventId": "rua-da-graca--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "144",
+          "title": "Primeira Sinagoga de São Paulo",
+          "detail": "A sinagoga Kehilat Israel, primeira e célula-mater de outras instituições judaicas da cidade, foi inaugurada aqui em 1912, num pequeno imóvel. Desde 2017 abriga o Memorial do Holocausto",
+          "address": "R. da Graça, 160",
+          "eraId": "republica-velha",
+          "year": 1912,
+          "coords": [
+            -46.63855,
+            -23.52975002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-da-graca--002",
+          "themeId": "poi-turistico",
+          "featureId": "memorial-da-imigracao-judaica-e-do-holocausto",
+          "title": "Memorial da Imigração Judaica e do Holocausto",
+          "detail": "Museu / memória",
+          "address": "",
+          "eraId": "museu_memoria",
+          "year": null,
+          "coords": [
+            -46.6385290375,
+            -23.52978854375
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-barao-de-itapetininga": {
+      "streetKey": "rua-barao-de-itapetininga",
+      "streetDisplay": "Rua Barão de Itapetininga",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "modernismo"
+      ],
+      "yearRange": "1899–1932",
+      "evidences": [
+        {
+          "eventId": "rua-barao-de-itapetininga--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "152",
+          "title": "Flávio de Carvalho",
+          "detail": "Arquiteto e artista plástico (1899-1973), um dos pioneiros da performance no país, impactou a sociedade paulistana ao desfilar nesta rua seu traje tropical, com saia e blusa, em 18 de outubro de 1956",
+          "address": "R. Barão de Itapetininga, 140",
+          "eraId": "republica-velha",
+          "year": 1899,
+          "coords": [
+            -46.64035606,
+            -23.54476565
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-barao-de-itapetininga--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "209",
+          "title": "MMDC",
+          "detail": "Daqui partiram os disparos que alvejaram em 23 de maio de 1932 os jovens Miragaia, Martins, Dráusio e Camargo durante manifestação. Suas iniciais designaram a sociedade interessada na derrubada de Vargas",
+          "address": "R. Barão de Itapetininga, 296, 298",
+          "eraId": "modernismo",
+          "year": 1932,
+          "coords": [
+            -46.6415407,
+            -23.54379672
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-solon": {
+      "streetKey": "rua-solon",
+      "streetDisplay": "Rua Solon",
+      "evidenceCount": 3,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "ditadura"
+      ],
+      "yearRange": "1921–1984",
+      "evidences": [
+        {
+          "eventId": "rua-solon--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "486",
+          "title": "Fábrica da Ford",
+          "detail": "Inaugurada em 1921, aqui funcionou a primeira grande linha de montagem de automóveis do Brasil, operando até a década de 50. Estes edifícios são uma das primeiras arquiteturas industriais da cidade",
+          "address": "R. Sólon, 1143",
+          "eraId": "republica-velha",
+          "year": 1921,
+          "coords": [
+            -46.6468003,
+            -23.52692662
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-solon--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "231",
+          "title": "Edifício União",
+          "detail": "Abandonado ainda em fase de construção, foi ocupado nos anos 1980. Em 2005, seus moradores entraram com pedido de usucapião coletivo, concedido dez anos depois, pela primeira vez para a posse de um prédio",
+          "address": "R. Solon, 934",
+          "eraId": "ditadura",
+          "year": 1980,
+          "coords": [
+            -46.6451691,
+            -23.52588422
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-solon--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "171",
+          "title": "Radar Tantã",
+          "detail": "Inaugurada aqui em 1984, em parte da antiga fábrica da Ford, foi precursora das casas noturnas que unem vários espaços de entretenimento. Em menos de um ano de sua abertura, levou jovens de classe média ao Bom Retiro",
+          "address": "R. Solon, 1069",
+          "eraId": "ditadura",
+          "year": 1984,
+          "coords": [
+            -46.64608,
+            -23.52654002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "avenida-angelica": {
+      "streetKey": "avenida-angelica",
+      "streetDisplay": "Avenida Angélica",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "republica-velha"
+      ],
+      "yearRange": "1842–1927",
+      "evidences": [
+        {
+          "eventId": "avenida-angelica--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "176",
+          "title": "Maria Angélica de Sousa Queirós",
+          "detail": "Nesta esquina ficava a casa onde morava uma das fundadoras de Higienópolis, Angélica (1842-1929). As ruas que levam seu nome e o de seu marido, Francisco de Barros, foram abertas após o loteamento de sua chácara",
+          "address": "Av. Angélica, 546 c/ Al. Barros",
+          "eraId": "colonial-imperio",
+          "year": 1842,
+          "coords": [
+            -46.65450783,
+            -23.53702282
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "avenida-angelica--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "262",
+          "title": "Edifício Marina Mendes Margarido",
+          "detail": "Construído em 1927, o projeto de Júlio de Abreu Jr. é um dos primeiros edifícios modernos da cidade. À época, se destacou pela ausência de ornamentos e pela nova forma de morar, com banheiros e serviços na fachada e quartos de empregados na cober",
+          "address": "Av. Angélica, 172",
+          "eraId": "republica-velha",
+          "year": 1927,
+          "coords": [
+            -46.65374,
+            -23.53438002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "avenida-higienopolis": {
+      "streetKey": "avenida-higienopolis",
+      "streetDisplay": "Avenida Higienópolis",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "republica-velha"
+      ],
+      "yearRange": "1825–1903",
+      "evidences": [
+        {
+          "eventId": "avenida-higienopolis--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "191",
+          "title": "Veridiana da Silva Prado",
+          "detail": "Uma das fundadoras deste bairro, dona Veridiana (1825-1910) estabeleceu aqui o palacete de sua chácara após sua separação, rara no século 19. Foi um notável salão cultural da elite",
+          "address": "Av. Higienópolis, 18",
+          "eraId": "colonial-imperio",
+          "year": 1825,
+          "coords": [
+            -46.65221688,
+            -23.54513165
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "avenida-higienopolis--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "327",
+          "title": "Caio Prado Jr.",
+          "detail": "O relevante intelectual marxista (1907-1990) viveu sua infância na Vila Antonieta, erguida neste terreno em 1903 com projeto de Carlos Ekman, e nos anos 1920, substituída por um palacete de Elisiário da Cunha Bahiana",
+          "address": "Av.Higienópolis, 195 c/ R. Sabará",
+          "eraId": "republica-velha",
+          "year": 1903,
+          "coords": [
+            -46.65406,
+            -23.54480002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-aurora": {
+      "streetKey": "rua-aurora",
+      "streetDisplay": "Rua Aurora",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha"
+      ],
+      "yearRange": "1902–1910",
+      "evidences": [
+        {
+          "eventId": "rua-aurora--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "272",
+          "title": "Casa Del Vecchio",
+          "detail": "Pioneira na fabricação de violões no Brasil, foi fundada em 1902 na rua do Riachuelo pelo luthier italiano Angelo Del Vecchio. Dezoito anos depois a empresa se mudou para este endereço, até fechar suas portas em 2022",
+          "address": "R. Aurora, 187",
+          "eraId": "republica-velha",
+          "year": 1902,
+          "coords": [
+            -46.63846,
+            -23.53892002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-aurora--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "204",
+          "title": "Adoniran Barbosa",
+          "detail": "O cantor e compositor (1910-1982) viveu aqui entre 1949 e 1962, de onde avistava a \"maloca\" de Matogrosso e Joca, personagens da canção Saudosa Maloca",
+          "address": "R. Aurora, 500",
+          "eraId": "republica-velha",
+          "year": 1910,
+          "coords": [
+            -46.64104032,
+            -23.54012381
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "avenida-rangel-pestana": {
+      "streetKey": "avenida-rangel-pestana",
+      "streetDisplay": "Avenida Rangel Pestana",
+      "evidenceCount": 3,
+      "themeCount": 2,
+      "eras": [
+        "colonial-imperio",
+        "sem-data"
+      ],
+      "yearRange": "",
+      "evidences": [
+        {
+          "eventId": "avenida-rangel-pestana--001",
+          "themeId": "acervo-tombado",
+          "featureId": "5016",
+          "title": "ACERVO DA IGREJA DA ORDEM TERCEIRA DE NOSSA SENHORA DO CARMO",
+          "detail": "RES. 47/1992",
+          "address": "AV RANGEL PESTANA, 230",
+          "eraId": "colonial-imperio",
+          "year": null,
+          "coords": [
+            -46.631069,
+            -23.55057602
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "avenida-rangel-pestana--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "250",
+          "title": "Bordas do Triângulo Histórico de SP (3)",
+          "detail": "Aqui é um dos vértices do território colonial pioneiro delimitado pelo Mosteiro de São Bento, Igreja da Ordem Primeira de São Francisco e Igreja da Ordem Terceira do Carmo, área que deu origem ao Centro Histórico da cidade",
+          "address": "Av. Rangel Pestana, 230",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63125412,
+            -23.55034222
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "avenida-rangel-pestana--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "219",
+          "title": "Figueira da Marquesa",
+          "detail": "Na chácara da Marquesa de Santos, que era nesta região, ficava a grande árvore que serviu como marco informal de entrada na cidade durante o século 19. Foi retirada no começo do século 20",
+          "address": "Av. Rangel Pestana, 863",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.62574032,
+            -23.54755335
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "avenida-rio-branco": {
+      "streetKey": "avenida-rio-branco",
+      "streetDisplay": "Avenida Rio Branco",
+      "evidenceCount": 3,
+      "themeCount": 2,
+      "eras": [
+        "republica-velha",
+        "populista"
+      ],
+      "yearRange": "1915–1961",
+      "evidences": [
+        {
+          "eventId": "avenida-rio-branco--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "427",
+          "title": "Palácio do Governo",
+          "detail": "O Palacete Elias Chaves foi residência típica dos Barões do Café na capital. Entre os anos de 1915 a 1965 se tornou sede do Governo Estadual de São Paulo e passou a ser chamada de Palácio dos Campos Elísios",
+          "address": "Av. Rio Branco, 1269",
+          "eraId": "republica-velha",
+          "year": 1915,
+          "coords": [
+            -46.64513,
+            -23.53352002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "avenida-rio-branco--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "239",
+          "title": "Edifício Wilton Paes de Almeida",
+          "detail": "A torre transparente projetada em 1961 pelo arquiteto Roger Zmekhol sediou a Cia. Com. de Vidros do Brasil e depois, órgãos públicos até 2009. Estava ocupada por moradias sociais ao desabar após incêndio em 01/05/2018 deixando mortos e desaparecido",
+          "address": "Av. Rio Branco, 10",
+          "eraId": "populista",
+          "year": 1961,
+          "coords": [
+            -46.6378553,
+            -23.54229682
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "avenida-rio-branco--003",
+          "themeId": "poi-turistico",
+          "featureId": "igreja-santa-ifigenia",
+          "title": "Igreja Santa Ifigênia",
+          "detail": "Património religioso",
+          "address": "",
+          "eraId": "igreja_religiosidade",
+          "year": null,
+          "coords": [
+            -46.637941814814816,
+            -23.541983896296298
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "rua-treze-de-maio": {
+      "streetKey": "rua-treze-de-maio",
+      "streetDisplay": "Rua Treze de Maio",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "sem-data"
+      ],
+      "yearRange": "1929",
+      "evidences": [
+        {
+          "eventId": "rua-treze-de-maio--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "263",
+          "title": "Escadaria do Bixiga",
+          "detail": "Com 84 degraus e 16 metros de altura, esta escadaria foi construída em 1929 pelo prefeito Pires do Rio para ligar a porção aristocrática da Bela Vista – o Morro dos Ingleses – ao local popular de moradias e negócios – a rua Treze de Maio",
+          "address": "R. Treze de Maio, 752",
+          "eraId": "republica-velha",
+          "year": 1929,
+          "coords": [
+            -46.64641,
+            -23.55986002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-treze-de-maio--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "253",
+          "title": "Festa da Achiropita",
+          "detail": "No entorno desta igreja acontece, em agosto, a tradicional festa em homenagem à padroeira do Bixiga, que celebra a culinária e cultura italiana. Surgida para apoiar a construção da igreja, hoje dá suporte às obras sociais da paróquia",
+          "address": "R. Treze de Maio, 478",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.64663,
+            -23.55729002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "alameda-rio-claro": {
+      "streetKey": "alameda-rio-claro",
+      "streetDisplay": "Alameda Rio Claro",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha"
+      ],
+      "yearRange": "1904–1926",
+      "evidences": [
+        {
+          "eventId": "alameda-rio-claro--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "269",
+          "title": "Complexo Hospitalar Matarazzo",
+          "detail": "Funcionou aqui entre 1904 e 1993. Com o slogan “a saúde dos ricos para os pobres”, atendia primeiramente aos imigrantes italianos e seus descendentes com serviços de qualidade. Sua fundação está associada ao Conde Francisco Matarazzo",
+          "address": "Al. Rio Claro, 190",
+          "eraId": "republica-velha",
+          "year": 1904,
+          "coords": [
+            -46.65288737,
+            -23.56136917
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "alameda-rio-claro--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "458",
+          "title": "Maria de Lourdes Guarda",
+          "detail": "A militante (1926-1996) é considerada um símbolo da luta pelos direitos das pessoas com deficiência no Brasil. Apesar de morar no hospital que existia aqui e usar uma maca para se locomover, se comunicava com a América Latina inteira",
+          "address": "Al. Rio Claro, 190",
+          "eraId": "republica-velha",
+          "year": 1926,
+          "coords": [
+            -46.65286,
+            -23.56139002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-sao-bento": {
+      "streetKey": "rua-sao-bento",
+      "streetDisplay": "Rua São Bento",
+      "evidenceCount": 4,
+      "themeCount": 3,
+      "eras": [
+        "republica-velha",
+        "democracia"
+      ],
+      "yearRange": "1927–2000",
+      "evidences": [
+        {
+          "eventId": "rua-sao-bento--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "275",
+          "title": "Cine São Bento",
+          "detail": "Foi inaugurado neste local em 1927, com uma sessão do clássico do cinema mudo “Tristeza de Satanás”, de D. W. Griffith. O espaço funcionou como exibidor oficial da Paramount na cidade até 1929 e em 1950 encerrou suas atividades",
+          "address": "R. São Bento, 241, 243 e 245",
+          "eraId": "republica-velha",
+          "year": 1927,
+          "coords": [
+            -46.63573,
+            -23.54700002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-sao-bento--002",
+          "themeId": "monumentos",
+          "featureId": "315",
+          "title": "Sem Nome",
+          "detail": "Implantado em 2000 · Escultura Abstrata · aço pintado",
+          "address": "Largo São Bento",
+          "eraId": "democracia",
+          "year": 2000,
+          "coords": [
+            -46.63417427,
+            -23.54401022
+          ],
+          "sequence": 2,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-sao-bento--003",
+          "themeId": "poi-turistico",
+          "featureId": "edificio-martinelli",
+          "title": "Edifício Martinelli",
+          "detail": "Arquitetura / mirante",
+          "address": "",
+          "eraId": "arquitetura_mirante",
+          "year": null,
+          "coords": [
+            -46.6349485,
+            -23.5456985
+          ],
+          "sequence": 3,
+          "sequenceTotal": 4
+        },
+        {
+          "eventId": "rua-sao-bento--004",
+          "themeId": "poi-turistico",
+          "featureId": "mosteiro-de-sao-bento",
+          "title": "Mosteiro de São Bento",
+          "detail": "Património religioso",
+          "address": "",
+          "eraId": "igreja_religiosidade",
+          "year": null,
+          "coords": [
+            -46.6339137,
+            -23.5438193
+          ],
+          "sequence": 4,
+          "sequenceTotal": 4
+        }
+      ]
+    },
+    "rua-brigadeiro-tobias": {
+      "streetKey": "rua-brigadeiro-tobias",
+      "streetDisplay": "Rua Brigadeiro Tobias",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "sem-data"
+      ],
+      "yearRange": "1876",
+      "evidences": [
+        {
+          "eventId": "rua-brigadeiro-tobias--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "508",
+          "title": "Hospital da Sociedade Portuguesa de Beneficência",
+          "detail": "Fundado em 1876, em homenagem a São Joaquim, foi o segundo hospital da capital, depois apenas da Santa Casa de Misericórdia. Mudou-se para a região do Paraíso, nos anos 1950, onde segue atualmente",
+          "address": "R. Brigadeiro Tobias, 367",
+          "eraId": "colonial-imperio",
+          "year": 1876,
+          "coords": [
+            -46.63531798,
+            -23.53992172
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-brigadeiro-tobias--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "296",
+          "title": "Edifício Mirante do Vale",
+          "detail": "Inicialmente chamado Palácio Zarzur e Kogan, também conhecido como Edifício Zarzur, foi considerado o mais alto da cidade e do país até o começo do século 21. Seu programa original incluía inúmeros escritórios e lojas comerciais",
+          "address": "R. Brigadeiro Tobias, 118",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63572,
+            -23.54205002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-da-republica": {
+      "streetKey": "praca-da-republica",
+      "streetDisplay": "Praça Da República",
+      "evidenceCount": 11,
+      "themeCount": 3,
+      "eras": [
+        "republica-velha",
+        "modernismo",
+        "populista",
+        "ditadura"
+      ],
+      "yearRange": "1909–1982",
+      "evidences": [
+        {
+          "eventId": "praca-da-republica--001",
+          "themeId": "monumentos",
+          "featureId": "65",
+          "title": "Cesário Mota",
+          "detail": "Implantado em 1909 · Busto · bronze e granito",
+          "address": "Praça da República",
+          "eraId": "republica-velha",
+          "year": 1909,
+          "coords": [
+            -46.64272595,
+            -23.54385467
+          ],
+          "sequence": 1,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--002",
+          "themeId": "monumentos",
+          "featureId": "51",
+          "title": "Caetano de Campos",
+          "detail": "Implantado em 1930 · Herma · bronze e granito",
+          "address": "Praça da República",
+          "eraId": "modernismo",
+          "year": 1930,
+          "coords": [
+            -46.64315564,
+            -23.54366456
+          ],
+          "sequence": 2,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "299",
+          "title": "Edifício Esther",
+          "detail": "Objeto de concurso em 1935 vencido pelos arquitetos Álvaro Vital Brasil e Adhemar Marinho é um dos primeiros prédios da arquitetura moderna em São Paulo. Abrigou a sede do Instituto de Arquitetos do Brasil e o Clube dos Artistas",
+          "address": "Pc. da República, 64 ao 80",
+          "eraId": "modernismo",
+          "year": 1935,
+          "coords": [
+            -46.64281,
+            -23.54459002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--004",
+          "themeId": "monumentos",
+          "featureId": "23",
+          "title": "Amizade Entre Os Povos",
+          "detail": "Implantado em 1936 · Marco · bronze e granito",
+          "address": "Praça da República (interior da EMEI Armando de Arruda Pereira)",
+          "eraId": "modernismo",
+          "year": 1936,
+          "coords": [
+            -46.64299346,
+            -23.54277616
+          ],
+          "sequence": 4,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--005",
+          "themeId": "monumentos",
+          "featureId": "212",
+          "title": "Mercúrio em Repouso",
+          "detail": "Implantado em 1938 · Estátua · bronze e granito",
+          "address": "Praça da República",
+          "eraId": "modernismo",
+          "year": 1938,
+          "coords": [
+            -46.64185665,
+            -23.54332537
+          ],
+          "sequence": 5,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--006",
+          "themeId": "monumentos",
+          "featureId": "246",
+          "title": "Ninando a Boneca",
+          "detail": "Implantado em 1938 · Estátua · granito e bronze",
+          "address": "Praça da República (interior da EMEI Armando de Arruda Pereira)",
+          "eraId": "modernismo",
+          "year": 1938,
+          "coords": [
+            -46.64296218,
+            -23.54293073
+          ],
+          "sequence": 6,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--007",
+          "themeId": "monumentos",
+          "featureId": "207",
+          "title": "Martins Miragaia Dráusio e Camargo",
+          "detail": "Implantado em 1956 · Marco · granito e concreto",
+          "address": "Praça da República",
+          "eraId": "populista",
+          "year": 1956,
+          "coords": [
+            -46.64337398,
+            -23.54331152
+          ],
+          "sequence": 7,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--008",
+          "themeId": "monumentos",
+          "featureId": "41",
+          "title": "Baden Powell",
+          "detail": "Implantado em 1959 · Busto · bronze e granito",
+          "address": "Praça da República",
+          "eraId": "populista",
+          "year": 1959,
+          "coords": [
+            -46.64336034,
+            -23.54308094
+          ],
+          "sequence": 8,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--009",
+          "themeId": "monumentos",
+          "featureId": "106",
+          "title": "Doutor Luiz Lázaro Zamenhoff",
+          "detail": "Implantado em 1969 · Herma · argamassa armada mármore e granito",
+          "address": "Praça da República",
+          "eraId": "ditadura",
+          "year": 1969,
+          "coords": [
+            -46.64250257,
+            -23.54382615
+          ],
+          "sequence": 9,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--010",
+          "themeId": "monumentos",
+          "featureId": "58",
+          "title": "Carolina Ribeiro",
+          "detail": "Implantado em 1982 · Herma · bronze e granilite",
+          "address": "Praça da República",
+          "eraId": "ditadura",
+          "year": 1982,
+          "coords": [
+            -46.64277264,
+            -23.5435131
+          ],
+          "sequence": 10,
+          "sequenceTotal": 11
+        },
+        {
+          "eventId": "praca-da-republica--011",
+          "themeId": "poi-turistico",
+          "featureId": "praca-da-republica",
+          "title": "Praça da República",
+          "detail": "Praça / espaço público",
+          "address": "",
+          "eraId": "praca_espaco_publico",
+          "year": null,
+          "coords": [
+            -46.642366515,
+            -23.54281625
+          ],
+          "sequence": 11,
+          "sequenceTotal": 11
+        }
+      ]
+    },
+    "praca-bento-de-camargo-barros": {
+      "streetKey": "praca-bento-de-camargo-barros",
+      "streetDisplay": "Praça Bento de Camargo Barros",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "populista",
+        "sem-data"
+      ],
+      "yearRange": "1963",
+      "evidences": [
+        {
+          "eventId": "praca-bento-de-camargo-barros--001",
+          "themeId": "monumentos",
+          "featureId": "49",
+          "title": "Brigadeiro José Vieira Couto de Magalhăes",
+          "detail": "Implantado em 1963 · Estátua · bronze e granito",
+          "address": "Praça Bento de Camargo Barros",
+          "eraId": "populista",
+          "year": 1963,
+          "coords": [
+            -46.62977737,
+            -23.52105349
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-bento-de-camargo-barros--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "302",
+          "title": "Associação Atlética São Paulo",
+          "detail": "A Associação Atlética São Paulo, fundada às margens do Rio Tietê, é um dos clubes pioneiros da cidade, tendo inaugurado uma das primeiras piscinas e ginásio coberto da cidade",
+          "address": "Pc. Bento de Camargo Barros, 162",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.62901,
+            -23.52050002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-carlos-de-sousa-nazare": {
+      "streetKey": "rua-carlos-de-sousa-nazare",
+      "streetDisplay": "Rua Carlos de Sousa Nazaré",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "colonial-imperio"
+      ],
+      "yearRange": "1869",
+      "evidences": [
+        {
+          "eventId": "rua-carlos-de-sousa-nazare--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "307",
+          "title": "Palacetes Rizkallah Jorge Tahan",
+          "detail": "Natural de Alepo (Síria), Rizkallah Jorge Tahan (1869-1949) construiu nesta rua os palacetes São Jorge (nº 286), Paraíso (nº 301) e Alepo (nº 327), no final dos anos 1930, alguns dos primeiros edifícios de apartamentos da cidade de São Paulo",
+          "address": "R. Carlos de Sousa Nazaré, 286",
+          "eraId": "colonial-imperio",
+          "year": 1869,
+          "coords": [
+            -46.63138,
+            -23.54057002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-carlos-de-sousa-nazare--002",
+          "themeId": "poi-turistico",
+          "featureId": "mercado-municipal-kinjo-yamato",
+          "title": "Mercado Municipal Kinjo Yamato",
+          "detail": "Comércio / mercado",
+          "address": "",
+          "eraId": "mercado_comercio",
+          "year": null,
+          "coords": [
+            -46.6302563,
+            -23.5403591
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-riskallah-jorge": {
+      "streetKey": "rua-riskallah-jorge",
+      "streetDisplay": "Rua Riskallah Jorge",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "modernismo"
+      ],
+      "yearRange": "1945",
+      "evidences": [
+        {
+          "eventId": "rua-riskallah-jorge--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "311",
+          "title": "Edifício Rizkallah Jorge Tahan",
+          "detail": "Erguido em 1945 pelo empresário sírio Rizkallah Jorge, foi projetado para ser o luxuoso Hotel Pinguim, nunca inaugurado. Abandonado nos anos 1980, o edifício foi ocupado por movimentos de moradia popular até ser",
+          "address": "R. Riskallah Jorge, 50",
+          "eraId": "modernismo",
+          "year": 1945,
+          "coords": [
+            -46.63497,
+            -23.54172002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-riskallah-jorge--002",
+          "themeId": "poi-turistico",
+          "featureId": "sampa-sky",
+          "title": "Sampa Sky",
+          "detail": "Ponto de interesse",
+          "address": "",
+          "eraId": "outro",
+          "year": null,
+          "coords": [
+            -46.6354953,
+            -23.5417098
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-alagoas": {
+      "streetKey": "rua-alagoas",
+      "streetDisplay": "Rua Alagoas",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "modernismo"
+      ],
+      "yearRange": "1874–1933",
+      "evidences": [
+        {
+          "eventId": "rua-alagoas--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "313",
+          "title": "Auguste Perret",
+          "detail": "O conceituado arquiteto francês (1874-1954) projetou este edifício, seu único no Brasil, no fim da década de 1940, com base na ideia do conde Armando Alvares Penteado. Sediaria uma escola de arte, que originou a FAAP",
+          "address": "R. Alagoas, 903",
+          "eraId": "colonial-imperio",
+          "year": 1874,
+          "coords": [
+            -46.66302,
+            -23.54512002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-alagoas--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "324",
+          "title": "Primeiro edifício de Higienópolis",
+          "detail": "Projetado por Abel Drummond e erguido pela Construtora Barreto, Xande & Cia em 1933, com uma moradia por andar e lojas no térreo, foi o primeiro a marcar o processo de verticalização do bairro",
+          "address": "R. Alagoas, 350",
+          "eraId": "modernismo",
+          "year": 1933,
+          "coords": [
+            -46.65772,
+            -23.54672002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-monte-alegre": {
+      "streetKey": "rua-monte-alegre",
+      "streetDisplay": "Rua Monte Alegre",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "sem-data"
+      ],
+      "yearRange": "1929",
+      "evidences": [
+        {
+          "eventId": "rua-monte-alegre--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "314",
+          "title": "Haroldo de Campos",
+          "detail": "Poeta, escritor, crítico e tradutor (1929-2003), entre outros, é um dos fundadores do movimento concretista, junto a seu irmão Augusto de Campos e o amigo Décio Pignatari. Morou aqui por décadas, próximo à PUC, onde foi professor",
+          "address": "R. Monte Alegre, 635",
+          "eraId": "republica-velha",
+          "year": 1929,
+          "coords": [
+            -46.66867105,
+            -23.53590298
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-monte-alegre--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "364",
+          "title": "Invasão Policial de 1977",
+          "detail": "Na noite de 22 de setembro, tropas comandadas pelo coronel Erasmo Dias invadiram este campus da PUC-SP para dissolver um ato estudantil contrário ao regime militar, culminando em agressões e prisões",
+          "address": "R. Monte Alegre, 984",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.67092342,
+            -23.53846244
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "alameda-santos": {
+      "streetKey": "alameda-santos",
+      "streetDisplay": "Alameda Santos",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "populista"
+      ],
+      "yearRange": "1910–1960",
+      "evidences": [
+        {
+          "eventId": "alameda-santos--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "319",
+          "title": "Zélia Gattai",
+          "detail": "Aqui, numa casa já demolida, morou nos anos 1910 e 1920 a fotógrafa, escritora e militante (1916–2008), junto com sua família de migrantes italianos anarquistas",
+          "address": "Al. Santos, 2534",
+          "eraId": "republica-velha",
+          "year": 1910,
+          "coords": [
+            -46.66368,
+            -23.55671002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "alameda-santos--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "436",
+          "title": "Cine Astor",
+          "detail": "Com uma sala ampla, foi inaugurado aqui no começo dos anos 1960, tendo funcionado até 2001. Seu espaço foi adaptado posteriormente para receber uma grande livraria",
+          "address": "Al. Santos",
+          "eraId": "populista",
+          "year": 1960,
+          "coords": [
+            -46.66072,
+            -23.55918002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-sao-caetano": {
+      "streetKey": "rua-sao-caetano",
+      "streetDisplay": "Rua São Caetano",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "sem-data"
+      ],
+      "yearRange": "",
+      "evidences": [
+        {
+          "eventId": "rua-sao-caetano--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "332",
+          "title": "Casa Gagliano",
+          "detail": "Inaugurada no início do século 20, foi uma popular loja de artigos pessoais e domésticos. Seu formato de propaganda nos jornais era único, com destaque a acidentes e incêndios na notícia, para chamar a atenção do leitor as promoções feitas na l",
+          "address": "R. São Caetano, 135",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63174,
+            -23.53462002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-sao-caetano--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "321",
+          "title": "Rua São Caetano",
+          "detail": "Aberta em início do século 19 como caminho ao hospital de isolamento das pessoas com hanseníase, chegou a ser conhecida como Travessa do Seminário e Rua dos Lázaros. Hoje, é popularmente chamada de Rua das Noivas, em função do comércio local",
+          "address": "R. São Caetano, 216",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63105,
+            -23.53505002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "avenida-tiradentes": {
+      "streetKey": "avenida-tiradentes",
+      "streetDisplay": "Avenida Tiradentes",
+      "evidenceCount": 7,
+      "themeCount": 3,
+      "eras": [
+        "colonial-imperio",
+        "sem-data"
+      ],
+      "yearRange": "1852–1856",
+      "evidences": [
+        {
+          "eventId": "avenida-tiradentes--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "375",
+          "title": "Casa de Correção",
+          "detail": "Inaugurada em 1852 foi depois denominada Presídio Tiradentes. Durante o Estado Novo e a Ditadura Militar admitiu encarcerados políticos, ficando conhecido como Torre das Donzelas o pavilhão reservado às presas políticas. Foi demolida nos anos 1970",
+          "address": "Av. Tiradentes, 451",
+          "eraId": "colonial-imperio",
+          "year": 1852,
+          "coords": [
+            -46.63312,
+            -23.53153002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "avenida-tiradentes--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "322",
+          "title": "Seminário Episcopal",
+          "detail": "Inaugurado parcialmente em 1856, o primeiro seminário da província foi uma referência na formação de sacerdotes e na educação básica. Na década de 1920, um trecho do conjunto edificado foi demolido, dando lugar à rua 25 de Janeiro",
+          "address": "Av. Tiradentes, 84",
+          "eraId": "colonial-imperio",
+          "year": 1856,
+          "coords": [
+            -46.63293,
+            -23.53506002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "avenida-tiradentes--003",
+          "themeId": "acervo-tombado",
+          "featureId": "5009",
+          "title": "ACERVO DO MUSEU DE ARTE SACRA",
+          "detail": "RES. 05/1991",
+          "address": "AV TIRADENTES, 702",
+          "eraId": "colonial-imperio",
+          "year": null,
+          "coords": [
+            -46.63124229,
+            -23.5297213
+          ],
+          "sequence": 3,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "avenida-tiradentes--004",
+          "themeId": "memoria-paulistana",
+          "featureId": "333",
+          "title": "Capela de Nossa Senhora da Luz",
+          "detail": "Construída entre final do século 16 e início do 17, era um ponto de devoção para os que chegavam e saíam da cidade pelo chamado caminho do Guaré. A capelinha, que influenciou como se nomeia a região, deu lugar ao Mosteiro da Luz no final do séc",
+          "address": "Av. Tiradentes, 676",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63133,
+            -23.53038002
+          ],
+          "sequence": 4,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "avenida-tiradentes--005",
+          "themeId": "acervo-tombado",
+          "featureId": "5022",
+          "title": "IMAGEM DE NOSSA SENHORA DAS DORES",
+          "detail": "PROC. 0822-T-69",
+          "address": "AV. TIRADENTES, 676",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63058974,
+            -23.53043706
+          ],
+          "sequence": 5,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "avenida-tiradentes--006",
+          "themeId": "poi-turistico",
+          "featureId": "igreja-santo-antonio",
+          "title": "Igreja Santo Antônio",
+          "detail": "Património religioso",
+          "address": "",
+          "eraId": "igreja_religiosidade",
+          "year": null,
+          "coords": [
+            -46.63142949090909,
+            -23.530396054545452
+          ],
+          "sequence": 6,
+          "sequenceTotal": 7
+        },
+        {
+          "eventId": "avenida-tiradentes--007",
+          "themeId": "poi-turistico",
+          "featureId": "pinacoteca-de-sao-paulo",
+          "title": "Pinacoteca de São Paulo",
+          "detail": "Museu / memória",
+          "address": "",
+          "eraId": "museu_memoria",
+          "year": null,
+          "coords": [
+            -46.63388775254237,
+            -23.53428718644068
+          ],
+          "sequence": 7,
+          "sequenceTotal": 7
+        }
+      ]
+    },
+    "rua-coronel-xavier-de-toledo": {
+      "streetKey": "rua-coronel-xavier-de-toledo",
+      "streetDisplay": "Rua Coronel Xavier de Toledo",
+      "evidenceCount": 3,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "modernismo",
+        "democracia"
+      ],
+      "yearRange": "1911–1990",
+      "evidences": [
+        {
+          "eventId": "rua-coronel-xavier-de-toledo--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "386",
+          "title": "Tabaris Dancing",
+          "detail": "O bordel, também conhecido como Cabaré Máximo, funcionou neste edifício, construído em 1911. A partir de 1934, o imóvel abrigou o bar e restaurante Pan Americano e, mais tarde, foi unido ao vizinho",
+          "address": "R. Coronel Xavier de Toledo, 23",
+          "eraId": "republica-velha",
+          "year": 1911,
+          "coords": [
+            -46.63904,
+            -23.54648002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-coronel-xavier-de-toledo--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "336",
+          "title": "Mappin Store",
+          "detail": "Projetado junto com o Viaduto do Chá pelo arquiteto Elisiário da Cunha Bahiana, este prédio Art Déco abrigou a Mappin Stores de 1939 até seu fechamento em 1999. A loja de departamentos foi consagrada como um importante ponto de compras na cidade",
+          "address": "R. Coronel Xavier de Toledo, 14",
+          "eraId": "modernismo",
+          "year": 1939,
+          "coords": [
+            -46.63911,
+            -23.54597002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-coronel-xavier-de-toledo--003",
+          "themeId": "memoria-paulistana",
+          "featureId": "370",
+          "title": "Primeiro Point da Pixação no Centro",
+          "detail": "No início da década de 1990 trabalhadores informais descansavam neste Largo. Alguns deles passaram a organizar ações de ocupação criativa da cidade, e um de seus pontos de encontro era aqui",
+          "address": "R. Coronel Xavier de Toledo, 200",
+          "eraId": "democracia",
+          "year": 1990,
+          "coords": [
+            -46.63976,
+            -23.54755002
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "praca-dom-jose-gaspar": {
+      "streetKey": "praca-dom-jose-gaspar",
+      "streetDisplay": "Praça Dom José Gaspar",
+      "evidenceCount": 8,
+      "themeCount": 2,
+      "eras": [
+        "modernismo",
+        "populista",
+        "ditadura"
+      ],
+      "yearRange": "1942–1976",
+      "evidences": [
+        {
+          "eventId": "praca-dom-jose-gaspar--001",
+          "themeId": "monumentos",
+          "featureId": "53",
+          "title": "Camőes",
+          "detail": "Implantado em 1942 · Estátua · bronze e granito",
+          "address": "Praça Dom José Gaspar",
+          "eraId": "modernismo",
+          "year": 1942,
+          "coords": [
+            -46.642173,
+            -23.54772348
+          ],
+          "sequence": 1,
+          "sequenceTotal": 8
+        },
+        {
+          "eventId": "praca-dom-jose-gaspar--002",
+          "themeId": "monumentos",
+          "featureId": "206",
+          "title": "Mário de Andrade",
+          "detail": "Implantado em 1946 · Cabeça · bronze e granito",
+          "address": "Praça Dom José Gaspar",
+          "eraId": "populista",
+          "year": 1946,
+          "coords": [
+            -46.64205258,
+            -23.54744445
+          ],
+          "sequence": 2,
+          "sequenceTotal": 8
+        },
+        {
+          "eventId": "praca-dom-jose-gaspar--003",
+          "themeId": "monumentos",
+          "featureId": "64",
+          "title": "Cervantes",
+          "detail": "Implantado em 1947 · Estátua · bronze e granito",
+          "address": "Praça Dom José Gaspar",
+          "eraId": "populista",
+          "year": 1947,
+          "coords": [
+            -46.64165878,
+            -23.54749602
+          ],
+          "sequence": 3,
+          "sequenceTotal": 8
+        },
+        {
+          "eventId": "praca-dom-jose-gaspar--004",
+          "themeId": "monumentos",
+          "featureId": "357",
+          "title": "Cruzeiro",
+          "detail": "Implantado em 1947 · Cruzeiro · granito",
+          "address": "Praça Dom José Gaspar",
+          "eraId": "populista",
+          "year": 1947,
+          "coords": [
+            -46.64234049,
+            -23.54720229
+          ],
+          "sequence": 4,
+          "sequenceTotal": 8
+        },
+        {
+          "eventId": "praca-dom-jose-gaspar--005",
+          "themeId": "memoria-paulistana",
+          "featureId": "349",
+          "title": "Paribar",
+          "detail": "Inaugurado em 1949, foi um ponto de efervescência cultural nas décadas de 1950 a 1970. Foi frequentado por personalidades como Tarsila do Amaral, Candido Portinari e Sergio Millet, além dos políticos Jânio Quadros, Adhemar de Barros e Delfim Netto",
+          "address": "Pc. Dom José Gaspar, 42",
+          "eraId": "populista",
+          "year": 1949,
+          "coords": [
+            -46.64191,
+            -23.54650002
+          ],
+          "sequence": 5,
+          "sequenceTotal": 8
+        },
+        {
+          "eventId": "praca-dom-jose-gaspar--006",
+          "themeId": "monumentos",
+          "featureId": "71",
+          "title": "Chopin",
+          "detail": "Implantado em 1954 · Máscara estela · bronze e granito",
+          "address": "Praça Dom José Gaspar",
+          "eraId": "populista",
+          "year": 1954,
+          "coords": [
+            -46.64193781,
+            -23.54703659
+          ],
+          "sequence": 6,
+          "sequenceTotal": 8
+        },
+        {
+          "eventId": "praca-dom-jose-gaspar--007",
+          "themeId": "monumentos",
+          "featureId": "92",
+          "title": "Dante",
+          "detail": "Implantado em 1955 · Estátua · mármore",
+          "address": "Praça Dom José Gaspar",
+          "eraId": "populista",
+          "year": 1955,
+          "coords": [
+            -46.64186894,
+            -23.54674402
+          ],
+          "sequence": 7,
+          "sequenceTotal": 8
+        },
+        {
+          "eventId": "praca-dom-jose-gaspar--008",
+          "themeId": "monumentos",
+          "featureId": "141",
+          "title": "Goethe",
+          "detail": "Implantado em 1976 · Cabeça · bronze e mármore",
+          "address": "Praça Dom José Gaspar",
+          "eraId": "ditadura",
+          "year": 1976,
+          "coords": [
+            -46.64222672,
+            -23.54697015
+          ],
+          "sequence": 8,
+          "sequenceTotal": 8
+        }
+      ]
+    },
+    "largo-sao-francisco": {
+      "streetKey": "largo-sao-francisco",
+      "streetDisplay": "Largo São Francisco",
+      "evidenceCount": 12,
+      "themeCount": 4,
+      "eras": [
+        "colonial-imperio",
+        "modernismo",
+        "populista",
+        "ditadura",
+        "democracia",
+        "sem-data"
+      ],
+      "yearRange": "1647–2006",
+      "evidences": [
+        {
+          "eventId": "largo-sao-francisco--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "372",
+          "title": "Convento e Igreja de São Francisco",
+          "detail": "Fundado em 1647, o Convento é palco de acontecimentos importantes para a história de São Paulo, como morada de Frei Galvão entre 1765 e 1822, e como o espaço que recebeu a primeira Faculdade de Direito do Brasil em 1827",
+          "address": "Largo São Francisco, 127",
+          "eraId": "colonial-imperio",
+          "year": 1647,
+          "coords": [
+            -46.6370924,
+            -23.54975531
+          ],
+          "sequence": 1,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--002",
+          "themeId": "monumentos",
+          "featureId": "181",
+          "title": "José Bonifácio O Moço",
+          "detail": "Implantado em 1936 · Estátua · bronze e granito",
+          "address": "Largo São Francisco (saguão de entrada da Faculdade de Direito da USP)",
+          "eraId": "modernismo",
+          "year": 1936,
+          "coords": [
+            -46.6369818,
+            -23.54995379
+          ],
+          "sequence": 2,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--003",
+          "themeId": "monumentos",
+          "featureId": "339",
+          "title": "Tribuna Livre",
+          "detail": "Implantado em 1958 · Tribuna · mármore",
+          "address": "Largo São Francisco",
+          "eraId": "populista",
+          "year": 1958,
+          "coords": [
+            -46.63672716,
+            -23.54971933
+          ],
+          "sequence": 3,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--004",
+          "themeId": "monumentos",
+          "featureId": "46",
+          "title": "BEIJO ETERNO (Fragmento do Monumento a Olavo Bilac)",
+          "detail": "Implantado em 1966 · Grupo escultórico · bronze e granito",
+          "address": "Largo São Francisco",
+          "eraId": "ditadura",
+          "year": 1966,
+          "coords": [
+            -46.63668388,
+            -23.54979943
+          ],
+          "sequence": 4,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--005",
+          "themeId": "monumentos",
+          "featureId": "296",
+          "title": "Quantas Pedras Forem Colocadas Tantas Arrancaremos",
+          "detail": "Implantado em 1973 · Placa · mármore",
+          "address": "Largo São Francisco (próximo a entrada da Faculdade de Direito)",
+          "eraId": "ditadura",
+          "year": 1973,
+          "coords": [
+            -46.63712779,
+            -23.54964052
+          ],
+          "sequence": 5,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--006",
+          "themeId": "monumentos",
+          "featureId": "5",
+          "title": "A todos os companheiros",
+          "detail": "Implantado em 1977 · Placa · mármore",
+          "address": "Largo São Francisco (próximo a entrada da Faculdade de Direito)",
+          "eraId": "ditadura",
+          "year": 1977,
+          "coords": [
+            -46.63677544,
+            -23.54982069
+          ],
+          "sequence": 6,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--007",
+          "themeId": "monumentos",
+          "featureId": "21",
+          "title": "Álvares de Azevedo",
+          "detail": "Implantado em 2006 · Busto · bronze e granito",
+          "address": "Largo São Francisco",
+          "eraId": "democracia",
+          "year": 2006,
+          "coords": [
+            -46.6366552,
+            -23.54990404
+          ],
+          "sequence": 7,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--008",
+          "themeId": "acervo-tombado",
+          "featureId": "5019",
+          "title": "ACERVO DA VENERÁVEL ORDEM TERCEIRA DE SÃO FRANCISCO",
+          "detail": "não consta",
+          "address": "LG SAO FRANCISCO, 173",
+          "eraId": "colonial-imperio",
+          "year": null,
+          "coords": [
+            -46.63748655,
+            -23.54977868
+          ],
+          "sequence": 8,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--009",
+          "themeId": "monumentos",
+          "featureId": "259",
+          "title": "O Menino e O Catavento",
+          "detail": "Data: 19-- · Estátua · bronze e granito",
+          "address": "Largo Săo Francisco",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.6369,
+            -23.54969142
+          ],
+          "sequence": 9,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--010",
+          "themeId": "memoria-paulistana",
+          "featureId": "390",
+          "title": "Túmulo de Julius Frank",
+          "detail": "Presta homenagem ao intelectual alemão radicado no Brasil e professor da Faculdade de Direito da USP, que exerceu importante papel na cidade durante o século 19 por seus ideais antiabsolutistas",
+          "address": "Largo São Francisco, 95",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.63688,
+            -23.54999002
+          ],
+          "sequence": 10,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--011",
+          "themeId": "poi-turistico",
+          "featureId": "faculdade-de-direito-da-usp",
+          "title": "Faculdade de Direito da USP",
+          "detail": "Educação",
+          "address": "",
+          "eraId": "educacao_institucional",
+          "year": null,
+          "coords": [
+            -46.63687394736842,
+            -23.549715042105266
+          ],
+          "sequence": 11,
+          "sequenceTotal": 12
+        },
+        {
+          "eventId": "largo-sao-francisco--012",
+          "themeId": "poi-turistico",
+          "featureId": "igreja-sao-francisco-de-assis",
+          "title": "Igreja São Francisco de Assis",
+          "detail": "Património religioso",
+          "address": "",
+          "eraId": "igreja_religiosidade",
+          "year": null,
+          "coords": [
+            -46.6371597,
+            -23.5497313
+          ],
+          "sequence": 12,
+          "sequenceTotal": 12
+        }
+      ]
+    },
+    "avenida-dr-arnaldo": {
+      "streetKey": "avenida-dr-arnaldo",
+      "streetDisplay": "Avenida Dr. Arnaldo",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "colonial-imperio",
+        "republica-velha"
+      ],
+      "yearRange": "1888–1918",
+      "evidences": [
+        {
+          "eventId": "avenida-dr-arnaldo--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "425",
+          "title": "Hospital de Isolamento de São Paulo",
+          "detail": "Foi construído em 1888 como Hospital dos Variolosos e ampliado em 1894, quando passou a se denominar como tal. Dividia-se em vários pavilhões que ocupavam o terreno hoje correspondente ao Quadrilátero da Saúde",
+          "address": "Av. Dr. Arnaldo, 165",
+          "eraId": "colonial-imperio",
+          "year": 1888,
+          "coords": [
+            -46.66661,
+            -23.55608002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "avenida-dr-arnaldo--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "374",
+          "title": "Gripe espanhola",
+          "detail": "Em novembro de 1918, a Câmara Municipal autorizou a desapropriação de um terreno próximo ao Cemitério do Araçá, para sua ampliação, devido às mortes provocadas pela epidemia",
+          "address": "Av. Dr. Arnaldo, 666",
+          "eraId": "republica-velha",
+          "year": 1918,
+          "coords": [
+            -46.67115,
+            -23.55378002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-conselheiro-brotero": {
+      "streetKey": "rua-conselheiro-brotero",
+      "streetDisplay": "Rua Conselheiro Brotero",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "democracia"
+      ],
+      "yearRange": "1914–1991",
+      "evidences": [
+        {
+          "eventId": "rua-conselheiro-brotero--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "400",
+          "title": "Grupo Carnavalesco Barra Funda",
+          "detail": "Aqui nasceu, em 1914, um dos primeiros cordões carnavalescos de São Paulo, o “Camisa Verde”. Fundado por Dionísio Barbosa, consistiu num marco para o carnaval da população negra da cidade",
+          "address": "R. Conselheiro Brotero, 100",
+          "eraId": "republica-velha",
+          "year": 1914,
+          "coords": [
+            -46.65549,
+            -23.52837002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-conselheiro-brotero--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "446",
+          "title": "Laramara",
+          "detail": "A Associação Brasileira de Assistência à Pessoa com Deficiência Visual, sediada neste edifício, foi fundada em 1991. Além de oferecer suporte e serviços especializados, é importante agente na defesa dos direitos desse grupo",
+          "address": "R. Conselheiro Brotero, 353",
+          "eraId": "democracia",
+          "year": 1991,
+          "coords": [
+            -46.65703831,
+            -23.53006973
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "avenida-prestes-maia": {
+      "streetKey": "avenida-prestes-maia",
+      "streetDisplay": "Avenida Prestes Maia",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "democracia"
+      ],
+      "yearRange": "1990",
+      "evidences": [
+        {
+          "eventId": "avenida-prestes-maia--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "416",
+          "title": "Companhia Nacional de Tecidos",
+          "detail": "Este imóvel, construído para sediar a empresa têxtil, ficou sem uso em 1990 e foi palco de diversas ocupações de moradia a partir dos anos 2000. É considerada a maior ocupação vertical do Brasil e uma das maiores da América Latina",
+          "address": "Av. Prestes Maia, 911",
+          "eraId": "democracia",
+          "year": 1990,
+          "coords": [
+            -46.63394,
+            -23.53682002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "avenida-prestes-maia--002",
+          "themeId": "poi-turistico",
+          "featureId": "estacao-da-luz",
+          "title": "Estação da Luz",
+          "detail": "Transporte",
+          "address": "",
+          "eraId": "transporte_estacao",
+          "year": null,
+          "coords": [
+            -46.6335305,
+            -23.538065
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-alvaro-de-carvalho": {
+      "streetKey": "rua-alvaro-de-carvalho",
+      "streetDisplay": "Rua Álvaro de Carvalho",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "populista",
+        "democracia"
+      ],
+      "yearRange": "1950–1990",
+      "evidences": [
+        {
+          "eventId": "rua-alvaro-de-carvalho--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "419",
+          "title": "Hotel Cambridge",
+          "detail": "Este edifício, onde funcionou o antigo hotel, fundado na década de 1950, ficou abandonado no começo dos anos 2000. Foi ocupado por movimentos sociais de luta por moradia em 2012 e posteriormente revitalizado para receber unidades habitacionais",
+          "address": "R. Álvaro de Carvalho, 53",
+          "eraId": "populista",
+          "year": 1950,
+          "coords": [
+            -46.64088,
+            -23.54856002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-alvaro-de-carvalho--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "420",
+          "title": "IAPETC",
+          "detail": "Projetado para sediar o Instituto de Aposentadorias e Pensões dos Empregados em Transportes e Cargas, esse prédio foi abandonado pelo INSS em 1990 e, em meio às disputas pela propriedade, é ocupado por movimentos de moradia desde 1997",
+          "address": "R. Álvaro de Carvalho, 427",
+          "eraId": "democracia",
+          "year": 1990,
+          "coords": [
+            -46.64421,
+            -23.54969002
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "rua-maua": {
+      "streetKey": "rua-maua",
+      "streetDisplay": "Rua Mauá",
+      "evidenceCount": 3,
+      "themeCount": 2,
+      "eras": [
+        "populista"
+      ],
+      "yearRange": "1953",
+      "evidences": [
+        {
+          "eventId": "rua-maua--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "421",
+          "title": "Hotel Santos Dumont",
+          "detail": "Inaugurado em 1953, o Hotel recebia quem chegava na região da Luz, principalmente comerciantes, tendo fechado na década de 1990. A partir dos anos 2000 foi ocupado por movimentos de moradia, que reformaram o edifício e o nomearam Ocupação Mauá",
+          "address": "R. Mauá, 340",
+          "eraId": "populista",
+          "year": 1953,
+          "coords": [
+            -46.6366,
+            -23.53516002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-maua--002",
+          "themeId": "poi-turistico",
+          "featureId": "estacao-pinacoteca-e-memorial-da-resistencia",
+          "title": "Estação Pinacoteca e Memorial da Resistência",
+          "detail": "Museu / memória",
+          "address": "",
+          "eraId": "museu_memoria",
+          "year": null,
+          "coords": [
+            -46.6391162,
+            -23.5347933
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "rua-maua--003",
+          "themeId": "poi-turistico",
+          "featureId": "sala-sao-paulo",
+          "title": "Sala São Paulo",
+          "detail": "Teatro / espetáculo",
+          "address": "",
+          "eraId": "teatro_espetaculo",
+          "year": null,
+          "coords": [
+            -46.63967692424242,
+            -23.53461523030303
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "rua-vinte-e-cinco-de-marco": {
+      "streetKey": "rua-vinte-e-cinco-de-marco",
+      "streetDisplay": "Rua Vinte e Cinco de Março",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "modernismo"
+      ],
+      "yearRange": "1930",
+      "evidences": [
+        {
+          "eventId": "rua-vinte-e-cinco-de-marco--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "422",
+          "title": "Parque Infantil Dom Pedro II",
+          "detail": "Ficava nesta área um dos primeiros parques infantis da cidade, projeto do intelectual Mário de Andrade implantado a partir dos anos 1930. Foi palco da produção cultural feita pelas crianças atendidas",
+          "address": "R. Vinte e Cinco de Março, 348 c/ Parque Dom Pedro II",
+          "eraId": "modernismo",
+          "year": 1930,
+          "coords": [
+            -46.62587,
+            -23.54965002
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-vinte-e-cinco-de-marco--002",
+          "themeId": "poi-turistico",
+          "featureId": "igreja-santa-cecilia",
+          "title": "Igreja Santa Cecília",
+          "detail": "Património religioso",
+          "address": "",
+          "eraId": "igreja_religiosidade",
+          "year": null,
+          "coords": [
+            -46.6323329,
+            -23.5446948
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-ramos-de-azevedo": {
+      "streetKey": "praca-ramos-de-azevedo",
+      "streetDisplay": "Praça Ramos de Azevedo",
+      "evidenceCount": 5,
+      "themeCount": 4,
+      "eras": [
+        "republica-velha",
+        "modernismo"
+      ],
+      "yearRange": "1922–1930",
+      "evidences": [
+        {
+          "eventId": "praca-ramos-de-azevedo--001",
+          "themeId": "monumentos",
+          "featureId": "220",
+          "title": "Monumento a Carlos Gomes",
+          "detail": "Implantado em 1922 · Chafariz grupo escultórico · bronze  mármore e granito",
+          "address": "Praça Ramos de Azevedo",
+          "eraId": "republica-velha",
+          "year": 1922,
+          "coords": [
+            -46.63826458,
+            -23.54569352
+          ],
+          "sequence": 1,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "praca-ramos-de-azevedo--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "482",
+          "title": "Hotel Esplanada",
+          "detail": "Nesse edifício eclético funcionou, entre 1923 e 1957, um dos hotéis mais luxuosos da cidade, com jantares dançantes e centenas de quartos com banheiros. Depois abrigou bancos e repartições públicas",
+          "address": "Pc. Ramos de Azevedo, 254",
+          "eraId": "republica-velha",
+          "year": 1923,
+          "coords": [
+            -46.6379984,
+            -23.54502343
+          ],
+          "sequence": 2,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "praca-ramos-de-azevedo--003",
+          "themeId": "monumentos",
+          "featureId": "304",
+          "title": "Rui Barbosa",
+          "detail": "Implantado em 1930 · Estátua · bronze e granito",
+          "address": "Praça Ramos de Azevedo",
+          "eraId": "modernismo",
+          "year": 1930,
+          "coords": [
+            -46.63803252,
+            -23.54554958
+          ],
+          "sequence": 3,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "praca-ramos-de-azevedo--004",
+          "themeId": "acervo-tombado",
+          "featureId": "5013",
+          "title": "BENS INTEGRADOS DO TEATRO MUNICIPAL",
+          "detail": "RES. 05/1991",
+          "address": "PC RAMOS DE AZEVEDO, 1",
+          "eraId": "republica-velha",
+          "year": null,
+          "coords": [
+            -46.638666,
+            -23.54530802
+          ],
+          "sequence": 4,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "praca-ramos-de-azevedo--005",
+          "themeId": "poi-turistico",
+          "featureId": "theatro-municipal",
+          "title": "Theatro Municipal",
+          "detail": "Ponto de interesse",
+          "address": "",
+          "eraId": "outro",
+          "year": null,
+          "coords": [
+            -46.63870822553192,
+            -23.545349323404256
+          ],
+          "sequence": 5,
+          "sequenceTotal": 5
+        }
+      ]
+    },
+    "praca-general-polidoro": {
+      "streetKey": "praca-general-polidoro",
+      "streetDisplay": "Praça General Polidoro",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "modernismo",
+        "populista"
+      ],
+      "yearRange": "1940–1949",
+      "evidences": [
+        {
+          "eventId": "praca-general-polidoro--001",
+          "themeId": "monumentos",
+          "featureId": "97",
+          "title": "Discóbolo",
+          "detail": "Implantado em 1940 · Chafariz Estátua · argamassa armada concreto e bronze",
+          "address": "Praça General Polidoro",
+          "eraId": "modernismo",
+          "year": 1940,
+          "coords": [
+            -46.63087377,
+            -23.57160714
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-general-polidoro--002",
+          "themeId": "memoria-paulistana",
+          "featureId": "491",
+          "title": "Primeira linha de trólebus",
+          "detail": "Pioneiro no país, o serviço inaugurou em 1949, parte da reformulação que ocorria nos transportes coletivos da cidade. O trajeto, depois ampliado, partia desta praça rumo à praça João Mendes, na Sé",
+          "address": "Pc. General Polidoro, 14",
+          "eraId": "populista",
+          "year": 1949,
+          "coords": [
+            -46.6313434,
+            -23.57122036
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-carlos-gomes": {
+      "streetKey": "praca-carlos-gomes",
+      "streetDisplay": "Praça Carlos Gomes",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "populista"
+      ],
+      "yearRange": "1952",
+      "evidences": [
+        {
+          "eventId": "praca-carlos-gomes--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "494",
+          "title": "Cine Joia",
+          "detail": "Aberto aqui em 1952, passou a exibir filmes japoneses de vanguarda em 1959, ao ser alugado pela produtora Toho. Fechou em 1987, abrigou outros usos e, em 2011, reabriu como espaço cultural",
+          "address": "Pc. Carlos Gomes, 82",
+          "eraId": "populista",
+          "year": 1952,
+          "coords": [
+            -46.63580806,
+            -23.55336166
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-carlos-gomes--002",
+          "themeId": "poi-turistico",
+          "featureId": "monumento-a-carlos-gomes",
+          "title": "Monumento a Carlos Gomes",
+          "detail": "Arquitetura / mirante",
+          "address": "",
+          "eraId": "arquitetura_mirante",
+          "year": null,
+          "coords": [
+            -46.63569558333333,
+            -23.553235733333334
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-patriarca": {
+      "streetKey": "praca-patriarca",
+      "streetDisplay": "Praça do Patriarca",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "populista",
+        "ditadura"
+      ],
+      "yearRange": "1954–1972",
+      "evidences": [
+        {
+          "eventId": "praca-patriarca--001",
+          "themeId": "memoria-paulistana",
+          "featureId": "509",
+          "title": "Hotel Othon Palace",
+          "detail": "Aberto em 1954, foi um dos principais hoteis da região, recebendo diversas personalidades estrangeiras. Desativado em 2008, foi ocupado por movimentos de moradia e desde 2018 abriga órgãos públicos",
+          "address": "Pc. do Patriarca, 69",
+          "eraId": "populista",
+          "year": 1954,
+          "coords": [
+            -46.63683151,
+            -23.54769916
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-patriarca--002",
+          "themeId": "monumentos",
+          "featureId": "180",
+          "title": "José Bonifácio de Andrada e Silva Patriarca da Independência",
+          "detail": "Implantado em 1972 · Estátua · bronze e granito",
+          "address": "Praça do Patriarca",
+          "eraId": "ditadura",
+          "year": 1972,
+          "coords": [
+            -46.63641766,
+            -23.54764066
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-da-luz": {
+      "streetKey": "praca-da-luz",
+      "streetDisplay": "Praça Da Luz",
+      "evidenceCount": 2,
+      "themeCount": 2,
+      "eras": [
+        "modernismo"
+      ],
+      "yearRange": "",
+      "evidences": [
+        {
+          "eventId": "praca-da-luz--001",
+          "themeId": "acervo-tombado",
+          "featureId": "5021",
+          "title": "COLEÇÃO NEMIROVSKY",
+          "detail": "PROC. 1642-T-11",
+          "address": "PRAÇA DA LUZ, 2",
+          "eraId": "modernismo",
+          "year": null,
+          "coords": [
+            -46.6339098,
+            -23.53431653
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-da-luz--002",
+          "themeId": "poi-turistico",
+          "featureId": "museu-da-lingua-portuguesa",
+          "title": "Museu da Língua Portuguesa",
+          "detail": "Museu / memória",
+          "address": "",
+          "eraId": "museu_memoria",
+          "year": null,
+          "coords": [
+            -46.63498512142858,
+            -23.53495512857143
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-dom-orione": {
+      "streetKey": "praca-dom-orione",
+      "streetDisplay": "Praça Dom Orione",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "ditadura"
+      ],
+      "yearRange": "1972–1983",
+      "evidences": [
+        {
+          "eventId": "praca-dom-orione--001",
+          "themeId": "monumentos",
+          "featureId": "102",
+          "title": "Dom Luiz Orione",
+          "detail": "Implantado em 1972 · Herma · bronze e granito",
+          "address": "Praça Dom Orione",
+          "eraId": "ditadura",
+          "year": 1972,
+          "coords": [
+            -46.64590297,
+            -23.5601412
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-dom-orione--002",
+          "themeId": "monumentos",
+          "featureId": "12",
+          "title": "Adoniran Barbosa",
+          "detail": "Implantado em 1983 · Herma · bronze e granito",
+          "address": "Praça Dom Orione",
+          "eraId": "ditadura",
+          "year": 1983,
+          "coords": [
+            -46.64571787,
+            -23.56036503
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-ragueb-chohfi": {
+      "streetKey": "praca-ragueb-chohfi",
+      "streetDisplay": "Praça Ragueb Chohfi",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "democracia"
+      ],
+      "yearRange": "1988",
+      "evidences": [
+        {
+          "eventId": "praca-ragueb-chohfi--001",
+          "themeId": "monumentos",
+          "featureId": "24",
+          "title": "Amizade Sírio-Libanesa",
+          "detail": "Implantado em 1988 · Grupo escultórico · bronze e granito",
+          "address": "Praça Ragueb Chohfi",
+          "eraId": "democracia",
+          "year": 1988,
+          "coords": [
+            -46.63181449,
+            -23.5453583
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-ragueb-chohfi--002",
+          "themeId": "monumentos",
+          "featureId": "361",
+          "title": "Ragueb Chohfi",
+          "detail": "Implantado em 1988 · Herma · bronze e granito",
+          "address": "Praça Ragueb Chohfi",
+          "eraId": "democracia",
+          "year": 1988,
+          "coords": [
+            -46.63196358,
+            -23.54515298
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "avenida-enida-paulista": {
+      "streetKey": "avenida-enida-paulista",
+      "streetDisplay": "Avenida Enida Paulista",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "modernismo",
+        "ditadura"
+      ],
+      "yearRange": "1935–1978",
+      "evidences": [
+        {
+          "eventId": "avenida-enida-paulista--001",
+          "themeId": "monumentos",
+          "featureId": "29",
+          "title": "Anhangüera",
+          "detail": "Implantado em 1935 · Estátua · mármore e bronze",
+          "address": "Avenida Paulista (calçada do Parque Tenente Siqueira Campos)",
+          "eraId": "modernismo",
+          "year": 1935,
+          "coords": [
+            -46.65625794,
+            -23.56187952
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "avenida-enida-paulista--002",
+          "themeId": "monumentos",
+          "featureId": "130",
+          "title": "Francisco de Miranda",
+          "detail": "Implantado em 1978 · Estátua · bronze e granito",
+          "address": "Avenida Paulista (canteiro central altura da Rua Bela Cintra)",
+          "eraId": "ditadura",
+          "year": 1978,
+          "coords": [
+            -46.66236631,
+            -23.5562146
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-das-guianas": {
+      "streetKey": "praca-das-guianas",
+      "streetDisplay": "Praça Das Guianas",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "modernismo",
+        "ditadura"
+      ],
+      "yearRange": "1942–1979",
+      "evidences": [
+        {
+          "eventId": "praca-das-guianas--001",
+          "themeId": "monumentos",
+          "featureId": "35",
+          "title": "Ascensão",
+          "detail": "Implantado em 1942 · Estátua · bronze e granito",
+          "address": "Praça das Guianas",
+          "eraId": "modernismo",
+          "year": 1942,
+          "coords": [
+            -46.66547449,
+            -23.5719484
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-das-guianas--002",
+          "themeId": "monumentos",
+          "featureId": "221",
+          "title": "Monumento a Federico Garcia Lorca",
+          "detail": "Implantado em 1979 · Escultura Abstrata · ferro chapas metálicas recortadas e alvenaria",
+          "address": "Praça das Guianas",
+          "eraId": "ditadura",
+          "year": 1979,
+          "coords": [
+            -46.66560918,
+            -23.57172138
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "largo-da-polvora": {
+      "streetKey": "largo-da-polvora",
+      "streetDisplay": "Largo Da Pólvora",
+      "evidenceCount": 5,
+      "themeCount": 1,
+      "eras": [
+        "ditadura",
+        "democracia"
+      ],
+      "yearRange": "1974–1987",
+      "evidences": [
+        {
+          "eventId": "largo-da-polvora--001",
+          "themeId": "monumentos",
+          "featureId": "174",
+          "title": "Jardim Japonês",
+          "detail": "Implantado em 1974 · Placa · granito",
+          "address": "Largo da Pólvora",
+          "eraId": "ditadura",
+          "year": 1974,
+          "coords": [
+            -46.63651808,
+            -23.55762484
+          ],
+          "sequence": 1,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "largo-da-polvora--002",
+          "themeId": "monumentos",
+          "featureId": "36",
+          "title": "Associação Dos Lojistas da Liberdade",
+          "detail": "Implantado em 1978 · Placa · granito e concreto",
+          "address": "Largo da Pólvora",
+          "eraId": "ditadura",
+          "year": 1978,
+          "coords": [
+            -46.63606605,
+            -23.55739869
+          ],
+          "sequence": 2,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "largo-da-polvora--003",
+          "themeId": "monumentos",
+          "featureId": "183",
+          "title": "Lanterna de Pedra (Tooro)",
+          "detail": "Implantado em 1978 · Marco · pedra alvenaria e bronze",
+          "address": "Largo da Pólvora",
+          "eraId": "ditadura",
+          "year": 1978,
+          "coords": [
+            -46.63651994,
+            -23.55750553
+          ],
+          "sequence": 3,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "largo-da-polvora--004",
+          "themeId": "monumentos",
+          "featureId": "327",
+          "title": "Shuhei Uetsuka",
+          "detail": "Implantado em 1978 · Estátua · bronze granito e mármore",
+          "address": "Largo da Pólvora",
+          "eraId": "ditadura",
+          "year": 1978,
+          "coords": [
+            -46.63637756,
+            -23.55752563
+          ],
+          "sequence": 4,
+          "sequenceTotal": 5
+        },
+        {
+          "eventId": "largo-da-polvora--005",
+          "themeId": "monumentos",
+          "featureId": "148",
+          "title": "Hachiro Miyasaki",
+          "detail": "Implantado em 1987 · Herma · bronze e granito",
+          "address": "Largo da Pólvora",
+          "eraId": "democracia",
+          "year": 1987,
+          "coords": [
+            -46.63595657,
+            -23.55737835
+          ],
+          "sequence": 5,
+          "sequenceTotal": 5
+        }
+      ]
+    },
+    "rua-ua-galvao-bueno": {
+      "streetKey": "rua-ua-galvao-bueno",
+      "streetDisplay": "Rua Ua Galvão Bueno",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "ditadura",
+        "democracia"
+      ],
+      "yearRange": "1974–1999",
+      "evidences": [
+        {
+          "eventId": "rua-ua-galvao-bueno--001",
+          "themeId": "monumentos",
+          "featureId": "42",
+          "title": "Bairro Oriental",
+          "detail": "Implantado em 1974 · Marco · granito",
+          "address": "Rua Galvão Bueno, 83",
+          "eraId": "ditadura",
+          "year": 1974,
+          "coords": [
+            -46.6353218,
+            -23.55634962
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "rua-ua-galvao-bueno--002",
+          "themeId": "monumentos",
+          "featureId": "356",
+          "title": "Yoshikazu Tanaka",
+          "detail": "Implantado em 1999 · Herma · bronze e concreto",
+          "address": "Rua Galvão Bueno, 83",
+          "eraId": "democracia",
+          "year": 1999,
+          "coords": [
+            -46.63532064,
+            -23.55623955
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-doutor-joao-mendes": {
+      "streetKey": "praca-doutor-joao-mendes",
+      "streetDisplay": "Praça Doutor João Mendes",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "populista",
+        "democracia"
+      ],
+      "yearRange": "1950–1988",
+      "evidences": [
+        {
+          "eventId": "praca-doutor-joao-mendes--001",
+          "themeId": "monumentos",
+          "featureId": "80",
+          "title": "Contando a Féria",
+          "detail": "Implantado em 1950 · Grupo escultórico · bronze e granito",
+          "address": "Praça Doutor João Mendes",
+          "eraId": "populista",
+          "year": 1950,
+          "coords": [
+            -46.63419707,
+            -23.55228707
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-doutor-joao-mendes--002",
+          "themeId": "monumentos",
+          "featureId": "175",
+          "title": "João Mendes",
+          "detail": "Implantado em 1988 · Herma · bronze e concreto",
+          "address": "Praça Doutor João Mendes",
+          "eraId": "democracia",
+          "year": 1988,
+          "coords": [
+            -46.63412429,
+            -23.55237452
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-marechal-deodoro": {
+      "streetKey": "praca-marechal-deodoro",
+      "streetDisplay": "Praça Marechal Deodoro",
+      "evidenceCount": 3,
+      "themeCount": 1,
+      "eras": [
+        "republica-velha",
+        "modernismo",
+        "democracia"
+      ],
+      "yearRange": "1929–2011",
+      "evidences": [
+        {
+          "eventId": "praca-marechal-deodoro--001",
+          "themeId": "monumentos",
+          "featureId": "105",
+          "title": "Doutor Luís Pereira Barreto",
+          "detail": "Implantado em 1929 · Grupo escultórico · bronze e granito",
+          "address": "Praça Marechal Deodoro",
+          "eraId": "republica-velha",
+          "year": 1929,
+          "coords": [
+            -46.65411917,
+            -23.53490875
+          ],
+          "sequence": 1,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "praca-marechal-deodoro--002",
+          "themeId": "monumentos",
+          "featureId": "257",
+          "title": "O índio e o tamanduá",
+          "detail": "Implantado em 1940 · Grupo escultórico · bronze e granito",
+          "address": "Praça Marechal Deodoro",
+          "eraId": "modernismo",
+          "year": 1940,
+          "coords": [
+            -46.65503685,
+            -23.53434336
+          ],
+          "sequence": 2,
+          "sequenceTotal": 3
+        },
+        {
+          "eventId": "praca-marechal-deodoro--003",
+          "themeId": "monumentos",
+          "featureId": "234",
+          "title": "Monumento ao Trabalhador do Asseio Conservação e Limpeza Urbana",
+          "detail": "Implantado em 2011 · Estátua · bronze",
+          "address": "Praça Marechal Deodoro",
+          "eraId": "democracia",
+          "year": 2011,
+          "coords": [
+            -46.65451867,
+            -23.53468173
+          ],
+          "sequence": 3,
+          "sequenceTotal": 3
+        }
+      ]
+    },
+    "praca-california": {
+      "streetKey": "praca-california",
+      "streetDisplay": "Praça Califórnia",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "democracia",
+        "sem-data"
+      ],
+      "yearRange": "1985",
+      "evidences": [
+        {
+          "eventId": "praca-california--001",
+          "themeId": "monumentos",
+          "featureId": "107",
+          "title": "Doutora Carlota Pereira Queiroz",
+          "detail": "Implantado em 1985 · Herma · bronze concreto e mármore",
+          "address": "Praça Califórnia",
+          "eraId": "democracia",
+          "year": 1985,
+          "coords": [
+            -46.67207092,
+            -23.57469912
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-california--002",
+          "themeId": "monumentos",
+          "featureId": "205",
+          "title": "Maria Esther Bueno",
+          "detail": "Data: ca. 199- · Escultura Figurativa · bronze e mármore",
+          "address": "Praça Califórnia",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.67182577,
+            -23.57451836
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-america": {
+      "streetKey": "praca-america",
+      "streetDisplay": "Praça América",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "democracia"
+      ],
+      "yearRange": "1999–2003",
+      "evidences": [
+        {
+          "eventId": "praca-america--001",
+          "themeId": "monumentos",
+          "featureId": "136",
+          "title": "General José Artigas",
+          "detail": "Implantado em 1999 · Cabeça · bronze e granito",
+          "address": "Praça América",
+          "eraId": "democracia",
+          "year": 1999,
+          "coords": [
+            -46.67065398,
+            -23.57103683
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-america--002",
+          "themeId": "monumentos",
+          "featureId": "153",
+          "title": "Homenagem a Forma",
+          "detail": "Implantado em 2003 · Escultura Abstrata · concreto pintado e bronze",
+          "address": "Praça América",
+          "eraId": "democracia",
+          "year": 2003,
+          "coords": [
+            -46.67020175,
+            -23.57074884
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-oswaldo-cruz": {
+      "streetKey": "praca-oswaldo-cruz",
+      "streetDisplay": "Praça Oswaldo Cruz",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "democracia",
+        "sem-data"
+      ],
+      "yearRange": "2013",
+      "evidences": [
+        {
+          "eventId": "praca-oswaldo-cruz--001",
+          "themeId": "monumentos",
+          "featureId": "281",
+          "title": "Plexus",
+          "detail": "Implantado em 2013 · Estátua · alumínio",
+          "address": "Praça Oswaldo Cruz - Av. Bernardino de Campos x Av. Paulista",
+          "eraId": "democracia",
+          "year": 2013,
+          "coords": [
+            -46.64399034,
+            -23.5712802
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-oswaldo-cruz--002",
+          "themeId": "monumentos",
+          "featureId": "169",
+          "title": "Índio Pescador",
+          "detail": "Data: 192- · Chafariz Estátua · bronze alvenaria e argamassa de cimento",
+          "address": "Praça Oswaldo Cruz",
+          "eraId": "sem-data",
+          "year": null,
+          "coords": [
+            -46.64426141,
+            -23.57161732
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-armenia": {
+      "streetKey": "praca-armenia",
+      "streetDisplay": "Praça Armênia",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "ditadura"
+      ],
+      "yearRange": "1965–1966",
+      "evidences": [
+        {
+          "eventId": "praca-armenia--001",
+          "themeId": "monumentos",
+          "featureId": "208",
+          "title": "Mártires Armênios",
+          "detail": "Implantado em 1965 · Obelisco · granito",
+          "address": "Praça Armênia",
+          "eraId": "ditadura",
+          "year": 1965,
+          "coords": [
+            -46.6305249,
+            -23.52582452
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-armenia--002",
+          "themeId": "monumentos",
+          "featureId": "243",
+          "title": "Monumento em Homenagem as Vítimas do Genocídio de 1915",
+          "detail": "Implantado em 1966 · Grupo escultórico · granito e bronze",
+          "address": "Praça Armênia",
+          "eraId": "ditadura",
+          "year": 1966,
+          "coords": [
+            -46.6304908,
+            -23.52625183
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "praca-padre-bento": {
+      "streetKey": "praca-padre-bento",
+      "streetDisplay": "Praça Padre Bento",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [
+        "modernismo",
+        "ditadura"
+      ],
+      "yearRange": "1932–1977",
+      "evidences": [
+        {
+          "eventId": "praca-padre-bento--001",
+          "themeId": "monumentos",
+          "featureId": "309",
+          "title": "Santo de Lisboa",
+          "detail": "Implantado em 1932 · Grupo escultórico · bronze e granito",
+          "address": "Praça Padre Bento",
+          "eraId": "modernismo",
+          "year": 1932,
+          "coords": [
+            -46.61879392,
+            -23.53287381
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "praca-padre-bento--002",
+          "themeId": "monumentos",
+          "featureId": "270",
+          "title": "Padre Bento Dias Pacheco",
+          "detail": "Implantado em 1977 · Estátua · bronze e granito",
+          "address": "Praça Padre Bento",
+          "eraId": "ditadura",
+          "year": 1977,
+          "coords": [
+            -46.61872924,
+            -23.53278256
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "beco-do-pinto": {
+      "streetKey": "beco-do-pinto",
+      "streetDisplay": "Beco Do Pinto",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [],
+      "yearRange": "",
+      "evidences": [
+        {
+          "eventId": "beco-do-pinto--001",
+          "themeId": "poi-turistico",
+          "featureId": "beco-do-pinto",
+          "title": "Beco do Pinto",
+          "detail": "Ponto de interesse",
+          "address": "",
+          "eraId": "outro",
+          "year": null,
+          "coords": [
+            -46.6318014,
+            -23.548302699999997
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "beco-do-pinto--002",
+          "themeId": "poi-turistico",
+          "featureId": "casa-da-imagem",
+          "title": "Casa da Imagem",
+          "detail": "Ponto de interesse",
+          "address": "",
+          "eraId": "outro",
+          "year": null,
+          "coords": [
+            -46.632198875,
+            -23.5483595375
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    },
+    "parque-anhangabau": {
+      "streetKey": "parque-anhangabau",
+      "streetDisplay": "Parque Anhangabau",
+      "evidenceCount": 2,
+      "themeCount": 1,
+      "eras": [],
+      "yearRange": "",
+      "evidences": [
+        {
+          "eventId": "parque-anhangabau--001",
+          "themeId": "poi-turistico",
+          "featureId": "edificio-matarazzo---sede-da-prefeitura",
+          "title": "Edifício Matarazzo – Sede da Prefeitura",
+          "detail": "Arquitetura / mirante",
+          "address": "",
+          "eraId": "arquitetura_mirante",
+          "year": null,
+          "coords": [
+            -46.63744258333333,
+            -23.547525699999998
+          ],
+          "sequence": 1,
+          "sequenceTotal": 2
+        },
+        {
+          "eventId": "parque-anhangabau--002",
+          "themeId": "poi-turistico",
+          "featureId": "shopping-light",
+          "title": "Shopping Light",
+          "detail": "Comércio / mercado",
+          "address": "",
+          "eraId": "mercado_comercio",
+          "year": null,
+          "coords": [
+            -46.63876225897435,
+            -23.546648564102565
+          ],
+          "sequence": 2,
+          "sequenceTotal": 2
+        }
+      ]
+    }
+  }
+}

@@ -211,6 +211,19 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res2.status, 200);
   });
 
+  it('deve responder 200 em street names geojson + catálogo', async () => {
+    const geo = await fetchPath('/centro/data/geojson/special/streets/centro_ruas_nomes__line.geojson');
+    assert.strictEqual(geo.status, 200);
+    const parsed = JSON.parse(geo.body);
+    assert.strictEqual(parsed.type, 'FeatureCollection');
+    assert.ok(parsed.features.length > 0, 'geojson de nomes de ruas não vazio');
+
+    const catalog = await fetchPath('/centro/data/catalog/street-names-catalog.json');
+    assert.strictEqual(catalog.status, 200);
+    const cat = JSON.parse(catalog.body);
+    assert.ok(Array.isArray(cat.entries), 'catálogo street-names parseável');
+  });
+
   it('deve responder 200 via proxy /app/config/theme.js', async () => {
     const res = await fetchPath('/app/config/theme.js');
     assert.strictEqual(res.status, 200);
@@ -344,8 +357,13 @@ describe('projeto_centro — HTTP integration', () => {
       '/centro/assets/icons/icon-pista.svg',
       '/centro/assets/icons/icon-droplets.svg',
       '/centro/assets/icons/icon-turismo.svg',
+      '/centro/assets/icons/icon-linha-tempo.svg',
       '/centro/data/geojson/special/pois/centro_pois_turisticos__point.geojson',
+      '/centro/data/geojson/special/timeline/centro_linha_tempo__point.geojson',
+      '/centro/data/geojson/special/timeline/centro_linha_tempo__line.geojson',
+      '/centro/data/catalog/street-timeline-index.json',
       '/centro/data/catalog/layer-unlocks.json',
+      '/centro/data/catalog/memoria-paulistana-images.json',
     ];
 
     for (const path of paths) {

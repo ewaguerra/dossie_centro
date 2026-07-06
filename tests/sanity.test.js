@@ -486,6 +486,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(icons.includes('getLegendItems'), 'getLegendItems ausente');
     assert.ok(icons.includes('layerIds'), 'layerIds ausente');
     assert.ok(icons.includes('memoria-paulistana-icon'), 'layer memoria ausente');
+    assert.ok(icons.includes('linha-tempo-icon'), 'layer linha-tempo ausente');
     assert.ok(icons.includes('rsb-pistas-icon'), 'layer pistas ausente');
     assert.ok(icons.includes('palette'), 'palette central ausente');
   });
@@ -494,6 +495,7 @@ describe('projeto_centro — sanity checks', () => {
     const runtime = read('centro/centro-runtime.js');
     assert.ok(runtime.includes('setupPoiThemeFilter'), 'setupPoiThemeFilter ausente');
     assert.ok(runtime.includes('applyAllPoiThemeFilters'), 'applyAllPoiThemeFilters ausente');
+    assert.ok(runtime.includes('bootMapLayers(mapInstance, hooks).then'), 'filtros POI após boot das camadas');
     assert.ok(runtime.includes('CENTRO.poiThemeFilter'), 'runtime deve delegar filtro POI');
     const poiFilter = read('centro/features/poi-theme-filter.js');
     assert.ok(poiFilter.includes('centroPoiThemeFilter'), 'persistencia de filtro ausente');
@@ -1369,6 +1371,8 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(symbol.includes('setDOMContent'), 'factory usa setDOMContent');
     assert.ok(!symbol.includes('innerHTML'), 'symbol-popup-layer sem innerHTML');
     assert.ok(!symbol.includes('.setHTML('), 'symbol-popup-layer sem setHTML');
+    assert.ok(symbol.includes('evidence-popup'), 'symbol-popup-layer usa className evidence-popup');
+    assert.ok(symbol.includes('closeButton: true'), 'symbol-popup-layer activa closeButton');
     assert.ok(!symbol.includes('POI_TEXT_FONT'), 'factory nao conhece POI_TEXT_FONT');
     assert.ok(!symbol.includes('styleSupportsTextLabels'), 'factory nao conhece styleSupportsTextLabels');
     assert.ok(!symbol.includes('getMapIconHaloPaint'), 'factory nao conhece getMapIconHaloPaint');
@@ -1615,10 +1619,16 @@ describe('projeto_centro — sanity checks', () => {
   });
 
   // ── Contraste WCAG labels POI ───────────────────────────────────
-  it('poi-bootstrap.js: labels POI usam texto escuro e halo por epoca', () => {
+  it('poi-bootstrap.js: labels POI usam texto escuro e halo claro legível', () => {
     const poiBoot = read('centro/map/poi-bootstrap.js');
+    const eraCls = read('centro/features/poi-era-classifier.js');
     assert.ok(poiBoot.includes('"text-color": "#1a1a1a"'), 'texto escuro ausente');
-    assert.ok(poiBoot.includes('getMapLabelPaint'), 'paint de label por tema/epoca');
+    assert.ok(poiBoot.includes('getMapLabelPaint'), 'paint de label por tema');
+    assert.ok(poiBoot.includes('"text-halo-color": "#ffffff"'), 'halo claro no bootstrap');
+    assert.ok(
+      eraCls.includes('"text-halo-color": "#ffffff"'),
+      'classifier nao deve usar halo escuro por epoca nos labels'
+    );
     assert.ok(!/"text-color":\s*"#fff"/.test(poiBoot), 'nao deve manter branco antigo');
   });
 
@@ -1939,7 +1949,8 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(poiFilter.includes('syncPhaseGate'), 'poi-theme-filter syncPhaseGate');
     assert.ok(poiFilter.includes('getFilterableThemes'), 'poi-theme-filter exclui pistas duplicado');
     assert.ok(poiFilter.includes('subs[subId] === true'), 'sub-filtros exigem marcação explícita');
-    assert.ok(poiFilter.includes('["==", 1, 0]'), 'tema sem épocas marcadas não mostra tudo');
+    assert.ok(poiFilter.includes('themeShouldShowOnMap'), 'tema com sub-filtros exige época marcada');
+    assert.ok(poiFilter.includes('enabledSubIds(theme, themeState).length > 0'), 'mapa oculto sem sub-filtros');
     const b3d = read('centro/features/buildings-3d.js');
     assert.ok(b3d.includes('isFeaturePhaseUnlocked("buildings-3d")'), 'buildings-3d gate de fase');
     const pistas = read('centro/features/pistas.js');
@@ -2333,7 +2344,11 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(poiBoot.includes('fetchLayerGeojson'), 'poi-bootstrap usa fetchLayerGeojson para POIs');
     assert.ok(!poiBoot.includes('"/centro/data/context/" + poiCfg'), 'sem hardcode /centro/data/context/ no poi-bootstrap');
     assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
-    assert.ok(triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo referencia POI_TURISTICO_LAYER_FILE');
+    assert.ok(
+      triangulo.includes('STREET_NAMES_LAYER_FILE') || triangulo.includes('STREETS_LAYER_FILE'),
+      'triangulo referencia malha de ruas OSM'
+    );
+    assert.ok(!triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo não usa POI turístico');
     assert.ok(!triangulo.includes('fetchCentroJson'), 'triangulo não usa fetchCentroJson');
     assert.ok(!triangulo.includes('/pages/centro/data/context'), 'triangulo sem path /pages/centro/data/context');
 
@@ -2350,7 +2365,11 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(poiBoot.includes('poiCfg.id === "poi-turistico"'), 'poi-turistico usa fluxo dedicado');
     assert.ok(poiBoot.includes('poiLayerArgs.layerFile = poiCfg.layerFile'), 'poi-turistico passa layerFile');
     assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
-    assert.ok(triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo usa POI_TURISTICO_LAYER_FILE');
+    assert.ok(
+      triangulo.includes('STREET_NAMES_LAYER_FILE') || triangulo.includes('STREETS_LAYER_FILE'),
+      'triangulo usa malha de ruas OSM'
+    );
+    assert.ok(!triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo sem POI turístico');
     assert.ok(!triangulo.includes('fetchCentroJson'), 'triangulo sem fetchCentroJson');
 
     let fetchCount = 0;
@@ -2430,6 +2449,60 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(css.includes('.pista-popup__desc'), '.pista-popup__desc ausente');
     assert.ok(css.includes('.pista-popup__img'), '.pista-popup__img ausente');
     assert.ok(css.includes('.pista-popup__source'), '.pista-popup__source ausente');
+    assert.ok(css.includes('.evidence-card'), '.evidence-card ausente');
+    assert.ok(css.includes('.evidence-card__spotlight'), 'spotlight ausente');
+  });
+
+  it('evidence-card.js carregado antes de map-popups.js', () => {
+    const html = read('centro/index.html');
+    const evidenceIdx = html.indexOf('ui/evidence-card.js');
+    const popupsIdx = html.indexOf('ui/map-popups.js');
+    assert.ok(evidenceIdx > -1, 'evidence-card.js ausente');
+    assert.ok(evidenceIdx < popupsIdx, 'evidence-card deve preceder map-popups');
+    const evidence = read('centro/ui/evidence-card.js');
+    assert.ok(evidence.includes('enhanceEvidenceCard'), 'enhanceEvidenceCard ausente');
+    assert.ok(evidence.includes('splitTextReveal'), 'splitTextReveal ausente');
+    assert.ok(evidence.includes('syncMapPopupTheme'), 'syncMapPopupTheme ausente');
+    assert.ok(!evidence.includes('innerHTML'), 'evidence-card nao deve usar innerHTML');
+  });
+
+  it('map-popups.css inclui animacoes React Bits (shiny, split, electric)', () => {
+    const css = read('centro/styles/map-popups.css');
+    assert.ok(css.includes('.evidence-card__eyebrow-shiny'), 'ShinyText ausente');
+    assert.ok(css.includes('.evidence-card__title-char'), 'SplitText ausente');
+    assert.ok(css.includes('.electric-border'), 'ElectricBorder ausente');
+    assert.ok(css.includes('var(--quote-accent'), 'quote-accent tematico ausente');
+    assert.ok(css.includes('.evidence-popup'), 'evidence-popup shell ausente');
+    assert.ok(css.includes('.maplibregl-popup-close-button'), 'close button ausente');
+    assert.ok(!css.includes('border-left: 3px solid #2563eb'), 'memoria-enunciado ainda usa azul fixo');
+  });
+
+  it('memoria paulistana: manifest Wikipedia e lookup no popup POI', () => {
+    const html = read('centro/index.html');
+    const imagesIdx = html.indexOf('features/memoria-paulistana-images.js');
+    const poiBootIdx = html.indexOf('map/poi-bootstrap.js');
+    assert.ok(imagesIdx > -1, 'memoria-paulistana-images.js ausente no HTML');
+    assert.ok(imagesIdx < poiBootIdx, 'manifest loader deve preceder poi-bootstrap');
+
+    const mod = read('centro/features/memoria-paulistana-images.js');
+    assert.doesNotThrow(() => new Function(mod));
+    assert.ok(mod.includes('memoriaPaulistanaImages'), 'export memoriaPaulistanaImages ausente');
+    assert.ok(mod.includes('memoria-paulistana-images.json'), 'URL do manifest ausente');
+
+    const manifest = JSON.parse(read('centro/data/catalog/memoria-paulistana-images.json'));
+    const keys = Object.keys(manifest);
+    assert.ok(keys.length >= 50, 'manifest deve ter dezenas de imagens');
+    const sample = manifest['67'] || manifest[keys[0]];
+    assert.ok(sample.imageUrl && sample.imageUrl.startsWith('https://'), 'imageUrl Wikipedia ausente');
+    assert.ok(sample.wikiUrl && sample.wikiUrl.includes('wikipedia.org'), 'wikiUrl ausente');
+
+    const popups = read('centro/ui/map-popups.js');
+    assert.ok(popups.includes('meta.imageUrl'), 'createPoiPopupNode deve renderizar imageUrl');
+    assert.ok(popups.includes('meta.wikiUrl'), 'createPoiPopupNode deve renderizar wikiUrl');
+
+    const poiBoot = read('centro/map/poi-bootstrap.js');
+    assert.ok(poiBoot.includes('memoriaPaulistanaImages'), 'poi-bootstrap deve consultar manifest');
+    assert.ok(poiBoot.includes('cd_identificador'), 'lookup por cd_identificador ausente');
   });
 
   // ── Regressões pós-auditoria 2026-07 ─────────────────────────────
@@ -2579,5 +2652,95 @@ describe('projeto_centro — sanity checks', () => {
     const css = read('centro/styles/sidebar.css');
     assert.ok(css.includes('.phases-list'), 'CSS phases-list');
     assert.ok(css.includes('.phase-row'), 'CSS phase-row');
+  });
+
+  it('STREET-NAMES: catálogo, geojson enriquecido e módulos runtime', () => {
+    const catalogPath = 'centro/data/catalog/street-names-catalog.json';
+    const geoPath = 'centro/data/geojson/special/streets/centro_ruas_nomes__line.geojson';
+    const reportPath = 'centro/data/reports/build/street_names_build_report.json';
+    assert.ok(exists(catalogPath), 'street-names-catalog.json ausente');
+    assert.ok(exists(geoPath), 'centro_ruas_nomes__line.geojson ausente');
+    assert.ok(exists(reportPath), 'street_names_build_report.json ausente');
+
+    const catalog = JSON.parse(read(catalogPath));
+    assert.ok(Array.isArray(catalog.entries) && catalog.entries.length >= 3, 'catálogo com entradas');
+
+    const geo = JSON.parse(read(geoPath));
+    assert.strictEqual(geo.type, 'FeatureCollection');
+    assert.ok(geo.features.length > 1000, 'malha enriquecida substancial');
+    const sample = geo.features.find((f) => f.properties && f.properties.has_rename === '1');
+    assert.ok(sample, 'deve haver segmentos com rename');
+    assert.ok(sample.properties.label_atual, 'label_atual presente');
+    assert.ok(sample.properties.label_historico, 'label_historico presente');
+
+    const streetNames = read('centro/features/street-names.js');
+    const overlay = read('centro/map/street-labels-overlay.js');
+    const controller = read('centro/map/catalog-layer-controller.js');
+    const html = read('centro/index.html');
+    assert.ok(streetNames.includes('DEV_SHOW_ALL'), 'modo dev documentado');
+    assert.ok(streetNames.includes('street-names-atual'), 'gate actual preparado');
+    assert.ok(overlay.includes('centro-street-label-atual'), 'layer label actual');
+    assert.ok(overlay.includes('centro-street-label-historico'), 'layer label histórico');
+    assert.ok(controller.includes('streetLabelsOverlay'), 'catalog controller integra labels');
+    assert.ok(html.includes('street-name-utils.js'), 'street-name-utils carregado');
+    assert.ok(html.includes('street-names.js'), 'street-names carregado');
+    assert.ok(html.includes('street-labels-overlay.js'), 'street-labels-overlay carregado');
+  });
+
+  it('STREET-NAMES: phase-gates street-names-* e triangulo usa ruas OSM', () => {
+    const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    assert.strictEqual(gates.featureMinPhase['street-names-atual'], 9);
+    assert.strictEqual(gates.featureMinPhase['street-names-historico'], 11);
+    const triangulo = read('centro/features/triangulo-historico.js');
+    assert.ok(triangulo.includes('isTargetHistoricStreet'), 'triangulo exporta matcher de ruas');
+    assert.ok(triangulo.includes('derived-from-street-centerlines'), 'polígono derivado de centerlines');
+    const argResync = read('centro/features/arg-resync.js');
+    assert.ok(argResync.includes('streetNames.syncPhaseGate'), 'arg-resync sincroniza street names');
+  });
+
+  it('LINHA-TEMPO: build, geojson, ícone ampulheta e runtime', () => {
+    const pkg = JSON.parse(read('package.json'));
+    assert.ok(pkg.scripts['build:street-timeline'], 'npm run build:street-timeline ausente');
+    assert.ok(exists('scripts/build-street-timeline.mjs'), 'build script ausente');
+    assert.ok(exists('scripts/lib/poi-address-utils.mjs'), 'poi-address-utils ausente');
+    assert.ok(exists('centro/data/geojson/special/timeline/centro_linha_tempo__point.geojson'), 'geojson linha-tempo ausente');
+    assert.ok(exists('centro/data/geojson/special/timeline/centro_linha_tempo__line.geojson'), 'fios linha-tempo ausentes');
+    assert.ok(exists('centro/data/catalog/street-timeline-index.json'), 'índice linha-tempo ausente');
+    assert.ok(exists('centro/assets/icons/icon-linha-tempo.svg'), 'ícone ampulheta ausente');
+
+    const timeline = JSON.parse(read('centro/data/geojson/special/timeline/centro_linha_tempo__point.geojson'));
+    assert.ok(timeline.features.length >= 1, 'linha-tempo deve ter pontos');
+    const sample = timeline.features[0].properties;
+    assert.ok(sample.street_display, 'street_display ausente');
+    assert.ok(sample.event_id, 'event_id ausente');
+    assert.ok(sample.evidence_detail !== undefined, 'evidence_detail ausente');
+    assert.ok(sample.sequence, 'sequence ausente');
+
+    const evidenceCard = read('centro/ui/evidence-card.js');
+    assert.ok(evidenceCard.includes('evidence-card__text-btn'), 'controles A-/A+ nos cards');
+    assert.ok(evidenceCard.includes('centroEvidenceTextScale'), 'persistência escala texto');
+
+    const icons = read('vendor/app/config/map-icons.js');
+    assert.ok(icons.includes('"linha-tempo"'), 'map-icons registra linha-tempo');
+    assert.ok(icons.includes('hourglass'), 'map-icons referencia hourglass');
+
+    const poiIcons = read('centro/features/poi-icons.js');
+    assert.ok(poiIcons.includes('LINHA_TEMPO_LAYER_FILE'), 'poi-icons expõe layer file');
+    assert.ok(poiIcons.includes('linha-tempo-icon'), 'poi-icons inclui layer id');
+
+    const poiBoot = read('centro/map/poi-bootstrap.js');
+    assert.ok(poiBoot.includes('addTimelineThreadLayer'), 'camada fio cronológico');
+    assert.ok(poiBoot.includes('threadLayerId'), 'layer id do fio');
+    assert.ok(poiBoot.includes('linha-tempo'), 'poi-bootstrap boota linha-tempo');
+
+    const popups = read('centro/ui/map-popups.js');
+    assert.ok(popups.includes('createTimelinePopupNode'), 'factory timeline popup');
+    assert.ok(popups.includes('timeline-popup__thread-hint'), 'hint do fio cronológico');
+
+    const poiFilter = read('centro/features/poi-theme-filter.js');
+    assert.ok(poiFilter.includes('applyTimelineThreadLayer'), 'filtro do fio cronológico');
+
+    const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    assert.strictEqual(gates.themeMinPhase['linha-tempo'], 5);
   });
 });

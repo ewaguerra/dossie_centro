@@ -15,11 +15,21 @@
       phase: PHASE,
       title: "Triângulo fechado",
       kicker: "Décima Primeira Alma",
-      missions: [],
+      missions: [
+        {
+          id: "triangulo-fundador",
+          title: "Fechar o triângulo — nomes fundadores visíveis",
+          complete: false,
+        },
+      ],
       isComplete: function () {
         return false;
       },
-      onActivate: function () {},
+      onActivate: function () {
+        if (ctx.flyToPreset && typeof ctx.flyToPreset === "function") {
+          ctx.flyToPreset("triangulo");
+        }
+      },
       onResync: function () {},
     };
   }

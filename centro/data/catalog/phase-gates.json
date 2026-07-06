@@ -132,13 +132,16 @@
     "memoria-paulistana": 4,
     "acervo-tombado": 4,
     "bem-arqueologico": 4,
+    "linha-tempo": 5,
     "pistas": 2
   },
   "featureMinPhase": {
     "pistas-rsb": 2,
     "subterranean": 7,
     "buildings-3d": 9,
-    "triangulo-historico": 11
+    "triangulo-historico": 11,
+    "street-names-atual": 9,
+    "street-names-historico": 11
   },
   "clueCountAdvance": [
     {

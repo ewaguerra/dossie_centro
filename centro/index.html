@@ -126,7 +126,7 @@
             <span class="poi-legend__summary-hint">abrir / fechar</span>
           </summary>
           <div id="poi-legend-panel" class="poi-legend__panel">
-            <p class="poi-legend__hint">Marque temáticas e, dentro de cada uma, filtre por época (cor no halo do ícone).</p>
+            <p class="poi-legend__hint">Marque temáticas e, dentro de cada uma, filtre por época (cor no halo). Linha do tempo agrupa evidências do mesmo logradouro.</p>
             <div class="poi-legend__list" id="poi-legend-grid" role="group" aria-label="Filtrar evidências por temática"></div>
           </div>
         </details>
@@ -163,6 +163,22 @@
           <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
           <button id="subterranean-guide-open" class="subterranean-guide-open-btn" type="button" hidden>Abrir guia da missão ↗</button>
           <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
+        </div>
+        <div id="centro-street-names-dev-card" class="sidebar-viz-card" hidden>
+          <h2 class="sidebar-viz-card__title">Nomes de ruas (dev)</h2>
+          <p class="sidebar-viz-card__desc">Labels GeoJSON sobre a malha OSM — actual, histórico ou ambos. Use também <code>?streetnames=all</code>.</p>
+          <label class="sidebar-extras__row layer-row" for="centro-street-names-dev-toggle">
+            <input type="checkbox" id="centro-street-names-dev-toggle" checked />
+            <span class="sidebar-extras__text">Mostrar nomes históricos de ruas</span>
+          </label>
+          <label class="sidebar-extras__row layer-row" for="centro-street-names-mode">
+            <span class="sidebar-extras__text">Modo de label</span>
+            <select id="centro-street-names-mode" class="sidebar-extras__select" aria-label="Modo de nomes de ruas">
+              <option value="all">Actual + histórico</option>
+              <option value="atual">Só actual</option>
+              <option value="historico">Só histórico</option>
+            </select>
+          </label>
         </div>
       </div>
     </div>
@@ -247,10 +263,12 @@
   <script src="/app/utils/card-utils.js" defer></script>
   <script src="/app/renderers/popup-renderer.js" defer></script>
   <script src="/pages/centro/utils.js" defer></script>
+  <script src="/pages/centro/features/street-name-utils.js" defer></script>
   <script src="/pages/centro/features/triangulo-historico.js" defer></script>
   <script src="/pages/centro/features/pistas.js" defer></script>
   <script src="/pages/centro/features/poi-icons.js" defer></script>
   <script src="/pages/centro/features/poi-era-classifier.js" defer></script>
+  <script src="/pages/centro/features/memoria-paulistana-images.js" defer></script>
   <script src="/pages/centro/features/buildings-3d.js" defer></script>
   <script src="/pages/centro/features/poi-theme-filter.js" defer></script>
   <script src="/pages/centro/features/layer-unlocks.js" defer></script>
@@ -274,11 +292,13 @@
   <script src="/pages/centro/missions/mission-orchestrator.js" defer></script>
   <script src="/pages/centro/features/centro-access-gate.js" defer></script>
   <script src="/pages/centro/features/arg-resync.js" defer></script>
+  <script src="/pages/centro/features/street-names.js" defer></script>
   <script src="/pages/centro/features/sidebar-layer-state.js" defer></script>
   <script type="module" src="/pages/centro/features/subterranean-cutaway.js"></script>
   <script src="/pages/centro/ui/toast.js" defer></script>
   <script src="/pages/centro/ui/lazy-assets.js" defer></script>
   <script src="/pages/centro/ui/investigation-ray.js" defer></script>
+  <script src="/pages/centro/ui/evidence-card.js" defer></script>
   <script src="/pages/centro/ui/map-popups.js" defer></script>
   <script src="/pages/centro/ui/sidebar-panel.js" defer></script>
   <script src="/pages/centro/ui/sidebar-phases-panel.js" defer></script>
@@ -288,6 +308,7 @@
   <script src="/pages/centro/map/basemap-config.js" defer></script>
   <script src="/pages/centro/map/map-safe.js" defer></script>
   <script src="/pages/centro/map/layer-data-url.js" defer></script>
+  <script src="/pages/centro/map/street-labels-overlay.js" defer></script>
   <script src="/pages/centro/map/catalog-layer-controller.js" defer></script>
   <script src="/pages/centro/map/symbol-popup-layer.js" defer></script>
   <script src="/pages/centro/map/poi-bootstrap.js" defer></script>

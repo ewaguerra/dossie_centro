@@ -46,6 +46,7 @@
       },
     },
     "bem-arqueologico": { strategy: "fixed", eraId: "colonial-imperio" },
+    "linha-tempo": { strategy: "field", field: "poi_era" },
     "poi-turistico": {
       strategy: "typology",
       field: "category",
@@ -101,6 +102,8 @@
       }
       case "fixed":
         return rule.eraId || "sem-data";
+      case "field":
+        return String(properties[rule.field] || "sem-data");
       case "typology": {
         var cat = properties[rule.field] || "outro";
         return String(cat);
@@ -230,20 +233,14 @@
     return buildEraHaloPaint("poi_era");
   }
 
-  function buildSubFilterLabelPaint(themeId) {
-    var rule = THEME_RULES[themeId];
-    if (rule && rule.strategy === "typology") {
-      var typologyPaint = buildTypologyHaloPaint(themeId, "poi_typology");
-      return {
-        "text-halo-color": typologyPaint["icon-halo-color"],
-        "text-halo-width": 2,
-        "text-halo-blur": 0.35,
-      };
-    }
-    if (rule && rule.strategy !== "typology") {
-      return buildEraTextHaloPaint("poi_era");
-    }
-    return null;
+  /** Labels: halo claro fixo — época/tipologia só no ícone, não no texto (WCAG). */
+  function buildSubFilterLabelPaint(_themeId) {
+    return {
+      "text-color": "#1a1a1a",
+      "text-halo-color": "#ffffff",
+      "text-halo-width": 2.5,
+      "text-halo-blur": 0.35,
+    };
   }
 
   function themeUsesEraHalo(themeId) {

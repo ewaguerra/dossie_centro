@@ -4,6 +4,8 @@
 (function () {
   "use strict";
 
+  var U = window.CENTRO && window.CENTRO.streetNameUtils;
+
   var TRIANGULO_HISTORICO = Object.freeze({
     sourceId: "centro-triangulo-historico-source",
     fillLayerId: "centro-triangulo-historico-fill",
@@ -39,6 +41,9 @@
   var trianguloHistoricoGeojsonPromise = null;
 
   function normalizeStreetName(value) {
+    if (U && typeof U.normalizeStreetName === "function") {
+      return U.normalizeStreetName(value);
+    }
     if (!value || typeof value !== "string") return "";
     return value
       .toLowerCase()
@@ -49,12 +54,16 @@
   }
 
   function getFeatureStreetName(feature) {
+    if (U && typeof U.getFeatureStreetName === "function") {
+      return U.getFeatureStreetName(feature);
+    }
     var props = feature && feature.properties;
     if (!props) return "";
     return (
       normalizeStreetName(props.logradouro) ||
       normalizeStreetName(props.name) ||
       normalizeStreetName(props.nome) ||
+      normalizeStreetName(props.name_atual) ||
       ""
     );
   }
@@ -112,17 +121,6 @@
       sumLat += points[i][1];
     }
     return [sumLon / points.length, sumLat / points.length];
-  }
-
-  function downsamplePoints(points, maxPoints) {
-    if (!points || points.length <= maxPoints) return points || [];
-    var step = points.length / maxPoints;
-    var result = [];
-    for (var i = 0; i < maxPoints; i++) {
-      var idx = Math.floor(i * step);
-      if (idx < points.length) result.push(points[idx]);
-    }
-    return result;
   }
 
   function dist2(a, b) {
@@ -223,15 +221,19 @@
     };
   }
 
+  function resolveStreetsLayerFile() {
+    if (U && U.STREET_NAMES_LAYER_FILE) {
+      return U.STREET_NAMES_LAYER_FILE;
+    }
+    return "data/geojson/heavy/15_osm_ruas__line.geojson";
+  }
+
   async function buildTrianguloHistoricoGeojson() {
     if (trianguloHistoricoGeojsonPromise) return trianguloHistoricoGeojsonPromise;
 
     trianguloHistoricoGeojsonPromise = (async function () {
       try {
-        var poi = window.CENTRO && window.CENTRO.poiIcons;
-        var layerFile =
-          (poi && poi.POI_TURISTICO_LAYER_FILE) ||
-          "data/geojson/special/pois/centro_pois_turisticos__point.geojson";
+        var layerFile = resolveStreetsLayerFile();
         var fetchLayer =
           window.CENTRO &&
           window.CENTRO.map &&
@@ -254,10 +256,14 @@
     return trianguloHistoricoGeojsonPromise;
   }
 
-  // ── Exports ────────────────────────────────────────────────────────────
   window.CENTRO = window.CENTRO || {};
   window.CENTRO.trianguloHistorico = {
     CONFIG: TRIANGULO_HISTORICO,
+    STREETS_LAYER_FILE:
+      (U && U.STREETS_LAYER_FILE) ||
+      "data/geojson/heavy/15_osm_ruas__line.geojson",
+    STREET_NAMES_LAYER_FILE: resolveStreetsLayerFile(),
     buildTrianguloHistoricoGeojson: buildTrianguloHistoricoGeojson,
+    isTargetHistoricStreet: isTargetHistoricStreet,
   };
 })();

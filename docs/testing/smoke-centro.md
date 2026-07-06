@@ -33,6 +33,9 @@ Abrir: **http://127.0.0.1:8080/centro/**
 | 12 | Sidebar: grupos context (Topografia, Património, Geotécnica…) + OSM ruas/endereços | ☐ |
 | 12b | ZEIS-2 em Controlo Zonal (5 polígonos no viewport; off por defeito) | ☐ |
 | 13 | Camada bloqueada → toast; `?clues=agua-calada` desbloqueia hidro | ☐ |
+| 13b | `?streetnames=all&phase=9` + Malha OSM → labels actuais z17+ | ☐ |
+| 13c | Labels históricos em ruas com rename (ex. Elevado Goulart) | ☐ |
+| 13d | Triângulo overlay alinhado às 3 ruas (não só fallback) fase ≥ 11 | ☐ |
 | 14 | Subsolo: exige fase 7 + 3 pistas; toggle disabled quando bloqueado | ☐ |
 | 15 | Guia missão: abre só por botão (13 Almas ou Visualização), fecha com ✕ / Escape | ☐ |
 | 16 | Fresh boot: apagar `centroAccessGranted` → senha → mapa limpo; reload mantém prefs | ☐ |

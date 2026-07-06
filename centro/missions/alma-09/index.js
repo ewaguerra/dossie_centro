@@ -15,11 +15,21 @@
       phase: PHASE,
       title: "Malha urbana",
       kicker: "Nona Alma",
-      missions: [],
+      missions: [
+        {
+          id: "malha-osm",
+          title: "Activar Malha de Circulação (Vias) e ler nomes actuais",
+          complete: false,
+        },
+      ],
       isComplete: function () {
         return false;
       },
-      onActivate: function () {},
+      onActivate: function () {
+        if (ctx.flyToPreset && typeof ctx.flyToPreset === "function") {
+          ctx.flyToPreset("geral");
+        }
+      },
       onResync: function () {},
     };
   }

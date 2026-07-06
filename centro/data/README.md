@@ -147,14 +147,19 @@ Estes três arquivos representam ~83% do peso total GeoJSON.
 
 Dados runtime com fluxo especial fora do checkbox padrão:
 
-- `pois/centro_pois_turisticos__point.geojson` — `addPOILayer` + Triângulo Histórico, fora de `context-wired` (**B4B-2**)
+- `pois/centro_pois_turisticos__point.geojson` — `addPOILayer`, fora de `context-wired` (**B4B-2**)
+- `streets/centro_ruas_nomes__line.geojson` — labels de nomes actuais/históricos; gerado por `npm run build:street-names`; activado com `15_osm_ruas__line` (**STREET-NAMES**)
 - `arg/centro_arquivo_superficial__point.geojson` — camada ARG wired (**B4B-1**)
 
-`centro_pois_turisticos__point` é carregado no boot por `addPOILayer` e consumido
-por `triangulo-historico.js` via `POI_TURISTICO_LAYER_FILE` → `buildLayerDataUrl()`.
+`centro_pois_turisticos__point` é carregado no boot por `addPOILayer` via `POI_TURISTICO_LAYER_FILE`.
 Permanece em `context-layers.json` (catálogo conhece props) mas **fora** de
-`context-wired.json`. Deduplicação de fetch entre os dois consumidores fica
-fora deste gate.
+`context-wired.json`.
+
+`centro_ruas_nomes__line` é derivado de `15_osm_ruas__line` + `catalog/street-names-catalog.json`.
+Regenerar: `npm run build:street-names`. Consumido por `street-labels-overlay.js` quando a
+Malha de Circulação está activa.
+
+`triangulo-historico.js` deriva o polígono das ruas OSM (`STREET_NAMES_LAYER_FILE` / `STREETS_LAYER_FILE`).
 
 `centro_arquivo_superficial__point` é **on-after-unlock**: `visible: true` no catálogo,
 mas phase gate fase 6 + `layer-unlocks` (`guardiao-tampa`) impedem fetch antes do desbloqueio.

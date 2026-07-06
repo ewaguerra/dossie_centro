@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-07-06T05:51:30.362Z",
+  "minEvidences": 2,
+  "sources": {
+    "memoria-paulistana": {
+      "total": 277,
+      "matched": 266,
+      "file": "centro\\data\\context\\centro_memoria_paulistana__point.geojson"
+    },
+    "acervo-tombado": {
+      "total": 16,
+      "matched": 16,
+      "file": "centro\\data\\context\\centro_acervo_tombado__point.geojson"
+    },
+    "bem-arqueologico": {
+      "total": 1,
+      "matched": 1,
+      "file": "centro\\data\\context\\centro_bem_arqueologico__point.geojson"
+    },
+    "monumentos": {
+      "total": 177,
+      "matched": 133,
+      "file": "centro\\data\\context\\centro_monumentos__point.geojson"
+    },
+    "poi-turistico": {
+      "total": 64,
+      "matched": 59,
+      "file": "centro\\data\\geojson\\special\\pois\\centro_pois_turisticos__point.geojson"
+    }
+  },
+  "unmatched": 60,
+  "streets": 81,
+  "timelinePoints": 277,
+  "timelineThreads": 196
+}

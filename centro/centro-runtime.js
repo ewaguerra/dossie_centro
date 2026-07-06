@@ -438,6 +438,21 @@
     });
   }
 
+  function setupStreetNamesDev() {
+    var overlay = window.CENTRO && window.CENTRO.streetLabelsOverlay;
+    if (overlay && typeof overlay.installListeners === "function") {
+      overlay.installListeners(function () {
+        return map;
+      });
+    }
+    var sn = window.CENTRO && window.CENTRO.streetNames;
+    if (sn && typeof sn.setupDevUi === "function") {
+      sn.setupDevUi(function () {
+        return map;
+      });
+    }
+  }
+
   function ensureInvestigationRayApi() {
     if (
       !investigationRayApi &&
@@ -486,7 +501,11 @@
         },
         bootPoiLayers: function (mapInstance, hooks) {
           var poiBoot = ensurePoiBootstrapApi();
-          if (poiBoot) return poiBoot.bootMapLayers(mapInstance, hooks);
+          if (poiBoot) {
+            return poiBoot.bootMapLayers(mapInstance, hooks).then(function () {
+              applyAllPoiThemeFilters();
+            });
+          }
           console.warn("[CENTRO] poi-bootstrap.js ausente — POI/pistas ignorados");
           applyAllPoiThemeFilters();
           return Promise.resolve();
@@ -674,6 +693,9 @@
     if (ui && typeof ui.setupLazyImageObserver === "function") {
       ui.setupLazyImageObserver();
     }
+    if (ui && typeof ui.enhanceSidebarVizCards === "function") {
+      ui.enhanceSidebarVizCards();
+    }
   }
 
   function ensureArgResyncApi() {
@@ -684,6 +706,9 @@
         ensureBuildings3dApi: ensureBuildings3dApi,
         ensureSubterraneanApi: ensureSubterraneanApi,
         syncTriangulo: syncTrianguloHistoricoOverlay,
+        getMap: function () {
+          return map;
+        },
         mapReadyPromise: mapReadyPromise,
       });
     }
@@ -719,6 +744,7 @@
       if (chrome && typeof chrome.install === "function") chrome.install();
       setupBuildings3DToggle();
       setupSubterraneanToggle();
+      setupStreetNamesDev();
       setupInvestigationRay();
       setupPoiThemeFilter();
       loadSidebarData();

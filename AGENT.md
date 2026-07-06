@@ -117,6 +117,8 @@ Consequências práticas:
     Three.js: esferas `subsolo-01`…`subsolo-13` + painéis geológicos
     (`subterranean-cutaway.js`). **Não** confundir com almas ARG `alma-NN`.
   - `centroMaster` — flag de modo mestre quando `?master=1` activo.
+  - `centroStreetNameMode` — `"atual"` | `"historico"` | `"all"` (modo de labels de ruas).
+  - `centroStreetNamesDev` — `"1"` / `"0"` toggle dev de nomes históricos na sidebar.
   - `protocolo13_caderno_clues` — array de IDs de pistas colectadas no
     Arquivo Morto; ponte para `centro/data/catalog/layer-unlocks.json`
     (desbloqueio de camadas no Centro). Ver §5.5.
@@ -189,6 +191,7 @@ O `server.py` reescreve prefixos para pastas no disco:
 | `npm run sync:maplibre` | Copia MapLibre de `node_modules` para `vendor/maplibre/` |
 | `npm run sync:lucide-icons` | Regenera SVGs **e valida paridade** manifest ↔ `map-icons.js`; **falha** se divergir (CAPRI E-02) |
 | `npm run sync:geojson-from-salto` | **Dev only:** regenera GeoJSON em `centro/data/` a partir de `../mapa_sp_salto`; commitar o output (requer `shapely`) |
+| `npm run build:street-names` | Enriquece `15_osm_ruas__line` → `geojson/special/streets/centro_ruas_nomes__line.geojson` |
 | `node scripts/smoke-centro.mjs` | Smoke headless (HTTP + console). Requer `server.py` a correr |
 | `node scripts/smoke-visual-colors.mjs` | Snapshot rápido de paleta no Centro |
 
@@ -392,7 +395,8 @@ MapLibre**. As convenções específicas:
   | Features transversais | `featureMinPhase` | ver abaixo |
   **`featureMinPhase`:** `pistas-rsb` (2) → `pistas.js`; `subterranean` (7) →
   `subterranean-cutaway.js`; `buildings-3d` (9) → `buildings-3d.js`;
-  `triangulo-historico` (11) → `syncTrianguloHistoricoOverlay()` no runtime
+  `street-names-atual` (9) / `street-names-historico` (11) → `street-names.js` +
+  `street-labels-overlay.js`; `triangulo-historico` (11) → `syncTrianguloHistoricoOverlay()` no runtime
   (add/remove no mapa; resync em `centro:arg-state-changed` e `storage` cross-tab).
   **Subsolo — gate composto (não só fase):** além de `protocolo13_phase >= 7`,
   exige as 3 pistas `agua-calada`, `aresta-fria`, `peso-fundacao` em
@@ -433,7 +437,8 @@ MapLibre**. As convenções específicas:
   - `arg-resync.js` — hub `centro:arg-state-changed` → sidebar, POI, 3D,
     subsolo, triângulo (sem basemap wipe)
   - `sidebar-layer-state.js` — classes/mensagens de lock na sidebar
-  - `triangulo-historico.js` — overlay do Triângulo Histórico
+  - `triangulo-historico.js` — overlay do Triângulo Histórico (polígono derivado da malha OSM)
+  - `street-name-utils.js`, `street-names.js` — normalização, gates e modo dev de labels de ruas
   - `pistas.js` — helper de pistas (Rua São Bento), exposto em
     `window.CENTRO.pistas` e consumido pelo runtime
   - `poi-icons.js` — declara as sources/layers symbol de patrimónios e
@@ -448,7 +453,7 @@ MapLibre**. As convenções específicas:
     `centro/test-full.html`. Tratar como sandbox/harness.
 - **Map modules** (`centro/map/`): `basemap-config.js`, `map-safe.js`,
   `layer-data-url.js`, `catalog-layer-controller.js`, `symbol-popup-layer.js`,
-  `poi-bootstrap.js`, `triangulo-overlay.js`, `map-init.js`.
+  `poi-bootstrap.js`, `triangulo-overlay.js`, `street-labels-overlay.js`, `map-init.js`.
 - **UI modules** (`centro/ui/`): `surface-links.js`, `sidebar-panel.js`,
   `sidebar-phases-panel.js`, `sidebar-orchestrator.js`, `sidebar-events.js`,
   `centro-chrome.js`, `investigation-ray.js`, `map-popups.js`, `toast.js`,

@@ -72,8 +72,24 @@
       if (popupCfg.guard && !popupCfg.guard(properties)) return;
       var args = popupCfg.buildArgs(properties, e);
       var popupNode = getPopupNode(popupCfg.factoryKey, args);
-      var popup = new maplibregl.Popup(popupCfg.popupOptions || {});
+      var popup = new maplibregl.Popup(
+        Object.assign(
+          {
+            closeButton: true,
+            closeOnClick: false,
+            className: "evidence-popup",
+            maxWidth: "340px",
+            offset: 20,
+          },
+          popupCfg.popupOptions || {}
+        )
+      );
       popup.setLngLat(e.lngLat).setDOMContent(popupNode).addTo(mapInstance);
+      var syncTheme =
+        window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.syncMapPopupTheme;
+      if (typeof syncTheme === "function") {
+        syncTheme(popup, popupNode);
+      }
     });
 
     bindLayerEventOnce(mapInstance, "mouseenter", config.iconLayerId, function () {

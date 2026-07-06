@@ -42,8 +42,8 @@ Feature `triangulo-historico` (overlay).
 
 - [ ] Definir passos de missão em `centro/missions/alma-11/index.js` (`missions[]`)
 - [ ] Implementar `onActivate` / `onResync` / `isComplete()`
-- [ ] Missão triângulo fechado.
-- [ ] Actualizar esta ficha quando houver entrega
+  - [ ] Missão triângulo fechado — overlay + nomes fundadores (`street-names-historico`).
+  - [ ] Actualizar esta ficha quando houver entrega
 
 ---
 

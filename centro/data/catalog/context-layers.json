@@ -98,6 +98,33 @@
       }
     },
     {
+      "id": "centro_ruas_nomes__line",
+      "title": "Nomes de Ruas (derivado)",
+      "group": "urbano_contexto",
+      "stackRole": "street-label",
+      "coverage": "partial",
+      "coverageCheck": "skip-bbox",
+      "coverageNote": "Malha enriquecida com nomes actuais/históricos — activada pelo runtime de labels, não pela sidebar.",
+      "file": "data/geojson/special/streets/centro_ruas_nomes__line.geojson",
+      "feature_count": 4626,
+      "geometry": "line",
+      "type": "line",
+      "minzoom": 15,
+      "maxzoom": 22,
+      "visible": false,
+      "weightClass": "light",
+      "loadPolicy": "special",
+      "style": {
+        "paint": {
+          "line-opacity": 0
+        }
+      },
+      "metadata": {
+        "generatedBy": "scripts/build-street-names-overlay.mjs",
+        "sourceCatalog": "catalog/street-names-catalog.json"
+      }
+    },
+    {
       "id": "15_osm_enderecos__point",
       "title": "Matriz de Endereçamento",
       "group": "urbano_contexto",

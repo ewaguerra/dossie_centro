@@ -37,12 +37,27 @@
     hitboxLayerId: "monumentos-hitbox",
   });
 
+  var LINHA_TEMPO_LAYER_FILE =
+    "data/geojson/special/timeline/centro_linha_tempo__point.geojson";
+
+  var LINHA_TEMPO_THREAD_LAYER_FILE =
+    "data/geojson/special/timeline/centro_linha_tempo__line.geojson";
+
+  var LINHA_TEMPO_LAYERS = Object.freeze({
+    sourceId: "linha-tempo-source",
+    iconLayerId: "linha-tempo-icon",
+    hitboxLayerId: "linha-tempo-hitbox",
+    threadSourceId: "linha-tempo-thread-source",
+    threadLayerId: "linha-tempo-thread-line",
+  });
+
   var POI_INTERACTION_LAYER_IDS = Object.freeze([
     "poi-turistico-icon",
     "memoria-paulistana-icon",
     "acervo-tombado-icon",
     "bem-arqueologico-icon",
     "monumentos-icon",
+    "linha-tempo-icon",
     "rsb-pistas-icon",
   ]);
 
@@ -54,6 +69,9 @@
     ACERVO_TOMBADO_LAYERS: ACERVO_TOMBADO_LAYERS,
     BEM_ARQUEOLOGICO_LAYERS: BEM_ARQUEOLOGICO_LAYERS,
     MONUMENTOS_LAYERS: MONUMENTOS_LAYERS,
+    LINHA_TEMPO_LAYER_FILE: LINHA_TEMPO_LAYER_FILE,
+    LINHA_TEMPO_THREAD_LAYER_FILE: LINHA_TEMPO_THREAD_LAYER_FILE,
+    LINHA_TEMPO_LAYERS: LINHA_TEMPO_LAYERS,
     POI_INTERACTION_LAYER_IDS: POI_INTERACTION_LAYER_IDS,
   };
 })();

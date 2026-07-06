@@ -383,6 +383,12 @@ Ganho no boot: ~4,1 MiB / 10.108 features fora do fetch inicial. `minzoom: 12`
 preservado (decisão de renderização, não de download). Mesma política
 heavy/default-off que `15_osm_enderecos__point` e `centro_bem_tombado__polygon`.
 
+**STREET-NAMES (2026-07):** derivado `geojson/special/streets/centro_ruas_nomes__line.geojson`
+(~4.626 features nomeadas) gerado por `npm run build:street-names` a partir de
+`15_osm_ruas__line` + `catalog/street-names-catalog.json`. Runtime:
+`street-labels-overlay.js` (symbol layers) activo com toggle `15_osm_ruas__line`.
+Dev: `?streetnames=all`, `DEV_SHOW_ALL` em `street-names.js`.
+
 ### 6.2 Default visibility de OSM endereços
 
 `15_osm_enderecos__point` ficou tempo significativo com `visible: true`

@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-07-06T04:59:33.919Z",
+  "inputRuas": "geojson/heavy/15_osm_ruas__line.geojson",
+  "inputCatalog": "catalog/street-names-catalog.json",
+  "outputGeojson": "geojson/special/streets/centro_ruas_nomes__line.geojson",
+  "sourceFeatures": 10108,
+  "outputFeatures": 4626,
+  "withRename": 170,
+  "catalogMatchedSegments": 144,
+  "catalogEntries": 10,
+  "unmatchedCatalogEntries": []
+}

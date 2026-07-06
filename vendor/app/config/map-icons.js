@@ -33,6 +33,13 @@ window.MAPA_SP_ICONS = {
       label: "Bem arqueológico",
       layerIds: ["bem-arqueologico-icon"],
     },
+    "linha-tempo": {
+      file: "icon-linha-tempo",
+      lucide: "hourglass",
+      color: "#7c3aed",
+      label: "Linha do tempo",
+      layerIds: ["linha-tempo-thread-line", "linha-tempo-icon", "linha-tempo-label"],
+    },
     monumentos: {
       file: "icon-monumentos",
       lucide: "landmark",
@@ -117,13 +124,14 @@ window.MAPA_SP_ICONS = {
 
   getThemeFilters: function () {
     var items = [];
-    var order = ["memoria-paulistana", "acervo-tombado", "bem-arqueologico", "monumentos", "poi-turistico"];
+    var order = ["memoria-paulistana", "acervo-tombado", "bem-arqueologico", "monumentos", "poi-turistico", "linha-tempo"];
     var sourceByTheme = {
       "memoria-paulistana": "memoria-paulistana-source",
       "acervo-tombado": "acervo-tombado-source",
       "bem-arqueologico": "bem-arqueologico-source",
       monumentos: "monumentos-source",
       "poi-turistico": "poi-turistico-source",
+      "linha-tempo": "linha-tempo-source",
     };
     var classifier = window.CENTRO && window.CENTRO.poiEraClassifier;
     for (var i = 0; i < order.length; i++) {

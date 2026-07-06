@@ -1,0 +1,5297 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64406145,
+            -23.5614198
+          ],
+          [
+            -46.64309219,
+            -23.56029327
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-brigadeiro-luis-antonio",
+        "street_display": "Avenida Brigadeiro Luís Antônio",
+        "thread_from_id": "avenida-brigadeiro-luis-antonio--001",
+        "thread_to_id": "avenida-brigadeiro-luis-antonio--002",
+        "from_era": "ditadura",
+        "to_era": "sem-data",
+        "from_year": 1969,
+        "to_year": "",
+        "poi_era_list": "ditadura|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64537,
+            -23.54992002
+          ],
+          [
+            -46.64560551538462,
+            -23.550767746153845
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-avanhandava",
+        "street_display": "Rua Avanhandava",
+        "thread_from_id": "rua-avanhandava--001",
+        "thread_to_id": "rua-avanhandava--002",
+        "from_era": "ditadura",
+        "to_era": "sem-data",
+        "from_year": 1968,
+        "to_year": "",
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65199845,
+            -23.54559702
+          ],
+          [
+            -46.65051,
+            -23.54662002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-maria-antonia",
+        "street_display": "Rua Maria Antônia",
+        "thread_from_id": "rua-maria-antonia--001",
+        "thread_to_id": "rua-maria-antonia--002",
+        "from_era": "colonial-imperio",
+        "to_era": "ditadura",
+        "from_year": 1815,
+        "to_year": 1968,
+        "poi_era_list": "colonial-imperio|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65051,
+            -23.54662002
+          ],
+          [
+            -46.65111,
+            -23.54610002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-maria-antonia",
+        "street_display": "Rua Maria Antônia",
+        "thread_from_id": "rua-maria-antonia--002",
+        "thread_to_id": "rua-maria-antonia--003",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1968,
+        "to_year": 1968,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63311,
+            -23.54220002
+          ],
+          [
+            -46.63333,
+            -23.54297002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-florencio-de-abreu",
+        "street_display": "Rua Florêncio de Abreu",
+        "thread_from_id": "rua-florencio-de-abreu--001",
+        "thread_to_id": "rua-florencio-de-abreu--002",
+        "from_era": "democracia",
+        "to_era": "republica-velha",
+        "from_year": 1892,
+        "to_year": 1898,
+        "poi_era_list": "democracia|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63333,
+            -23.54297002
+          ],
+          [
+            -46.63370831,
+            -23.54390497
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-florencio-de-abreu",
+        "street_display": "Rua Florêncio de Abreu",
+        "thread_from_id": "rua-florencio-de-abreu--002",
+        "thread_to_id": "rua-florencio-de-abreu--003",
+        "from_era": "republica-velha",
+        "to_era": "sem-data",
+        "from_year": 1898,
+        "to_year": "",
+        "poi_era_list": "republica-velha|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63370831,
+            -23.54390497
+          ],
+          [
+            -46.6329984,
+            -23.5388625
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-florencio-de-abreu",
+        "street_display": "Rua Florêncio de Abreu",
+        "thread_from_id": "rua-florencio-de-abreu--003",
+        "thread_to_id": "rua-florencio-de-abreu--004",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6339,
+            -23.55489002
+          ],
+          [
+            -46.63128769,
+            -23.55984838
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-da-gloria",
+        "street_display": "Rua Da Glória",
+        "thread_from_id": "rua-da-gloria--001",
+        "thread_to_id": "rua-da-gloria--002",
+        "from_era": "colonial-imperio",
+        "to_era": "modernismo",
+        "from_year": 1820,
+        "to_year": 1930,
+        "poi_era_list": "colonial-imperio|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63128769,
+            -23.55984838
+          ],
+          [
+            -46.63438,
+            -23.55434002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-da-gloria",
+        "street_display": "Rua Da Glória",
+        "thread_from_id": "rua-da-gloria--002",
+        "thread_to_id": "rua-da-gloria--003",
+        "from_era": "modernismo",
+        "to_era": "modernismo",
+        "from_year": 1930,
+        "to_year": 1940,
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63438,
+            -23.55434002
+          ],
+          [
+            -46.63433118,
+            -23.55323504
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-da-gloria",
+        "street_display": "Rua Da Glória",
+        "thread_from_id": "rua-da-gloria--003",
+        "thread_to_id": "rua-da-gloria--004",
+        "from_era": "modernismo",
+        "to_era": "sem-data",
+        "from_year": 1940,
+        "to_year": "",
+        "poi_era_list": "modernismo|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63659,
+            -23.52926002
+          ],
+          [
+            -46.63717,
+            -23.52833002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-tres-rios",
+        "street_display": "Rua Três Rios",
+        "thread_from_id": "rua-tres-rios--001",
+        "thread_to_id": "rua-tres-rios--002",
+        "from_era": "populista",
+        "to_era": "sem-data",
+        "from_year": 1953,
+        "to_year": "",
+        "poi_era_list": "populista|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63717,
+            -23.52833002
+          ],
+          [
+            -46.636584,
+            -23.52909
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-tres-rios",
+        "street_display": "Rua Três Rios",
+        "thread_from_id": "rua-tres-rios--002",
+        "thread_to_id": "rua-tres-rios--003",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.636584,
+            -23.52909
+          ],
+          [
+            -46.63779460833334,
+            -23.529364675
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-tres-rios",
+        "street_display": "Rua Três Rios",
+        "thread_from_id": "rua-tres-rios--003",
+        "thread_to_id": "rua-tres-rios--004",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63466094,
+            -23.55610814
+          ],
+          [
+            -46.63464829,
+            -23.55612772
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-dos-aflitos",
+        "street_display": "Rua Dos Aflitos",
+        "thread_from_id": "rua-dos-aflitos--001",
+        "thread_to_id": "rua-dos-aflitos--002",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63643,
+            -23.54952002
+          ],
+          [
+            -46.6363,
+            -23.54942002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-senador-paulo-egidio",
+        "street_display": "Rua Senador Paulo Egídio",
+        "thread_from_id": "rua-senador-paulo-egidio--001",
+        "thread_to_id": "rua-senador-paulo-egidio--002",
+        "from_era": "colonial-imperio",
+        "to_era": "ditadura",
+        "from_year": 1829,
+        "to_year": 1983,
+        "poi_era_list": "colonial-imperio|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63585,
+            -23.54842002
+          ],
+          [
+            -46.63486276,
+            -23.5485675
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-direita",
+        "street_display": "Rua Direita",
+        "thread_from_id": "rua-direita--001",
+        "thread_to_id": "rua-direita--002",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64206,
+            -23.54784002
+          ],
+          [
+            -46.64819306,
+            -23.54786342
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-consolacao",
+        "street_display": "Rua da Consolação",
+        "thread_from_id": "rua-consolacao--001",
+        "thread_to_id": "rua-consolacao--002",
+        "from_era": "colonial-imperio",
+        "to_era": "republica-velha",
+        "from_year": 1887,
+        "to_year": 1913,
+        "poi_era_list": "colonial-imperio|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64819306,
+            -23.54786342
+          ],
+          [
+            -46.65595051,
+            -23.5513594
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-consolacao",
+        "street_display": "Rua da Consolação",
+        "thread_from_id": "rua-consolacao--002",
+        "thread_to_id": "rua-consolacao--003",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1913,
+        "to_year": 1943,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65595051,
+            -23.5513594
+          ],
+          [
+            -46.66256,
+            -23.55561002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-consolacao",
+        "street_display": "Rua da Consolação",
+        "thread_from_id": "rua-consolacao--003",
+        "thread_to_id": "rua-consolacao--004",
+        "from_era": "modernismo",
+        "to_era": "populista",
+        "from_year": 1943,
+        "to_year": 1954,
+        "poi_era_list": "modernismo|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66256,
+            -23.55561002
+          ],
+          [
+            -46.65951159,
+            -23.55284305
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-consolacao",
+        "street_display": "Rua da Consolação",
+        "thread_from_id": "rua-consolacao--004",
+        "thread_to_id": "rua-consolacao--005",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1954,
+        "to_year": 1959,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65951159,
+            -23.55284305
+          ],
+          [
+            -46.65729291,
+            -23.55062375
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-consolacao",
+        "street_display": "Rua da Consolação",
+        "thread_from_id": "rua-consolacao--005",
+        "thread_to_id": "rua-consolacao--006",
+        "from_era": "populista",
+        "to_era": "republica-velha",
+        "from_year": 1959,
+        "to_year": "",
+        "poi_era_list": "populista|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64613,
+            -23.54842002
+          ],
+          [
+            -46.64601,
+            -23.54803002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-franklin-roosevelt",
+        "street_display": "Praça Franklin Roosevelt",
+        "thread_from_id": "praca-franklin-roosevelt--001",
+        "thread_to_id": "praca-franklin-roosevelt--002",
+        "from_era": "populista",
+        "to_era": "democracia",
+        "from_year": 1962,
+        "to_year": 2002,
+        "poi_era_list": "populista|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64601,
+            -23.54803002
+          ],
+          [
+            -46.64670835974026,
+            -23.54854523766234
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-franklin-roosevelt",
+        "street_display": "Praça Franklin Roosevelt",
+        "thread_from_id": "praca-franklin-roosevelt--002",
+        "thread_to_id": "praca-franklin-roosevelt--003",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 2002,
+        "to_year": "",
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6452,
+            -23.57114002
+          ],
+          [
+            -46.65283,
+            -23.56419002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--001",
+        "thread_to_id": "avenida-paulista--002",
+        "from_era": "colonial-imperio",
+        "to_era": "republica-velha",
+        "from_year": 1873,
+        "to_year": 1896,
+        "poi_era_list": "colonial-imperio|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65283,
+            -23.56419002
+          ],
+          [
+            -46.65872,
+            -23.56033002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--002",
+        "thread_to_id": "avenida-paulista--003",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1896,
+        "to_year": 1909,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65872,
+            -23.56033002
+          ],
+          [
+            -46.66167,
+            -23.55739002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--003",
+        "thread_to_id": "avenida-paulista--004",
+        "from_era": "republica-velha",
+        "to_era": "populista",
+        "from_year": 1909,
+        "to_year": 1960,
+        "poi_era_list": "republica-velha|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66167,
+            -23.55739002
+          ],
+          [
+            -46.66036178,
+            -23.55927527
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--004",
+        "thread_to_id": "avenida-paulista--005",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1960,
+        "to_year": 1963,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66036178,
+            -23.55927527
+          ],
+          [
+            -46.65121,
+            -23.56551002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--005",
+        "thread_to_id": "avenida-paulista--006",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1963,
+        "to_year": 1967,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65121,
+            -23.56551002
+          ],
+          [
+            -46.6531324,
+            -23.56401862
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--006",
+        "thread_to_id": "avenida-paulista--007",
+        "from_era": "ditadura",
+        "to_era": "democracia",
+        "from_year": 1967,
+        "to_year": 2009,
+        "poi_era_list": "ditadura|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6531324,
+            -23.56401862
+          ],
+          [
+            -46.65596,
+            -23.56151002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--007",
+        "thread_to_id": "avenida-paulista--008",
+        "from_era": "democracia",
+        "to_era": "democracia",
+        "from_year": 2009,
+        "to_year": 2013,
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65596,
+            -23.56151002
+          ],
+          [
+            -46.65295621,
+            -23.56462238
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--008",
+        "thread_to_id": "avenida-paulista--009",
+        "from_era": "democracia",
+        "to_era": "democracia",
+        "from_year": 2013,
+        "to_year": 2015,
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65295621,
+            -23.56462238
+          ],
+          [
+            -46.65591059,
+            -23.56147511
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--009",
+        "thread_to_id": "avenida-paulista--010",
+        "from_era": "democracia",
+        "to_era": "modernismo",
+        "from_year": 2015,
+        "to_year": "",
+        "poi_era_list": "democracia|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65591059,
+            -23.56147511
+          ],
+          [
+            -46.65874683,
+            -23.55971719
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-paulista",
+        "street_display": "Avenida Paulista",
+        "thread_from_id": "avenida-paulista--010",
+        "thread_to_id": "avenida-paulista--011",
+        "from_era": "modernismo",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "modernismo|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6401,
+            -23.54183002
+          ],
+          [
+            -46.64055,
+            -23.54283002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-ipiranga",
+        "street_display": "Avenida Ipiranga",
+        "thread_from_id": "avenida-ipiranga--001",
+        "thread_to_id": "avenida-ipiranga--002",
+        "from_era": "colonial-imperio",
+        "to_era": "modernismo",
+        "from_year": 1866,
+        "to_year": 1940,
+        "poi_era_list": "colonial-imperio|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64055,
+            -23.54283002
+          ],
+          [
+            -46.64099,
+            -23.54263002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-ipiranga",
+        "street_display": "Avenida Ipiranga",
+        "thread_from_id": "avenida-ipiranga--002",
+        "thread_to_id": "avenida-ipiranga--003",
+        "from_era": "modernismo",
+        "to_era": "modernismo",
+        "from_year": 1940,
+        "to_year": 1944,
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64099,
+            -23.54263002
+          ],
+          [
+            -46.64603,
+            -23.54676002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-ipiranga",
+        "street_display": "Avenida Ipiranga",
+        "thread_from_id": "avenida-ipiranga--003",
+        "thread_to_id": "avenida-ipiranga--004",
+        "from_era": "modernismo",
+        "to_era": "ditadura",
+        "from_year": 1944,
+        "to_year": 1960,
+        "poi_era_list": "modernismo|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64603,
+            -23.54676002
+          ],
+          [
+            -46.6436337,
+            -23.5453075
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-ipiranga",
+        "street_display": "Avenida Ipiranga",
+        "thread_from_id": "avenida-ipiranga--004",
+        "thread_to_id": "avenida-ipiranga--005",
+        "from_era": "ditadura",
+        "to_era": "sem-data",
+        "from_year": 1960,
+        "to_year": "",
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65844172,
+            -23.55655692
+          ],
+          [
+            -46.65896,
+            -23.55695002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-augusta",
+        "street_display": "Rua Augusta",
+        "thread_from_id": "rua-augusta--001",
+        "thread_to_id": "rua-augusta--002",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1947,
+        "to_year": 1960,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65896,
+            -23.55695002
+          ],
+          [
+            -46.65336061,
+            -23.55248536
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-augusta",
+        "street_display": "Rua Augusta",
+        "thread_from_id": "rua-augusta--002",
+        "thread_to_id": "rua-augusta--003",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1960,
+        "to_year": 1966,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65336061,
+            -23.55248536
+          ],
+          [
+            -46.66248,
+            -23.56040002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-augusta",
+        "street_display": "Rua Augusta",
+        "thread_from_id": "rua-augusta--003",
+        "thread_to_id": "rua-augusta--004",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1966,
+        "to_year": 1969,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66248,
+            -23.56040002
+          ],
+          [
+            -46.6533,
+            -23.55246002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-augusta",
+        "street_display": "Rua Augusta",
+        "thread_from_id": "rua-augusta--004",
+        "thread_to_id": "rua-augusta--005",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1969,
+        "to_year": 1980,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6533,
+            -23.55246002
+          ],
+          [
+            -46.6634368,
+            -23.56129591
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-augusta",
+        "street_display": "Rua Augusta",
+        "thread_from_id": "rua-augusta--005",
+        "thread_to_id": "rua-augusta--006",
+        "from_era": "ditadura",
+        "to_era": "democracia",
+        "from_year": 1980,
+        "to_year": 1988,
+        "poi_era_list": "ditadura|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6634368,
+            -23.56129591
+          ],
+          [
+            -46.65165,
+            -23.55182002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-augusta",
+        "street_display": "Rua Augusta",
+        "thread_from_id": "rua-augusta--006",
+        "thread_to_id": "rua-augusta--007",
+        "from_era": "democracia",
+        "to_era": "democracia",
+        "from_year": 1988,
+        "to_year": 2008,
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64675,
+            -23.54672002
+          ],
+          [
+            -46.646920938461534,
+            -23.54669953846154
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-rego-freitas",
+        "street_display": "Rua Rego Freitas",
+        "thread_from_id": "rua-rego-freitas--001",
+        "thread_to_id": "rua-rego-freitas--002",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 2009,
+        "to_year": "",
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63867233,
+            -23.54342537
+          ],
+          [
+            -46.63719603,
+            -23.54426692
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-sao-joao",
+        "street_display": "Avenida São João",
+        "thread_from_id": "avenida-sao-joao--001",
+        "thread_to_id": "avenida-sao-joao--002",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1897,
+        "to_year": 1906,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63719603,
+            -23.54426692
+          ],
+          [
+            -46.64144444,
+            -23.5418889
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-sao-joao",
+        "street_display": "Avenida São João",
+        "thread_from_id": "avenida-sao-joao--002",
+        "thread_to_id": "avenida-sao-joao--003",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1906,
+        "to_year": 1938,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64144444,
+            -23.5418889
+          ],
+          [
+            -46.63846289,
+            -23.54354277
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-sao-joao",
+        "street_display": "Avenida São João",
+        "thread_from_id": "avenida-sao-joao--003",
+        "thread_to_id": "avenida-sao-joao--004",
+        "from_era": "modernismo",
+        "to_era": "modernismo",
+        "from_year": 1938,
+        "to_year": 1939,
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63846289,
+            -23.54354277
+          ],
+          [
+            -46.63929016,
+            -23.5440219
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-sao-joao",
+        "street_display": "Avenida São João",
+        "thread_from_id": "avenida-sao-joao--004",
+        "thread_to_id": "avenida-sao-joao--005",
+        "from_era": "modernismo",
+        "to_era": "populista",
+        "from_year": 1939,
+        "to_year": 1957,
+        "poi_era_list": "modernismo|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63929016,
+            -23.5440219
+          ],
+          [
+            -46.64046,
+            -23.54231002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-sao-joao",
+        "street_display": "Avenida São João",
+        "thread_from_id": "avenida-sao-joao--005",
+        "thread_to_id": "avenida-sao-joao--006",
+        "from_era": "populista",
+        "to_era": "sem-data",
+        "from_year": 1957,
+        "to_year": "",
+        "poi_era_list": "populista|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63222,
+            -23.54859002
+          ],
+          [
+            -46.63194,
+            -23.54960002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-roberto-simonsen",
+        "street_display": "Rua Roberto Símonsen",
+        "thread_from_id": "rua-roberto-simonsen--001",
+        "thread_to_id": "rua-roberto-simonsen--002",
+        "from_era": "colonial-imperio",
+        "to_era": "republica-velha",
+        "from_year": 1797,
+        "to_year": 1909,
+        "poi_era_list": "colonial-imperio|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63194,
+            -23.54960002
+          ],
+          [
+            -46.63223,
+            -23.54844002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-roberto-simonsen",
+        "street_display": "Rua Roberto Símonsen",
+        "thread_from_id": "rua-roberto-simonsen--002",
+        "thread_to_id": "rua-roberto-simonsen--003",
+        "from_era": "republica-velha",
+        "to_era": "sem-data",
+        "from_year": 1909,
+        "to_year": "",
+        "poi_era_list": "republica-velha|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63625056,
+            -23.5460276
+          ],
+          [
+            -46.63631061,
+            -23.54673478
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-libero-badaro",
+        "street_display": "Rua Líbero Badaró",
+        "thread_from_id": "rua-libero-badaro--001",
+        "thread_to_id": "rua-libero-badaro--002",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1911,
+        "to_year": 1917,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63631061,
+            -23.54673478
+          ],
+          [
+            -46.63579489,
+            -23.5458185
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-libero-badaro",
+        "street_display": "Rua Líbero Badaró",
+        "thread_from_id": "rua-libero-badaro--002",
+        "thread_to_id": "rua-libero-badaro--003",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1917,
+        "to_year": 1922,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63579489,
+            -23.5458185
+          ],
+          [
+            -46.63627207,
+            -23.54666793
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-libero-badaro",
+        "street_display": "Rua Líbero Badaró",
+        "thread_from_id": "rua-libero-badaro--003",
+        "thread_to_id": "rua-libero-badaro--004",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1922,
+        "to_year": 1926,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63627207,
+            -23.54666793
+          ],
+          [
+            -46.63617396666667,
+            -23.546725388888888
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-libero-badaro",
+        "street_display": "Rua Líbero Badaró",
+        "thread_from_id": "rua-libero-badaro--004",
+        "thread_to_id": "rua-libero-badaro--005",
+        "from_era": "republica-velha",
+        "to_era": "sem-data",
+        "from_year": 1926,
+        "to_year": "",
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63447,
+            -23.54552002
+          ],
+          [
+            -46.6346123,
+            -23.54566647
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-antonio-prado",
+        "street_display": "Praça Antônio Prado",
+        "thread_from_id": "praca-antonio-prado--001",
+        "thread_to_id": "praca-antonio-prado--002",
+        "from_era": "colonial-imperio",
+        "to_era": "democracia",
+        "from_year": 1725,
+        "to_year": 2016,
+        "poi_era_list": "colonial-imperio|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63832502,
+            -23.54302621
+          ],
+          [
+            -46.63882,
+            -23.54288002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-paissandu",
+        "street_display": "Largo Do Paissandú",
+        "thread_from_id": "largo-do-paissandu--001",
+        "thread_to_id": "largo-do-paissandu--002",
+        "from_era": "populista",
+        "to_era": "sem-data",
+        "from_year": 1955,
+        "to_year": "",
+        "poi_era_list": "populista|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.651,
+            -23.54199002
+          ],
+          [
+            -46.65198,
+            -23.54513002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-dona-veridiana",
+        "street_display": "Rua Dona Veridiana",
+        "thread_from_id": "rua-dona-veridiana--001",
+        "thread_to_id": "rua-dona-veridiana--002",
+        "from_era": "colonial-imperio",
+        "to_era": "ditadura",
+        "from_year": 1825,
+        "to_year": 1963,
+        "poi_era_list": "colonial-imperio|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63555014,
+            -23.55525762
+          ],
+          [
+            -46.63543697,
+            -23.55534984
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-liberdade",
+        "street_display": "Praça Da Liberdade",
+        "thread_from_id": "praca-da-liberdade--001",
+        "thread_to_id": "praca-da-liberdade--002",
+        "from_era": "ditadura",
+        "to_era": "democracia",
+        "from_year": 1976,
+        "to_year": 1995,
+        "poi_era_list": "ditadura|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63543697,
+            -23.55534984
+          ],
+          [
+            -46.63561,
+            -23.55534002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-liberdade",
+        "street_display": "Praça Da Liberdade",
+        "thread_from_id": "praca-da-liberdade--002",
+        "thread_to_id": "praca-da-liberdade--003",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 1995,
+        "to_year": "",
+        "poi_era_list": "democracia|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63561,
+            -23.55534002
+          ],
+          [
+            -46.635290749999996,
+            -23.55523715
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-liberdade",
+        "street_display": "Praça Da Liberdade",
+        "thread_from_id": "praca-da-liberdade--003",
+        "thread_to_id": "praca-da-liberdade--004",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64494,
+            -23.54170002
+          ],
+          [
+            -46.6455658,
+            -23.54140327
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--001",
+        "thread_to_id": "largo-do-arouche--002",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1893,
+        "to_year": 1922,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6455658,
+            -23.54140327
+          ],
+          [
+            -46.64499822,
+            -23.541302
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--002",
+        "thread_to_id": "largo-do-arouche--003",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1922,
+        "to_year": 1931,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64499822,
+            -23.541302
+          ],
+          [
+            -46.64544188,
+            -23.54103985
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--003",
+        "thread_to_id": "largo-do-arouche--004",
+        "from_era": "modernismo",
+        "to_era": "modernismo",
+        "from_year": 1931,
+        "to_year": 1941,
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64544188,
+            -23.54103985
+          ],
+          [
+            -46.6451887,
+            -23.54040265
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--004",
+        "thread_to_id": "largo-do-arouche--005",
+        "from_era": "modernismo",
+        "to_era": "populista",
+        "from_year": 1941,
+        "to_year": 1948,
+        "poi_era_list": "modernismo|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6451887,
+            -23.54040265
+          ],
+          [
+            -46.64544,
+            -23.54122002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--005",
+        "thread_to_id": "largo-do-arouche--006",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1948,
+        "to_year": 1950,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64544,
+            -23.54122002
+          ],
+          [
+            -46.64529093,
+            -23.54099901
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--006",
+        "thread_to_id": "largo-do-arouche--007",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1950,
+        "to_year": 1959,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64529093,
+            -23.54099901
+          ],
+          [
+            -46.64537247,
+            -23.54079803
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--007",
+        "thread_to_id": "largo-do-arouche--008",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1959,
+        "to_year": 1965,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64537247,
+            -23.54079803
+          ],
+          [
+            -46.64541701,
+            -23.54092227
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--008",
+        "thread_to_id": "largo-do-arouche--009",
+        "from_era": "ditadura",
+        "to_era": "democracia",
+        "from_year": 1965,
+        "to_year": 1986,
+        "poi_era_list": "ditadura|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64541701,
+            -23.54092227
+          ],
+          [
+            -46.64637458,
+            -23.54163483
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--009",
+        "thread_to_id": "largo-do-arouche--010",
+        "from_era": "democracia",
+        "to_era": "democracia",
+        "from_year": 1986,
+        "to_year": 1992,
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64637458,
+            -23.54163483
+          ],
+          [
+            -46.64581208,
+            -23.54077902
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--010",
+        "thread_to_id": "largo-do-arouche--011",
+        "from_era": "democracia",
+        "to_era": "republica-velha",
+        "from_year": 1992,
+        "to_year": "",
+        "poi_era_list": "democracia|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64581208,
+            -23.54077902
+          ],
+          [
+            -46.64541256,
+            -23.54160392
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-do-arouche",
+        "street_display": "Largo Do Arouche",
+        "thread_from_id": "largo-do-arouche--011",
+        "thread_to_id": "largo-do-arouche--012",
+        "from_era": "republica-velha",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "republica-velha|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63441847,
+            -23.54618474
+          ],
+          [
+            -46.6343972,
+            -23.5465253
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-quinze-novembro",
+        "street_display": "Rua Quinze de Novembro",
+        "thread_from_id": "rua-quinze-novembro--001",
+        "thread_to_id": "rua-quinze-novembro--002",
+        "from_era": "colonial-imperio",
+        "to_era": "sem-data",
+        "from_year": 1837,
+        "to_year": "",
+        "poi_era_list": "colonial-imperio"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64332,
+            -23.55288002
+          ],
+          [
+            -46.64307,
+            -23.55389002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-major-diogo",
+        "street_display": "Rua Major Diogo",
+        "thread_from_id": "rua-major-diogo--001",
+        "thread_to_id": "rua-major-diogo--002",
+        "from_era": "colonial-imperio",
+        "to_era": "populista",
+        "from_year": 1878,
+        "to_year": 1948,
+        "poi_era_list": "colonial-imperio|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64307,
+            -23.55389002
+          ],
+          [
+            -46.64266,
+            -23.55809002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-major-diogo",
+        "street_display": "Rua Major Diogo",
+        "thread_from_id": "rua-major-diogo--002",
+        "thread_to_id": "rua-major-diogo--003",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1948,
+        "to_year": 1980,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.645203,
+            -23.56073202
+          ],
+          [
+            -46.64554,
+            -23.55788002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-rui-barbosa",
+        "street_display": "Rua Rui Barbosa",
+        "thread_from_id": "rua-rui-barbosa--001",
+        "thread_to_id": "rua-rui-barbosa--002",
+        "from_era": "populista",
+        "to_era": "sem-data",
+        "from_year": 1963,
+        "to_year": "",
+        "poi_era_list": "populista|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64259,
+            -23.54637002
+          ],
+          [
+            -46.64363,
+            -23.54535002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-sao-luis",
+        "street_display": "Avenida São Luis",
+        "thread_from_id": "avenida-sao-luis--001",
+        "thread_to_id": "avenida-sao-luis--002",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1960,
+        "to_year": 1965,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64363,
+            -23.54535002
+          ],
+          [
+            -46.6434,
+            -23.54565002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-sao-luis",
+        "street_display": "Avenida São Luis",
+        "thread_from_id": "avenida-sao-luis--002",
+        "thread_to_id": "avenida-sao-luis--003",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1965,
+        "to_year": 1965,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6434,
+            -23.54565002
+          ],
+          [
+            -46.64259,
+            -23.54634002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-sao-luis",
+        "street_display": "Avenida São Luis",
+        "thread_from_id": "avenida-sao-luis--003",
+        "thread_to_id": "avenida-sao-luis--004",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1965,
+        "to_year": 1966,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63326,
+            -23.54727002
+          ],
+          [
+            -46.63354723,
+            -23.54645557
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-boa-vista",
+        "street_display": "Rua Boa Vista",
+        "thread_from_id": "rua-boa-vista--001",
+        "thread_to_id": "rua-boa-vista--002",
+        "from_era": "colonial-imperio",
+        "to_era": "republica-velha",
+        "from_year": 1711,
+        "to_year": 1898,
+        "poi_era_list": "colonial-imperio|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63354723,
+            -23.54645557
+          ],
+          [
+            -46.6333429,
+            -23.54663869
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-boa-vista",
+        "street_display": "Rua Boa Vista",
+        "thread_from_id": "rua-boa-vista--002",
+        "thread_to_id": "rua-boa-vista--003",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1898,
+        "to_year": 1922,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64540976,
+            -23.54905011
+          ],
+          [
+            -46.645847,
+            -23.54909302
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-nestor-pestana",
+        "street_display": "Rua Nestor Pestana",
+        "thread_from_id": "rua-nestor-pestana--001",
+        "thread_to_id": "rua-nestor-pestana--002",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1895,
+        "to_year": "",
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63296442,
+            -23.54901078
+          ],
+          [
+            -46.63399862,
+            -23.55041013
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--001",
+        "thread_to_id": "praca-da-se--002",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1928,
+        "to_year": 1934,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63399862,
+            -23.55041013
+          ],
+          [
+            -46.63377942,
+            -23.54992082
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--002",
+        "thread_to_id": "praca-da-se--003",
+        "from_era": "modernismo",
+        "to_era": "populista",
+        "from_year": 1934,
+        "to_year": 1954,
+        "poi_era_list": "modernismo|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63377942,
+            -23.54992082
+          ],
+          [
+            -46.63284763,
+            -23.55083481
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--003",
+        "thread_to_id": "praca-da-se--004",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1954,
+        "to_year": 1978,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63284763,
+            -23.55083481
+          ],
+          [
+            -46.63334776,
+            -23.55010416
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--004",
+        "thread_to_id": "praca-da-se--005",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1978,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63334776,
+            -23.55010416
+          ],
+          [
+            -46.63331783,
+            -23.55098772
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--005",
+        "thread_to_id": "praca-da-se--006",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63331783,
+            -23.55098772
+          ],
+          [
+            -46.63278907,
+            -23.55023392
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--006",
+        "thread_to_id": "praca-da-se--007",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63278907,
+            -23.55023392
+          ],
+          [
+            -46.63296024,
+            -23.55095924
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--007",
+        "thread_to_id": "praca-da-se--008",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63296024,
+            -23.55095924
+          ],
+          [
+            -46.63343949,
+            -23.55025066
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--008",
+        "thread_to_id": "praca-da-se--009",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63343949,
+            -23.55025066
+          ],
+          [
+            -46.63254821,
+            -23.55102714
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--009",
+        "thread_to_id": "praca-da-se--010",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63254821,
+            -23.55102714
+          ],
+          [
+            -46.63313936,
+            -23.55119368
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--010",
+        "thread_to_id": "praca-da-se--011",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63313936,
+            -23.55119368
+          ],
+          [
+            -46.63265608,
+            -23.55156033
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--011",
+        "thread_to_id": "praca-da-se--012",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63265608,
+            -23.55156033
+          ],
+          [
+            -46.63368471,
+            -23.55067395
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--012",
+        "thread_to_id": "praca-da-se--013",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63368471,
+            -23.55067395
+          ],
+          [
+            -46.6326085,
+            -23.55043665
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--013",
+        "thread_to_id": "praca-da-se--014",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1979,
+        "to_year": 1979,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6326085,
+            -23.55043665
+          ],
+          [
+            -46.63221469,
+            -23.55042507
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--014",
+        "thread_to_id": "praca-da-se--015",
+        "from_era": "ditadura",
+        "to_era": "democracia",
+        "from_year": 1979,
+        "to_year": 1998,
+        "poi_era_list": "ditadura|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63221469,
+            -23.55042507
+          ],
+          [
+            -46.63378734,
+            -23.55105269
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--015",
+        "thread_to_id": "praca-da-se--016",
+        "from_era": "democracia",
+        "to_era": "democracia",
+        "from_year": 1998,
+        "to_year": 2000,
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63378734,
+            -23.55105269
+          ],
+          [
+            -46.63378845,
+            -23.55083054
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--016",
+        "thread_to_id": "praca-da-se--017",
+        "from_era": "democracia",
+        "to_era": "democracia",
+        "from_year": 2000,
+        "to_year": 2004,
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63378845,
+            -23.55083054
+          ],
+          [
+            -46.63278976,
+            -23.5513916
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--017",
+        "thread_to_id": "praca-da-se--018",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 2004,
+        "to_year": "",
+        "poi_era_list": "democracia|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63278976,
+            -23.5513916
+          ],
+          [
+            -46.63435966666667,
+            -23.551232885185186
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--018",
+        "thread_to_id": "praca-da-se--019",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63435966666667,
+            -23.551232885185186
+          ],
+          [
+            -46.633219385000004,
+            -23.55054228
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-se",
+        "street_display": "Praça Da Sé",
+        "thread_from_id": "praca-da-se--019",
+        "thread_to_id": "praca-da-se--020",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6381,
+            -23.54407002
+          ],
+          [
+            -46.63832,
+            -23.54445002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-conselheiro-crispiniano",
+        "street_display": "Rua Conselheiro Crispiniano",
+        "thread_from_id": "rua-conselheiro-crispiniano--001",
+        "thread_to_id": "rua-conselheiro-crispiniano--002",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 2009,
+        "to_year": "",
+        "poi_era_list": "democracia|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63855,
+            -23.52975002
+          ],
+          [
+            -46.6385290375,
+            -23.52978854375
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-da-graca",
+        "street_display": "Rua Da Graça",
+        "thread_from_id": "rua-da-graca--001",
+        "thread_to_id": "rua-da-graca--002",
+        "from_era": "republica-velha",
+        "to_era": "sem-data",
+        "from_year": 1912,
+        "to_year": "",
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64035606,
+            -23.54476565
+          ],
+          [
+            -46.6415407,
+            -23.54379672
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-barao-de-itapetininga",
+        "street_display": "Rua Barão de Itapetininga",
+        "thread_from_id": "rua-barao-de-itapetininga--001",
+        "thread_to_id": "rua-barao-de-itapetininga--002",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1899,
+        "to_year": 1932,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6468003,
+            -23.52692662
+          ],
+          [
+            -46.6451691,
+            -23.52588422
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-solon",
+        "street_display": "Rua Solon",
+        "thread_from_id": "rua-solon--001",
+        "thread_to_id": "rua-solon--002",
+        "from_era": "republica-velha",
+        "to_era": "ditadura",
+        "from_year": 1921,
+        "to_year": 1980,
+        "poi_era_list": "republica-velha|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6451691,
+            -23.52588422
+          ],
+          [
+            -46.64608,
+            -23.52654002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-solon",
+        "street_display": "Rua Solon",
+        "thread_from_id": "rua-solon--002",
+        "thread_to_id": "rua-solon--003",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1980,
+        "to_year": 1984,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65450783,
+            -23.53702282
+          ],
+          [
+            -46.65374,
+            -23.53438002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-angelica",
+        "street_display": "Avenida Angélica",
+        "thread_from_id": "avenida-angelica--001",
+        "thread_to_id": "avenida-angelica--002",
+        "from_era": "colonial-imperio",
+        "to_era": "republica-velha",
+        "from_year": 1842,
+        "to_year": 1927,
+        "poi_era_list": "colonial-imperio|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65221688,
+            -23.54513165
+          ],
+          [
+            -46.65406,
+            -23.54480002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-higienopolis",
+        "street_display": "Avenida Higienópolis",
+        "thread_from_id": "avenida-higienopolis--001",
+        "thread_to_id": "avenida-higienopolis--002",
+        "from_era": "colonial-imperio",
+        "to_era": "republica-velha",
+        "from_year": 1825,
+        "to_year": 1903,
+        "poi_era_list": "colonial-imperio|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63846,
+            -23.53892002
+          ],
+          [
+            -46.64104032,
+            -23.54012381
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-aurora",
+        "street_display": "Rua Aurora",
+        "thread_from_id": "rua-aurora--001",
+        "thread_to_id": "rua-aurora--002",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1902,
+        "to_year": 1910,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.631069,
+            -23.55057602
+          ],
+          [
+            -46.63125412,
+            -23.55034222
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-rangel-pestana",
+        "street_display": "Avenida Rangel Pestana",
+        "thread_from_id": "avenida-rangel-pestana--001",
+        "thread_to_id": "avenida-rangel-pestana--002",
+        "from_era": "colonial-imperio",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "colonial-imperio|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63125412,
+            -23.55034222
+          ],
+          [
+            -46.62574032,
+            -23.54755335
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-rangel-pestana",
+        "street_display": "Avenida Rangel Pestana",
+        "thread_from_id": "avenida-rangel-pestana--002",
+        "thread_to_id": "avenida-rangel-pestana--003",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64513,
+            -23.53352002
+          ],
+          [
+            -46.6378553,
+            -23.54229682
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-rio-branco",
+        "street_display": "Avenida Rio Branco",
+        "thread_from_id": "avenida-rio-branco--001",
+        "thread_to_id": "avenida-rio-branco--002",
+        "from_era": "republica-velha",
+        "to_era": "populista",
+        "from_year": 1915,
+        "to_year": 1961,
+        "poi_era_list": "republica-velha|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6378553,
+            -23.54229682
+          ],
+          [
+            -46.637941814814816,
+            -23.541983896296298
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-rio-branco",
+        "street_display": "Avenida Rio Branco",
+        "thread_from_id": "avenida-rio-branco--002",
+        "thread_to_id": "avenida-rio-branco--003",
+        "from_era": "populista",
+        "to_era": "sem-data",
+        "from_year": 1961,
+        "to_year": "",
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64641,
+            -23.55986002
+          ],
+          [
+            -46.64663,
+            -23.55729002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-treze-de-maio",
+        "street_display": "Rua Treze de Maio",
+        "thread_from_id": "rua-treze-de-maio--001",
+        "thread_to_id": "rua-treze-de-maio--002",
+        "from_era": "republica-velha",
+        "to_era": "sem-data",
+        "from_year": 1929,
+        "to_year": "",
+        "poi_era_list": "republica-velha|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65288737,
+            -23.56136917
+          ],
+          [
+            -46.65286,
+            -23.56139002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "alameda-rio-claro",
+        "street_display": "Alameda Rio Claro",
+        "thread_from_id": "alameda-rio-claro--001",
+        "thread_to_id": "alameda-rio-claro--002",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1904,
+        "to_year": 1926,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63573,
+            -23.54700002
+          ],
+          [
+            -46.63417427,
+            -23.54401022
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-sao-bento",
+        "street_display": "Rua São Bento",
+        "thread_from_id": "rua-sao-bento--001",
+        "thread_to_id": "rua-sao-bento--002",
+        "from_era": "republica-velha",
+        "to_era": "democracia",
+        "from_year": 1927,
+        "to_year": 2000,
+        "poi_era_list": "republica-velha|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63417427,
+            -23.54401022
+          ],
+          [
+            -46.6349485,
+            -23.5456985
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-sao-bento",
+        "street_display": "Rua São Bento",
+        "thread_from_id": "rua-sao-bento--002",
+        "thread_to_id": "rua-sao-bento--003",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 2000,
+        "to_year": "",
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6349485,
+            -23.5456985
+          ],
+          [
+            -46.6339137,
+            -23.5438193
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-sao-bento",
+        "street_display": "Rua São Bento",
+        "thread_from_id": "rua-sao-bento--003",
+        "thread_to_id": "rua-sao-bento--004",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63531798,
+            -23.53992172
+          ],
+          [
+            -46.63572,
+            -23.54205002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-brigadeiro-tobias",
+        "street_display": "Rua Brigadeiro Tobias",
+        "thread_from_id": "rua-brigadeiro-tobias--001",
+        "thread_to_id": "rua-brigadeiro-tobias--002",
+        "from_era": "colonial-imperio",
+        "to_era": "sem-data",
+        "from_year": 1876,
+        "to_year": "",
+        "poi_era_list": "colonial-imperio|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64272595,
+            -23.54385467
+          ],
+          [
+            -46.64315564,
+            -23.54366456
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--001",
+        "thread_to_id": "praca-da-republica--002",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1909,
+        "to_year": 1930,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64315564,
+            -23.54366456
+          ],
+          [
+            -46.64281,
+            -23.54459002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--002",
+        "thread_to_id": "praca-da-republica--003",
+        "from_era": "modernismo",
+        "to_era": "modernismo",
+        "from_year": 1930,
+        "to_year": 1935,
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64281,
+            -23.54459002
+          ],
+          [
+            -46.64299346,
+            -23.54277616
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--003",
+        "thread_to_id": "praca-da-republica--004",
+        "from_era": "modernismo",
+        "to_era": "modernismo",
+        "from_year": 1935,
+        "to_year": 1936,
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64299346,
+            -23.54277616
+          ],
+          [
+            -46.64185665,
+            -23.54332537
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--004",
+        "thread_to_id": "praca-da-republica--005",
+        "from_era": "modernismo",
+        "to_era": "modernismo",
+        "from_year": 1936,
+        "to_year": 1938,
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64185665,
+            -23.54332537
+          ],
+          [
+            -46.64296218,
+            -23.54293073
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--005",
+        "thread_to_id": "praca-da-republica--006",
+        "from_era": "modernismo",
+        "to_era": "modernismo",
+        "from_year": 1938,
+        "to_year": 1938,
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64296218,
+            -23.54293073
+          ],
+          [
+            -46.64337398,
+            -23.54331152
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--006",
+        "thread_to_id": "praca-da-republica--007",
+        "from_era": "modernismo",
+        "to_era": "populista",
+        "from_year": 1938,
+        "to_year": 1956,
+        "poi_era_list": "modernismo|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64337398,
+            -23.54331152
+          ],
+          [
+            -46.64336034,
+            -23.54308094
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--007",
+        "thread_to_id": "praca-da-republica--008",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1956,
+        "to_year": 1959,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64336034,
+            -23.54308094
+          ],
+          [
+            -46.64250257,
+            -23.54382615
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--008",
+        "thread_to_id": "praca-da-republica--009",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1959,
+        "to_year": 1969,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64250257,
+            -23.54382615
+          ],
+          [
+            -46.64277264,
+            -23.5435131
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--009",
+        "thread_to_id": "praca-da-republica--010",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1969,
+        "to_year": 1982,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64277264,
+            -23.5435131
+          ],
+          [
+            -46.642366515,
+            -23.54281625
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-republica",
+        "street_display": "Praça Da República",
+        "thread_from_id": "praca-da-republica--010",
+        "thread_to_id": "praca-da-republica--011",
+        "from_era": "ditadura",
+        "to_era": "sem-data",
+        "from_year": 1982,
+        "to_year": "",
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.62977737,
+            -23.52105349
+          ],
+          [
+            -46.62901,
+            -23.52050002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-bento-de-camargo-barros",
+        "street_display": "Praça Bento de Camargo Barros",
+        "thread_from_id": "praca-bento-de-camargo-barros--001",
+        "thread_to_id": "praca-bento-de-camargo-barros--002",
+        "from_era": "populista",
+        "to_era": "sem-data",
+        "from_year": 1963,
+        "to_year": "",
+        "poi_era_list": "populista|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63138,
+            -23.54057002
+          ],
+          [
+            -46.6302563,
+            -23.5403591
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-carlos-de-sousa-nazare",
+        "street_display": "Rua Carlos de Sousa Nazaré",
+        "thread_from_id": "rua-carlos-de-sousa-nazare--001",
+        "thread_to_id": "rua-carlos-de-sousa-nazare--002",
+        "from_era": "colonial-imperio",
+        "to_era": "sem-data",
+        "from_year": 1869,
+        "to_year": "",
+        "poi_era_list": "colonial-imperio"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63497,
+            -23.54172002
+          ],
+          [
+            -46.6354953,
+            -23.5417098
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-riskallah-jorge",
+        "street_display": "Rua Riskallah Jorge",
+        "thread_from_id": "rua-riskallah-jorge--001",
+        "thread_to_id": "rua-riskallah-jorge--002",
+        "from_era": "modernismo",
+        "to_era": "sem-data",
+        "from_year": 1945,
+        "to_year": "",
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66302,
+            -23.54512002
+          ],
+          [
+            -46.65772,
+            -23.54672002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-alagoas",
+        "street_display": "Rua Alagoas",
+        "thread_from_id": "rua-alagoas--001",
+        "thread_to_id": "rua-alagoas--002",
+        "from_era": "colonial-imperio",
+        "to_era": "modernismo",
+        "from_year": 1874,
+        "to_year": 1933,
+        "poi_era_list": "colonial-imperio|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66867105,
+            -23.53590298
+          ],
+          [
+            -46.67092342,
+            -23.53846244
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-monte-alegre",
+        "street_display": "Rua Monte Alegre",
+        "thread_from_id": "rua-monte-alegre--001",
+        "thread_to_id": "rua-monte-alegre--002",
+        "from_era": "republica-velha",
+        "to_era": "sem-data",
+        "from_year": 1929,
+        "to_year": "",
+        "poi_era_list": "republica-velha|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66368,
+            -23.55671002
+          ],
+          [
+            -46.66072,
+            -23.55918002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "alameda-santos",
+        "street_display": "Alameda Santos",
+        "thread_from_id": "alameda-santos--001",
+        "thread_to_id": "alameda-santos--002",
+        "from_era": "republica-velha",
+        "to_era": "populista",
+        "from_year": 1910,
+        "to_year": 1960,
+        "poi_era_list": "republica-velha|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63174,
+            -23.53462002
+          ],
+          [
+            -46.63105,
+            -23.53505002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-sao-caetano",
+        "street_display": "Rua São Caetano",
+        "thread_from_id": "rua-sao-caetano--001",
+        "thread_to_id": "rua-sao-caetano--002",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63312,
+            -23.53153002
+          ],
+          [
+            -46.63293,
+            -23.53506002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-tiradentes",
+        "street_display": "Avenida Tiradentes",
+        "thread_from_id": "avenida-tiradentes--001",
+        "thread_to_id": "avenida-tiradentes--002",
+        "from_era": "colonial-imperio",
+        "to_era": "colonial-imperio",
+        "from_year": 1852,
+        "to_year": 1856,
+        "poi_era_list": "colonial-imperio"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63293,
+            -23.53506002
+          ],
+          [
+            -46.63124229,
+            -23.5297213
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-tiradentes",
+        "street_display": "Avenida Tiradentes",
+        "thread_from_id": "avenida-tiradentes--002",
+        "thread_to_id": "avenida-tiradentes--003",
+        "from_era": "colonial-imperio",
+        "to_era": "colonial-imperio",
+        "from_year": 1856,
+        "to_year": "",
+        "poi_era_list": "colonial-imperio"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63124229,
+            -23.5297213
+          ],
+          [
+            -46.63133,
+            -23.53038002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-tiradentes",
+        "street_display": "Avenida Tiradentes",
+        "thread_from_id": "avenida-tiradentes--003",
+        "thread_to_id": "avenida-tiradentes--004",
+        "from_era": "colonial-imperio",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "colonial-imperio|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63133,
+            -23.53038002
+          ],
+          [
+            -46.63058974,
+            -23.53043706
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-tiradentes",
+        "street_display": "Avenida Tiradentes",
+        "thread_from_id": "avenida-tiradentes--004",
+        "thread_to_id": "avenida-tiradentes--005",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63058974,
+            -23.53043706
+          ],
+          [
+            -46.63142949090909,
+            -23.530396054545452
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-tiradentes",
+        "street_display": "Avenida Tiradentes",
+        "thread_from_id": "avenida-tiradentes--005",
+        "thread_to_id": "avenida-tiradentes--006",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63142949090909,
+            -23.530396054545452
+          ],
+          [
+            -46.63388775254237,
+            -23.53428718644068
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-tiradentes",
+        "street_display": "Avenida Tiradentes",
+        "thread_from_id": "avenida-tiradentes--006",
+        "thread_to_id": "avenida-tiradentes--007",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63904,
+            -23.54648002
+          ],
+          [
+            -46.63911,
+            -23.54597002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-coronel-xavier-de-toledo",
+        "street_display": "Rua Coronel Xavier de Toledo",
+        "thread_from_id": "rua-coronel-xavier-de-toledo--001",
+        "thread_to_id": "rua-coronel-xavier-de-toledo--002",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1911,
+        "to_year": 1939,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63911,
+            -23.54597002
+          ],
+          [
+            -46.63976,
+            -23.54755002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-coronel-xavier-de-toledo",
+        "street_display": "Rua Coronel Xavier de Toledo",
+        "thread_from_id": "rua-coronel-xavier-de-toledo--002",
+        "thread_to_id": "rua-coronel-xavier-de-toledo--003",
+        "from_era": "modernismo",
+        "to_era": "democracia",
+        "from_year": 1939,
+        "to_year": 1990,
+        "poi_era_list": "modernismo|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.642173,
+            -23.54772348
+          ],
+          [
+            -46.64205258,
+            -23.54744445
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-dom-jose-gaspar",
+        "street_display": "Praça Dom José Gaspar",
+        "thread_from_id": "praca-dom-jose-gaspar--001",
+        "thread_to_id": "praca-dom-jose-gaspar--002",
+        "from_era": "modernismo",
+        "to_era": "populista",
+        "from_year": 1942,
+        "to_year": 1946,
+        "poi_era_list": "modernismo|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64205258,
+            -23.54744445
+          ],
+          [
+            -46.64165878,
+            -23.54749602
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-dom-jose-gaspar",
+        "street_display": "Praça Dom José Gaspar",
+        "thread_from_id": "praca-dom-jose-gaspar--002",
+        "thread_to_id": "praca-dom-jose-gaspar--003",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1946,
+        "to_year": 1947,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64165878,
+            -23.54749602
+          ],
+          [
+            -46.64234049,
+            -23.54720229
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-dom-jose-gaspar",
+        "street_display": "Praça Dom José Gaspar",
+        "thread_from_id": "praca-dom-jose-gaspar--003",
+        "thread_to_id": "praca-dom-jose-gaspar--004",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1947,
+        "to_year": 1947,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64234049,
+            -23.54720229
+          ],
+          [
+            -46.64191,
+            -23.54650002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-dom-jose-gaspar",
+        "street_display": "Praça Dom José Gaspar",
+        "thread_from_id": "praca-dom-jose-gaspar--004",
+        "thread_to_id": "praca-dom-jose-gaspar--005",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1947,
+        "to_year": 1949,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64191,
+            -23.54650002
+          ],
+          [
+            -46.64193781,
+            -23.54703659
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-dom-jose-gaspar",
+        "street_display": "Praça Dom José Gaspar",
+        "thread_from_id": "praca-dom-jose-gaspar--005",
+        "thread_to_id": "praca-dom-jose-gaspar--006",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1949,
+        "to_year": 1954,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64193781,
+            -23.54703659
+          ],
+          [
+            -46.64186894,
+            -23.54674402
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-dom-jose-gaspar",
+        "street_display": "Praça Dom José Gaspar",
+        "thread_from_id": "praca-dom-jose-gaspar--006",
+        "thread_to_id": "praca-dom-jose-gaspar--007",
+        "from_era": "populista",
+        "to_era": "populista",
+        "from_year": 1954,
+        "to_year": 1955,
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64186894,
+            -23.54674402
+          ],
+          [
+            -46.64222672,
+            -23.54697015
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-dom-jose-gaspar",
+        "street_display": "Praça Dom José Gaspar",
+        "thread_from_id": "praca-dom-jose-gaspar--007",
+        "thread_to_id": "praca-dom-jose-gaspar--008",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1955,
+        "to_year": 1976,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6370924,
+            -23.54975531
+          ],
+          [
+            -46.6369818,
+            -23.54995379
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--001",
+        "thread_to_id": "largo-sao-francisco--002",
+        "from_era": "colonial-imperio",
+        "to_era": "modernismo",
+        "from_year": 1647,
+        "to_year": 1936,
+        "poi_era_list": "colonial-imperio|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6369818,
+            -23.54995379
+          ],
+          [
+            -46.63672716,
+            -23.54971933
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--002",
+        "thread_to_id": "largo-sao-francisco--003",
+        "from_era": "modernismo",
+        "to_era": "populista",
+        "from_year": 1936,
+        "to_year": 1958,
+        "poi_era_list": "modernismo|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63672716,
+            -23.54971933
+          ],
+          [
+            -46.63668388,
+            -23.54979943
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--003",
+        "thread_to_id": "largo-sao-francisco--004",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1958,
+        "to_year": 1966,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63668388,
+            -23.54979943
+          ],
+          [
+            -46.63712779,
+            -23.54964052
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--004",
+        "thread_to_id": "largo-sao-francisco--005",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1966,
+        "to_year": 1973,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63712779,
+            -23.54964052
+          ],
+          [
+            -46.63677544,
+            -23.54982069
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--005",
+        "thread_to_id": "largo-sao-francisco--006",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1973,
+        "to_year": 1977,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63677544,
+            -23.54982069
+          ],
+          [
+            -46.6366552,
+            -23.54990404
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--006",
+        "thread_to_id": "largo-sao-francisco--007",
+        "from_era": "ditadura",
+        "to_era": "democracia",
+        "from_year": 1977,
+        "to_year": 2006,
+        "poi_era_list": "ditadura|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6366552,
+            -23.54990404
+          ],
+          [
+            -46.63748655,
+            -23.54977868
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--007",
+        "thread_to_id": "largo-sao-francisco--008",
+        "from_era": "democracia",
+        "to_era": "colonial-imperio",
+        "from_year": 2006,
+        "to_year": "",
+        "poi_era_list": "democracia|colonial-imperio"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63748655,
+            -23.54977868
+          ],
+          [
+            -46.6369,
+            -23.54969142
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--008",
+        "thread_to_id": "largo-sao-francisco--009",
+        "from_era": "colonial-imperio",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "colonial-imperio|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6369,
+            -23.54969142
+          ],
+          [
+            -46.63688,
+            -23.54999002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--009",
+        "thread_to_id": "largo-sao-francisco--010",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63688,
+            -23.54999002
+          ],
+          [
+            -46.63687394736842,
+            -23.549715042105266
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--010",
+        "thread_to_id": "largo-sao-francisco--011",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63687394736842,
+            -23.549715042105266
+          ],
+          [
+            -46.6371597,
+            -23.5497313
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-sao-francisco",
+        "street_display": "Largo São Francisco",
+        "thread_from_id": "largo-sao-francisco--011",
+        "thread_to_id": "largo-sao-francisco--012",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66661,
+            -23.55608002
+          ],
+          [
+            -46.67115,
+            -23.55378002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-dr-arnaldo",
+        "street_display": "Avenida Dr. Arnaldo",
+        "thread_from_id": "avenida-dr-arnaldo--001",
+        "thread_to_id": "avenida-dr-arnaldo--002",
+        "from_era": "colonial-imperio",
+        "to_era": "republica-velha",
+        "from_year": 1888,
+        "to_year": 1918,
+        "poi_era_list": "colonial-imperio|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65549,
+            -23.52837002
+          ],
+          [
+            -46.65703831,
+            -23.53006973
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-conselheiro-brotero",
+        "street_display": "Rua Conselheiro Brotero",
+        "thread_from_id": "rua-conselheiro-brotero--001",
+        "thread_to_id": "rua-conselheiro-brotero--002",
+        "from_era": "republica-velha",
+        "to_era": "democracia",
+        "from_year": 1914,
+        "to_year": 1991,
+        "poi_era_list": "republica-velha|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63394,
+            -23.53682002
+          ],
+          [
+            -46.6335305,
+            -23.538065
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-prestes-maia",
+        "street_display": "Avenida Prestes Maia",
+        "thread_from_id": "avenida-prestes-maia--001",
+        "thread_to_id": "avenida-prestes-maia--002",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 1990,
+        "to_year": "",
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64088,
+            -23.54856002
+          ],
+          [
+            -46.64421,
+            -23.54969002
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-alvaro-de-carvalho",
+        "street_display": "Rua Álvaro de Carvalho",
+        "thread_from_id": "rua-alvaro-de-carvalho--001",
+        "thread_to_id": "rua-alvaro-de-carvalho--002",
+        "from_era": "populista",
+        "to_era": "democracia",
+        "from_year": 1950,
+        "to_year": 1990,
+        "poi_era_list": "populista|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6366,
+            -23.53516002
+          ],
+          [
+            -46.6391162,
+            -23.5347933
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-maua",
+        "street_display": "Rua Mauá",
+        "thread_from_id": "rua-maua--001",
+        "thread_to_id": "rua-maua--002",
+        "from_era": "populista",
+        "to_era": "sem-data",
+        "from_year": 1953,
+        "to_year": "",
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6391162,
+            -23.5347933
+          ],
+          [
+            -46.63967692424242,
+            -23.53461523030303
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-maua",
+        "street_display": "Rua Mauá",
+        "thread_from_id": "rua-maua--002",
+        "thread_to_id": "rua-maua--003",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.62587,
+            -23.54965002
+          ],
+          [
+            -46.6323329,
+            -23.5446948
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-vinte-e-cinco-de-marco",
+        "street_display": "Rua Vinte e Cinco de Março",
+        "thread_from_id": "rua-vinte-e-cinco-de-marco--001",
+        "thread_to_id": "rua-vinte-e-cinco-de-marco--002",
+        "from_era": "modernismo",
+        "to_era": "sem-data",
+        "from_year": 1930,
+        "to_year": "",
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63826458,
+            -23.54569352
+          ],
+          [
+            -46.6379984,
+            -23.54502343
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-ramos-de-azevedo",
+        "street_display": "Praça Ramos de Azevedo",
+        "thread_from_id": "praca-ramos-de-azevedo--001",
+        "thread_to_id": "praca-ramos-de-azevedo--002",
+        "from_era": "republica-velha",
+        "to_era": "republica-velha",
+        "from_year": 1922,
+        "to_year": 1923,
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6379984,
+            -23.54502343
+          ],
+          [
+            -46.63803252,
+            -23.54554958
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-ramos-de-azevedo",
+        "street_display": "Praça Ramos de Azevedo",
+        "thread_from_id": "praca-ramos-de-azevedo--002",
+        "thread_to_id": "praca-ramos-de-azevedo--003",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1923,
+        "to_year": 1930,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63803252,
+            -23.54554958
+          ],
+          [
+            -46.638666,
+            -23.54530802
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-ramos-de-azevedo",
+        "street_display": "Praça Ramos de Azevedo",
+        "thread_from_id": "praca-ramos-de-azevedo--003",
+        "thread_to_id": "praca-ramos-de-azevedo--004",
+        "from_era": "modernismo",
+        "to_era": "republica-velha",
+        "from_year": 1930,
+        "to_year": "",
+        "poi_era_list": "modernismo|republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.638666,
+            -23.54530802
+          ],
+          [
+            -46.63870822553192,
+            -23.545349323404256
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-ramos-de-azevedo",
+        "street_display": "Praça Ramos de Azevedo",
+        "thread_from_id": "praca-ramos-de-azevedo--004",
+        "thread_to_id": "praca-ramos-de-azevedo--005",
+        "from_era": "republica-velha",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "republica-velha"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63087377,
+            -23.57160714
+          ],
+          [
+            -46.6313434,
+            -23.57122036
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-general-polidoro",
+        "street_display": "Praça General Polidoro",
+        "thread_from_id": "praca-general-polidoro--001",
+        "thread_to_id": "praca-general-polidoro--002",
+        "from_era": "modernismo",
+        "to_era": "populista",
+        "from_year": 1940,
+        "to_year": 1949,
+        "poi_era_list": "modernismo|populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63580806,
+            -23.55336166
+          ],
+          [
+            -46.63569558333333,
+            -23.553235733333334
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-carlos-gomes",
+        "street_display": "Praça Carlos Gomes",
+        "thread_from_id": "praca-carlos-gomes--001",
+        "thread_to_id": "praca-carlos-gomes--002",
+        "from_era": "populista",
+        "to_era": "sem-data",
+        "from_year": 1952,
+        "to_year": "",
+        "poi_era_list": "populista"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63683151,
+            -23.54769916
+          ],
+          [
+            -46.63641766,
+            -23.54764066
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-patriarca",
+        "street_display": "Praça do Patriarca",
+        "thread_from_id": "praca-patriarca--001",
+        "thread_to_id": "praca-patriarca--002",
+        "from_era": "populista",
+        "to_era": "ditadura",
+        "from_year": 1954,
+        "to_year": 1972,
+        "poi_era_list": "populista|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6339098,
+            -23.53431653
+          ],
+          [
+            -46.63498512142858,
+            -23.53495512857143
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-da-luz",
+        "street_display": "Praça Da Luz",
+        "thread_from_id": "praca-da-luz--001",
+        "thread_to_id": "praca-da-luz--002",
+        "from_era": "modernismo",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": "modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64590297,
+            -23.5601412
+          ],
+          [
+            -46.64571787,
+            -23.56036503
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-dom-orione",
+        "street_display": "Praça Dom Orione",
+        "thread_from_id": "praca-dom-orione--001",
+        "thread_to_id": "praca-dom-orione--002",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1972,
+        "to_year": 1983,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63181449,
+            -23.5453583
+          ],
+          [
+            -46.63196358,
+            -23.54515298
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-ragueb-chohfi",
+        "street_display": "Praça Ragueb Chohfi",
+        "thread_from_id": "praca-ragueb-chohfi--001",
+        "thread_to_id": "praca-ragueb-chohfi--002",
+        "from_era": "democracia",
+        "to_era": "democracia",
+        "from_year": 1988,
+        "to_year": 1988,
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65625794,
+            -23.56187952
+          ],
+          [
+            -46.66236631,
+            -23.5562146
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "avenida-enida-paulista",
+        "street_display": "Avenida Enida Paulista",
+        "thread_from_id": "avenida-enida-paulista--001",
+        "thread_to_id": "avenida-enida-paulista--002",
+        "from_era": "modernismo",
+        "to_era": "ditadura",
+        "from_year": 1935,
+        "to_year": 1978,
+        "poi_era_list": "modernismo|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.66547449,
+            -23.5719484
+          ],
+          [
+            -46.66560918,
+            -23.57172138
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-das-guianas",
+        "street_display": "Praça Das Guianas",
+        "thread_from_id": "praca-das-guianas--001",
+        "thread_to_id": "praca-das-guianas--002",
+        "from_era": "modernismo",
+        "to_era": "ditadura",
+        "from_year": 1942,
+        "to_year": 1979,
+        "poi_era_list": "modernismo|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63651808,
+            -23.55762484
+          ],
+          [
+            -46.63606605,
+            -23.55739869
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-da-polvora",
+        "street_display": "Largo Da Pólvora",
+        "thread_from_id": "largo-da-polvora--001",
+        "thread_to_id": "largo-da-polvora--002",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1974,
+        "to_year": 1978,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63606605,
+            -23.55739869
+          ],
+          [
+            -46.63651994,
+            -23.55750553
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-da-polvora",
+        "street_display": "Largo Da Pólvora",
+        "thread_from_id": "largo-da-polvora--002",
+        "thread_to_id": "largo-da-polvora--003",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1978,
+        "to_year": 1978,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63651994,
+            -23.55750553
+          ],
+          [
+            -46.63637756,
+            -23.55752563
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-da-polvora",
+        "street_display": "Largo Da Pólvora",
+        "thread_from_id": "largo-da-polvora--003",
+        "thread_to_id": "largo-da-polvora--004",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1978,
+        "to_year": 1978,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63637756,
+            -23.55752563
+          ],
+          [
+            -46.63595657,
+            -23.55737835
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "largo-da-polvora",
+        "street_display": "Largo Da Pólvora",
+        "thread_from_id": "largo-da-polvora--004",
+        "thread_to_id": "largo-da-polvora--005",
+        "from_era": "ditadura",
+        "to_era": "democracia",
+        "from_year": 1978,
+        "to_year": 1987,
+        "poi_era_list": "ditadura|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6353218,
+            -23.55634962
+          ],
+          [
+            -46.63532064,
+            -23.55623955
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "rua-ua-galvao-bueno",
+        "street_display": "Rua Ua Galvão Bueno",
+        "thread_from_id": "rua-ua-galvao-bueno--001",
+        "thread_to_id": "rua-ua-galvao-bueno--002",
+        "from_era": "ditadura",
+        "to_era": "democracia",
+        "from_year": 1974,
+        "to_year": 1999,
+        "poi_era_list": "ditadura|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63419707,
+            -23.55228707
+          ],
+          [
+            -46.63412429,
+            -23.55237452
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-doutor-joao-mendes",
+        "street_display": "Praça Doutor João Mendes",
+        "thread_from_id": "praca-doutor-joao-mendes--001",
+        "thread_to_id": "praca-doutor-joao-mendes--002",
+        "from_era": "populista",
+        "to_era": "democracia",
+        "from_year": 1950,
+        "to_year": 1988,
+        "poi_era_list": "populista|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65411917,
+            -23.53490875
+          ],
+          [
+            -46.65503685,
+            -23.53434336
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-marechal-deodoro",
+        "street_display": "Praça Marechal Deodoro",
+        "thread_from_id": "praca-marechal-deodoro--001",
+        "thread_to_id": "praca-marechal-deodoro--002",
+        "from_era": "republica-velha",
+        "to_era": "modernismo",
+        "from_year": 1929,
+        "to_year": 1940,
+        "poi_era_list": "republica-velha|modernismo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.65503685,
+            -23.53434336
+          ],
+          [
+            -46.65451867,
+            -23.53468173
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-marechal-deodoro",
+        "street_display": "Praça Marechal Deodoro",
+        "thread_from_id": "praca-marechal-deodoro--002",
+        "thread_to_id": "praca-marechal-deodoro--003",
+        "from_era": "modernismo",
+        "to_era": "democracia",
+        "from_year": 1940,
+        "to_year": 2011,
+        "poi_era_list": "modernismo|democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.67207092,
+            -23.57469912
+          ],
+          [
+            -46.67182577,
+            -23.57451836
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-california",
+        "street_display": "Praça Califórnia",
+        "thread_from_id": "praca-california--001",
+        "thread_to_id": "praca-california--002",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 1985,
+        "to_year": "",
+        "poi_era_list": "democracia|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.67065398,
+            -23.57103683
+          ],
+          [
+            -46.67020175,
+            -23.57074884
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-america",
+        "street_display": "Praça América",
+        "thread_from_id": "praca-america--001",
+        "thread_to_id": "praca-america--002",
+        "from_era": "democracia",
+        "to_era": "democracia",
+        "from_year": 1999,
+        "to_year": 2003,
+        "poi_era_list": "democracia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.64399034,
+            -23.5712802
+          ],
+          [
+            -46.64426141,
+            -23.57161732
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-oswaldo-cruz",
+        "street_display": "Praça Oswaldo Cruz",
+        "thread_from_id": "praca-oswaldo-cruz--001",
+        "thread_to_id": "praca-oswaldo-cruz--002",
+        "from_era": "democracia",
+        "to_era": "sem-data",
+        "from_year": 2013,
+        "to_year": "",
+        "poi_era_list": "democracia|sem-data"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6305249,
+            -23.52582452
+          ],
+          [
+            -46.6304908,
+            -23.52625183
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-armenia",
+        "street_display": "Praça Armênia",
+        "thread_from_id": "praca-armenia--001",
+        "thread_to_id": "praca-armenia--002",
+        "from_era": "ditadura",
+        "to_era": "ditadura",
+        "from_year": 1965,
+        "to_year": 1966,
+        "poi_era_list": "ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.61879392,
+            -23.53287381
+          ],
+          [
+            -46.61872924,
+            -23.53278256
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "praca-padre-bento",
+        "street_display": "Praça Padre Bento",
+        "thread_from_id": "praca-padre-bento--001",
+        "thread_to_id": "praca-padre-bento--002",
+        "from_era": "modernismo",
+        "to_era": "ditadura",
+        "from_year": 1932,
+        "to_year": 1977,
+        "poi_era_list": "modernismo|ditadura"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.6318014,
+            -23.548302699999997
+          ],
+          [
+            -46.632198875,
+            -23.5483595375
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "beco-do-pinto",
+        "street_display": "Beco Do Pinto",
+        "thread_from_id": "beco-do-pinto--001",
+        "thread_to_id": "beco-do-pinto--002",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -46.63744258333333,
+            -23.547525699999998
+          ],
+          [
+            -46.63876225897435,
+            -23.546648564102565
+          ]
+        ]
+      },
+      "properties": {
+        "street_key": "parque-anhangabau",
+        "street_display": "Parque Anhangabau",
+        "thread_from_id": "parque-anhangabau--001",
+        "thread_to_id": "parque-anhangabau--002",
+        "from_era": "sem-data",
+        "to_era": "sem-data",
+        "from_year": "",
+        "to_year": "",
+        "poi_era_list": ""
+      }
+    }
+  ]
+}

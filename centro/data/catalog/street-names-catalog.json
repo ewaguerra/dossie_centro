@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "description": "Nomes históricos curados para enriquecer 15_osm_ruas__line no perímetro Alpha.",
+  "entries": [
+    {
+      "id": "rua-sao-bento",
+      "priority": "high",
+      "match": {
+        "name": ["Rua São Bento", "Largo São Bento", "Largo de São Bento"]
+      },
+      "nome_atual": "Rua São Bento",
+      "nomes_historicos": [
+        { "nome": "Rua de São Bento", "era": "1554", "nota": "via fundadora do núcleo" }
+      ],
+      "codinome_arg": "Aresta Fria",
+      "min_phase_historico": 11
+    },
+    {
+      "id": "rua-direita",
+      "priority": "high",
+      "match": {
+        "name": ["Rua Direita"]
+      },
+      "nome_atual": "Rua Direita",
+      "nomes_historicos": [
+        { "nome": "Rua Direita", "era": "1554", "nota": "via fundadora — nome colonial mantido" }
+      ],
+      "min_phase_historico": 11
+    },
+    {
+      "id": "rua-quinze-novembro",
+      "priority": "high",
+      "match": {
+        "name": ["Rua Quinze de Novembro", "Rua 15 de Novembro", "Rua XV de Novembro"]
+      },
+      "nome_atual": "Rua Quinze de Novembro",
+      "nomes_historicos": [
+        { "nome": "Rua Direita (trecho)", "era": "1554", "nota": "extensão da via fundadora" },
+        { "nome": "Rua Quinze de Novembro", "era": "1889", "nota": "toponímia republicana" }
+      ],
+      "min_phase_historico": 11
+    },
+    {
+      "id": "praca-patriarca",
+      "priority": "high",
+      "match": {
+        "name": ["Praça do Patriarca", "Pátio do Colégio", "Largo do Patriarca"]
+      },
+      "nome_atual": "Praça do Patriarca",
+      "nomes_historicos": [
+        { "nome": "Pátio do Colégio", "era": "1554", "nota": "marco zero da vila" }
+      ],
+      "min_phase_historico": 11
+    },
+    {
+      "id": "rua-consolacao",
+      "priority": "high",
+      "match": {
+        "name": ["Rua da Consolação", "Consolação"]
+      },
+      "nome_atual": "Rua da Consolação",
+      "nomes_historicos": [
+        { "nome": "Caminho da Consolação", "era": "séc. XVIII", "nota": "trajeto para Santana" }
+      ],
+      "min_phase_historico": 9
+    },
+    {
+      "id": "rua-sete-abril",
+      "priority": "high",
+      "match": {
+        "name": ["Rua Sete de Abril", "Rua 7 de Abril"]
+      },
+      "nome_atual": "Rua Sete de Abril",
+      "nomes_historicos": [
+        { "nome": "Rua Sete de Abril", "era": "1891", "nota": "homenagem à Abolição" }
+      ],
+      "min_phase_historico": 9
+    },
+    {
+      "id": "av-nove-julho",
+      "priority": "high",
+      "match": {
+        "name": ["Avenida Nove de Julho", "Avenida 9 de Julho"]
+      },
+      "nome_atual": "Avenida Nove de Julho",
+      "nomes_historicos": [
+        { "nome": "Avenida 9 de Julho", "era": "1938", "nota": "denominação anterior" }
+      ],
+      "min_phase_historico": 9
+    },
+    {
+      "id": "elevado-goulart",
+      "priority": "high",
+      "match": {
+        "name": ["Elevado Presidente João Goulart", "Elevado Presidente Arthur da Costa e Silva"]
+      },
+      "nome_atual": "Elevado Presidente João Goulart",
+      "nomes_historicos": [
+        { "nome": "Elevado Presidente Arthur da Costa e Silva", "era": "1969", "nota": "renomeação pós-ditadura" }
+      ],
+      "min_phase_historico": 9
+    },
+    {
+      "id": "rua-zumbi",
+      "priority": "high",
+      "match": {
+        "name": ["Rua Zumbi dos Palmares", "Rua Jorge Velho"]
+      },
+      "nome_atual": "Rua Zumbi dos Palmares",
+      "nomes_historicos": [
+        { "nome": "Rua Jorge Velho", "era": "colonial", "nota": "toponímia anterior" }
+      ],
+      "min_phase_historico": 9
+    },
+    {
+      "id": "tunel-joao-paulo",
+      "priority": "high",
+      "match": {
+        "name": ["Túnel São João Paulo II", "Túnel Papa João Paulo II"]
+      },
+      "nome_atual": "Túnel São João Paulo II",
+      "nomes_historicos": [
+        { "nome": "Túnel Papa João Paulo II", "era": "2007", "nota": "denominação anterior" }
+      ],
+      "min_phase_historico": 9
+    }
+  ]
+}

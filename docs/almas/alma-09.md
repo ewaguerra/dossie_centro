@@ -43,8 +43,8 @@ OSM ruas/endereços; feature `buildings-3d`.
 
 - [ ] Definir passos de missão em `centro/missions/alma-09/index.js` (`missions[]`)
 - [ ] Implementar `onActivate` / `onResync` / `isComplete()`
-- [ ] Missão malha urbana.
-- [ ] Actualizar esta ficha quando houver entrega
+  - [ ] Missão malha urbana — activar Malha OSM e ler labels (`street-names-atual`).
+  - [ ] Actualizar esta ficha quando houver entrega
 
 ---
 

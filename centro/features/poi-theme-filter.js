@@ -164,6 +164,36 @@
       return ids;
     }
 
+    function buildTimelineThreadFilter(theme, enabledIds) {
+      if (!enabledIds.length) return ["==", 1, 0];
+      var total = (theme.subFilters || []).length;
+      if (enabledIds.length >= total) return null;
+      var parts = ["any"];
+      for (var ti = 0; ti < enabledIds.length; ti++) {
+        parts.push([
+          ">=",
+          ["index-of", enabledIds[ti], ["coalesce", ["get", "poi_era_list"], ""]],
+          0,
+        ]);
+      }
+      return parts;
+    }
+
+    function applyTimelineThreadLayer(theme, visible, enabledIds) {
+      var map = getMap();
+      var layerId = "linha-tempo-thread-line";
+      if (!map || !map.getLayer(layerId)) return;
+      if (!visible) {
+        map.setLayoutProperty(layerId, "visibility", "none");
+        map.setFilter(layerId, null);
+        return;
+      }
+      map.setLayoutProperty(layerId, "visibility", "visible");
+      var filter = buildTimelineThreadFilter(theme, enabledIds);
+      if (filter) map.setFilter(layerId, filter);
+      else map.setFilter(layerId, null);
+    }
+
     function buildLayerFilter(theme, enabledIds) {
       if (!theme.subProperty) return null;
       if (!enabledIds.length) return ["==", 1, 0];
@@ -178,6 +208,7 @@
       var visibility = visible ? "visible" : "none";
       for (var i = 0; i < theme.layerIds.length; i++) {
         var layerId = theme.layerIds[i];
+        if (layerId === "linha-tempo-thread-line") continue;
         if (!map.getLayer(layerId)) continue;
         map.setLayoutProperty(layerId, "visibility", visibility);
         if (!visible) {
@@ -225,26 +256,31 @@
       }
     }
 
+    function themeShouldShowOnMap(theme, themeState) {
+      var phaseOk = isThemeUnlocked(theme.id);
+      var userWants = themeState.on === true;
+      if (!phaseOk || !userWants) return false;
+
+      var hasSubFilters = (theme.subFilters || []).length > 0;
+      if (!hasSubFilters) return true;
+
+      // Temática com sub-filtros (época/tipologia): exige pelo menos um marcado.
+      return enabledSubIds(theme, themeState).length > 0;
+    }
+
     function applyAll() {
       var themes = getFilterableThemes();
       var state = loadState();
       for (var i = 0; i < themes.length; i++) {
         var theme = themes[i];
         var themeState = state[theme.id] || { on: false, subs: {} };
-        var phaseOk = isThemeUnlocked(theme.id);
-        var userWants = themeState.on === true;
-        var visible = phaseOk && userWants;
+        var visible = themeShouldShowOnMap(theme, themeState);
         var enabledIds = enabledSubIds(theme, themeState);
-        var hasSubFilters = (theme.subFilters || []).length > 0;
-        var filter = null;
-        if (visible) {
-          if (hasSubFilters && enabledIds.length === 0) {
-            filter = ["==", 1, 0];
-          } else {
-            filter = buildLayerFilter(theme, enabledIds);
-          }
-        }
+        var filter = visible ? buildLayerFilter(theme, enabledIds) : null;
         setThemeVisibility(theme, visible, filter);
+        if (theme.id === "linha-tempo") {
+          applyTimelineThreadLayer(theme, visible, enabledIds);
+        }
       }
     }
 
