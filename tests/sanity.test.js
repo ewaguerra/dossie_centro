@@ -1662,6 +1662,12 @@ describe('projeto_centro — sanity checks', () => {
     const html = read('centro/index.html');
     const poiBoot = read('centro/map/poi-bootstrap.js');
     assert.ok(runtime.includes('resolveBasemapStyle'), 'runtime deve usar resolveBasemapStyle');
+    assert.ok(runtime.includes('prepareBasemapStyle'), 'runtime deve preparar basemap async (URLs absolutas)');
+    assert.ok(basemapCfg.includes('prepareBasemapStyle'), 'basemap-config deve expor prepareBasemapStyle');
+    assert.ok(
+      read('centro/map/map-init.js').includes('transformRequest'),
+      'map-init deve absolutizar URLs via transformRequest'
+    );
     assert.ok(basemapCfg.includes('STYLE_LOCAL'), 'basemap-config deve expor STYLE_LOCAL');
     assert.ok(basemapCfg.includes('/centro/assets/basemap/liberty.json'), 'STYLE_LOCAL ausente');
     assert.ok(basemapCfg.includes('tiles.openfreemap.org/styles/liberty'), 'STYLE_ONLINE ausente');

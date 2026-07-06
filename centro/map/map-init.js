@@ -106,6 +106,23 @@
       panel.appendChild(body);
     }
 
+    function createBasemapTransformRequest() {
+      var absolutize =
+        window.CENTRO &&
+        window.CENTRO.map &&
+        typeof window.CENTRO.map.absolutizeBasemapUrl === "function"
+          ? window.CENTRO.map.absolutizeBasemapUrl
+          : function (url) {
+              if (typeof url !== "string" || !url) return url;
+              if (url.indexOf("http://") === 0 || url.indexOf("https://") === 0) return url;
+              if (url.charAt(0) === "/") return window.location.origin + url;
+              return url;
+            };
+      return function (url, _resourceType) {
+        return { url: absolutize(url) };
+      };
+    }
+
     function init() {
       if (typeof maplibregl === "undefined") {
         console.warn("[CENTRO] maplibre-gl.js ausente — mapa não inicializado");
@@ -123,6 +140,7 @@
         maxZoom: ctx.maxZoom,
         locale: MAPLIBRE_LOCALE_PT_BR,
         attributionControl: { compact: true },
+        transformRequest: createBasemapTransformRequest(),
       });
       mapInstance.addControl(new maplibregl.NavigationControl(), "top-right");
       mapInstance.addControl(new maplibregl.ScaleControl(), "bottom-left");

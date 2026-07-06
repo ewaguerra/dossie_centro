@@ -314,14 +314,15 @@
     });
   }
 
-  function ensureMapInitApi() {
+  function ensureMapInitApi(basemapStyleOverride) {
+    var style = basemapStyleOverride != null ? basemapStyleOverride : BASEMAP_STYLE;
     if (!mapInitApi && window.CENTRO && window.CENTRO.mapInit) {
       mapInitApi = window.CENTRO.mapInit.create({
         center: CENTRO_CENTER,
         maxBounds: CENTRO_MAX_BOUNDS,
         minZoom: MIN_ZOOM,
         maxZoom: MAX_ZOOM,
-        basemapStyle: BASEMAP_STYLE,
+        basemapStyle: style,
         groundColor: BASEMAP_GROUND_COLOR,
         onMapCreated: function (mapInstance) {
           map = mapInstance;
@@ -371,8 +372,15 @@
   }
 
   function initMap() {
-    var api = ensureMapInitApi();
-    if (api && typeof api.init === "function") api.init();
+    var prepare =
+      basemapApi && typeof basemapApi.prepareBasemapStyle === "function"
+        ? basemapApi.prepareBasemapStyle()
+        : Promise.resolve(BASEMAP_STYLE);
+    prepare.then(function (resolvedStyle) {
+      mapInitApi = null;
+      var api = ensureMapInitApi(resolvedStyle);
+      if (api && typeof api.init === "function") api.init();
+    });
   }
 
   function flyToLocation(lng, lat, zoom, pitch) {
