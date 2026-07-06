@@ -1668,7 +1668,9 @@ describe('projeto_centro — sanity checks', () => {
       read('centro/map/map-init.js').includes('transformRequest'),
       'map-init deve absolutizar URLs via transformRequest'
     );
-    assert.ok(basemapCfg.includes('STYLE_LOCAL'), 'basemap-config deve expor STYLE_LOCAL');
+    assert.ok(basemapCfg.includes('hardenBasemapStyle'), 'basemap-config deve endurecer filtros null-safe');
+    assert.ok(basemapCfg.includes('return STYLE_LOCAL'), 'default basemap deve ser liberty local em todos os hosts');
+    assert.ok(!basemapCfg.includes('isLocalDevHost() ? STYLE_ONLINE'), 'nao deve bifurcar dev/prod no default');
     assert.ok(basemapCfg.includes('/centro/assets/basemap/liberty.json'), 'STYLE_LOCAL ausente');
     assert.ok(basemapCfg.includes('tiles.openfreemap.org/styles/liberty'), 'STYLE_ONLINE ausente');
     assert.ok(html.includes('basemap-config.js'), 'index.html deve carregar basemap-config');
@@ -1692,6 +1694,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(planet.includes('"/basemap/planet/'), 'planet.json deve usar tiles proxied');
     assert.ok(!style.includes('https://tiles.openfreemap.org'), 'nao deve restar URL absoluta no estilo');
     assert.ok(!planet.includes('https://tiles.openfreemap.org'), 'nao deve restar URL absoluta no planet');
+    assert.ok(style.includes('"coalesce"'), 'liberty.json deve ter filtros coalesce (npm run sync:basemap-style)');
     const pkg = JSON.parse(read('package.json'));
     assert.ok(pkg.scripts && pkg.scripts['sync:basemap-style'], 'npm run sync:basemap-style ausente');
   });

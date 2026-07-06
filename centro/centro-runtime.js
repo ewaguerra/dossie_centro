@@ -13,8 +13,8 @@
   var MIN_ZOOM = U.MIN_ZOOM || 13;
   var MAX_ZOOM = U.MAX_ZOOM || 17;
 
-  // Basemap: OpenFreeMap liberty — online em dev local; Vercel usa JSON local
-  // (/centro/assets/basemap/liberty.json) com tiles via proxy /basemap/ (vercel.json).
+  // Basemap: liberty local + proxy /basemap/ (dev e Vercel); prepareBasemapStyle
+  // inline TileJSON, absolutiza URLs proxied e endurece filtros MapLibre 5.
   // Override: ?basemap=online | ?basemap=local
   var basemapApi = window.CENTRO && window.CENTRO.map;
   var BASEMAP_STYLE =

@@ -9,6 +9,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { hardenBasemapStyle } from "./lib/harden-basemap-style.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const UPSTREAM_STYLE = "https://tiles.openfreemap.org/styles/liberty";
@@ -62,8 +63,15 @@ async function main() {
     throw new Error("liberty.json nao referencia planet.json local");
   }
 
+  const styleObj = hardenBasemapStyle(JSON.parse(styleRewritten));
+  const styleOut = JSON.stringify(styleObj);
+
+  if (!styleOut.includes('"coalesce"')) {
+    throw new Error("hardenBasemapStyle nao aplicou coalesce ao liberty.json");
+  }
+
   await mkdir(dirname(DEST_STYLE), { recursive: true });
-  await writeFile(DEST_STYLE, styleRewritten, "utf-8");
+  await writeFile(DEST_STYLE, styleOut, "utf-8");
   await writeFile(DEST_PLANET, planetRewritten, "utf-8");
   log(`→ ${DEST_STYLE.replace(ROOT + "/", "")}`);
   log(`→ ${DEST_PLANET.replace(ROOT + "/", "")}`);
