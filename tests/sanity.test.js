@@ -1701,6 +1701,7 @@ describe('projeto_centro — sanity checks', () => {
       String(basemapRewrite.destination).includes('tiles.openfreemap.org'),
       'destino do proxy basemap incorreto'
     );
+    assert.strictEqual(vercel.outputDirectory, '.', 'outputDirectory deve ser raiz do repo');
   });
 
   it('artefatos do bake offline antigo foram removidos', () => {

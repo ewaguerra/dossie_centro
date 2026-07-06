@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm install",
+  "outputDirectory": ".",
   "rewrites": [
     { "source": "/pages/centro/:path*", "destination": "/centro/:path*" },
     { "source": "/app/vendor/maplibre/:path*", "destination": "/vendor/maplibre/:path*" },
