@@ -389,9 +389,11 @@ MapLibre**. As convenções específicas:
   `getSoul(phase)`, `formatPhaseLockLabel(minPhase)`. Evento
   `centro:arg-state-changed` (e listener `storage` para `protocolo13_phase` /
   `protocolo13_caderno_clues`) reaplica sidebar, POI, pistas RSB, 3D, subsolo
-  e triângulo histórico via `resyncArgStateConsumers()`. Fluxo detalhado:
+  e triângulo histórico via `resyncArgStateConsumers()`.   Fluxo detalhado:
   `docs/architecture/map-init-flow.md`. Plano de refactor do runtime:
   `docs/architecture/runtime-refactor-plan.md`.
+- **Missões por Alma (`centro/missions/`) — §5.5.1:** um módulo por fase
+  narrativa; gates técnicos permanecem em `phase-gates.json`.
 - **Módulos satélite em `centro/features/`** (carregados pelo
   `centro/index.html` antes do runtime, na ordem em que aparecem):
   - `layer-unlocks.js`, `protocolo-phase.js`, `catalog-load.js` — catálogo,
@@ -414,7 +416,8 @@ MapLibre**. As convenções específicas:
   `tests/sanity.test.js`. Ver §6 para a regra geral de `innerHTML`.
 - **Namespace global controlado** — tudo o que sair de um IIFE entra em
   `window.CENTRO.<subnamespace>` (`window.CENTRO.utils`,
-  `window.CENTRO.poiIcons`, `window.CENTRO.pistas`, …). Excepções
+  `window.CENTRO.poiIcons`, `window.CENTRO.pistas`, `window.CENTRO.missions`,
+  `window.CENTRO.missionsRegistry`, …). Excepções
   permitidas hoje:
   - `window.CENTRO_POIS` — operações `OP:*` para `flyTo` (criada pelo runtime)
   - `window.MAPA_SP_ICONS` — registry de ícones (`vendor/app/config/map-icons.js`)
@@ -426,6 +429,47 @@ MapLibre**. As convenções específicas:
   - Todos os IIFE no Centro fazem `var U = window.CENTRO.utils;` no topo
     para encurtar acesso a helpers (`U.byId`, `U.log`, …) — manter esse
     padrão em ficheiro novo.
+
+#### 5.5.1 Missões por Alma (`centro/missions/`)
+
+Trabalhar **conteúdo narrativo e passos de missão** fase a fase — **não**
+duplicar gates de camada/tema/feature (isso fica em `phase-gates.json`).
+
+| Pasta | Fase | Alma |
+|---|---|---|
+| `centro/missions/alma-01/` | 1 | Superfície |
+| `centro/missions/alma-02/` | 2 | Hidrografia soterrada |
+| `centro/missions/alma-03/` | 3 | Património rígido |
+| `centro/missions/alma-04/` | 4 | Acervo e memória |
+| `centro/missions/alma-05/` | 5 | Geotecnia |
+| `centro/missions/alma-06/` | 6 | Arquivo superficial |
+| `centro/missions/alma-07/` | 7 | Rasgue o Asfalto |
+| `centro/missions/alma-08/` | 8 | Setores interditos |
+| `centro/missions/alma-09/` | 9 | Malha urbana |
+| `centro/missions/alma-10/` | 10 | Risco sistémico |
+| `centro/missions/alma-11/` | 11 | Triângulo fechado |
+| `centro/missions/alma-12/` | 12 | Comissão |
+| `centro/missions/alma-13/` | 13 | Permanência |
+
+**Ficheiros por alma:** `index.js` (IIFE) regista
+`window.CENTRO.missions["alma-NN"] = { create, phase }`. Dentro de
+`create(ctx)` implementar `missions[]`, `isComplete()`, `onActivate()`,
+`onResync()`. **Registry:** `centro/missions/registry.js` →
+`window.CENTRO.missionsRegistry` (`get`, `forPhase`, `createSoul`).
+
+**Ordem no `centro/index.html`:** após `protocolo-phase.js`, carregar
+`alma-01/index.js` … `alma-13/index.js`, depois `registry.js`, depois
+`mission-orchestrator.js`. O runtime chama `missionsOrchestrator.install()`.
+
+**Fase 7 hoje:** lógica pesada ainda em `subterranean-cutaway.js`; migrar
+para `alma-07/` incrementalmente. **Stubs:** regenerar com
+`node scripts/scaffold-mission-almas.mjs` se `souls[]` mudar.
+
+**Namespace:** `window.CENTRO.missions` (mapa por id) e
+`window.CENTRO.missionsRegistry`. Não criar `window.alma*` solto.
+
+Arquitectura completa: `docs/architecture/missions-almas.md`.
+Ficha de registo por alma: `docs/almas/alma-NN.md` (índice em `docs/almas/README.md`).
 
 ---
 
@@ -728,7 +772,7 @@ Itens **ainda abertos** (reabrir só com gate CAPRI):
 | `centro/centro-runtime.js` ainda grande (~1 300 linhas) | Parcial — extraídos `catalog-load`, `layer-unlocks`, `protocolo-phase`, `buildings-3d`, `poi-theme-filter` | `centro/features/` + runtime |
 | `arquivista/js/script.js` (~846 linhas) | Parcial — `open-application.js` extrai dock/apps; script principal ainda grande | `arquivista/js/` |
 | `04a_zeis2__polygon` (cidade inteira) | Só **5 polígonos** no viewport do mapa (clip bbox); não intersecta `16_regiao_centro` | `sync:geojson-from-salto` |
-| Fases 2–13 do ARG (conteúdo narrativo) | Roadmap — **gates técnicos** implementados em `phase-gates.json` + sidebar `layer-row--phase-locked`; avanço por pistas via `clueCountAdvance` até fase 6 | `protocolo-phase.js` |
+| Fases 2–13 do ARG (conteúdo narrativo) | **Scaffold** — um módulo por alma em `centro/missions/alma-NN/`; gates técnicos em `phase-gates.json`; avanço por pistas até fase 6; Fase 7 parcial em `subterranean-cutaway.js` | `centro/missions/`, `protocolo-phase.js` |
 | Contraste WCAG AA formal (outros pares) | Parcial — corrigidos `.as-digital-aviso` e `nav-retorno` terminal; resto em `docs/accessibility/contrast-notes.md` | design system |
 | Playwright browser E2E | HTTP + smoke manual cobrem regressões; Playwright opcional se instalar browsers | `docs/testing/smoke-centro.md` |
 | PMTiles offline Brasil | Fora de scope — ver `docs/offline-scope.md` | — |

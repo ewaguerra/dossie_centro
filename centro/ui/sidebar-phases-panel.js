@@ -35,6 +35,12 @@
           };
     var maxPhase = opts.maxPhase != null ? opts.maxPhase : 13;
     var currentPhase = getPhase();
+    var getPhaseMeta =
+      typeof opts.getPhaseMeta === "function"
+        ? opts.getPhaseMeta
+        : function () {
+            return "";
+          };
 
     panel.innerHTML = "";
 
@@ -81,7 +87,8 @@
 
       var meta = document.createElement("p");
       meta.className = "phase-row__meta";
-      meta.textContent = "Fase " + p + " de " + maxPhase;
+      var phaseMeta = getPhaseMeta(p);
+      meta.textContent = phaseMeta || "Fase " + p + " de " + maxPhase;
 
       row.appendChild(head);
       row.appendChild(meta);

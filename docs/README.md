@@ -31,6 +31,8 @@ Quando uma análise CAPRI gera uma decisão, ela vira **ADR**, entrada em `docs/
 | [design-system/README.md](./design-system/README.md) | Tokens, componentes, a11y |
 | [architecture/map-init-flow.md](./architecture/map-init-flow.md) | Fluxo de init do mapa (boot DOM + MapLibre) |
 | [architecture/runtime-refactor-plan.md](./architecture/runtime-refactor-plan.md) | Plano para fatiar `centro-runtime.js` |
+| [architecture/missions-almas.md](./architecture/missions-almas.md) | Módulo por alma — missões das 13 fases |
+| [almas/README.md](./almas/README.md) | **Ficha por alma** — o que existe e backlog (13 fases) |
 
 ## Repositórios irmãos (ARG)
 

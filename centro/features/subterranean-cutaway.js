@@ -219,6 +219,38 @@ import * as THREE from "/vendor/three/three.module.min.js";
     } catch (_e) { /* ignora */ }
   }
 
+  function countSoulsFound() {
+    var found = getFoundElementIds();
+    var n = 0;
+    for (var i = 0; i < TREZE_ALMAS.length; i++) {
+      if (found.has(TREZE_ALMAS[i].id)) n++;
+    }
+    return n;
+  }
+
+  function countGeoFound() {
+    var found = getFoundElementIds();
+    var n = 0;
+    for (var i = 0; i < CUTAWAY_ITEMS.length; i++) {
+      if (found.has(CUTAWAY_ITEMS[i].id)) n++;
+    }
+    return n;
+  }
+
+  function isViewEnabled() {
+    try {
+      return window.localStorage && window.localStorage.getItem(ENABLED_STORAGE_KEY) === "1";
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  function dispatchProgressEvent() {
+    try {
+      document.dispatchEvent(new CustomEvent("centro:subterranean-progress"));
+    } catch (_e) { /* ignora */ }
+  }
+
   function getMissingClues() {
     if (isMasterMode()) return [];
     var collected = getCollectedClues();
@@ -761,6 +793,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
           "warn"
         );
       }
+      dispatchProgressEvent();
     }
 
     function markSoulFound(soulMesh) {
@@ -783,6 +816,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
           "warn"
         );
       }
+      dispatchProgressEvent();
     }
 
     function bindInteraction(map) {
@@ -931,6 +965,23 @@ import * as THREE from "/vendor/three/three.module.min.js";
   applyMasterBootstrap();
 
   window.CENTRO = window.CENTRO || {};
-  window.CENTRO.subterraneanCutaway = { create: create, ready: true };
+  window.CENTRO.subterraneanCutaway = {
+    create: create,
+    ready: true,
+    SOUL_COUNT: TREZE_ALMAS.length,
+    GEO_COUNT: CUTAWAY_ITEMS.length,
+    SOUL_IDS: TREZE_ALMAS.map(function (a) {
+      return a.id;
+    }),
+    GEO_ITEM_IDS: CUTAWAY_ITEMS.map(function (item) {
+      return item.id;
+    }),
+    FOUND_STORAGE_KEY: FOUND_STORAGE_KEY,
+    getFoundElementIds: getFoundElementIds,
+    countSoulsFound: countSoulsFound,
+    countGeoFound: countGeoFound,
+    isUnlocked: isUnlocked,
+    isViewEnabled: isViewEnabled,
+  };
   document.dispatchEvent(new CustomEvent("centro:subterranean-ready"));
 })();

@@ -181,6 +181,7 @@
   var trianguloOverlayApi = null;
   var sidebarOrchestratorApi = null;
   var argResyncApi = null;
+  var missionsOrchestratorInstalled = false;
   var centroChromeApi = null;
   var mapInitApi = null;
 
@@ -527,6 +528,15 @@
     if (api && typeof api.install === "function") api.install();
   }
 
+  function setupMissionsOrchestrator() {
+    if (missionsOrchestratorInstalled) return;
+    var orch = window.CENTRO && window.CENTRO.missionsOrchestrator;
+    if (orch && typeof orch.install === "function") {
+      orch.install();
+      missionsOrchestratorInstalled = true;
+    }
+  }
+
   function bootstrap() {
     var chrome = ensureCentroChromeApi();
     if (chrome && typeof chrome.install === "function") chrome.install();
@@ -534,6 +544,7 @@
     setupSubterraneanToggle();
     setupPoiThemeFilter();
     setupCentroUiFromModules();
+    setupMissionsOrchestrator();
     setupArgStateListener();
     loadSidebarData();
     initMap();

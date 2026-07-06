@@ -1,6 +1,6 @@
 # Matriz de testes — projeto_centro
 
-**Suíte automatizada:** `npm test` → **167 testes** (139 sanity + 28 HTTP) · verificado 2026-07-05
+**Suíte automatizada:** `npm test` → **168 testes** (140 sanity + 28 HTTP) · verificado 2026-07-05
 
 > **Nota:** landing, arquivo-morto e arquivista vivem em repos irmãos — testes abaixo focam no **Centro** servido por este repositório.
 

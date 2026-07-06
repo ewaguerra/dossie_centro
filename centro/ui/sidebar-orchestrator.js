@@ -68,6 +68,12 @@
         getPhase: phaseApi && typeof phaseApi.getPhase === "function" ? phaseApi.getPhase.bind(phaseApi) : null,
         getSoul: phaseApi && typeof phaseApi.getSoul === "function" ? phaseApi.getSoul.bind(phaseApi) : null,
         maxPhase: phaseApi && phaseApi.MAX_PHASE ? phaseApi.MAX_PHASE : 13,
+        getPhaseMeta:
+          window.CENTRO &&
+          window.CENTRO.missionsOrchestrator &&
+          typeof window.CENTRO.missionsOrchestrator.getPhaseMeta === "function"
+            ? window.CENTRO.missionsOrchestrator.getPhaseMeta.bind(window.CENTRO.missionsOrchestrator)
+            : null,
       });
     }
 

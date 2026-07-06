@@ -1853,6 +1853,38 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!read('centro/centro-runtime.js').includes('centroSubterraneanGuideDismissed'), 'guia não persiste dismiss órfão');
   });
 
+  it('centro: modulos missions alma-01..13 e registry', () => {
+    const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
+    const html = read('centro/index.html');
+    assert.ok(exists('centro/missions/registry.js'), 'missions registry ausente');
+    const registry = read('centro/missions/registry.js');
+    assert.ok(registry.includes('window.CENTRO.missionsRegistry'), 'missionsRegistry ausente');
+    assert.ok(registry.includes('alma-13'), 'registry deve listar alma-13');
+    assert.ok(html.includes('centro/missions/registry.js'), 'index deve carregar missions registry');
+    for (const soul of gates.souls) {
+      const rel = `centro/missions/${soul.id}/index.js`;
+      assert.ok(exists(rel), `${rel} ausente`);
+      assert.ok(html.includes(`centro/missions/${soul.id}/index.js`), `index deve carregar ${soul.id}`);
+      const mod = read(rel);
+      assert.ok(mod.includes(`var ID = "${soul.id}"`), `${soul.id} id incorreto`);
+      assert.ok(mod.includes(`var PHASE = ${soul.phase}`), `${soul.id} phase incorreta`);
+      assert.ok(mod.includes('window.CENTRO.missions'), `${soul.id} deve registar CENTRO.missions`);
+      const doc = `docs/almas/${soul.id}.md`;
+      assert.ok(exists(doc), `${doc} ausente`);
+    }
+    assert.ok(exists('docs/almas/README.md'), 'docs/almas/README.md ausente');
+    assert.ok(exists('centro/missions/mission-orchestrator.js'), 'mission-orchestrator ausente');
+    assert.ok(html.includes('mission-orchestrator.js'), 'index deve carregar mission-orchestrator');
+    const alma07 = read('centro/missions/alma-07/index.js');
+    assert.ok(alma07.includes('tryAdvancePhase'), 'alma-07 deve avançar fase');
+    assert.ok(alma07.includes('getProgressLabel'), 'alma-07 deve expor progresso');
+    const subRoot = read('centro/features/subterranean-cutaway.js');
+    assert.ok(subRoot.includes('countSoulsFound'), 'subsolo expoe countSoulsFound');
+    assert.ok(subRoot.includes('centro:subterranean-progress'), 'subsolo emite progresso');
+    const phasesPanel = read('centro/ui/sidebar-phases-panel.js');
+    assert.ok(phasesPanel.includes('getPhaseMeta'), 'phases panel suporta meta de missão');
+  });
+
   it('WCAG: contraste aviso digital e nav terminal', () => {
     const popups = read('centro/styles/map-popups.css');
     assert.match(
