@@ -67,8 +67,8 @@ A regra mais importante deste projeto:
 Consequências práticas:
 
 ### 3.1 Senhas narrativas são teatro, não segurança
-- Os "passwords" (`apoio` na landing, `marco zero` no arquivista, códigos
-  futuros de fases do centro) estão **em texto puro no JS**. Isso é
+- Os "passwords" (`apoio` na landing, `marco zero` no arquivista, `joelma` no
+  gate do centro, códigos futuros de fases) estão **em texto puro no JS**. Isso é
   **intencional**: o jogador deve ter chance de encontrá-los via investigação
   in-character (no blog, nos posts, nas pistas do mapa) — mas o gate teatral
   cede silenciosamente se ele decidir vasculhar Sources. Não é falha.
@@ -104,13 +104,16 @@ Consequências práticas:
   `caderno_arquivista` ou `protocolo13`.
 - Chaves canónicas actuais:
   - `centroDebug` — flag do inspector debug (`?debug=1` também activa).
+  - `centroAccessGranted` — `"1"` após senha correcta na **primeira visita**
+    (`centro-access-gate.js`); mapa só inicializa depois do desbloqueio.
   - `centroPoiThemeFilter` — filtro temático POI (JSON `{themeId: bool}`).
   - `centroPistasRsbVisible` — toggle pistas Rua São Bento no mapa (`"0"` / `"1"`).
   - `centroBuildings3D` — toggle da maquete 3D (`"0"` / `"1"`).
   - `protocolo13_phase` — fase ARG actual (1–13); escrita por `protocolo-phase.js`.
   - `centroSubterraneanEnabled` — toggle visão subterrânea persistido (`"0"` / `"1"`).
-  - `centroSubterraneanUnlockedElements` — JSON com IDs de elementos/almas
-    encontrados no corte Three.js (`subterranean-cutaway.js`).
+  - `centroSubterraneanUnlockedElements` — JSON com IDs colectados no corte
+    Three.js: esferas `subsolo-01`…`subsolo-13` + painéis geológicos
+    (`subterranean-cutaway.js`). **Não** confundir com almas ARG `alma-NN`.
   - `centroMaster` — flag de modo mestre quando `?master=1` activo.
   - `protocolo13_caderno_clues` — array de IDs de pistas colectadas no
     Arquivo Morto; ponte para `centro/data/catalog/layer-unlocks.json`
@@ -293,7 +296,15 @@ Tokens canônicos em `tokens.css`: `--color-brand`, `--color-brand-dim`,
 Tudo o que se aplica especificamente ao mapa está em **§7 Playbook
 MapLibre**. As convenções específicas:
 
-- Runtime em `centro/centro-runtime.js` (IIFE). Constantes no topo:
+- **Gate de primeira visita** (`#centro-access-gate`, `centro-access-gate.js`):
+  overlay fundo escuro + quadro de senha antes do `bootstrap()` inicializar o mapa.
+  Senha narrativa: **`joelma`** (case-insensitive; dica visível in-character).
+  Persistência: `localStorage.centroAccessGranted = "1"`. Bypass dev: visitante já
+  desbloqueado, ou `?master=1`. O runtime só chama `initMap()` após `accessGate.install()`.
+  Ficheiros: `centro/index.html`, `centro/styles/centro-access-gate.css`.
+
+- Runtime em `centro/centro-runtime.js` (IIFE, ~560 linhas — orquestrador fino
+  pós-refactor R1–R6). Constantes no topo:
   `BASEMAP_STYLE`, `BASEMAP_GROUND_COLOR`, `MAPLIBRE_LOCALE_PT_BR`,
   `POI_TEXT_FONT`, `CENTRO_CENTER`, `CENTRO_MAX_BOUNDS`, `DEBUG_INSPECTOR`,
   `BUILDINGS_3D_LAYER_ID`, `BUILDINGS_3D_STORAGE_KEY`, `POI_THEME_STORAGE_KEY`,
@@ -309,7 +320,7 @@ MapLibre**. As convenções específicas:
 - **Sidebar IA (4 tabs — IDs DOM preservados):**
   | Tab (label) | ID DOM | Conteúdo |
   |---|---|---|
-  | **13 Almas** | `#sidebar-tab-fases` | Lista `#phases-panel` com as 13 Almas (`phase-gates.json` → `renderPhasesPanel`). Botão `#subterranean-guide-open-fases` abre o guia da missão Fase 7 (só por clique explícito). Estado: Activa / Concluída / Bloqueada; actualiza com `centro:arg-state-changed`. |
+  | **13 Almas** | `#sidebar-tab-fases` | Lista `#phases-panel` com as 13 Almas (`phase-gates.json` → `renderPhasesPanel`). **Guia Fase 7** (`#subterranean-guide`) só a partir da **fase ARG ≥ 7**: botões `#subterranean-guide-open-fases` / `#subterranean-guide-open` ficam `hidden` antes disso; clique no cartão `alma-07` (`.phase-row--guide`) também só então. Meta da missão subsolo (ex. «X/13 esferas») via `missionsOrchestrator.getPhaseMeta(7)`. **Não** confundir esferas 3D `subsolo-NN` com `alma-01`…`alma-13` do ARG — ver tabela em §5.5. |
   | **Visualização** | `#sidebar-tab-opcoes` | Cartões: maquete 3D (`#centro-buildings-3d-toggle`) e missão Fase 7 / subsolo (`#centro-subterranean-toggle`, `#subterranean-guide-open`). Toggle subsolo **disabled** quando bloqueado (fase + pistas). |
   | **Território** | `#sidebar-tab-camadas` | Camadas wired (polígonos/linhas). 3 secções narrativas: Centro Histórico, Arquivo dos Soterrados, Contexto Urbano (OSM). Subgrupo **PESADO** colapsado por defeito. |
   | **Evidências** | `#sidebar-tab-pois` | Filtro temático de ícones clicáveis (património + turismo via `addPOILayer`). Toggle `#centro-pistas-rsb-toggle` para pistas Rua São Bento. **Não** duplica toggles do Território. |
@@ -382,9 +393,14 @@ MapLibre**. As convenções específicas:
   `#centro-phase-badge` e mensagens de lock usam `formatPhaseLockLabel()` —
   ex.: `Alma 07 — Rasgue o Asfalto`. Avanço automático por pistas só até fase 6
   (`clueCountAdvance`); fases 7–13 via narrativa, `?phase=`, `?master=1` ou
-  missão subsolo. **Nota:** as 13 almas colectáveis no corte Three.js
-  (`TREZE_ALMAS` em `subterranean-cutaway.js`) são missão da Fase 7, distintas
-  do registo ARG em `souls[]`, embora partilhem IDs `alma-NN`.
+  missão subsolo (**13/13 esferas `subsolo-NN` → `setPhase(8)`** via `alma-07/index.js`).
+  **Dois namespaces de ID (não misturar):**
+  | Namespace | Exemplo | Fase ARG | Significado |
+  |---|---|---|---|
+  | `souls[]` / `missions/alma-NN/` | `alma-01` | 1 | Alma ARG «Superfície» — módulo `centro/missions/alma-01/` |
+  | `souls[]` / `missions/alma-NN/` | `alma-07` | 7 | Alma ARG «Rasgue o Asfalto» — missão subsolo |
+  | `TREZE_ALMAS` (esferas 3D) | `subsolo-01` | *(nenhuma)* | 1.ª esfera da **missão Fase 7** — **não** é a Alma ARG da Fase 1 |
+  IDs legados `alma-NN` em `centroSubterraneanUnlockedElements` migram para `subsolo-NN` ao ler.
   API: `getMinPhaseForLayer|Theme|Feature`, `is*PhaseUnlocked`,
   `getSoul(phase)`, `formatPhaseLockLabel(minPhase)`. Evento
   `centro:arg-state-changed` (e listener `storage` para `protocolo13_phase` /
@@ -398,6 +414,8 @@ MapLibre**. As convenções específicas:
   `centro/index.html` antes do runtime, na ordem em que aparecem):
   - `layer-unlocks.js`, `protocolo-phase.js`, `catalog-load.js` — catálogo,
     gates de pista e fase
+  - `arg-resync.js` — hub `centro:arg-state-changed` → sidebar, POI, 3D,
+    subsolo, triângulo
   - `sidebar-layer-state.js` — classes/mensagens de lock na sidebar
   - `triangulo-historico.js` — overlay do Triângulo Histórico
   - `pistas.js` — helper de pistas (Rua São Bento), exposto em
@@ -406,18 +424,25 @@ MapLibre**. As convenções específicas:
     turismo, expostas em `window.CENTRO.poiIcons.{POI_TURISTICO_LAYERS,
     MEMORIA_PAULISTANA_LAYERS, …, POI_INTERACTION_LAYER_IDS}`
   - `poi-theme-filter.js`, `buildings-3d.js` — filtros Evidências e maquete 3D
-  - `subterranean-cutaway.js` — Visão subterrânea (ES module + Three.js)
+  - `subterranean-cutaway.js` — Visão subterrânea (ES module + Three.js);
+    emite `centro:subterranean-progress` ao colectar esferas/geologia
   - `rio-animado.js` **não** é carregado em produção — só em
     `centro/test-full.html`. Tratar como sandbox/harness.
+- **Missões** (`centro/missions/`): `alma-01/` … `alma-13/index.js`,
+  `registry.js`, `mission-orchestrator.js` — ver §5.5.1.
+- **Map modules** (`centro/map/`): `map-safe.js`, `layer-data-url.js`,
+  `catalog-layer-controller.js`, `symbol-popup-layer.js`, `poi-bootstrap.js`,
+  `triangulo-overlay.js`, `map-init.js`.
 - **UI modules** (`centro/ui/`): `sidebar-panel.js`, `sidebar-phases-panel.js`,
-  `sidebar-events.js`, `map-popups.js`, `centro-toast.js`, etc.
+  `sidebar-orchestrator.js`, `sidebar-events.js`, `centro-chrome.js`,
+  `map-popups.js`, `toast.js`, `lazy-assets.js`, etc.
 - POIs/popups via DOM API (`setDOMContent` + `createElement` + `textContent`).
   **`setHTML` é proibido em runtime** — teste guardião em
   `tests/sanity.test.js`. Ver §6 para a regra geral de `innerHTML`.
 - **Namespace global controlado** — tudo o que sair de um IIFE entra em
   `window.CENTRO.<subnamespace>` (`window.CENTRO.utils`,
   `window.CENTRO.poiIcons`, `window.CENTRO.pistas`, `window.CENTRO.missions`,
-  `window.CENTRO.missionsRegistry`, …). Excepções
+  `window.CENTRO.missionsRegistry`, `window.CENTRO.missionsOrchestrator`, …). Excepções
   permitidas hoje:
   - `window.CENTRO_POIS` — operações `OP:*` para `flyTo` (criada pelo runtime)
   - `window.MAPA_SP_ICONS` — registry de ícones (`vendor/app/config/map-icons.js`)
@@ -435,7 +460,7 @@ MapLibre**. As convenções específicas:
 Trabalhar **conteúdo narrativo e passos de missão** fase a fase — **não**
 duplicar gates de camada/tema/feature (isso fica em `phase-gates.json`).
 
-| Pasta | Fase | Alma |
+| Pasta (`missions/`) | Fase ARG | Título da fase |
 |---|---|---|
 | `centro/missions/alma-01/` | 1 | Superfície |
 | `centro/missions/alma-02/` | 2 | Hidrografia soterrada |
@@ -461,12 +486,38 @@ duplicar gates de camada/tema/feature (isso fica em `phase-gates.json`).
 `alma-01/index.js` … `alma-13/index.js`, depois `registry.js`, depois
 `mission-orchestrator.js`. O runtime chama `missionsOrchestrator.install()`.
 
-**Fase 7 hoje:** lógica pesada ainda em `subterranean-cutaway.js`; migrar
-para `alma-07/` incrementalmente. **Stubs:** regenerar com
-`node scripts/scaffold-mission-almas.mjs` se `souls[]` mudar.
+**Fase 7 (implementada):** missão em `alma-07/index.js` (passos, `isComplete()`,
+**13/13 → Fase 8**); render 3D/gates ainda em `subterranean-cutaway.js`.
+Guia `#subterranean-guide` (Fase 7 — Rasgue o Asfalto) só disponível com **fase ARG ≥ 7**
+(`centro-chrome.js` → `syncSubterraneanGuideAccess`). Abre por botões ou clique no cartão
+`alma-07` na tab 13 Almas — nunca na Fase 1 (`alma-01`).
 
-**Namespace:** `window.CENTRO.missions` (mapa por id) e
-`window.CENTRO.missionsRegistry`. Não criar `window.alma*` solto.
+**Copy canónica do guia** (`centro/index.html` → `#subterranean-guide`):
+
+| # | Título | Conteúdo (resumo) |
+|---|---|---|
+| 01 | Reunir clearance do subsolo | Fase 7 + pistas `agua-calada`, `aresta-fria`, `peso-fundacao` no caderno |
+| 02 | Activar visão subterrânea | Tab **Visualização** → toggle; tecla `S` na sidebar |
+| 03 | Voar para o subsolo | `flyTo` pitch 70°; botão `#subterranean-fly-btn` |
+| 04 | Encontrar as 13 esferas vermelhas | Colecta `subsolo-01`…`subsolo-13`; legenda X/13 |
+| 05 | Evidências geológicas *(opcional)* | 5 painéis (`CUTAWAY_ITEMS`); não bloqueia avanço |
+| 13 | 13/13 esferas — missão concluída | `setPhase(8)` → Alma 08 — Setores interditos |
+
+Rodapé in-game: copy para jogador («guardado neste dispositivo») — **não** expor
+`localStorage` nem IDs técnicos. Detalhe dev: `centroSubterraneanUnlockedElements`.
+«modo mestre» no guia in-game — `?master=1` / `CENTRO.dev.unlockAlma7()` são só
+para QA (ver `docs/almas/alma-07.md`).
+
+**Stubs alma-01…06, 08…13:** regenerar com
+`node scripts/scaffold-mission-almas.mjs` se `souls[]` mudar.
+Fichas de registo: `node scripts/scaffold-alma-docs.mjs` → `docs/almas/`.
+
+**Namespace:** `window.CENTRO.missions`, `window.CENTRO.missionsRegistry`,
+`window.CENTRO.missionsOrchestrator`, `window.CENTRO.ui.openSubterraneanGuide`.
+Não criar `window.alma*` solto.
+
+**Eventos:** `centro:subterranean-progress` (colecta subsolo),
+`centro:arg-state-changed` (fase/caderno — orchestrator re-sincroniza).
 
 Arquitectura completa: `docs/architecture/missions-almas.md`.
 Ficha de registo por alma: `docs/almas/alma-NN.md` (índice em `docs/almas/README.md`).
@@ -709,8 +760,9 @@ stroke `2`. Definido em `centro/data/icon-manifest.json`. No mapa:
 6. **Atualizar catálogo / fixtures.** Se adicionar layer, post, comando CLI
    ou rota narrativa, registre no índice apropriado.
 7. **Rodar `npm run ci`** (ou `npm test`). Toda a suíte deve permanecer
-   verde — a saída do CI é a fonte da verdade para a contagem atual.
+   verde — **168 testes** (140 sanity + 28 HTTP) · ver `docs/testing/`.
 8. **Atualizar `AGENT.md`** se mudar uma convenção transversal.
+9. **Actualizar `docs/almas/alma-NN.md`** quando entregar missão dessa fase.
 
 ---
 
@@ -769,16 +821,17 @@ Itens **ainda abertos** (reabrir só com gate CAPRI):
 
 | Item | Estado | Onde está |
 |---|---|---|
-| `centro/centro-runtime.js` ainda grande (~1 300 linhas) | Parcial — extraídos `catalog-load`, `layer-unlocks`, `protocolo-phase`, `buildings-3d`, `poi-theme-filter` | `centro/features/` + runtime |
+| `centro/centro-runtime.js` (~560 linhas) | Parcial — R1–R6 extraíram POI, triângulo, sidebar, ARG resync, chrome, map-init | `centro/map/`, `centro/ui/`, `centro/features/` |
 | `arquivista/js/script.js` (~846 linhas) | Parcial — `open-application.js` extrai dock/apps; script principal ainda grande | `arquivista/js/` |
 | `04a_zeis2__polygon` (cidade inteira) | Só **5 polígonos** no viewport do mapa (clip bbox); não intersecta `16_regiao_centro` | `sync:geojson-from-salto` |
-| Fases 2–13 do ARG (conteúdo narrativo) | **Scaffold** — um módulo por alma em `centro/missions/alma-NN/`; gates técnicos em `phase-gates.json`; avanço por pistas até fase 6; Fase 7 parcial em `subterranean-cutaway.js` | `centro/missions/`, `protocolo-phase.js` |
+| Fases 2–6, 8–13 (missões narrativas) | **Scaffold** — módulos `centro/missions/alma-NN/` + fichas `docs/almas/`; gates em `phase-gates.json` | `mission-orchestrator.js` |
+| Fase 7 subsolo (render 3D) | Missão **implementada** (`alma-07`); Three.js ainda em `subterranean-cutaway.js` | `centro/missions/alma-07/` |
 | Contraste WCAG AA formal (outros pares) | Parcial — corrigidos `.as-digital-aviso` e `nav-retorno` terminal; resto em `docs/accessibility/contrast-notes.md` | design system |
 | Playwright browser E2E | HTTP + smoke manual cobrem regressões; Playwright opcional se instalar browsers | `docs/testing/smoke-centro.md` |
 | PMTiles offline Brasil | Fora de scope — ver `docs/offline-scope.md` | — |
 | `map-icons.js` gerado só do manifest (E-02 fase 2) | DEFER — hoje manifest + `map-icons.js` em paridade manual via sync | `scripts/sync-lucide-icons.mjs` |
 
-**Implementado (2026-05–07):** context wired (**20 camadas** sidebar, 9 grupos), OSM ruas/endereços, ZEIS-2 no viewport, `sync:geojson-from-salto`, triângulo overlay com resync por fase, deep-link `?clues=` e `?phase=`, `phase-gates.json` v2, sidebar 4 tabs (13 Almas), badge `#centro-phase-badge`, módulos `buildings-3d.js` / `poi-theme-filter.js` / `subterranean-cutaway.js`, execution map em `docs/architecture/map-init-flow.md`.
+**Implementado (2026-05–07):** context wired (**20 camadas** sidebar, 9 grupos), OSM ruas/endereços, ZEIS-2 no viewport, `sync:geojson-from-salto`, triângulo overlay com resync por fase, deep-link `?clues=` e `?phase=`, `phase-gates.json` v2, sidebar 4 tabs (13 Almas), badge `#centro-phase-badge`, módulos `buildings-3d.js` / `poi-theme-filter.js` / `subterranean-cutaway.js`, refactor runtime R1–R6 (`centro/map/`, `centro/ui/centro-chrome.js`, `arg-resync.js`), **missões por alma** (`centro/missions/`, `docs/almas/`, Fase 7 com avanço 13/13→8), execution map em `docs/architecture/map-init-flow.md`.
 
 ---
 

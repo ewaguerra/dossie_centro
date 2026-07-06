@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "description": "Regras de classificação por tema POI. Turismo usa tipologia (sem datas no GeoJSON). Acervo usa curadoria manual por cd_identificador.",
+  "themes": {
+    "monumentos": {
+      "strategy": "year",
+      "field": "tx_data_implantacao"
+    },
+    "memoria-paulistana": {
+      "strategy": "yearFromText",
+      "field": "dc_enunciado_placa"
+    },
+    "acervo-tombado": {
+      "strategy": "manual",
+      "field": "cd_identificador",
+      "overrides": {
+        "5007": "republica-velha",
+        "5016": "colonial-imperio",
+        "5009": "colonial-imperio",
+        "5022": "sem-data",
+        "5011": "modernismo",
+        "5025": "democracia",
+        "5021": "modernismo",
+        "5024": "colonial-imperio",
+        "5002": "ditadura",
+        "5006": "modernismo",
+        "5014": "republica-velha",
+        "5018": "republica-velha",
+        "5010": "modernismo",
+        "5020": "republica-velha",
+        "5013": "republica-velha",
+        "5019": "colonial-imperio"
+      }
+    },
+    "bem-arqueologico": {
+      "strategy": "fixed",
+      "eraId": "colonial-imperio"
+    },
+    "poi-turistico": {
+      "strategy": "typology",
+      "field": "category",
+      "typologies": {
+        "igreja_religiosidade": { "label": "Religioso", "color": "#f5e6cc" },
+        "arquitetura_mirante": { "label": "Arquitetura / mirante", "color": "#ffd6a5" },
+        "museu_memoria": { "label": "Museu / memória", "color": "#c8e6c9" },
+        "teatro_espetaculo": { "label": "Teatro / espetáculo", "color": "#c8e6c9" },
+        "educacao_institucional": { "label": "Educação", "color": "#bbdefb" },
+        "transporte_estacao": { "label": "Transporte", "color": "#e1bee7" },
+        "sesc_lazer": { "label": "Lazer / SESC", "color": "#b2ebf2" },
+        "mercado_comercio": { "label": "Comércio / mercado", "color": "#fff9c4" },
+        "praca_espaco_publico": { "label": "Praça / espaço público", "color": "#b2ebf2" },
+        "outro": { "label": "Outros", "color": "#f5f5f5" }
+      }
+    }
+  }
+}

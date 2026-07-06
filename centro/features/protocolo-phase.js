@@ -109,14 +109,20 @@
   }
 
   function isLayerPhaseUnlocked(layerId) {
+    var mm = window.CENTRO && window.CENTRO.masterMode;
+    if (mm && typeof mm.isActive === "function" && mm.isActive()) return true;
     return isPhaseAtLeast(getMinPhaseForLayer(layerId));
   }
 
   function isThemePhaseUnlocked(themeId) {
+    var mm = window.CENTRO && window.CENTRO.masterMode;
+    if (mm && typeof mm.isActive === "function" && mm.isActive()) return true;
     return isPhaseAtLeast(getMinPhaseForTheme(themeId));
   }
 
   function isFeaturePhaseUnlocked(featureId) {
+    var mm = window.CENTRO && window.CENTRO.masterMode;
+    if (mm && typeof mm.isActive === "function" && mm.isActive()) return true;
     return isPhaseAtLeast(getMinPhaseForFeature(featureId));
   }
 

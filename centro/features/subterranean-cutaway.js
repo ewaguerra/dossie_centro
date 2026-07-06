@@ -127,20 +127,21 @@ import * as THREE from "/vendor/three/three.module.min.js";
 
   // ── 13 Almas — coordenadas reais na área central de SP ───────────────────
 
+  // IDs `subsolo-NN` — NÃO confundir com `alma-NN` do ARG (souls[] / missions/).
   var TREZE_ALMAS = [
-    { id: "alma-01", title: "Primeira Alma — Rio soterrado",            lngLat: [-46.6355, -23.5488], depthM: -11, freq: 1.10, phaseOff: 0.0 },
-    { id: "alma-02", title: "Segunda Alma — Fundação colonial",         lngLat: [-46.6348, -23.5466], depthM: -17, freq: 0.90, phaseOff: 0.7 },
-    { id: "alma-03", title: "Terceira Alma — Câmara submersa",          lngLat: [-46.6337, -23.5499], depthM: -9,  freq: 1.30, phaseOff: 1.4 },
-    { id: "alma-04", title: "Quarta Alma — Adro do Colégio",            lngLat: [-46.6325, -23.5480], depthM: -14, freq: 0.70, phaseOff: 2.1 },
-    { id: "alma-05", title: "Quinta Alma — Argila do aterro",           lngLat: [-46.6368, -23.5493], depthM: -33, freq: 1.50, phaseOff: 2.8 },
-    { id: "alma-06", title: "Sexta Alma — Leito do Tamanduateí",        lngLat: [-46.6313, -23.5503], depthM: -21, freq: 0.80, phaseOff: 3.5 },
-    { id: "alma-07", title: "Sétima Alma — Túnel da Linha 3",           lngLat: [-46.6351, -23.5511], depthM: -24, freq: 1.20, phaseOff: 4.2 },
-    { id: "alma-08", title: "Oitava Alma — Galeria pluvial",            lngLat: [-46.6378, -23.5472], depthM: -10, freq: 1.00, phaseOff: 0.3 },
-    { id: "alma-09", title: "Nona Alma — Rocha basáltica",              lngLat: [-46.6341, -23.5524], depthM: -49, freq: 0.60, phaseOff: 1.0 },
-    { id: "alma-10", title: "Décima Alma — Vala do processo",           lngLat: [-46.6362, -23.5455], depthM: -6,  freq: 1.40, phaseOff: 1.7 },
-    { id: "alma-11", title: "Décima Primeira Alma — Câmara de gás",     lngLat: [-46.6332, -23.5468], depthM: -20, freq: 0.85, phaseOff: 2.4 },
-    { id: "alma-12", title: "Décima Segunda Alma — Aterro compactado",  lngLat: [-46.6387, -23.5509], depthM: -28, freq: 1.15, phaseOff: 3.1 },
-    { id: "alma-13", title: "Décima Terceira Alma — Núcleo original",   lngLat: [-46.6346, -23.5482], depthM: -42, freq: 0.50, phaseOff: 3.8 },
+    { id: "subsolo-01", title: "Rio soterrado",                         lngLat: [-46.6355, -23.5488], depthM: -11, freq: 1.10, phaseOff: 0.0 },
+    { id: "subsolo-02", title: "Fundação colonial",                     lngLat: [-46.6348, -23.5466], depthM: -17, freq: 0.90, phaseOff: 0.7 },
+    { id: "subsolo-03", title: "Câmara submersa",                       lngLat: [-46.6337, -23.5499], depthM: -9,  freq: 1.30, phaseOff: 1.4 },
+    { id: "subsolo-04", title: "Adro do Colégio",                       lngLat: [-46.6325, -23.5480], depthM: -14, freq: 0.70, phaseOff: 2.1 },
+    { id: "subsolo-05", title: "Argila do aterro",                      lngLat: [-46.6368, -23.5493], depthM: -33, freq: 1.50, phaseOff: 2.8 },
+    { id: "subsolo-06", title: "Leito do Tamanduateí",                  lngLat: [-46.6313, -23.5503], depthM: -21, freq: 0.80, phaseOff: 3.5 },
+    { id: "subsolo-07", title: "Túnel da Linha 3",                      lngLat: [-46.6351, -23.5511], depthM: -24, freq: 1.20, phaseOff: 4.2 },
+    { id: "subsolo-08", title: "Galeria pluvial",                       lngLat: [-46.6378, -23.5472], depthM: -10, freq: 1.00, phaseOff: 0.3 },
+    { id: "subsolo-09", title: "Rocha basáltica",                       lngLat: [-46.6341, -23.5524], depthM: -49, freq: 0.60, phaseOff: 1.0 },
+    { id: "subsolo-10", title: "Vala do processo",                      lngLat: [-46.6362, -23.5455], depthM: -6,  freq: 1.40, phaseOff: 1.7 },
+    { id: "subsolo-11", title: "Câmara de gás",                         lngLat: [-46.6332, -23.5468], depthM: -20, freq: 0.85, phaseOff: 2.4 },
+    { id: "subsolo-12", title: "Aterro compactado",                     lngLat: [-46.6387, -23.5509], depthM: -28, freq: 1.15, phaseOff: 3.1 },
+    { id: "subsolo-13", title: "Núcleo original",                       lngLat: [-46.6346, -23.5482], depthM: -42, freq: 0.50, phaseOff: 3.8 },
   ];
 
   // ── State helpers ────────────────────────────────────────────────────────
@@ -153,24 +154,57 @@ import * as THREE from "/vendor/three/three.module.min.js";
     return false;
   }
 
-  function applyMasterBootstrap() {
-    if (!isMasterMode()) return false;
+  function unlockAlma7(options) {
+    options = options || {};
+    var enableView = options.enableView !== false;
+    var clearProgress = options.clearProgress === true;
     try {
       if (window.localStorage) {
-        window.localStorage.setItem(MASTER_STORAGE_KEY,   "1");
-        window.localStorage.setItem(PHASE_STORAGE_KEY,    String(getRequiredPhase()));
-        window.localStorage.setItem(ENABLED_STORAGE_KEY,  "1");
+        window.localStorage.setItem(PHASE_STORAGE_KEY, String(getRequiredPhase()));
+        if (enableView) window.localStorage.setItem(ENABLED_STORAGE_KEY, "1");
         var existing = [];
         var raw = window.localStorage.getItem(CADERNO_STORAGE_KEY);
-        if (raw) { var parsed = JSON.parse(raw); if (Array.isArray(parsed)) existing = parsed; }
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) existing = parsed;
+        }
         var set = new Set(existing);
         for (var i = 0; i < REQUIRED_CLUES.length; i++) set.add(REQUIRED_CLUES[i]);
         window.localStorage.setItem(CADERNO_STORAGE_KEY, JSON.stringify(Array.from(set)));
+        if (clearProgress) window.localStorage.removeItem(FOUND_STORAGE_KEY);
       }
       var ph = window.CENTRO && window.CENTRO.protocoloPhase;
-      if (ph && typeof ph.setPhase === "function") ph.setPhase(getRequiredPhase());
-    } catch (_e) { /* ignora */ }
-    return true;
+      if (ph && typeof ph.setPhase === "function") {
+        ph.setPhase(getRequiredPhase());
+      } else {
+        document.dispatchEvent(new CustomEvent("centro:arg-state-changed"));
+      }
+      if (typeof window.centroToast === "function") {
+        window.centroToast(
+          "Alma 7 desbloqueada — Fase 7, 3 pistas do subsolo" +
+            (clearProgress ? ", progresso zerado." : "."),
+          "warn"
+        );
+      }
+      return true;
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  function applyMasterBootstrap() {
+    if (!isMasterMode()) return false;
+    try {
+      if (window.localStorage) window.localStorage.setItem(MASTER_STORAGE_KEY, "1");
+    } catch (_e) {
+      /* ignora */
+    }
+    var mm = window.CENTRO && window.CENTRO.masterMode;
+    if (mm && typeof mm.bootstrapReviewUnlocks === "function") {
+      mm.bootstrapReviewUnlocks();
+      return true;
+    }
+    return unlockAlma7({ enableView: true, clearProgress: false });
   }
 
   function getCollectedClues() {
@@ -201,6 +235,14 @@ import * as THREE from "/vendor/three/three.module.min.js";
     return "Fase " + getRequiredPhase() + " — " + PHASE_TITLE;
   }
 
+  function migrateLegacySoulId(id) {
+    if (typeof id !== "string") return id;
+    if (id.indexOf("subsolo-") === 0) return id;
+    var match = /^alma-(\d{2})$/.exec(id);
+    if (match) return "subsolo-" + match[1];
+    return id;
+  }
+
   function getFoundElementIds() {
     try {
       var raw = window.localStorage && window.localStorage.getItem(FOUND_STORAGE_KEY);
@@ -208,7 +250,10 @@ import * as THREE from "/vendor/three/three.module.min.js";
       var parsed = JSON.parse(raw);
       if (!Array.isArray(parsed)) return new Set();
       var ids = new Set();
-      for (var i = 0; i < parsed.length; i++) if (typeof parsed[i] === "string") ids.add(parsed[i]);
+      for (var i = 0; i < parsed.length; i++) {
+        if (typeof parsed[i] !== "string") continue;
+        ids.add(migrateLegacySoulId(parsed[i]));
+      }
       return ids;
     } catch (_e) { return new Set(); }
   }
@@ -983,5 +1028,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
     isUnlocked: isUnlocked,
     isViewEnabled: isViewEnabled,
   };
+  window.CENTRO.dev = window.CENTRO.dev || {};
+  window.CENTRO.dev.unlockAlma7 = unlockAlma7;
   document.dispatchEvent(new CustomEvent("centro:subterranean-ready"));
 })();

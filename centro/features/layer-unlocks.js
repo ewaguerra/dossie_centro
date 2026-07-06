@@ -23,6 +23,8 @@
   }
 
   function isLayerUnlocked(layerId, layerUnlockRules) {
+    var mm = window.CENTRO && window.CENTRO.masterMode;
+    if (mm && typeof mm.isActive === "function" && mm.isActive()) return true;
     if (!layerUnlockRules || !layerUnlockRules[layerId]) return true;
     var required = layerUnlockRules[layerId];
     var collected = getCollectedClueIds();

@@ -193,7 +193,7 @@ body.subterranean-active #map::before {
   position: fixed;
   bottom: calc(var(--jesuit-frame-bottom, 48px) + 16px);
   z-index: calc(var(--z-modal, 1000) + 2);
-  width: min(320px, calc(100vw - var(--jesuit-frame-left, 44px) - var(--jesuit-frame-right, 44px) - 32px));
+  width: min(380px, calc(100vw - var(--jesuit-frame-left, 44px) - var(--jesuit-frame-right, 44px) - 32px));
   max-height: calc(
     100dvh - var(--jesuit-frame-top, 56px) - var(--jesuit-frame-bottom, 48px) - 32px
   );
@@ -213,7 +213,7 @@ body.centro-sidebar-collapsed .subterranean-guide {
   left: calc(var(--jesuit-frame-left, 44px) + 12px);
   right: calc(var(--jesuit-frame-right, 44px) + 12px);
   width: auto;
-  max-width: min(360px, calc(100vw - var(--jesuit-frame-left, 44px) - var(--jesuit-frame-right, 44px) - 24px));
+  max-width: min(420px, calc(100vw - var(--jesuit-frame-left, 44px) - var(--jesuit-frame-right, 44px) - 24px));
 }
 
 .subterranean-guide[hidden] {
@@ -225,21 +225,22 @@ body.centro-sidebar-collapsed .subterranean-guide {
 }
 
 .subterranean-guide__header {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
   flex-shrink: 0;
-  padding: 9px 12px 8px;
+  padding: 12px 48px 10px 14px;
   border-bottom: 1px solid rgba(245, 158, 11, 0.22);
   background: rgba(245, 158, 11, 0.07);
 }
 
 .subterranean-guide__kicker {
   font-family: var(--font-code);
-  font-size: 8px;
-  letter-spacing: 0.14em;
+  font-size: var(--sidebar-type-meta);
+  letter-spacing: 0.12em;
   color: #f59e0b;
-  opacity: 0.75;
+  opacity: 0.85;
   white-space: nowrap;
 }
 
@@ -247,24 +248,26 @@ body.centro-sidebar-collapsed .subterranean-guide {
   flex: 1;
   min-width: 0;
   font-family: var(--font-code);
-  font-size: 11px;
+  font-size: var(--sidebar-type-section);
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
   color: #fbbf24;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .subterranean-guide__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: var(--sidebar-type-body);
   cursor: pointer;
   border-radius: 2px;
   transition: color 0.15s, background 0.15s;
@@ -279,10 +282,10 @@ body.centro-sidebar-collapsed .subterranean-guide {
 .subterranean-guide__steps {
   list-style: none;
   margin: 0;
-  padding: 10px 12px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -291,7 +294,7 @@ body.centro-sidebar-collapsed .subterranean-guide {
 
 .subterranean-guide__step {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: flex-start;
 }
 
@@ -302,49 +305,50 @@ body.centro-sidebar-collapsed .subterranean-guide {
 
 .subterranean-guide__step-num {
   flex: 0 0 auto;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(245, 158, 11, 0.38);
   border-radius: 2px;
   font-family: var(--font-code);
-  font-size: 10px;
+  font-size: var(--sidebar-type-meta);
   font-weight: 700;
   color: #fbbf24;
   background: rgba(245, 158, 11, 0.07);
   line-height: 1;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .subterranean-guide__step-body {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
 }
 
 .subterranean-guide__step-body strong {
-  font-family: var(--font-code);
-  font-size: 10px;
+  font-family: var(--font-ui);
+  font-size: var(--sidebar-type-body);
   font-weight: 700;
-  color: #e2e8f0;
-  letter-spacing: 0.03em;
+  color: #f1f5f9;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
 }
 
 .subterranean-guide__step-body span {
-  font-family: var(--font-code);
-  font-size: 9.5px;
-  color: rgba(203, 213, 225, 0.75);
-  line-height: 1.4;
+  font-family: var(--font-ui);
+  font-size: var(--sidebar-type-meta);
+  color: rgba(226, 232, 240, 0.88);
+  line-height: 1.5;
 }
 
 .subterranean-guide__step-body code {
   font-family: var(--font-code);
-  font-size: 9px;
+  font-size: 0.95em;
   color: #fbbf24;
   background: rgba(245, 158, 11, 0.12);
-  padding: 1px 4px;
+  padding: 2px 6px;
   border-radius: 2px;
 }
 
@@ -356,16 +360,16 @@ body.centro-sidebar-collapsed .subterranean-guide {
 .subterranean-guide__btn {
   display: inline-flex;
   align-items: center;
-  margin-top: 4px;
-  padding: 4px 8px;
+  margin-top: 6px;
+  padding: 8px 12px;
   border: 1px solid rgba(245, 158, 11, 0.6);
   border-radius: 2px;
   background: rgba(245, 158, 11, 0.12);
   color: #fbbf24;
   font-family: var(--font-code);
-  font-size: 9px;
+  font-size: var(--sidebar-type-meta);
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-decoration: none;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
@@ -378,15 +382,15 @@ body.centro-sidebar-collapsed .subterranean-guide {
 
 .subterranean-guide__footer {
   flex-shrink: 0;
-  padding: 7px 12px 9px;
+  padding: 10px 14px 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .subterranean-guide__footer-note {
-  font-family: var(--font-code);
-  font-size: 9px;
-  color: rgba(148, 163, 184, 0.55);
-  line-height: 1.4;
+  font-family: var(--font-ui);
+  font-size: var(--sidebar-type-meta);
+  color: rgba(203, 213, 225, 0.72);
+  line-height: 1.45;
 }
 
 @media (max-width: 480px) {

@@ -39,7 +39,7 @@
   }
 
   function getPhaseMeta(phaseNum) {
-    if (phaseNum !== 7) return "";
+    if (Number(phaseNum) !== 7) return "";
     if (activeInstance && activeInstance.id === "alma-07" && typeof activeInstance.getProgressLabel === "function") {
       return activeInstance.getProgressLabel();
     }

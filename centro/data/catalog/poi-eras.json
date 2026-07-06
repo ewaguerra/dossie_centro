@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "description": "Épocas históricas para sub-filtro de evidências POI. Cores maximamente separadas no círculo cromático.",
+  "eras": [
+    {
+      "id": "colonial-imperio",
+      "label": "Colonial / Império",
+      "shortLabel": "Colonial",
+      "range": "até 1888",
+      "color": "#92400e"
+    },
+    {
+      "id": "republica-velha",
+      "label": "República Velha",
+      "shortLabel": "Rep. Velha",
+      "range": "1889–1930",
+      "color": "#b45309"
+    },
+    {
+      "id": "modernismo",
+      "label": "Modernismo / Vargas",
+      "shortLabel": "Modernismo",
+      "range": "1931–1945",
+      "color": "#ca8a04"
+    },
+    {
+      "id": "populista",
+      "label": "Populista / JK",
+      "shortLabel": "Populista",
+      "range": "1946–1963",
+      "color": "#65a30d"
+    },
+    {
+      "id": "ditadura",
+      "label": "Ditadura militar",
+      "shortLabel": "Ditadura",
+      "range": "1964–1984",
+      "color": "#475569"
+    },
+    {
+      "id": "democracia",
+      "label": "Redemocratização",
+      "shortLabel": "Democracia",
+      "range": "1985+",
+      "color": "#0369a1"
+    },
+    {
+      "id": "sem-data",
+      "label": "Data indeterminada",
+      "shortLabel": "Indeterm.",
+      "range": "—",
+      "color": "#78716c"
+    }
+  ]
+}

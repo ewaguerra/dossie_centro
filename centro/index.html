@@ -18,10 +18,27 @@
   <link href="/pages/centro/styles/profile-card.css" rel="stylesheet" />
   <link href="/pages/centro/styles/jesuit-frame.css" rel="stylesheet" />
   <link href="/pages/centro/styles/subterranean-cutaway.css" rel="stylesheet" />
+  <link href="/pages/centro/styles/centro-access-gate.css" rel="stylesheet" />
   <link href="/pages/centro/styles/map-popups.css" rel="stylesheet" />
   <link href="/pages/centro/styles/responsive.css" rel="stylesheet" />
 </head>
-<body class="has-jesuit-frame">
+<body class="has-jesuit-frame centro-access-locked">
+  <div id="centro-access-gate" class="centro-access-gate" role="dialog" aria-modal="true" aria-labelledby="centro-access-gate-title">
+    <div class="centro-access-gate__backdrop" aria-hidden="true"></div>
+    <div class="centro-access-gate__panel">
+      <p class="centro-access-gate__kicker">Protocolo 13 · Clearance</p>
+      <h2 id="centro-access-gate-title" class="centro-access-gate__title">Acesso ao dossiê cartográfico</h2>
+      <p class="centro-access-gate__intro">Operador não identificado. Introduza a chave de desbloqueio para aceder ao mapa forense do Centro.</p>
+      <form id="centro-access-gate-form" class="centro-access-gate__form" autocomplete="off">
+        <label class="centro-access-gate__label" for="centro-access-gate-input">Chave de operador</label>
+        <input id="centro-access-gate-input" class="centro-access-gate__input" name="centro-access-key" type="password" inputmode="text" autocomplete="off" required />
+        <p id="centro-access-gate-error" class="centro-access-gate__error" hidden>Chave recusada.</p>
+        <p class="centro-access-gate__hint">Dica: joelma</p>
+        <button type="submit" class="centro-access-gate__submit">Desbloquear mapa</button>
+      </form>
+    </div>
+  </div>
+
   <button id="sidebar-toggle" class="btn btn--ghost btn--icon" type="button" aria-label="Abrir/fechar sidebar" title="Alternar painel">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
   </button>
@@ -108,7 +125,7 @@
             <span class="poi-legend__summary-hint">abrir / fechar</span>
           </summary>
           <div id="poi-legend-panel" class="poi-legend__panel">
-            <p class="poi-legend__hint">Marque só as temáticas que quer decodificar no mapa.</p>
+            <p class="poi-legend__hint">Marque temáticas e, dentro de cada uma, filtre por época (cor no halo do ícone).</p>
             <div class="poi-legend__list" id="poi-legend-grid" role="group" aria-label="Filtrar evidências por temática"></div>
           </div>
         </details>
@@ -116,7 +133,7 @@
     </div>
     <div id="sidebar-panel-fases" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-fases" hidden>
       <p class="sidebar-tab-intro">Registo das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.</p>
-      <button id="subterranean-guide-open-fases" class="subterranean-guide-open-btn subterranean-guide-open-btn--fases" type="button">Abrir guia da missão ↗</button>
+      <button id="subterranean-guide-open-fases" class="subterranean-guide-open-btn subterranean-guide-open-btn--fases" type="button" hidden>Abrir guia da missão ↗</button>
       <div id="phases-panel" class="phases-list" role="list" aria-label="13 almas do Protocolo 13 Almas"></div>
     </div>
     <div id="sidebar-panel-opcoes" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-opcoes" hidden>
@@ -136,14 +153,14 @@
         </div>
         <div class="sidebar-viz-card sidebar-viz-card--mission">
           <h2 class="sidebar-viz-card__title">Missão Fase 7 — Rasgue o Asfalto</h2>
-          <p class="sidebar-viz-card__desc">Visão subterrânea, corte vertical e colecta das 13 almas soterradas.</p>
+          <p class="sidebar-viz-card__desc">Visão subterrânea, corte vertical e colecta das 13 esferas do subsolo.</p>
           <label class="sidebar-extras__row layer-row subterranean-toggle" for="centro-subterranean-toggle">
             <input type="checkbox" id="centro-subterranean-toggle" />
             <span class="sidebar-extras__text">Activar visão subterrânea</span>
           </label>
           <div id="subterranean-status" class="subterranean-status" aria-live="polite"></div>
           <button id="subterranean-fly-sidebar-btn" class="subterranean-fly-sidebar-btn" type="button" hidden aria-label="Voar para o corte subterrâneo">↗ VOAR PARA O SUBSOLO</button>
-          <button id="subterranean-guide-open" class="subterranean-guide-open-btn" type="button">Abrir guia da missão ↗</button>
+          <button id="subterranean-guide-open" class="subterranean-guide-open-btn" type="button" hidden>Abrir guia da missão ↗</button>
           <div id="subterranean-legend" class="subterranean-legend" aria-label="Elementos da visão subterrânea"></div>
         </div>
       </div>
@@ -163,50 +180,49 @@
       <li class="subterranean-guide__step">
         <span class="subterranean-guide__step-num">01</span>
         <div class="subterranean-guide__step-body">
-          <strong>Activar modo mestre</strong>
-          <span>Acesse <code>?master=1</code> na URL — desbloqueia Fase 7, as 3 pistas do subsolo e a visão subterrânea.</span>
-          <a id="subterranean-master-link" class="subterranean-guide__btn" href="?master=1">ACTIVAR AGORA →</a>
+          <strong>Reunir clearance do subsolo</strong>
+          <span>Com <em>Fase 7</em> activa, confirme no caderno as três pistas: <code>agua-calada</code>, <code>aresta-fria</code> e <code>peso-fundacao</code>. Só então o toggle <em>Visão subterrânea</em> deixa de estar bloqueado.</span>
         </div>
       </li>
       <li class="subterranean-guide__step">
         <span class="subterranean-guide__step-num">02</span>
         <div class="subterranean-guide__step-body">
-          <strong>Abrir painel lateral</strong>
-          <span>Clique no ícone ☰ (canto superior esquerdo) e active o toggle <em>Visão subterrânea</em>.</span>
+          <strong>Activar visão subterrânea</strong>
+          <span>Sidebar → tab <em>Visualização</em> → marque <em>Activar visão subterrânea</em>. Tecla <code>S</code> abre ou fecha a sidebar.</span>
         </div>
       </li>
       <li class="subterranean-guide__step">
         <span class="subterranean-guide__step-num">03</span>
         <div class="subterranean-guide__step-body">
           <strong>Voar para o subsolo</strong>
-          <span>Clique para inclinar o mapa a 70° e centrar no corte vertical. O layer aparece com efeito glitch.</span>
+          <span>Inclina o mapa a 70° e centra no corte vertical. O layer 3D aparece com efeito glitch.</span>
           <button id="subterranean-fly-btn" class="subterranean-guide__btn" type="button">VOAR PARA O SUBSOLO ↗</button>
         </div>
       </li>
       <li class="subterranean-guide__step">
         <span class="subterranean-guide__step-num">04</span>
         <div class="subterranean-guide__step-body">
-          <strong>Clique nas 13 esferas vermelhas</strong>
-          <span>Cada esfera pulsa em frequência diferente. Ao clicar: partículas explodem, esfera vira verde, pista registrada.</span>
+          <strong>Encontrar as 13 esferas vermelhas</strong>
+          <span>Cada esfera pulsa numa frequência diferente. Ao clicar: partículas explodem, a esfera fica verde e o progresso sobe na legenda (meta da missão: 13/13).</span>
         </div>
       </li>
       <li class="subterranean-guide__step">
         <span class="subterranean-guide__step-num">05</span>
         <div class="subterranean-guide__step-body">
-          <strong>Elementos geológicos</strong>
-          <span>Clique também no Rio Anhangabaú, túnel do metrô e fundações para registrar evidências.</span>
+          <strong>Evidências geológicas (opcional)</strong>
+          <span>Registe os <strong>5 painéis</strong> do corte — rio Anhangabaú, fundação, túnel do metrô, argila e basalto. Passo extra; <em>não</em> bloqueia o avanço para a Fase 8.</span>
         </div>
       </li>
       <li class="subterranean-guide__step subterranean-guide__step--final">
         <span class="subterranean-guide__step-num">13</span>
         <div class="subterranean-guide__step-body">
-          <strong>13/13 almas — Fase 7 concluída</strong>
-          <span>Todas as almas coletadas fecham o ciclo do Protocolo 13.</span>
+          <strong>13/13 esferas — missão concluída</strong>
+          <span>Com todas as esferas do corte, <em>Rasgue o Asfalto</em> fecha e desbloqueia a <strong>Alma 08 — Setores interditos</strong>.</span>
         </div>
       </li>
     </ol>
     <div class="subterranean-guide__footer">
-      <span class="subterranean-guide__footer-note">Progresso salvo em <code>localStorage</code> — persiste entre sessões.</span>
+      <span class="subterranean-guide__footer-note">O progresso desta missão fica guardado neste dispositivo — podes fechar e continuar depois.</span>
     </div>
   </div>
 
@@ -233,11 +249,13 @@
   <script src="/pages/centro/features/triangulo-historico.js" defer></script>
   <script src="/pages/centro/features/pistas.js" defer></script>
   <script src="/pages/centro/features/poi-icons.js" defer></script>
+  <script src="/pages/centro/features/poi-era-classifier.js" defer></script>
   <script src="/pages/centro/features/buildings-3d.js" defer></script>
   <script src="/pages/centro/features/poi-theme-filter.js" defer></script>
   <script src="/pages/centro/features/layer-unlocks.js" defer></script>
   <script src="/pages/centro/features/catalog-load.js" defer></script>
   <script src="/pages/centro/features/protocolo-phase.js" defer></script>
+  <script src="/pages/centro/features/master-mode.js" defer></script>
   <script src="/pages/centro/missions/alma-01/index.js" defer></script>
   <script src="/pages/centro/missions/alma-02/index.js" defer></script>
   <script src="/pages/centro/missions/alma-03/index.js" defer></script>
@@ -253,6 +271,7 @@
   <script src="/pages/centro/missions/alma-13/index.js" defer></script>
   <script src="/pages/centro/missions/registry.js" defer></script>
   <script src="/pages/centro/missions/mission-orchestrator.js" defer></script>
+  <script src="/pages/centro/features/centro-access-gate.js" defer></script>
   <script src="/pages/centro/features/arg-resync.js" defer></script>
   <script src="/pages/centro/features/sidebar-layer-state.js" defer></script>
   <script type="module" src="/pages/centro/features/subterranean-cutaway.js"></script>

@@ -1,0 +1,22 @@
+{
+  "layer": "centro_quadras_fiscais__polygon",
+  "source": "https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs",
+  "typeName": "geoportal:quadra_fiscal",
+  "fetch_bbox": [
+    -46.676,
+    -23.579,
+    -46.604,
+    -23.517
+  ],
+  "clip": "centro\\data\\processed\\16_regiao_centro__polygon.geojson",
+  "generated_at": "2026-07-06T01:22:50.400297+00:00",
+  "raw_features": 2934,
+  "clipped_features": 1554,
+  "stats": {
+    "polygons": 1554,
+    "setores_fiscais_unicos": 22,
+    "quadras_unicas_setor_quadra": 1274,
+    "subquadras_sql_unicas": 1428
+  },
+  "output": "centro\\data\\geojson\\heavy\\centro_quadras_fiscais__polygon.geojson"
+}

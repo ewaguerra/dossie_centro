@@ -30,6 +30,11 @@
       if (subApi && typeof subApi.syncPhaseGate === "function") subApi.syncPhaseGate();
 
       if (typeof ctx.syncTriangulo === "function") ctx.syncTriangulo();
+
+      var mm = window.CENTRO && window.CENTRO.masterMode;
+      if (mm && typeof mm.isActive === "function" && mm.isActive() && typeof mm.syncReviewConsumers === "function") {
+        mm.syncReviewConsumers(ctx);
+      }
     }
 
     function install() {

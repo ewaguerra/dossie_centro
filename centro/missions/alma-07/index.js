@@ -97,8 +97,8 @@
     if (!isGateOpen()) return "Missão bloqueada — fase 7 e 3 pistas do subsolo.";
     var souls = countSoulsFound();
     var max = soulTarget();
-    if (isComplete()) return "Missão concluída — 13/13 almas do subsolo.";
-    return "Missão activa — " + souls + "/" + max + " almas do subsolo.";
+    if (isComplete()) return "Missão concluída — 13/13 esferas do subsolo.";
+    return "Missão activa — " + souls + "/" + max + " esferas do subsolo.";
   }
 
   function tryAdvancePhase() {

@@ -14,6 +14,7 @@
     "sync:icons": "node scripts/sync-lucide-icons.mjs",
     "healthcheck:centro": "node scripts/centro-healthcheck.mjs",
     "sync:geojson-from-salto": "python3 scripts/sync-geojson-from-salto.py",
+    "sync:quadras-geosampa": "python scripts/sync-quadras-geosampa.py",
     "postinstall": "node scripts/sync-maplibre.mjs --silent || true; node scripts/sync-three.mjs --silent || true; node scripts/sync-lucide-icons.mjs --silent || true"
   },
   "engines": {

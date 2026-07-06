@@ -19,19 +19,84 @@
     "13": "Permanência"
   },
   "souls": [
-    { "phase": 1, "id": "alma-01", "title": "Superfície", "kicker": "Primeira Alma" },
-    { "phase": 2, "id": "alma-02", "title": "Hidrografia soterrada", "kicker": "Segunda Alma" },
-    { "phase": 3, "id": "alma-03", "title": "Património rígido", "kicker": "Terceira Alma" },
-    { "phase": 4, "id": "alma-04", "title": "Acervo e memória", "kicker": "Quarta Alma" },
-    { "phase": 5, "id": "alma-05", "title": "Geotecnia", "kicker": "Quinta Alma" },
-    { "phase": 6, "id": "alma-06", "title": "Arquivo superficial", "kicker": "Sexta Alma" },
-    { "phase": 7, "id": "alma-07", "title": "Rasgue o Asfalto", "kicker": "Sétima Alma" },
-    { "phase": 8, "id": "alma-08", "title": "Setores interditos", "kicker": "Oitava Alma" },
-    { "phase": 9, "id": "alma-09", "title": "Malha urbana", "kicker": "Nona Alma" },
-    { "phase": 10, "id": "alma-10", "title": "Risco sistémico", "kicker": "Décima Alma" },
-    { "phase": 11, "id": "alma-11", "title": "Triângulo fechado", "kicker": "Décima Primeira Alma" },
-    { "phase": 12, "id": "alma-12", "title": "Comissão", "kicker": "Décima Segunda Alma" },
-    { "phase": 13, "id": "alma-13", "title": "Permanência", "kicker": "Décima Terceira Alma" }
+    {
+      "phase": 1,
+      "id": "alma-01",
+      "title": "Superfície",
+      "kicker": "Primeira Alma"
+    },
+    {
+      "phase": 2,
+      "id": "alma-02",
+      "title": "Hidrografia soterrada",
+      "kicker": "Segunda Alma"
+    },
+    {
+      "phase": 3,
+      "id": "alma-03",
+      "title": "Património rígido",
+      "kicker": "Terceira Alma"
+    },
+    {
+      "phase": 4,
+      "id": "alma-04",
+      "title": "Acervo e memória",
+      "kicker": "Quarta Alma"
+    },
+    {
+      "phase": 5,
+      "id": "alma-05",
+      "title": "Geotecnia",
+      "kicker": "Quinta Alma"
+    },
+    {
+      "phase": 6,
+      "id": "alma-06",
+      "title": "Arquivo superficial",
+      "kicker": "Sexta Alma"
+    },
+    {
+      "phase": 7,
+      "id": "alma-07",
+      "title": "Rasgue o Asfalto",
+      "kicker": "Sétima Alma"
+    },
+    {
+      "phase": 8,
+      "id": "alma-08",
+      "title": "Setores interditos",
+      "kicker": "Oitava Alma"
+    },
+    {
+      "phase": 9,
+      "id": "alma-09",
+      "title": "Malha urbana",
+      "kicker": "Nona Alma"
+    },
+    {
+      "phase": 10,
+      "id": "alma-10",
+      "title": "Risco sistémico",
+      "kicker": "Décima Alma"
+    },
+    {
+      "phase": 11,
+      "id": "alma-11",
+      "title": "Triângulo fechado",
+      "kicker": "Décima Primeira Alma"
+    },
+    {
+      "phase": 12,
+      "id": "alma-12",
+      "title": "Comissão",
+      "kicker": "Décima Segunda Alma"
+    },
+    {
+      "phase": 13,
+      "id": "alma-13",
+      "title": "Permanência",
+      "kicker": "Décima Terceira Alma"
+    }
   ],
   "layerMinPhase": {
     "16_regiao_centro__polygon": 1,
@@ -58,7 +123,8 @@
     "centro_arquivo_superficial__point": 6,
     "15_osm_ruas__line": 9,
     "15_osm_enderecos__point": 9,
-    "centro_pois_turisticos__point": 3
+    "centro_pois_turisticos__point": 3,
+    "centro_quadras_fiscais__polygon": 9
   },
   "themeMinPhase": {
     "monumentos": 3,
@@ -75,10 +141,25 @@
     "triangulo-historico": 11
   },
   "clueCountAdvance": [
-    { "minClues": 2, "phase": 2 },
-    { "minClues": 5, "phase": 3 },
-    { "minClues": 8, "phase": 4 },
-    { "minClues": 11, "phase": 5 },
-    { "minClues": 14, "phase": 6 }
+    {
+      "minClues": 2,
+      "phase": 2
+    },
+    {
+      "minClues": 5,
+      "phase": 3
+    },
+    {
+      "minClues": 8,
+      "phase": 4
+    },
+    {
+      "minClues": 11,
+      "phase": 5
+    },
+    {
+      "minClues": 14,
+      "phase": 6
+    }
   ]
 }

@@ -45,7 +45,11 @@
       return !!(style && style.glyphs);
     }
 
-    function getMapIconHaloPaint() {
+    function getMapIconHaloPaint(themeId) {
+      var classifier = window.CENTRO && window.CENTRO.poiEraClassifier;
+      if (classifier && typeof classifier.buildSubFilterPaint === "function" && themeId) {
+        return classifier.buildSubFilterPaint(themeId);
+      }
       var iconsRegistry = window.MAPA_SP_ICONS;
       var paper = (iconsRegistry && iconsRegistry.settings && iconsRegistry.settings.paper) || "#fdfbf7";
       return {
@@ -53,6 +57,13 @@
         "icon-halo-width": 2,
         "icon-halo-blur": 0.5,
       };
+    }
+
+    function enrichSourceData(themeId, sourceData) {
+      var classifier = window.CENTRO && window.CENTRO.poiEraClassifier;
+      if (!classifier || typeof classifier.enrichGeojson !== "function") return sourceData;
+      if (typeof sourceData === "string") return sourceData;
+      return classifier.enrichGeojson(themeId, sourceData);
     }
 
     function pistaItemFromProperties(properties) {
@@ -76,6 +87,7 @@
       var addrProp = cfg.addrProp;
       var iconPath = cfg.iconPath;
       var layerFile = cfg.layerFile;
+      var themeId = cfg.themeId;
 
       var addSymbol = getMapHelper("addSymbolPopupLayer");
       if (typeof addSymbol !== "function") {
@@ -115,6 +127,8 @@
         sourceData = await fetchLayer(layerFile);
       }
 
+      sourceData = enrichSourceData(themeId, sourceData);
+
       return addSymbol(mapInstance, {
         sourceId: sourceId,
         iconLayerId: iconLayerId,
@@ -127,7 +141,7 @@
           "icon-allow-overlap": true,
           "icon-anchor": "center",
         },
-        iconPaint: getMapIconHaloPaint(),
+        iconPaint: getMapIconHaloPaint(themeId),
         label: labelConfig,
         popup: {
           factoryKey: "createPoiPopupNode",
@@ -308,11 +322,12 @@
           titleProp: poiCfg.titleProp,
           descProp: poiCfg.descProp,
           addrProp: poiCfg.addrProp,
+          themeId: poiCfg.id,
         };
         if (poiCfg.id === "poi-turistico") {
           poiLayerArgs.layerFile = poiCfg.layerFile;
         } else {
-          poiLayerArgs.dataPath = buildLayerDataUrl({ file: poiCfg.layerFile });
+          poiLayerArgs.layerFile = poiCfg.layerFile;
         }
         try {
           await addPOILayer(mapInstance, poiLayerArgs);

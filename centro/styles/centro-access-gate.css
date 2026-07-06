@@ -1,0 +1,169 @@
+/**
+ * Gate de primeira visita — overlay escuro + quadro de senha (HUD forense).
+ */
+
+.centro-access-gate {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-modal, 1000) + 20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(16px, var(--jesuit-frame-top, 56px))
+    max(16px, var(--jesuit-frame-right, 44px))
+    max(16px, var(--jesuit-frame-bottom, 48px))
+    max(16px, var(--jesuit-frame-left, 44px));
+}
+
+.centro-access-gate[hidden] {
+  display: none !important;
+}
+
+.centro-access-gate__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 7, 15, 0.94);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.centro-access-gate__panel {
+  position: relative;
+  width: min(420px, 100%);
+  padding: 28px 28px 24px;
+  border: 1px solid rgba(220, 38, 38, 0.45);
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.98) 0%, rgba(8, 8, 10, 0.98) 100%);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.centro-access-gate__kicker {
+  margin: 0 0 8px;
+  font-family: var(--font-code);
+  font-size: var(--sidebar-type-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-strong-muted);
+}
+
+.centro-access-gate__title {
+  margin: 0 0 10px;
+  font-family: var(--font-code);
+  font-size: var(--sidebar-type-section);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fbbf24;
+  line-height: 1.25;
+}
+
+.centro-access-gate__intro {
+  margin: 0 0 20px;
+  font-family: var(--font-ui);
+  font-size: var(--sidebar-type-body);
+  line-height: 1.5;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.centro-access-gate__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.centro-access-gate__label {
+  font-family: var(--font-code);
+  font-size: var(--sidebar-type-meta);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(203, 213, 225, 0.8);
+}
+
+.centro-access-gate__input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #f8fafc;
+  font-family: var(--font-code);
+  font-size: var(--sidebar-type-body);
+  letter-spacing: 0.04em;
+}
+
+.centro-access-gate__input:focus {
+  outline: 2px solid rgba(245, 158, 11, 0.55);
+  outline-offset: 1px;
+  border-color: rgba(245, 158, 11, 0.65);
+}
+
+.centro-access-gate__error {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--sidebar-type-meta);
+  color: var(--color-accent-strong-muted);
+}
+
+.centro-access-gate__error[hidden] {
+  display: none;
+}
+
+.centro-access-gate__hint {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--sidebar-type-meta);
+  color: rgba(148, 163, 184, 0.78);
+}
+
+.centro-access-gate__submit {
+  margin-top: 6px;
+  padding: 11px 16px;
+  border: 1px solid rgba(245, 158, 11, 0.55);
+  border-radius: 2px;
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  font-family: var(--font-code);
+  font-size: var(--sidebar-type-meta);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.centro-access-gate__submit:hover {
+  background: rgba(245, 158, 11, 0.22);
+  border-color: #f59e0b;
+}
+
+.centro-access-gate--shake .centro-access-gate__panel {
+  animation: centro-access-shake 0.42s ease;
+}
+
+@keyframes centro-access-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+body.centro-access-locked {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .centro-access-gate--shake .centro-access-gate__panel {
+    animation: none;
+  }
+}

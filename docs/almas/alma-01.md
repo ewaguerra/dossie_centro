@@ -9,6 +9,8 @@
 
 Registo canónico de gates: [`phase-gates.json`](../../centro/data/catalog/phase-gates.json). Arquitectura de missões: [`missions-almas.md`](../architecture/missions-almas.md).
 
+> **Nota:** a esfera 3D `subsolo-01` (missão da Fase 7 — subsolo) **não** é esta alma ARG `alma-01`. Ver [`alma-07.md`](alma-07.md) § namespaces.
+
 ---
 
 ## Gates técnicos (desbloqueiam nesta fase)

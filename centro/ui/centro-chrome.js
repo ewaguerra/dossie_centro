@@ -190,25 +190,39 @@
     }
 
     function setupSubterraneanGuide() {
+      var GUIDE_MIN_PHASE = 7;
       var guide = document.getElementById("subterranean-guide");
       var closeBtn = document.getElementById("subterranean-guide-close");
       var openBtns = document.querySelectorAll(
         "#subterranean-guide-open, #subterranean-guide-open-fases"
       );
-      var masterLink = document.getElementById("subterranean-master-link");
-      if (masterLink) {
-        var params = new URLSearchParams(window.location.search);
-        params.set("master", "1");
-        masterLink.href = "?" + params.toString();
-      }
       if (!guide || !closeBtn) return;
+
+      function getCurrentPhase() {
+        var ph = window.CENTRO && window.CENTRO.protocoloPhase;
+        if (ph && typeof ph.getPhase === "function") return ph.getPhase();
+        return 1;
+      }
+
+      function isSubterraneanGuideAvailable() {
+        return getCurrentPhase() >= GUIDE_MIN_PHASE;
+      }
 
       function closeGuide() {
         guide.hidden = true;
       }
 
       function openGuide() {
+        if (!isSubterraneanGuideAvailable()) return;
         guide.hidden = false;
+      }
+
+      function syncSubterraneanGuideAccess() {
+        var available = isSubterraneanGuideAvailable();
+        openBtns.forEach(function (btn) {
+          btn.hidden = !available;
+        });
+        if (!available && !guide.hidden) closeGuide();
       }
 
       closeBtn.addEventListener("click", closeGuide);
@@ -219,12 +233,15 @@
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape" && !guide.hidden) closeGuide();
       });
+      document.addEventListener("centro:arg-state-changed", syncSubterraneanGuideAccess);
 
       guide.hidden = true;
+      syncSubterraneanGuideAccess();
 
       window.CENTRO = window.CENTRO || {};
       window.CENTRO.ui = window.CENTRO.ui || {};
       window.CENTRO.ui.openSubterraneanGuide = openGuide;
+      window.CENTRO.ui.syncSubterraneanGuideAccess = syncSubterraneanGuideAccess;
     }
 
     function install() {

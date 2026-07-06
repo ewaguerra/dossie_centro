@@ -118,16 +118,33 @@ window.MAPA_SP_ICONS = {
   getThemeFilters: function () {
     var items = [];
     var order = ["memoria-paulistana", "acervo-tombado", "bem-arqueologico", "monumentos", "poi-turistico"];
+    var sourceByTheme = {
+      "memoria-paulistana": "memoria-paulistana-source",
+      "acervo-tombado": "acervo-tombado-source",
+      "bem-arqueologico": "bem-arqueologico-source",
+      monumentos: "monumentos-source",
+      "poi-turistico": "poi-turistico-source",
+    };
+    var classifier = window.CENTRO && window.CENTRO.poiEraClassifier;
     for (var i = 0; i < order.length; i++) {
       var id = order[i];
       var entry = this.patrimonio[id];
       if (!entry) continue;
+      var rule = classifier && typeof classifier.getThemeRule === "function" ? classifier.getThemeRule(id) : null;
+      var subFilters =
+        classifier && typeof classifier.getSubFiltersForTheme === "function"
+          ? classifier.getSubFiltersForTheme(id)
+          : [];
       items.push({
         id: id,
         color: entry.color,
         label: entry.label,
         iconPath: this.getIconPath(entry.file),
         layerIds: entry.layerIds || [],
+        sourceId: sourceByTheme[id] || "",
+        subFilterKind: rule && rule.strategy === "typology" ? "typology" : "era",
+        subProperty: rule && rule.strategy === "typology" ? "poi_typology" : "poi_era",
+        subFilters: subFilters,
       });
     }
     items.push({
@@ -136,6 +153,10 @@ window.MAPA_SP_ICONS = {
       label: this.pistas.label,
       iconPath: this.getIconPath(this.pistas.file),
       layerIds: this.pistas.layerIds || [],
+      sourceId: "rsb-pistas-source",
+      subFilterKind: null,
+      subProperty: null,
+      subFilters: [],
     });
     return items;
   },

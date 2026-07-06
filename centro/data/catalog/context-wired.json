@@ -1,16 +1,1 @@
-{
-  "version": 1,
-  "description": "Camadas context com GeoJSON no disco. Inclui OSM ruas/endereços (clipped) e demais context wired. Exclui centro_pois_turisticos (addPOILayer) e POIs patrimoniais duplicados (sidebar-exclude.json).",
-  "layerIds": [
-    "15_osm_ruas__line",
-    "15_osm_enderecos__point",
-    "centro_rios_geosampa__line",
-    "centro_area_inundavel__polygon",
-    "centro_rios_osm__line",
-    "centro_bem_tombado__polygon",
-    "centro_carta_geotecnica__polygon",
-    "centro_risco_alagamento__point",
-    "centro_declividade__polygon",
-    "centro_arquivo_superficial__point"
-  ]
-}
+{"version":1,"description":"Camadas context com GeoJSON no disco. Inclui OSM ruas/endereços (clipped) e demais context wired. Exclui centro_pois_turisticos (addPOILayer) e POIs patrimoniais duplicados (sidebar-exclude.json).","layerIds":["15_osm_ruas__line","15_osm_enderecos__point","centro_quadras_fiscais__polygon","centro_rios_geosampa__line","centro_area_inundavel__polygon","centro_rios_osm__line","centro_bem_tombado__polygon","centro_carta_geotecnica__polygon","centro_risco_alagamento__point","centro_declividade__polygon","centro_arquivo_superficial__point"]}

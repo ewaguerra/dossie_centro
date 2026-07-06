@@ -518,6 +518,7 @@
         ensureBuildings3dApi: ensureBuildings3dApi,
         ensureSubterraneanApi: ensureSubterraneanApi,
         syncTriangulo: syncTrianguloHistoricoOverlay,
+        mapReadyPromise: mapReadyPromise,
       });
     }
     return argResyncApi;
@@ -538,16 +539,31 @@
   }
 
   function bootstrap() {
-    var chrome = ensureCentroChromeApi();
-    if (chrome && typeof chrome.install === "function") chrome.install();
-    setupBuildings3DToggle();
-    setupSubterraneanToggle();
-    setupPoiThemeFilter();
-    setupCentroUiFromModules();
-    setupMissionsOrchestrator();
-    setupArgStateListener();
-    loadSidebarData();
-    initMap();
+    function startCentro() {
+      setupCentroUiFromModules();
+      setupMissionsOrchestrator();
+      setupArgStateListener();
+
+      var master = window.CENTRO && window.CENTRO.masterMode;
+      if (master && typeof master.install === "function") {
+        master.install({ mapReadyPromise: mapReadyPromise });
+      }
+
+      var chrome = ensureCentroChromeApi();
+      if (chrome && typeof chrome.install === "function") chrome.install();
+      setupBuildings3DToggle();
+      setupSubterraneanToggle();
+      setupPoiThemeFilter();
+      loadSidebarData();
+      initMap();
+    }
+
+    var gate = window.CENTRO && window.CENTRO.accessGate;
+    if (gate && typeof gate.install === "function") {
+      gate.install(startCentro);
+      return;
+    }
+    startCentro();
   }
 
   if (document.readyState === "loading") {

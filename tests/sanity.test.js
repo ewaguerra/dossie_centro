@@ -329,6 +329,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('centro-pistas-rsb-toggle'), 'toggle pistas RSB presente');
     assert.ok(html.includes('subterranean-guide-open'), 'botão guia Fase 7 presente');
     assert.ok(html.includes('subterranean-guide-open-fases'), 'botão guia na tab 13 Almas presente');
+    assert.ok(html.includes('subterranean-guide-open-fases" class="subterranean-guide-open-btn subterranean-guide-open-btn--fases" type="button" hidden'), 'botão guia fases oculto por defeito');
     assert.ok(!html.includes('class="sidebar-tools"'), 'acordeao A2 nao deve voltar');
 
     // Runtime tem tabs
@@ -337,8 +338,9 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(chrome.includes('setupSidebarTabs'), 'setupSidebarTabs no centro-chrome');
     assert.ok(chrome.includes('activateSidebarTab'), 'activateSidebarTab no centro-chrome');
     assert.ok(chrome.includes('sidebar-tab-camadas'), 'tab camadas default ausente');
-    assert.ok(chrome.includes('subterranean-guide-open-fases'), 'guia missão abre só por botão na tab 13 Almas');
-    assert.ok(chrome.includes('openSubterraneanGuide'), 'API openSubterraneanGuide ausente');
+    assert.ok(chrome.includes('syncSubterraneanGuideAccess'), 'guia subsolo sincroniza com fase ARG');
+    assert.ok(chrome.includes('GUIDE_MIN_PHASE'), 'guia subsolo exige fase minima');
+    assert.ok(chrome.includes('openSubterraneanGuide'), 'API openSubterraneanGuide presente');
     assert.ok(runtime.includes('ensureCentroChromeApi'), 'runtime delega chrome bootstrap');
     assert.ok(!chrome.includes('fasesTab.addEventListener("click", openGuide)'), 'tab 13 Almas não deve auto-abrir guia');
   });
@@ -524,6 +526,8 @@ describe('projeto_centro — sanity checks', () => {
     modules.forEach(function(token) {
       assert.ok(runtime.includes(token), token + ' ausente no runtime');
     });
+    assert.ok(runtime.includes('CENTRO.accessGate'), 'runtime aguarda gate de senha');
+    assert.ok(runtime.includes('gate.install(startCentro)'), 'initMap só após desbloqueio');
     assert.ok(!runtime.includes('<style'), 'runtime nao deve conter markup HTML inline');
   });
 
@@ -1720,7 +1724,8 @@ describe('projeto_centro — sanity checks', () => {
     const layerFile = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
     assert.ok(poiBoot.includes('poi-turistico'), 'poi-bootstrap deve carregar POI turistico');
     assert.ok(poiBoot.includes('POI_TURISTICO_LAYER_FILE'), 'poi-bootstrap referencia POI_TURISTICO_LAYER_FILE');
-    assert.ok(poiBoot.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'addPOILayer via buildLayerDataUrl');
+    assert.ok(poiBoot.includes('fetchLayerGeojson'), 'addPOILayer via fetchLayerGeojson');
+    assert.ok(poiBoot.includes('enrichGeojson'), 'addPOILayer enriquece GeoJSON com era/tipologia');
     assert.ok(!poiBoot.includes('"/centro/data/context/" + poiCfg.file'), 'addPOILayer sem hardcode /centro/data/context/');
     assert.ok(runtime.includes('.bootMapLayers'), 'runtime delega boot POI');
     assert.ok(icons.includes('"poi-turistico"'), 'map-icons patrimonio turistico ausente');
@@ -1792,9 +1797,16 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(exists('centro/features/catalog-load.js'), 'catalog-load.js ausente');
     assert.ok(exists('centro/features/layer-unlocks.js'), 'layer-unlocks.js ausente');
     assert.ok(exists('centro/features/protocolo-phase.js'), 'protocolo-phase.js ausente');
+    assert.ok(exists('centro/features/centro-access-gate.js'), 'centro-access-gate.js ausente');
     const html = read('centro/index.html');
     assert.ok(html.includes('catalog-load.js'), 'index deve carregar catalog-load');
     assert.ok(html.includes('layer-unlocks.js'), 'index deve carregar layer-unlocks');
+    assert.ok(html.includes('centro-access-gate.js'), 'index deve carregar access gate');
+    assert.ok(html.includes('id="centro-access-gate"'), 'overlay de senha presente no HTML');
+    assert.ok(html.includes('centro-access-gate.css'), 'CSS access gate presente');
+    const gate = read('centro/features/centro-access-gate.js');
+    assert.ok(gate.includes('centroAccessGranted'), 'gate persiste centroAccessGranted');
+    assert.ok(gate.includes('joelma'), 'senha narrativa joelma');
     const load = read('centro/features/catalog-load.js');
     assert.ok(load.includes('context-wired.json'), 'catalog-load deve ler context-wired');
   });
@@ -1820,6 +1832,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(gates.featureMinPhase && gates.featureMinPhase.subterranean === 7, 'featureMinPhase.subterranean');
     const html = read('centro/index.html');
     assert.ok(html.includes('poi-theme-filter.js'), 'index deve carregar poi-theme-filter.js');
+    assert.ok(html.includes('poi-era-classifier.js'), 'index deve carregar poi-era-classifier.js');
     assert.ok(html.includes('centro-phase-badge'), 'badge de fase no centro ausente');
     const runtime = read('centro/centro-runtime.js');
     const triOverlay = read('centro/map/triangulo-overlay.js');
@@ -1880,9 +1893,17 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(alma07.includes('getProgressLabel'), 'alma-07 deve expor progresso');
     const subRoot = read('centro/features/subterranean-cutaway.js');
     assert.ok(subRoot.includes('countSoulsFound'), 'subsolo expoe countSoulsFound');
+    assert.ok(subRoot.includes('subsolo-01'), 'esferas subsolo usam ids subsolo-NN');
+    assert.ok(subRoot.includes('migrateLegacySoulId'), 'migra ids legados alma-NN');
     assert.ok(subRoot.includes('centro:subterranean-progress'), 'subsolo emite progresso');
     const phasesPanel = read('centro/ui/sidebar-phases-panel.js');
+    const cssSidebar = read('centro/styles/sidebar.css');
     assert.ok(phasesPanel.includes('getPhaseMeta'), 'phases panel suporta meta de missão');
+    assert.ok(phasesPanel.includes('GUIDE_ALMA_ID'), 'guia ligado a alma-07 explicitamente');
+    assert.ok(phasesPanel.includes('currentPhase >= GUIDE_PHASE'), 'cartao guia so a partir da fase 7');
+    assert.ok(phasesPanel.includes('canOpenSubterraneanGuide'), 'clique no guia verifica fase');
+    assert.ok(phasesPanel.includes('phase-row--guide'), 'cartao alma-07 marcado como guia');
+    assert.ok(cssSidebar.includes('.phase-row--guide'), 'CSS cartão guia fase 7');
   });
 
   it('WCAG: contraste aviso digital e nav terminal', () => {
@@ -1900,11 +1921,12 @@ describe('projeto_centro — sanity checks', () => {
     );
   });
 
-  it('context-wired.json lista 10 camadas com ficheiro no disco', () => {
+  it('context-wired.json lista 11 camadas com ficheiro no disco', () => {
     const wired = JSON.parse(read('centro/data/catalog/context-wired.json'));
-    assert.strictEqual(wired.layerIds.length, 10);
+    assert.strictEqual(wired.layerIds.length, 11);
     assert.ok(wired.layerIds.includes('15_osm_ruas__line'), 'OSM ruas wired');
     assert.ok(wired.layerIds.includes('15_osm_enderecos__point'), 'OSM enderecos wired');
+    assert.ok(wired.layerIds.includes('centro_quadras_fiscais__polygon'), 'quadras fiscais wired');
     for (const id of wired.layerIds) {
       const ctx = JSON.parse(read('centro/data/catalog/context-layers.json'));
       const ly = ctx.layers.find((l) => l.id === id);
@@ -1924,7 +1946,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(orchestrator.includes('CENTRO.catalogLoad'), 'catalogo delegado via sidebar-orchestrator');
   });
 
-  it('sidebar: 9 grupos e 20 camadas na sidebar (10 processed + 10 context wired)', () => {
+  it('sidebar: 9 grupos e 21 camadas na sidebar (10 processed + 11 context wired)', () => {
     const processedGroups = JSON.parse(read('centro/data/catalog/groups.json'));
     const contextGroups = JSON.parse(read('centro/data/catalog/context-groups.json'));
     const processedLayers = JSON.parse(read('centro/data/catalog/layers.json')).layers || [];
@@ -1933,7 +1955,7 @@ describe('projeto_centro — sanity checks', () => {
     const excludeSet = new Set(exclude.layerIds || []);
     const sidebarCount = processedLayers.length + wired.layerIds.filter((id) => !excludeSet.has(id)).length;
     assert.strictEqual(processedGroups.length + contextGroups.length, 9, 'sidebar deve ter 9 grupos');
-    assert.strictEqual(sidebarCount, 20, 'sidebar deve ter 20 camadas wired');
+    assert.strictEqual(sidebarCount, 21, 'sidebar deve ter 21 camadas wired');
   });
 
   it('server.py: superficies removidas retornam 404', () => {
@@ -2222,7 +2244,8 @@ describe('projeto_centro — sanity checks', () => {
       'POI_TURISTICO_LAYER_FILE deve apontar para special/pois'
     );
     assert.ok(poiBoot.includes('layerFile: poi.POI_TURISTICO_LAYER_FILE'), 'poi-bootstrap usa POI_TURISTICO_LAYER_FILE');
-    assert.ok(poiBoot.includes('buildLayerDataUrl({ file: poiCfg.layerFile })'), 'demais POIs via buildLayerDataUrl');
+    assert.ok(poiBoot.includes('poiLayerArgs.layerFile = poiCfg.layerFile'), 'poi-bootstrap carrega POIs via layerFile');
+    assert.ok(poiBoot.includes('fetchLayerGeojson'), 'poi-bootstrap usa fetchLayerGeojson para POIs');
     assert.ok(!poiBoot.includes('"/centro/data/context/" + poiCfg'), 'sem hardcode /centro/data/context/ no poi-bootstrap');
     assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
     assert.ok(triangulo.includes('POI_TURISTICO_LAYER_FILE'), 'triangulo referencia POI_TURISTICO_LAYER_FILE');
