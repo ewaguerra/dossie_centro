@@ -65,6 +65,23 @@ window.MAPA_SP_ICONS = {
     layerIds: ["rsb-pistas-icon"],
   },
 
+  demo: {
+    id: "demo",
+    file: "icon-demo",
+    color: "#9a3412",
+    lucide: "book-open",
+    label: "Demo — livro-jogo",
+    layerIds: ["demo-demonao-icon"],
+    markers: {
+      "demo-santa-luzia": { file: "icon-demo-fonte", lucide: "droplets" },
+      "demo-solar-marquesa": { file: "icon-demo-marquesa", lucide: "crown" },
+      "demo-figueira-marquesa": { file: "icon-demo-arvore", lucide: "tree-deciduous" },
+      "demo-marco-zero": { file: "icon-demo-marco", lucide: "landmark" },
+      "demo-igreja-carmo": { file: "icon-demo-carmo", lucide: "church" },
+      "demo-triangulo": { file: "icon-demo-triangulo", lucide: "map-pin" },
+    },
+  },
+
   layers: {
     "13_saude__point": { lucide: "heart-pulse", color: "#ef4444" },
     "13_educacao__point": { lucide: "graduation-cap", color: "#2563eb" },
@@ -103,6 +120,35 @@ window.MAPA_SP_ICONS = {
 
   resolvePistasIcon: function () {
     return this.getIconPath(this.pistas.file);
+  },
+
+  resolveDemoMarkerIcon: function (markerId) {
+    var demo = this.demo;
+    if (!demo) return this.getIconPath("icon-demo");
+    var entry = demo.markers && markerId ? demo.markers[markerId] : null;
+    if (entry && entry.file) return this.getIconPath(entry.file);
+    return this.getIconPath(demo.file || "icon-demo");
+  },
+
+  getDemoMarkerImageId: function (markerId) {
+    var demo = this.demo;
+    if (demo && demo.markers && markerId && demo.markers[markerId]) {
+      return "demo-pin--" + markerId;
+    }
+    return "demo-pin--default";
+  },
+
+  buildDemoIconImageMatch: function () {
+    var demo = this.demo;
+    var expr = ["match", ["get", "markerId"]];
+    if (demo && demo.markers) {
+      var keys = Object.keys(demo.markers);
+      for (var i = 0; i < keys.length; i++) {
+        expr.push(keys[i], this.getDemoMarkerImageId(keys[i]));
+      }
+    }
+    expr.push(this.getDemoMarkerImageId(""));
+    return expr;
   },
 
   getLayerEntry: function (layerId) {

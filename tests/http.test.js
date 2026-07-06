@@ -355,6 +355,11 @@ describe('projeto_centro — HTTP integration', () => {
       '/centro/assets/icons/icon-arqueologia.svg',
       '/centro/assets/icons/icon-monumentos.svg',
       '/centro/assets/icons/icon-pista.svg',
+      '/centro/assets/icons/icon-demo.svg',
+      '/centro/assets/icons/icon-demo-marco.svg',
+      '/centro/assets/icons/icon-demo-marquesa.svg',
+      '/centro/assets/icons/icon-demo-fonte.svg',
+      '/centro/assets/icons/icon-demo-carmo.svg',
       '/centro/assets/icons/icon-droplets.svg',
       '/centro/assets/icons/icon-turismo.svg',
       '/centro/assets/icons/icon-linha-tempo.svg',
@@ -363,7 +368,9 @@ describe('projeto_centro — HTTP integration', () => {
       '/centro/data/geojson/special/timeline/centro_linha_tempo__line.geojson',
       '/centro/data/catalog/street-timeline-index.json',
       '/centro/data/catalog/layer-unlocks.json',
-      '/centro/data/catalog/memoria-paulistana-images.json',
+      '/centro/data/catalog/poi-wikipedia-images.json',
+      '/centro/data/demo/demonao-titilia-chapter.json',
+      '/centro/data/demo/demonao-titilia-markers.geojson',
     ];
 
     for (const path of paths) {

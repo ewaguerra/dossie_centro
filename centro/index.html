@@ -105,6 +105,9 @@
       <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-pois"
               aria-controls="sidebar-panel-pois" aria-selected="false" type="button"
               aria-label="Evidências — ícones e pistas no mapa">Evidências</button>
+      <button class="sidebar-tab sidebar-tab--compact" role="tab" id="sidebar-tab-demo"
+              aria-controls="sidebar-panel-demo" aria-selected="false" type="button"
+              aria-label="Demo — capítulo livro-jogo Demonão e Titília">Demo</button>
     </div>
     <div id="sidebar-panel-camadas" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-camadas" hidden>
       <p class="sidebar-tab-intro">Operador: interpole camadas de superfície — bairros, rios soterrados, zoneamento, risco. Marque o que ainda resiste no mapa-base. Nódulos clicáveis → aba Evidências.</p>
@@ -131,6 +134,18 @@
           </div>
         </details>
       </div>
+    </div>
+    <div id="sidebar-panel-demo" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-demo" hidden>
+      <p class="sidebar-tab-intro">Capítulo demo do livro-jogo: Demonão, Titília e o Marco Zero que mente. Siga os passos, decodifique senhas narrativas e cruze o mapa entre Praça da Sé e o Solar da Marquesa.</p>
+      <label class="sidebar-extras__row layer-row sidebar-demo-markers-toggle" for="centro-demo-markers-toggle">
+        <input type="checkbox" id="centro-demo-markers-toggle" checked />
+        <span class="sidebar-extras__text">Exibir pistas do capítulo demo no mapa</span>
+      </label>
+      <label class="sidebar-extras__row layer-row sidebar-demo-markers-toggle" for="centro-demo-reveal-all-toggle">
+        <input type="checkbox" id="centro-demo-reveal-all-toggle" />
+        <span class="sidebar-extras__text">Revelar todas as pistas desbloqueadas (spoiler)</span>
+      </label>
+      <div id="demo-panel" class="demo-panel" role="region" aria-label="Capítulo demo Demonão e Titília"></div>
     </div>
     <div id="sidebar-panel-fases" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="sidebar-tab-fases">
       <p class="sidebar-tab-intro">Registo das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.</p>
@@ -268,12 +283,13 @@
   <script src="/pages/centro/features/pistas.js" defer></script>
   <script src="/pages/centro/features/poi-icons.js" defer></script>
   <script src="/pages/centro/features/poi-era-classifier.js" defer></script>
-  <script src="/pages/centro/features/memoria-paulistana-images.js" defer></script>
+  <script src="/pages/centro/features/poi-wikipedia-images.js" defer></script>
   <script src="/pages/centro/features/buildings-3d.js" defer></script>
   <script src="/pages/centro/features/poi-theme-filter.js" defer></script>
   <script src="/pages/centro/features/layer-unlocks.js" defer></script>
   <script src="/pages/centro/features/catalog-load.js" defer></script>
   <script src="/pages/centro/features/protocolo-phase.js" defer></script>
+  <script src="/pages/centro/features/demo-chapter.js" defer></script>
   <script src="/pages/centro/features/master-mode.js" defer></script>
   <script src="/pages/centro/missions/alma-01/index.js" defer></script>
   <script src="/pages/centro/missions/alma-02/index.js" defer></script>
@@ -300,6 +316,7 @@
   <script src="/pages/centro/ui/investigation-ray.js" defer></script>
   <script src="/pages/centro/ui/evidence-card.js" defer></script>
   <script src="/pages/centro/ui/map-popups.js" defer></script>
+  <script src="/pages/centro/ui/sidebar-demo-panel.js" defer></script>
   <script src="/pages/centro/ui/sidebar-panel.js" defer></script>
   <script src="/pages/centro/ui/sidebar-phases-panel.js" defer></script>
   <script src="/pages/centro/ui/sidebar-events.js" defer></script>
@@ -311,6 +328,7 @@
   <script src="/pages/centro/map/street-labels-overlay.js" defer></script>
   <script src="/pages/centro/map/catalog-layer-controller.js" defer></script>
   <script src="/pages/centro/map/symbol-popup-layer.js" defer></script>
+  <script src="/pages/centro/map/demo-markers.js" defer></script>
   <script src="/pages/centro/map/poi-bootstrap.js" defer></script>
   <script src="/pages/centro/map/triangulo-overlay.js" defer></script>
   <script src="/pages/centro/map/map-init.js" defer></script>

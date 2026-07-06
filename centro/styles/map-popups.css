@@ -858,6 +858,32 @@ a.as-sponsor__nome:hover {
     transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Popups no mapa — leitura estável, sem animações que redimensionam o card */
+.evidence-card--map-popup.evidence-card--enter,
+.evidence-card--map-popup.evidence-card--visible {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.evidence-card--map-popup .evidence-card__spotlight,
+.evidence-card--map-popup .evidence-card__glare {
+  display: none;
+}
+
+.evidence-card--map-popup .evidence-card__title-char {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  animation: none;
+}
+
+.evidence-card--map-popup .evidence-card__quote--blur-in {
+  opacity: 1;
+  filter: none;
+  animation: none;
+}
+
 .evidence-card--visible .evidence-card__glare {
   animation: evidence-card-glare 0.85s ease 0.12s 1 forwards;
 }
@@ -1128,7 +1154,7 @@ a.as-sponsor__nome:hover {
 
 .evidence-card__text-tools-label {
   margin-right: auto;
-  font-size: calc(0.62rem * var(--evidence-text-scale, 1));
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--centro-ink-faint);
@@ -1143,7 +1169,7 @@ a.as-sponsor__nome:hover {
   background: var(--centro-paper);
   color: var(--centro-ink);
   font-family: var(--font-mono);
-  font-size: calc(0.72rem * var(--evidence-text-scale, 1));
+  font-size: 0.72rem;
   font-weight: 700;
   line-height: 1.2;
   cursor: pointer;

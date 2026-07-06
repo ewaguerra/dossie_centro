@@ -35,6 +35,7 @@
       tabs: {
         territorio: "Território",
         evidencias: "Evidências",
+        demo: "Demo",
         fases: "13 Almas",
         visualizacao: "Visualização"
       },
@@ -46,7 +47,9 @@
         fases:
           "Registo das 13 Almas — fases do Protocolo. Cada alma cruzada libera rastros no Território, sinais em Evidências e instrumentos em Visualização.",
         visualizacao:
-          "Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver clearance para ver o que a cidade enterrou."
+          "Instrumentos forenses: maquete estrutural 3D e corte subterrâneo (Fase 7 — Rasgue o Asfalto). Ative quando tiver clearance para ver o que a cidade enterrou.",
+        demo:
+          "Capítulo demo do livro-jogo: Demonão, Titília e o Marco Zero. Decodifique senhas narrativas e cruze o mapa entre Praça da Sé e o Solar da Marquesa."
       },
       meta: {
         layers: "21 camadas",

@@ -219,21 +219,25 @@
                 } else if (seqTotal > 1 && seq === seqTotal) {
                   threadHint = "Último marco cronológico deste logradouro.";
                 }
-                return [
-                  {
-                    title: properties.nm_titulo || "Evidência",
-                    streetDisplay: properties.street_display || "",
-                    address: properties.evidence_address || "",
-                    detail: properties.evidence_detail || "",
-                    year: properties.evidence_year || null,
-                    sourceThemeId: properties.source_theme_id || "",
-                    sequence: seq,
-                    sequenceTotal: seqTotal,
-                    threadHint: threadHint,
-                    themeId: "linha-tempo",
-                    eraId: properties.poi_era || "",
-                  },
-                ];
+                var timelineMeta = {
+                  title: properties.nm_titulo || "Evidência",
+                  streetDisplay: properties.street_display || "",
+                  address: properties.evidence_address || "",
+                  detail: properties.evidence_detail || "",
+                  year: properties.evidence_year || null,
+                  sourceThemeId: properties.source_theme_id || "",
+                  sequence: seq,
+                  sequenceTotal: seqTotal,
+                  threadHint: threadHint,
+                  themeId: "linha-tempo",
+                  eraId: properties.poi_era || "",
+                };
+                var wikiImages =
+                  window.CENTRO && window.CENTRO.poiWikipediaImages;
+                if (wikiImages && typeof wikiImages.applyWikiFields === "function") {
+                  wikiImages.applyWikiFields(timelineMeta, "linha-tempo", properties);
+                }
+                return [timelineMeta];
               },
               popupOptions: { maxWidth: "420px", offset: 24 },
             }
@@ -257,19 +261,10 @@
                   themeId: themeId,
                   eraId: properties.poi_era || properties.poi_typology || "",
                 };
-                if (themeId === "memoria-paulistana") {
-                  var mpImages =
-                    window.CENTRO &&
-                    window.CENTRO.memoriaPaulistanaImages;
-                  if (mpImages && typeof mpImages.lookup === "function") {
-                    var imgEntry = mpImages.lookup(properties.cd_identificador);
-                    if (imgEntry) {
-                      meta.imageUrl = imgEntry.imageUrl || "";
-                      meta.wikiUrl = imgEntry.wikiUrl || "";
-                      meta.wikiTitle = imgEntry.wikiTitle || "";
-                      meta.imageCredit = imgEntry.attribution || "";
-                    }
-                  }
+                var wikiImages =
+                  window.CENTRO && window.CENTRO.poiWikipediaImages;
+                if (wikiImages && typeof wikiImages.applyWikiFields === "function") {
+                  wikiImages.applyWikiFields(meta, themeId, properties);
                 }
                 return [meta];
               },
@@ -442,6 +437,8 @@
           iconLayerId:
             (poi.BEM_ARQUEOLOGICO_LAYERS && poi.BEM_ARQUEOLOGICO_LAYERS.iconLayerId) ||
             "bem-arqueologico-icon",
+          titleProp: "nm_imovel",
+          addrProp: "nm_endereco",
         },
         {
           id: "monumentos",
@@ -493,12 +490,12 @@
       }
 
       var poiConfigs = buildPoiConfigs(poi);
-      var mpImages = window.CENTRO && window.CENTRO.memoriaPaulistanaImages;
-      if (mpImages && typeof mpImages.load === "function") {
+      var wikiImages = window.CENTRO && window.CENTRO.poiWikipediaImages;
+      if (wikiImages && typeof wikiImages.load === "function") {
         try {
-          await mpImages.load();
+          await wikiImages.load();
         } catch (e) {
-          console.warn("[CENTRO] memoria-paulistana-images.json indisponível", e.message);
+          console.warn("[CENTRO] poi-wikipedia-images.json indisponível", e.message);
         }
       }
       for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
@@ -546,6 +543,15 @@
         console.warn("[CENTRO] Erro ao carregar pistas:", e);
         if (typeof hooks.onPistasError === "function") {
           hooks.onPistasError(e);
+        }
+      }
+
+      var demoMarkers = window.CENTRO && window.CENTRO.demoMarkers;
+      if (demoMarkers && typeof demoMarkers.bootDemoMarkers === "function") {
+        try {
+          await demoMarkers.bootDemoMarkers(mapInstance);
+        } catch (e) {
+          console.warn("[CENTRO] Erro demo markers:", e.message);
         }
       }
     }

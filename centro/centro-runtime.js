@@ -609,6 +609,10 @@
         },
         addLayerToMap: addLayerToMap,
         removeLayerFromMap: removeLayerFromMap,
+        flyToLocation: flyToLocation,
+        getMap: function () {
+          return map;
+        },
       });
     }
     return sidebarOrchestratorApi;

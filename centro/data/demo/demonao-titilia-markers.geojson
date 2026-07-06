@@ -1,0 +1,66 @@
+{
+  "type": "FeatureCollection",
+  "name": "demonao_titilia_demo_markers",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-46.63326, -23.54727] },
+      "properties": {
+        "markerId": "demo-santa-luzia",
+        "stepId": "facada",
+        "title": "Fonte de Santa Luzia",
+        "description": "Na manhã de 6 de março de 1819, Felício Pinto Coelho de Mendonça — marido violento e jogador — feriu Domitila com duas facadas (coxa e abdômen) perto da fonte de Santa Luzia. Ela sobreviveu; o divórcio só veio em 21 de maio de 1824. Em 29 de agosto de 1822, poucos dias antes da Independência, conheceria D. Pedro I."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-46.63222, -23.54859] },
+      "properties": {
+        "markerId": "demo-solar-marquesa",
+        "stepId": "marquesa",
+        "title": "Solar da Marquesa de Santos",
+        "description": "Em 1834 Domitila adquiriu este casarão de taipa-de-pilão — único remanescente urbano desse tipo no centro histórico. Palco de saraus da elite paulistana; presente do Imperador e alvo do «insulto desmiolado» de José Bonifácio («Quem sonharia que a michela Domitila seria viscondessa da pátria dos Andradas!»). Viscondessa (1825) e marquesa (1826) de Santos. Morreu aqui em 3 de novembro de 1867, aos 69 anos."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-46.62574, -23.54755] },
+      "properties": {
+        "markerId": "demo-figueira-marquesa",
+        "stepId": "volta",
+        "title": "Figueira da Marquesa",
+        "description": "Na chácara da Marquesa, nesta região, ficava a figueira que serviu de marco informal de entrada na cidade no século XIX (retirada no início do XX). Mandada de volta a SP em 1829, casou-se em 1842 com Rafael Tobias de Aguiar — o «Reizinho de São Paulo», rico tropeiro e líder liberal. Quando ele foi preso na Revolução de 1842, foi morar com ele na Fortaleza da Laje."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-46.63399862, -23.55041013] },
+      "properties": {
+        "markerId": "demo-marco-zero",
+        "stepId": "totem",
+        "title": "Marco Zero",
+        "description": "A cerca de duzentos metros do Solar da Marquesa de Santos. O Marco Zero atual (Jean Gabriel Villin, 1934) é a quarta tentativa de marcar o «centro» da cidade — cartão-postal oficial a passos da mulher que a corte estigmatizava como «michela» e que o Imperador assinava «Demonão» nas cartas."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-46.63107, -23.55058] },
+      "properties": {
+        "markerId": "demo-igreja-carmo",
+        "stepId": "epilogo",
+        "title": "Igreja do Carmo",
+        "description": "Igreja da Ordem Terceira do Carmo — fachada de Joaquim Pinto de Oliveira, o Tebas, escravo arquiteto que embelezou a casa de Deus sem poder sentar no banco. A cem metros do Marco Zero, no triângulo com o Solar da Marquesa: poder sagrado, oficial e extraoficial no mesmo raio."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-46.6334, -23.5494] },
+      "properties": {
+        "markerId": "demo-triangulo",
+        "stepId": "epilogo",
+        "title": "Triângulo das Alcunhas",
+        "description": "Marco Zero, Solar da Marquesa (~200 m) e Igreja do Carmo (~100 m): poder oficial, extraoficial e negado em trezentos metros. Domitila de Castro (1797–1867), viscondessa e marquesa de Santos, morreu no Solar e foi sepultada no Cemitério da Consolação — hoje objeto de devoção popular."
+      }
+    }
+  ]
+}

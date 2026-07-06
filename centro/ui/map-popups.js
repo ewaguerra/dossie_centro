@@ -16,6 +16,7 @@
     "poi-turistico": "Turismo",
     "linha-tempo": "Linha do tempo",
     pistas: "Pista Histórica",
+    demo: "Demo — Demonão e Titília",
   };
 
   var THEME_EYEBROW_SHORT = {
@@ -185,7 +186,7 @@
 
     var enhance = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.enhanceEvidenceCard;
     if (typeof enhance === "function") {
-      enhance(root, { spotlightColor: hexToRgba(themeColor, 0.2) });
+      enhance(root, { variant: "map-popup", spotlightColor: hexToRgba(themeColor, 0.2) });
     }
 
     return root;
@@ -212,6 +213,18 @@
     titleEl.className = "evidence-card__title poi-popup__title";
     titleEl.textContent = meta.title || "Evidência";
     root.appendChild(titleEl);
+
+    if (meta.imageUrl) {
+      var figure = document.createElement("figure");
+      figure.className = "evidence-card__media";
+      var img = document.createElement("img");
+      img.className = "poi-popup__img evidence-card__img";
+      img.alt = meta.title || "";
+      img.loading = "lazy";
+      img.src = meta.imageUrl;
+      figure.appendChild(img);
+      root.appendChild(figure);
+    }
 
     var streetLine = document.createElement("p");
     streetLine.className = "evidence-card__meta timeline-popup__street";
@@ -271,9 +284,29 @@
       root.appendChild(thread);
     }
 
+    if (meta.wikiUrl) {
+      var pWiki = document.createElement("p");
+      pWiki.className = "poi-popup__source evidence-card__source";
+      var wikiLabel = document.createElement("span");
+      wikiLabel.textContent = "Fonte: ";
+      pWiki.appendChild(wikiLabel);
+      var wikiLink = document.createElement("a");
+      wikiLink.href = meta.wikiUrl;
+      wikiLink.target = "_blank";
+      wikiLink.rel = "noopener";
+      wikiLink.textContent = meta.wikiTitle || "Wikipedia";
+      pWiki.appendChild(wikiLink);
+      root.appendChild(pWiki);
+    } else if (meta.imageCredit) {
+      var pCredit = document.createElement("p");
+      pCredit.className = "poi-popup__source evidence-card__source";
+      pCredit.textContent = meta.imageCredit;
+      root.appendChild(pCredit);
+    }
+
     var enhance = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.enhanceEvidenceCard;
     if (typeof enhance === "function") {
-      enhance(root, { spotlightColor: hexToRgba(themeColor, 0.2) });
+      enhance(root, { variant: "map-popup", spotlightColor: hexToRgba(themeColor, 0.2) });
     }
 
     return root;
@@ -331,7 +364,7 @@
 
     var enhance = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.enhanceEvidenceCard;
     if (typeof enhance === "function") {
-      enhance(root, { spotlightColor: "rgba(37, 99, 235, 0.16)" });
+      enhance(root, { variant: "map-popup", spotlightColor: "rgba(37, 99, 235, 0.16)" });
     }
 
     return root;

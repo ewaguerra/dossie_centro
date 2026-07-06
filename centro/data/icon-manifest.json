@@ -19,6 +19,13 @@
     { "out": "icon-turismo", "lucide": "binoculars", "color": "#2563eb" },
     { "out": "icon-pista", "lucide": "camera", "color": "#eab308" },
     { "out": "icon-droplets", "lucide": "droplets", "color": "#0284c7" },
-    { "out": "icon-linha-tempo", "lucide": "hourglass", "color": "#7c3aed", "eraHalo": true }
+    { "out": "icon-linha-tempo", "lucide": "hourglass", "color": "#7c3aed", "eraHalo": true },
+    { "out": "icon-demo", "lucide": "book-open", "color": "#9a3412" },
+    { "out": "icon-demo-marco", "lucide": "landmark", "color": "#9a3412" },
+    { "out": "icon-demo-marquesa", "lucide": "crown", "color": "#9a3412" },
+    { "out": "icon-demo-fonte", "lucide": "droplets", "color": "#9a3412" },
+    { "out": "icon-demo-carmo", "lucide": "church", "color": "#9a3412" },
+    { "out": "icon-demo-arvore", "lucide": "tree-deciduous", "color": "#9a3412" },
+    { "out": "icon-demo-triangulo", "lucide": "map-pin", "color": "#9a3412" }
   ]
 }

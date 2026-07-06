@@ -150,6 +150,20 @@
             phaseApi.updatePhaseBadge();
           }
           renderPhasesPanel();
+          var demoInstall = window.CENTRO && window.CENTRO.ui && window.CENTRO.ui.installDemoPanel;
+          if (typeof demoInstall === "function") {
+            var demoOpts = {
+              flyTo: typeof ctx.flyToLocation === "function" ? ctx.flyToLocation : null,
+              map: typeof ctx.getMap === "function" ? ctx.getMap() : null,
+            };
+            demoInstall(demoOpts);
+            if (typeof ctx.whenMapReady === "function") {
+              ctx.whenMapReady(function () {
+                demoOpts.map = typeof ctx.getMap === "function" ? ctx.getMap() : null;
+                demoInstall(demoOpts);
+              });
+            }
+          }
           var phaseNum = phaseApi && typeof phaseApi.getPhase === "function" ? phaseApi.getPhase() : 1;
           console.log(
             "[CENTRO] Sidebar carregada:",

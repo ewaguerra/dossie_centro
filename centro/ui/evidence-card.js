@@ -83,6 +83,10 @@
     cardEl.insertBefore(toolbar, cardEl.firstChild);
   }
 
+  function isMapPopupVariant(options) {
+    return options && options.variant === "map-popup";
+  }
+
   function prefersReducedMotion() {
     return (
       typeof window.matchMedia === "function" &&
@@ -156,18 +160,22 @@
     if (!cardEl || cardEl.dataset.evidenceEnhanced === "1") return cardEl;
 
     options = options || {};
+    var mapPopup = isMapPopupVariant(options);
     cardEl.dataset.evidenceEnhanced = "1";
     cardEl.classList.add("evidence-card");
 
     if (options.variant === "sidebar") {
       cardEl.classList.add("evidence-card--sidebar");
     }
+    if (mapPopup) {
+      cardEl.classList.add("evidence-card--map-popup");
+    }
 
     if (options.spotlightColor) {
       cardEl.style.setProperty("--spotlight-color", options.spotlightColor);
     }
 
-    if (!cardEl.querySelector(".evidence-card__spotlight")) {
+    if (!mapPopup && !cardEl.querySelector(".evidence-card__spotlight")) {
       var spotlight = document.createElement("div");
       spotlight.className = "evidence-card__spotlight";
       spotlight.setAttribute("aria-hidden", "true");
@@ -176,7 +184,7 @@
 
     attachTextScaleToolbar(cardEl);
 
-    if (!cardEl.querySelector(".evidence-card__glare")) {
+    if (!mapPopup && !cardEl.querySelector(".evidence-card__glare")) {
       var glare = document.createElement("div");
       glare.className = "evidence-card__glare";
       glare.setAttribute("aria-hidden", "true");
@@ -188,7 +196,7 @@
       }
     }
 
-    if (!prefersReducedMotion()) {
+    if (!mapPopup && !prefersReducedMotion()) {
       cardEl.addEventListener("pointermove", onPointerMove);
       cardEl.addEventListener(
         "pointerleave",
@@ -200,11 +208,15 @@
       );
     }
 
-    cardEl.classList.add("evidence-card--enter");
-    requestAnimationFrame(function () {
+    if (mapPopup) {
       cardEl.classList.add("evidence-card--visible");
-      decorateEvidenceCardContent(cardEl);
-    });
+    } else {
+      cardEl.classList.add("evidence-card--enter");
+      requestAnimationFrame(function () {
+        cardEl.classList.add("evidence-card--visible");
+        decorateEvidenceCardContent(cardEl);
+      });
+    }
 
     return cardEl;
   }

@@ -1,0 +1,102 @@
+{
+  "id": "demonao-titilia",
+  "title": "O Demonão e a Titília",
+  "subtitle": "Dois Metros de Distância, Duzentos Anos de Hipocrisia",
+  "tagline": "Livro-jogo demo — Marco Zero, Marquesa e o centro que não é centro de nada.",
+  "steps": [
+    {
+      "id": "prefacio",
+      "chapter": "Prefácio",
+      "title": "Demonão e Titília",
+      "kicker": "Passo 1 de 8",
+      "body": "Dom Pedro I assinava as cartas para Domitila como DEMONÃO. Ela era Titília. Mais de 180 cartas — juras de amor, Estado, fofoca da corte, linguagem vulgar e, dizem os biógrafos, desenhos eróticos nas margens. Domitila de Castro (1797–1867), filha de família da elite paulista, tornou-se a amante mais longa e notória do Imperador — relação de cerca de sete anos, desde 29 de agosto de 1822.",
+      "hint": "Como o Imperador assinava nas cartas para a amante?",
+      "passwords": ["demonão", "demonao"],
+      "clueId": "demo-demonao-prefacio",
+      "flyTo": { "lng": -46.6334, "lat": -23.5494, "zoom": 16.2, "pitch": 0 }
+    },
+    {
+      "id": "facada",
+      "chapter": "Capítulo II",
+      "title": "A facada",
+      "kicker": "Passo 2 de 8",
+      "body": "Na manhã de 6 de março de 1819, perto da fonte de Santa Luzia, o marido Felício deu duas facadas em Domitila — coxa e abdômen. O processo de divórcio revelou violência doméstica e tentativa de se apossar das terras em Minas; a acusação de adultério era infundada. O divórcio só veio em 21 de maio de 1824. Três anos antes, em 29 de agosto de 1822, ela conhecera o Imperador em São Paulo.",
+      "hint": "Apelido carinhoso da amante nas cartas do Demonão.",
+      "passwords": ["titília", "titilia", "santa luzia", "facada"],
+      "markerId": "demo-santa-luzia",
+      "clueId": "demo-demonao-facada",
+      "flyTo": { "lng": -46.63326, "lat": -23.54727, "zoom": 17, "pitch": 0 }
+    },
+    {
+      "id": "irma",
+      "chapter": "Capítulo II",
+      "title": "A irmã também",
+      "kicker": "Passo 3 de 8",
+      "body": "Dom Pedro teve caso com Maria Benedita, irmã de Domitila, ao mesmo tempo. O Demonão não era monogâmico. Era imperial — e mantinha outros casos paralelos além das duas irmãs Castro.",
+      "hint": "Nome da irmã de Domitila que também foi amante do Imperador.",
+      "passwords": ["maria benedita", "benedita", "imperial"],
+      "clueId": "demo-demonao-irma",
+      "flyTo": { "lng": -46.6328, "lat": -23.5489, "zoom": 16.5, "pitch": 0 }
+    },
+    {
+      "id": "dama",
+      "chapter": "Capítulo II",
+      "title": "Dama de companhia da Imperatriz",
+      "kicker": "Passo 4 de 8",
+      "body": "Em 4 de abril de 1825, Dom Pedro nomeou a amante dama camarista da Imperatriz Leopoldina — posição de honra no círculo íntimo da esposa. Leopoldina escreveu à irmã: «O monstro sedutor é a causa de todas as desgraças.» A imperatriz morreu em dezembro de 1826; a hostilidade pública contra a Marquesa intensificou-se.",
+      "hint": "Nome da Imperatriz traída.",
+      "passwords": ["leopoldina", "dama de companhia", "imperatriz"],
+      "clueId": "demo-demonao-dama",
+      "flyTo": { "lng": -46.63222, "lat": -23.54859, "zoom": 17, "pitch": 0 }
+    },
+    {
+      "id": "marquesa",
+      "chapter": "Capítulo II",
+      "title": "Que insulto desmiolado!",
+      "kicker": "Passo 5 de 8",
+      "body": "Viscondessa de Santos (12 de outubro de 1825) e marquesa no ano seguinte — título «de Santos» como provocação aos Andrada. José Bonifácio escreveu do exílio: «Quem sonharia que a michela Domitila seria viscondessa da pátria dos Andradas! Que insulto desmiolado!» Em 1834 adquiriu o Solar, casarão de taipa-de-pilão a duzentos metros do Marco Zero.",
+      "hint": "Como a corte insultava Domitila — ou o título que o Imperador lhe deu.",
+      "passwords": ["marquesa", "marquesa de santos", "michela", "insulto desmiolado", "andradas"],
+      "markerId": "demo-solar-marquesa",
+      "clueId": "demo-demonao-marquesa",
+      "flyTo": { "lng": -46.63222, "lat": -23.54859, "zoom": 17.5, "pitch": 45 }
+    },
+    {
+      "id": "volta",
+      "chapter": "Capítulo II",
+      "title": "A volta por cima",
+      "kicker": "Passo 6 de 8",
+      "body": "Mandada de volta a SP em 1829 — condição imposta pelas cortes europeias para o casamento de D. Pedro com Amélia de Leuchtenberg —, casou em 1842 com Rafael Tobias de Aguiar, o Reizinho de São Paulo. Líder da Revolução Liberal de 1842, preso na Fortaleza da Laje; ela foi morar na cadeia com ele. Matriarca, filantropia, morreu rica e respeitada no Solar em 1867.",
+      "hint": "Apelido do homem mais poderoso da província que ela casou.",
+      "passwords": ["reizinho", "tobias", "rafael tobias", "volta por cima"],
+      "markerId": "demo-figueira-marquesa",
+      "clueId": "demo-demonao-volta",
+      "flyTo": { "lng": -46.62574, "lat": -23.54755, "zoom": 16.5, "pitch": 0 }
+    },
+    {
+      "id": "totem",
+      "chapter": "Capítulo I",
+      "title": "O francês e o totem",
+      "kicker": "Passo 7 de 8",
+      "body": "O Marco Zero foi projetado pelo francês Jean Gabriel Villin (1934). É a quarta tentativa de fincar um totem e dizer «aqui é o começo». Seis faces com estereótipos dos estados vizinhos — a duzentos metros, a mulher que a corte chamava de puta; a placa de bronze mede setenta centímetros para setecentos anos mal contados.",
+      "hint": "Sobrenome do arquiteto francês — ou o que este monumento finge ser.",
+      "passwords": ["villin", "marco zero", "quarta tentativa", "jean gabriel"],
+      "markerId": "demo-marco-zero",
+      "clueId": "demo-demonao-totem",
+      "flyTo": { "lng": -46.63399862, "lat": -23.55041013, "zoom": 18, "pitch": 50 }
+    },
+    {
+      "id": "epilogo",
+      "chapter": "Epílogo",
+      "title": "A placa que não existe",
+      "kicker": "Passo 8 de 8",
+      "body": "Se o Marco Zero fosse honesto, diria: a duzentos metros, Domitila de Castro — viscondessa e marquesa de Santos, sepultada no Cemitério da Consolação; a cem metros, a igreja que Tebas embelezou sem poder sentar no banco. Demonão, Titília e Tebas mandam lembranças.",
+      "hint": "Nome do escravo arquiteto da Igreja do Carmo — ou a despedida do epílogo.",
+      "passwords": ["tebas", "demonão titília tebas", "demonao titilia tebas", "joao pinto de oliveira"],
+      "markerId": "demo-triangulo",
+      "markerIds": ["demo-triangulo", "demo-igreja-carmo"],
+      "clueId": "demo-demonao-epilogo",
+      "flyTo": { "lng": -46.6336, "lat": -23.5492, "zoom": 16.8, "pitch": 55 }
+    }
+  ]
+}

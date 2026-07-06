@@ -17,6 +17,7 @@
     "sync:geojson-from-salto": "python3 scripts/sync-geojson-from-salto.py",
     "build:street-names": "node scripts/build-street-names-overlay.mjs",
     "build:street-timeline": "node scripts/build-street-timeline.mjs",
+    "fetch:poi-wikipedia-images": "node scripts/fetch-poi-wikipedia-images.mjs",
     "sync:quadras-geosampa": "python scripts/sync-quadras-geosampa.py",
     "postinstall": "node scripts/sync-maplibre.mjs --silent || true; node scripts/sync-three.mjs --silent || true; node scripts/sync-lucide-icons.mjs --silent || true; node scripts/sync-basemap-style.mjs --silent || true"
   },

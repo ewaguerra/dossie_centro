@@ -287,6 +287,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('id="sidebar-tab-camadas"'), 'tab camadas ausente');
     assert.ok(html.includes('id="sidebar-tab-opcoes"'), 'tab opcoes ausente');
     assert.ok(html.includes('id="sidebar-tab-pois"'), 'tab pois ausente');
+    assert.ok(html.includes('id="sidebar-tab-demo"'), 'tab demo ausente');
     assert.ok(html.includes('id="sidebar-tab-fases"'), 'tab fases ausente');
     assert.ok(html.includes('id="phases-panel"'), 'phases-panel ausente');
     assert.ok(html.includes('13 Almas'), 'tab 13 Almas presente');
@@ -294,6 +295,8 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('id="sidebar-panel-camadas"'), 'panel camadas ausente');
     assert.ok(html.includes('id="sidebar-panel-opcoes"'), 'panel opcoes ausente');
     assert.ok(html.includes('id="sidebar-panel-pois"'), 'panel pois ausente');
+    assert.ok(html.includes('id="sidebar-panel-demo"'), 'panel demo ausente');
+    assert.ok(html.includes('id="demo-panel"'), 'demo-panel ausente');
     assert.ok(html.includes('role="tabpanel"'), 'tabpanel role ausente');
 
     // Camadas fica no painel correto
@@ -324,6 +327,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(html.includes('Evidências no mapa'), 'label filtro POI preservado');
     assert.ok(html.includes('Território'), 'tab Território renomeado');
     assert.ok(html.includes('Evidências'), 'tab Evidências renomeado');
+    assert.ok(html.includes('>Demo</button>'), 'tab Demo presente');
     assert.ok(html.includes('Visualização'), 'tab Visualização renomeado');
     assert.ok(html.includes('sidebar-tab-intro'), 'intro por tab presente');
     assert.ok(html.includes('sidebar-viz-card'), 'cartões Visualização presentes');
@@ -2469,7 +2473,7 @@ describe('projeto_centro — sanity checks', () => {
   it('map-popups.css inclui animacoes React Bits (shiny, split, electric)', () => {
     const css = read('centro/styles/map-popups.css');
     assert.ok(css.includes('.evidence-card__eyebrow-shiny'), 'ShinyText ausente');
-    assert.ok(css.includes('.evidence-card__title-char'), 'SplitText ausente');
+    assert.ok(css.includes('.evidence-card--map-popup'), 'estilo map-popup estavel ausente');
     assert.ok(css.includes('.electric-border'), 'ElectricBorder ausente');
     assert.ok(css.includes('var(--quote-accent'), 'quote-accent tematico ausente');
     assert.ok(css.includes('.evidence-popup'), 'evidence-popup shell ausente');
@@ -2477,22 +2481,24 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!css.includes('border-left: 3px solid #2563eb'), 'memoria-enunciado ainda usa azul fixo');
   });
 
-  it('memoria paulistana: manifest Wikipedia e lookup no popup POI', () => {
+  it('POI cards: manifest Wikipedia unificado e lookup nos popups', () => {
     const html = read('centro/index.html');
-    const imagesIdx = html.indexOf('features/memoria-paulistana-images.js');
+    const imagesIdx = html.indexOf('features/poi-wikipedia-images.js');
     const poiBootIdx = html.indexOf('map/poi-bootstrap.js');
-    assert.ok(imagesIdx > -1, 'memoria-paulistana-images.js ausente no HTML');
+    assert.ok(imagesIdx > -1, 'poi-wikipedia-images.js ausente no HTML');
     assert.ok(imagesIdx < poiBootIdx, 'manifest loader deve preceder poi-bootstrap');
 
-    const mod = read('centro/features/memoria-paulistana-images.js');
+    const mod = read('centro/features/poi-wikipedia-images.js');
     assert.doesNotThrow(() => new Function(mod));
-    assert.ok(mod.includes('memoriaPaulistanaImages'), 'export memoriaPaulistanaImages ausente');
-    assert.ok(mod.includes('memoria-paulistana-images.json'), 'URL do manifest ausente');
+    assert.ok(mod.includes('poiWikipediaImages'), 'export poiWikipediaImages ausente');
+    assert.ok(mod.includes('poi-wikipedia-images.json'), 'URL do manifest ausente');
+    assert.ok(mod.includes('applyWikiFields'), 'applyWikiFields ausente');
 
-    const manifest = JSON.parse(read('centro/data/catalog/memoria-paulistana-images.json'));
-    const keys = Object.keys(manifest);
-    assert.ok(keys.length >= 50, 'manifest deve ter dezenas de imagens');
-    const sample = manifest['67'] || manifest[keys[0]];
+    const manifest = JSON.parse(read('centro/data/catalog/poi-wikipedia-images.json'));
+    const memoria = manifest['memoria-paulistana'] || {};
+    const keys = Object.keys(memoria);
+    assert.ok(keys.length >= 50, 'memoria-paulistana deve ter dezenas de imagens');
+    const sample = memoria['67'] || memoria[keys[0]];
     assert.ok(sample.imageUrl && sample.imageUrl.startsWith('https://'), 'imageUrl Wikipedia ausente');
     assert.ok(sample.wikiUrl && sample.wikiUrl.includes('wikipedia.org'), 'wikiUrl ausente');
 
@@ -2501,8 +2507,60 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(popups.includes('meta.wikiUrl'), 'createPoiPopupNode deve renderizar wikiUrl');
 
     const poiBoot = read('centro/map/poi-bootstrap.js');
-    assert.ok(poiBoot.includes('memoriaPaulistanaImages'), 'poi-bootstrap deve consultar manifest');
-    assert.ok(poiBoot.includes('cd_identificador'), 'lookup por cd_identificador ausente');
+    assert.ok(poiBoot.includes('poiWikipediaImages'), 'poi-bootstrap deve consultar manifest unificado');
+    assert.ok(poiBoot.includes('applyWikiFields'), 'poi-bootstrap deve enriquecer todos os temas');
+  });
+
+  it('demo livro-jogo: aba Demo, capítulo Demonão e marcadores no mapa', () => {
+    const html = read('centro/index.html');
+    const demoIdx = html.indexOf('features/demo-chapter.js');
+    const panelIdx = html.indexOf('ui/sidebar-demo-panel.js');
+    const markersIdx = html.indexOf('map/demo-markers.js');
+    const poiBootIdx = html.indexOf('map/poi-bootstrap.js');
+    assert.ok(demoIdx > -1, 'demo-chapter.js ausente no HTML');
+    assert.ok(panelIdx > -1, 'sidebar-demo-panel.js ausente no HTML');
+    assert.ok(markersIdx > -1 && markersIdx < poiBootIdx, 'demo-markers deve preceder poi-bootstrap');
+
+    const chapter = JSON.parse(read('centro/data/demo/demonao-titilia-chapter.json'));
+    assert.strictEqual(chapter.steps.length, 8, 'capítulo demo deve ter 8 passos');
+    assert.ok(chapter.steps[0].passwords.includes('demonão'), 'senha prefacio ausente');
+
+    const markers = JSON.parse(read('centro/data/demo/demonao-titilia-markers.geojson'));
+    assert.ok(markers.features.length >= 5, 'marcadores demo no geojson');
+
+    const demoMod = read('centro/features/demo-chapter.js');
+    assert.doesNotThrow(() => new Function(demoMod));
+    assert.ok(demoMod.includes('CENTRO.demoChapter'), 'export demoChapter ausente');
+    assert.ok(demoMod.includes('submitPassword'), 'submitPassword ausente');
+    assert.ok(demoMod.includes('isMarkerVisible'), 'isMarkerVisible ausente');
+    assert.ok(demoMod.includes('isRevealAllMarkers'), 'isRevealAllMarkers ausente');
+    assert.ok(demoMod.includes('setRevealAllMarkers'), 'setRevealAllMarkers ausente');
+
+    const panelMod = read('centro/ui/sidebar-demo-panel.js');
+    assert.doesNotThrow(() => new Function(panelMod));
+    assert.ok(panelMod.includes('installDemoPanel'), 'installDemoPanel ausente');
+    assert.ok(!panelMod.includes('innerHTML'), 'sidebar-demo-panel sem innerHTML');
+
+    const css = read('centro/styles/sidebar.css');
+    assert.ok(css.includes('.demo-step-row'), 'estilos demo-step-row ausentes');
+    assert.ok(css.includes('.demo-active-card'), 'estilos demo-active-card ausentes');
+
+    const poiBoot = read('centro/map/poi-bootstrap.js');
+    assert.ok(poiBoot.includes('bootDemoMarkers'), 'poi-bootstrap deve bootar demo markers');
+
+    const demoMarkers = read('centro/map/demo-markers.js');
+    assert.ok(demoMarkers.includes('buildDemoIconImageMatch'), 'demo-markers usa icones por markerId');
+    assert.ok(demoMarkers.includes('refreshSourceData'), 'demo-markers exporta refreshSourceData');
+    assert.ok(demoMarkers.includes('setData'), 'demo-markers deve actualizar geojson via setData');
+    assert.ok(demoMarkers.includes('ensureChapterLoaded'), 'demo-markers aguarda capítulo');
+    assert.ok(demoMarkers.includes('icon-demo'), 'demo-markers referencia icon-demo');
+    assert.ok(exists('centro/assets/icons/icon-demo.svg'), 'icon-demo.svg ausente');
+    assert.ok(exists('centro/assets/icons/icon-demo-marco.svg'), 'icon-demo-marco.svg ausente');
+    assert.ok(exists('centro/assets/icons/icon-demo-marquesa.svg'), 'icon-demo-marquesa.svg ausente');
+
+    const demoIcon = read('centro/assets/icons/icon-demo.svg');
+    assert.ok(demoIcon.includes('data-template="disc-forensic"'), 'icon-demo usa template forense');
+    assert.ok(demoIcon.includes('#9a3412'), 'icon-demo usa cor imperial demo');
   });
 
   // ── Regressões pós-auditoria 2026-07 ─────────────────────────────
@@ -2718,6 +2776,7 @@ describe('projeto_centro — sanity checks', () => {
 
     const evidenceCard = read('centro/ui/evidence-card.js');
     assert.ok(evidenceCard.includes('evidence-card__text-btn'), 'controles A-/A+ nos cards');
+    assert.ok(evidenceCard.includes('map-popup'), 'variante map-popup para leitura estavel');
     assert.ok(evidenceCard.includes('centroEvidenceTextScale'), 'persistência escala texto');
 
     const icons = read('vendor/app/config/map-icons.js');
