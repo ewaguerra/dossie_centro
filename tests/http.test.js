@@ -1,6 +1,7 @@
 import { describe, it, after, before } from 'node:test';
 import assert from 'node:assert';
 import { spawn } from 'node:child_process';
+import { createServer } from 'node:net';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { request } from 'node:http';
@@ -8,14 +9,28 @@ import { spawnServer } from '../scripts/lib/python-cmd.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
-const PORT = 9876;
-const BASE = `http://127.0.0.1:${PORT}`;
 
+let port = 9876;
+let base = `http://127.0.0.1:${port}`;
 let server = null;
+
+function getFreePort() {
+  return new Promise((resolve, reject) => {
+    const probe = createServer();
+    probe.once('error', reject);
+    probe.listen(0, '127.0.0.1', () => {
+      const chosen = probe.address().port;
+      probe.close((err) => {
+        if (err) reject(err);
+        else resolve(chosen);
+      });
+    });
+  });
+}
 
 function fetchPath(path) {
   return new Promise((resolve, reject) => {
-    const url = new URL(path, BASE);
+    const url = new URL(path, base);
     request(url, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
@@ -37,7 +52,9 @@ function waitForServer(maxMs = 5000) {
 
 describe('projeto_centro — HTTP integration', () => {
   before(async () => {
-    server = spawnServer(spawn, join(ROOT, 'server.py'), PORT, {
+    port = await getFreePort();
+    base = `http://127.0.0.1:${port}`;
+    server = spawnServer(spawn, join(ROOT, 'server.py'), port, {
       cwd: ROOT,
       stdio: ['ignore', 'pipe', 'pipe'],
     });
@@ -119,7 +136,7 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('function bootstrap'), 'runtime deve conter bootstrap');
     assert.ok(res.body.includes('function initMap'), 'runtime deve conter initMap');
-    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
+    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600, must-revalidate');
   });
 
   it('deve responder 200 em /pages/centro/ui/surface-links.js', async () => {
@@ -139,14 +156,14 @@ describe('projeto_centro — HTTP integration', () => {
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('var(--color-accent)'), 'a11y deve usar token accent');
     assert.ok(res.body.includes('prefers-reduced-motion'), 'a11y deve ter reduced-motion');
-    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
+    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600, must-revalidate');
   });
 
   it('deve responder 200 em /app/styles/tokens.css', async () => {
     const res = await fetchPath('/app/styles/tokens.css');
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('--color-brand'), 'tokens deve conter --color-brand');
-    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
+    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600, must-revalidate');
   });
 
   it('deve responder 200 em /pages/centro/styles/centro-chrome.css', async () => {
@@ -198,7 +215,7 @@ describe('projeto_centro — HTTP integration', () => {
     const res = await fetchPath('/pages/centro/centro-sidebar.css');
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes("@import url('styles/layout.css')"), 'agregador deve importar layout');
-    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
+    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600, must-revalidate');
   });
 
   it('deve responder 200 em pistas JSON + imagens', async () => {
@@ -228,7 +245,7 @@ describe('projeto_centro — HTTP integration', () => {
     const res = await fetchPath('/app/config/theme.js');
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.includes('MAPA_SP_THEME'), 'theme.js deve conter MAPA_SP_THEME');
-    assert.strictEqual(res.headers['cache-control'], 'no-cache, must-revalidate');
+    assert.strictEqual(res.headers['cache-control'], 'public, max-age=3600, must-revalidate');
   });
 
   it('cache: 404 em /vendor/ NAO recebe immutable (cache de erro envenena navegador)', async () => {
@@ -260,7 +277,7 @@ describe('projeto_centro — HTTP integration', () => {
     );
   });
 
-  it('headers de cache: somente /vendor/ recebe immutable; assets do projeto sao no-cache', async () => {
+  it('headers de cache: somente /vendor/ recebe immutable; JS/CSS mutáveis com max-age curto', async () => {
     const vendor = await fetchPath('/vendor/maplibre/maplibre-gl.js');
     assert.strictEqual(vendor.status, 200);
     assert.match(
@@ -269,14 +286,13 @@ describe('projeto_centro — HTTP integration', () => {
       'vendor third-party precisa ser immutable'
     );
 
-    const projectPaths = [
-      '/centro/index.html',
+    const shortCachePaths = [
       '/pages/centro/centro-runtime.js',
       '/app/styles/tokens.css',
-      '/centro/data/catalog/layers.json',
-      '/centro/assets/icons/icon-memoria.svg',
+      '/pages/centro/styles/centro-chrome.css',
+      '/app/config/theme.js',
     ];
-    for (const path of projectPaths) {
+    for (const path of shortCachePaths) {
       const res = await fetchPath(path);
       const cc = res.headers['cache-control'] || '';
       assert.ok(
@@ -285,9 +301,21 @@ describe('projeto_centro — HTTP integration', () => {
       );
       assert.match(
         cc,
-        /no-cache/,
-        `${path} precisa revalidar a cada request (no-cache)`
+        /max-age=3600/,
+        `${path} deve usar cache curto (max-age=3600)`
       );
+    }
+
+    const noCachePaths = [
+      '/centro/index.html',
+      '/centro/data/catalog/layers.json',
+      '/centro/assets/icons/icon-memoria.svg',
+    ];
+    for (const path of noCachePaths) {
+      const res = await fetchPath(path);
+      const cc = res.headers['cache-control'] || '';
+      assert.ok(!cc.includes('immutable'), `${path} NUNCA pode ser immutable`);
+      assert.match(cc, /no-cache/, `${path} precisa revalidar a cada request (no-cache)`);
     }
   });
 

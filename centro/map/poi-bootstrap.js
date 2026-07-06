@@ -498,37 +498,34 @@
           console.warn("[CENTRO] poi-wikipedia-images.json indisponível", e.message);
         }
       }
-      for (var poiIndex = 0; poiIndex < poiConfigs.length; poiIndex++) {
-        var poiCfg = poiConfigs[poiIndex];
-        var iconPath = resolvePatrimonioIconPath(poiCfg.id);
-        var poiLayerArgs = {
-          sourceId: poiCfg.sourceId,
-          iconLayerId: poiCfg.iconLayerId,
-          labelLayerId: poiCfg.id + "-label",
-          imageId: poiCfg.id + "-pin",
-          iconPath: iconPath,
-          titleProp: poiCfg.titleProp,
-          descProp: poiCfg.descProp,
-          addrProp: poiCfg.addrProp,
-          themeId: poiCfg.id,
-        };
-        if (poiCfg.id === "poi-turistico") {
-          poiLayerArgs.layerFile = poiCfg.layerFile;
-        } else {
-          poiLayerArgs.layerFile = poiCfg.layerFile;
-        }
-        try {
-          if (poiCfg.id === "linha-tempo") {
-            await addTimelineThreadLayer(mapInstance, poi);
+      await Promise.all(
+        poiConfigs.map(async function (poiCfg) {
+          var iconPath = resolvePatrimonioIconPath(poiCfg.id);
+          var poiLayerArgs = {
+            sourceId: poiCfg.sourceId,
+            iconLayerId: poiCfg.iconLayerId,
+            labelLayerId: poiCfg.id + "-label",
+            imageId: poiCfg.id + "-pin",
+            iconPath: iconPath,
+            titleProp: poiCfg.titleProp,
+            descProp: poiCfg.descProp,
+            addrProp: poiCfg.addrProp,
+            themeId: poiCfg.id,
+            layerFile: poiCfg.layerFile,
+          };
+          try {
+            if (poiCfg.id === "linha-tempo") {
+              await addTimelineThreadLayer(mapInstance, poi);
+            }
+            await addPOILayer(mapInstance, poiLayerArgs);
+          } catch (e) {
+            console.warn("[CENTRO] Erro POI layer", poiCfg.iconLayerId, e.message);
+            if (typeof window.centroToast === "function") {
+              window.centroToast("Erro ao carregar camada POI: " + poiCfg.iconLayerId, "warn");
+            }
           }
-          await addPOILayer(mapInstance, poiLayerArgs);
-        } catch (e) {
-          console.warn("[CENTRO] Erro POI layer", poiCfg.iconLayerId, e.message);
-          if (typeof window.centroToast === "function") {
-            window.centroToast("Erro ao carregar camada POI: " + poiCfg.iconLayerId, "warn");
-          }
-        }
-      }
+        })
+      );
       console.log("[CENTRO] " + poiConfigs.length + " POI layers adicionados (fluxo único)");
 
       try {

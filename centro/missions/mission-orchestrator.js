@@ -17,6 +17,34 @@
     return "alma-" + String(phase).padStart(2, "0");
   }
 
+  function getRegistry() {
+    return window.CENTRO && window.CENTRO.missionsRegistry;
+  }
+
+  function getLoader() {
+    return window.CENTRO && window.CENTRO.missionLoader;
+  }
+
+  function ensureMissionsForPhase(phase) {
+    var reg = getRegistry();
+    var ids = [almaIdForPhase(phase)];
+    if (phase >= 7 && ids.indexOf("alma-07") === -1) {
+      ids.push("alma-07");
+    }
+    if (reg && typeof reg.ensureLoaded === "function") {
+      return Promise.all(
+        ids.map(function (id) {
+          return reg.ensureLoaded(id);
+        })
+      );
+    }
+    var loader = getLoader();
+    if (loader && typeof loader.preloadMissions === "function") {
+      return loader.preloadMissions(ids);
+    }
+    return Promise.resolve();
+  }
+
   function refreshPhasesPanel() {
     var panel = document.getElementById("phases-panel");
     if (!panel || !panel.firstElementChild) return;
@@ -43,7 +71,7 @@
     if (activeInstance && activeInstance.id === "alma-07" && typeof activeInstance.getProgressLabel === "function") {
       return activeInstance.getProgressLabel();
     }
-    var reg = window.CENTRO && window.CENTRO.missionsRegistry;
+    var reg = getRegistry();
     if (!reg || typeof reg.createSoul !== "function") return "";
     var probe = reg.createSoul("alma-07", {});
     if (probe && typeof probe.getProgressLabel === "function") return probe.getProgressLabel();
@@ -51,7 +79,7 @@
   }
 
   function activateForPhase(phase) {
-    var reg = window.CENTRO && window.CENTRO.missionsRegistry;
+    var reg = getRegistry();
     if (!reg || typeof reg.createSoul !== "function") return;
     activeInstance = reg.createSoul(almaIdForPhase(phase), {});
     activePhase = phase;
@@ -62,14 +90,21 @@
 
   function syncMission() {
     var phase = getPhase();
-    if (activePhase !== phase) {
-      activateForPhase(phase);
-    } else if (activeInstance && typeof activeInstance.onResync === "function") {
-      activeInstance.onResync();
-    } else {
-      activateForPhase(phase);
-    }
-    refreshPhasesPanel();
+    ensureMissionsForPhase(phase)
+      .then(function () {
+        if (activePhase !== phase) {
+          activateForPhase(phase);
+        } else if (activeInstance && typeof activeInstance.onResync === "function") {
+          activeInstance.onResync();
+        } else {
+          activateForPhase(phase);
+        }
+        refreshPhasesPanel();
+      })
+      .catch(function (err) {
+        console.warn("[CENTRO] Falha ao carregar missão da fase", phase, err);
+        refreshPhasesPanel();
+      });
   }
 
   function install() {

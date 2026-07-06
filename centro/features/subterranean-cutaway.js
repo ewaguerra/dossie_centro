@@ -5,10 +5,22 @@
  * Efeitos: 13 almas pulsantes, rio respirando, scanlines geológicas,
  * glitch de aparição em 3 estágios e explosão de partículas por alma.
  */
-import * as THREE from "/vendor/three/three.module.min.js";
-
 (function () {
   "use strict";
+
+  var THREE = null;
+  var threeLoadPromise = null;
+
+  function ensureThree() {
+    if (THREE) return Promise.resolve(THREE);
+    if (!threeLoadPromise) {
+      threeLoadPromise = import("/vendor/three/three.module.min.js").then(function (mod) {
+        THREE = mod;
+        return THREE;
+      });
+    }
+    return threeLoadPromise;
+  }
 
   var LAYER_ID          = "centro-subterranean-cutaway";
   var TOGGLE_ID         = "centro-subterranean-toggle";
@@ -930,6 +942,39 @@ import * as THREE from "/vendor/three/three.module.min.js";
       }
     }
 
+    function mountThreeLayer(map, options) {
+      options = options || {};
+      var statusEl = document.getElementById(STATUS_ID);
+      var loadingTimer = window.setTimeout(function () {
+        if (statusEl) statusEl.textContent = "Carregando visão subterrânea…";
+      }, 200);
+
+      return ensureThree()
+        .then(function () {
+          window.clearTimeout(loadingTimer);
+          if (!enabled || map.getLayer(LAYER_ID)) {
+            syncStatus();
+            return;
+          }
+          activeLayer = createThreeLayer(map);
+          map.addLayer(activeLayer);
+          bindInteraction(map);
+          if (!options.noFly) flyToSubterranean(map);
+          syncStatus();
+        })
+        .catch(function (err) {
+          window.clearTimeout(loadingTimer);
+          enabled = false;
+          persistEnabled(false);
+          syncToggleUI(false);
+          syncStatus();
+          console.warn("[CENTRO] Falha ao carregar Three.js para subsolo:", err);
+          if (!options.silent && typeof window.centroToast === "function") {
+            window.centroToast("Não foi possível carregar a visão subterrânea.", "warn");
+          }
+        });
+    }
+
     function setEnabled(nextEnabled, options) {
       options = options || {};
       var map = getMap();
@@ -946,12 +991,7 @@ import * as THREE from "/vendor/three/three.module.min.js";
       }
       enabled = !!nextEnabled;
       if (enabled && !map.getLayer(LAYER_ID)) {
-        activeLayer = createThreeLayer(map);
-        map.addLayer(activeLayer);
-        bindInteraction(map);
-        // noFly=true quando restaurado no boot (usuário já está orientado).
-        // Voa apenas quando o usuário activa explicitamente o toggle.
-        if (!options.noFly) flyToSubterranean(map);
+        mountThreeLayer(map, options);
       } else if (!enabled && map.getLayer(LAYER_ID)) {
         unbindInteraction(map);
         map.removeLayer(LAYER_ID);

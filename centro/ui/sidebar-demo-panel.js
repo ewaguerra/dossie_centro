@@ -10,6 +10,10 @@
 
   function flyToStep(step, flyToFn) {
     if (!step || !step.flyTo || typeof flyToFn !== "function") return;
+    var ui = window.CENTRO && window.CENTRO.ui;
+    if (ui && typeof ui.collapseSidebarForMap === "function") {
+      ui.collapseSidebarForMap();
+    }
     flyToFn(step.flyTo.lng, step.flyTo.lat, step.flyTo.zoom, step.flyTo.pitch || 0);
   }
 

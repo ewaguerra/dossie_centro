@@ -277,6 +277,16 @@ describe('projeto_centro — sanity checks', () => {
   it('responsive.css: sidebar mobile nao limita max-height a 70vh', () => {
     const css = read('centro/styles/responsive.css');
     assert.ok(!css.includes('max-height: 70vh'), 'regra 70vh truncava sidebar em mobile');
+    assert.ok(css.includes('overflow-x: auto'), 'tabs com scroll horizontal no mobile');
+    assert.ok(css.includes('#sidebar-toggle'), 'toggle oculto no mobile em favor do open-btn');
+  });
+
+  it('centro-chrome: sidebar recolhe no mobile para liberar o mapa', () => {
+    const chrome = read('centro/ui/centro-chrome.js');
+    assert.ok(chrome.includes('isMobileViewport'), 'detecção mobile ausente');
+    assert.ok(chrome.includes('applyMobileSidebarBootLayout'), 'boot mobile ausente');
+    assert.ok(chrome.includes('collapseSidebarForMap'), 'helper collapseSidebarForMap ausente');
+    assert.ok(chrome.includes('wireSidebarMobileButtons'), 'wire mobile ausente');
   });
 
   it('sidebar UX A4: tabs ARIA, IDs essenciais e conteudo preservado', () => {
@@ -1377,6 +1387,7 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(!symbol.includes('.setHTML('), 'symbol-popup-layer sem setHTML');
     assert.ok(symbol.includes('evidence-popup'), 'symbol-popup-layer usa className evidence-popup');
     assert.ok(symbol.includes('closeButton: true'), 'symbol-popup-layer activa closeButton');
+    assert.ok(symbol.includes('collapseSidebarForMap'), 'popup POI recolhe sidebar no mobile');
     assert.ok(!symbol.includes('POI_TEXT_FONT'), 'factory nao conhece POI_TEXT_FONT');
     assert.ok(!symbol.includes('styleSupportsTextLabels'), 'factory nao conhece styleSupportsTextLabels');
     assert.ok(!symbol.includes('getMapIconHaloPaint'), 'factory nao conhece getMapIconHaloPaint');
@@ -1667,8 +1678,8 @@ describe('projeto_centro — sanity checks', () => {
     assert.ok(runtime.includes('CENTRO.subterraneanCutaway'), 'runtime deve delegar visão subterrânea');
     assert.ok(runtime.includes('centro:subterranean-ready'), 'runtime deve tolerar carregamento module');
     assert.ok(feature.includes('type: "custom"'), 'deve usar custom layer MapLibre');
-    assert.ok(feature.includes('import * as THREE'), 'feature deve importar Three.js');
-    assert.ok(feature.includes('/vendor/three/three.module.min.js'), 'Three deve vir de vendor local');
+    assert.ok(feature.includes('ensureThree'), 'feature deve carregar Three sob demanda');
+    assert.ok(feature.includes('import("/vendor/three/three.module.min.js")'), 'Three deve vir de import dinâmico vendor local');
     assert.ok(feature.includes('new THREE.Scene'), 'scene Three ausente');
     assert.ok(feature.includes('new THREE.WebGLRenderer'), 'renderer Three ausente');
     assert.ok(feature.includes('new THREE.Raycaster'), 'Raycaster Three ausente');
@@ -1769,6 +1780,36 @@ describe('projeto_centro — sanity checks', () => {
       'destino do proxy basemap incorreto'
     );
     assert.strictEqual(vercel.outputDirectory, '.', 'outputDirectory deve ser raiz do repo');
+    const headers = vercel.headers || [];
+    const centroJsCache = headers.find(function (h) {
+      return h.source === '/centro/(.*)\\.js';
+    });
+    assert.ok(centroJsCache, 'header cache /centro/*.js ausente');
+    assert.ok(
+      String(centroJsCache.headers[0].value).includes('max-age=3600'),
+      'JS do centro deve ter max-age=3600'
+    );
+    assert.ok(
+      !String(centroJsCache.headers[0].value).includes('immutable'),
+      'JS mutável do centro não deve ser immutable'
+    );
+    const blanketNoCache = headers.find(function (h) {
+      return h.source === '/centro/(.*)' && String(h.headers[0].value).includes('no-cache');
+    });
+    assert.ok(!blanketNoCache, 'vercel não deve aplicar no-cache blanket em /centro/*');
+  });
+
+  it('centro: boot performance — POI paralelo, mapa não bloqueante, preload', () => {
+    const html = read('centro/index.html');
+    const mapInit = read('centro/map/map-init.js');
+    const poiBoot = read('centro/map/poi-bootstrap.js');
+    assert.ok(html.includes('rel="preload" href="/vendor/maplibre/maplibre-gl.js"'), 'preload maplibre ausente');
+    assert.ok(html.includes('rel="preload" href="/centro/assets/basemap/liberty.json"'), 'preload liberty ausente');
+    assert.ok(!html.includes('knowledge.js'), 'knowledge.js não deve carregar no boot do centro');
+    assert.ok(mapInit.includes('mapReadyResolve'), 'map-init deve resolver mapReady');
+    assert.ok(!mapInit.includes('await ctx.bootPoiLayers'), 'POI boot não deve bloquear map load');
+    assert.ok(mapInit.includes('Promise.resolve(ctx.bootPoiLayers'), 'POI boot deve ser assíncrono em background');
+    assert.ok(poiBoot.includes('Promise.all'), 'poi-bootstrap deve carregar POIs em paralelo');
   });
 
   it('artefatos do bake offline antigo foram removidos', () => {
@@ -1970,14 +2011,22 @@ describe('projeto_centro — sanity checks', () => {
     const gates = JSON.parse(read('centro/data/catalog/phase-gates.json'));
     const html = read('centro/index.html');
     assert.ok(exists('centro/missions/registry.js'), 'missions registry ausente');
+    assert.ok(exists('centro/missions/mission-loader.js'), 'mission-loader ausente');
     const registry = read('centro/missions/registry.js');
+    const loader = read('centro/missions/mission-loader.js');
     assert.ok(registry.includes('window.CENTRO.missionsRegistry'), 'missionsRegistry ausente');
+    assert.ok(registry.includes('ensureLoaded'), 'registry deve expor ensureLoaded');
     assert.ok(registry.includes('alma-13'), 'registry deve listar alma-13');
+    assert.ok(loader.includes('ensureMissionLoaded'), 'mission-loader deve expor ensureMissionLoaded');
+    assert.ok(html.includes('centro/missions/mission-loader.js'), 'index deve carregar mission-loader');
     assert.ok(html.includes('centro/missions/registry.js'), 'index deve carregar missions registry');
     for (const soul of gates.souls) {
       const rel = `centro/missions/${soul.id}/index.js`;
       assert.ok(exists(rel), `${rel} ausente`);
-      assert.ok(html.includes(`centro/missions/${soul.id}/index.js`), `index deve carregar ${soul.id}`);
+      assert.ok(
+        !html.includes(`centro/missions/${soul.id}/index.js`),
+        `index não deve carregar ${soul.id} no boot (lazy loader)`
+      );
       const mod = read(rel);
       assert.ok(mod.includes(`var ID = "${soul.id}"`), `${soul.id} id incorreto`);
       assert.ok(mod.includes(`var PHASE = ${soul.phase}`), `${soul.id} phase incorreta`);
@@ -2344,7 +2393,10 @@ describe('projeto_centro — sanity checks', () => {
       'POI_TURISTICO_LAYER_FILE deve apontar para special/pois'
     );
     assert.ok(poiBoot.includes('layerFile: poi.POI_TURISTICO_LAYER_FILE'), 'poi-bootstrap usa POI_TURISTICO_LAYER_FILE');
-    assert.ok(poiBoot.includes('poiLayerArgs.layerFile = poiCfg.layerFile'), 'poi-bootstrap carrega POIs via layerFile');
+    assert.ok(
+      poiBoot.includes('layerFile: poiCfg.layerFile') || poiBoot.includes('poiLayerArgs.layerFile = poiCfg.layerFile'),
+      'poi-bootstrap carrega POIs via layerFile'
+    );
     assert.ok(poiBoot.includes('fetchLayerGeojson'), 'poi-bootstrap usa fetchLayerGeojson para POIs');
     assert.ok(!poiBoot.includes('"/centro/data/context/" + poiCfg'), 'sem hardcode /centro/data/context/ no poi-bootstrap');
     assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
@@ -2366,8 +2418,14 @@ describe('projeto_centro — sanity checks', () => {
     const layerFile = 'data/geojson/special/pois/centro_pois_turisticos__point.geojson';
 
     assert.ok(poiBoot.includes('getMapHelper("fetchLayerGeojson")'), 'addPOILayer delega fetchLayerGeojson');
-    assert.ok(poiBoot.includes('poiCfg.id === "poi-turistico"'), 'poi-turistico usa fluxo dedicado');
-    assert.ok(poiBoot.includes('poiLayerArgs.layerFile = poiCfg.layerFile'), 'poi-turistico passa layerFile');
+    assert.ok(
+      poiBoot.includes('id: "poi-turistico"') && poiBoot.includes('POI_TURISTICO_LAYER_FILE'),
+      'poi-turistico usa fluxo layerFile unificado'
+    );
+    assert.ok(
+      poiBoot.includes('layerFile: poiCfg.layerFile') || poiBoot.includes('poiLayerArgs.layerFile = poiCfg.layerFile'),
+      'poi-turistico passa layerFile'
+    );
     assert.ok(triangulo.includes('fetchLayerGeojson'), 'triangulo usa fetchLayerGeojson');
     assert.ok(
       triangulo.includes('STREET_NAMES_LAYER_FILE') || triangulo.includes('STREETS_LAYER_FILE'),

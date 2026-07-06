@@ -764,6 +764,20 @@ restore de prefs. Labels POI: colisão activa, visíveis a partir de zoom 15.
   `setupLazyImageObserver` (centro). Para landing/arquivo-morto/arquivista,
   inclua `loading="lazy"` direto na tag.
 - **Scripts** com `defer`. Sem `async` (quebra ordem de dependências do app).
+- **Boot do mapa:** `mapReadyPromise` resolve logo após `map.load` (basemap
+  pintado); POI boot corre em **background** (`poi-bootstrap.js` com
+  `Promise.all` nas camadas). Não bloquear `mapReady` à espera de GeoJSON POI.
+- **Three.js sob demanda:** `subterranean-cutaway.js` usa `import()` dinâmico
+  de `/vendor/three/three.module.min.js` só ao activar a visão subterrânea.
+- **Missões lazy:** `mission-loader.js` injecta `alma-NN/index.js` sob
+  demanda (fase corrente + `alma-07` quando fase ≥ 7). O `index.html` **não**
+  lista os 13 scripts de alma no boot.
+- **Preload crítico:** `<link rel="preload">` para `maplibre-gl.js` e
+  `liberty.json` no `<head>` de `centro/index.html`.
+- **Cache Vercel/dev:** `immutable` só em `/vendor/`. HTML do centro
+  (`index.html`) com `no-cache`. JS/CSS mutáveis em `/centro/`, `/pages/centro/`
+  e `/app/` com `max-age=3600, must-revalidate` (sem `immutable`). Ver
+  `vercel.json` e `server.py` — devem estar em paridade.
 - **Catálogo** (`layers.json` + `groups.json`) carregado **uma vez** e
   indexado em `Map`. Nunca refetche por interação.
 - **`queryRenderedFeatures`** sempre com `{ layers: [...] }` para escopar.

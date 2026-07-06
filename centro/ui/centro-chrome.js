@@ -38,6 +38,18 @@
       });
     }
 
+    function isMobileViewport() {
+      return !!(window.matchMedia && window.matchMedia("(max-width: 768px)").matches);
+    }
+
+    function collapseSidebarForMap() {
+      if (isMobileViewport()) setSidebarCollapsed(true);
+    }
+
+    function applyMobileSidebarBootLayout() {
+      if (isMobileViewport()) setSidebarCollapsed(true);
+    }
+
     function setSidebarCollapsed(collapsed) {
       var sb = document.getElementById("panel");
       var btn = document.getElementById("sidebar-toggle");
@@ -132,6 +144,7 @@
     function setupNarrativeNav() {
       document.querySelectorAll("#narrative-nav .nav-btn[data-nav-lng]").forEach(function (btn) {
         btn.addEventListener("click", function () {
+          collapseSidebarForMap();
           flyToLocation(
             parseFloat(btn.dataset.navLng),
             parseFloat(btn.dataset.navLat),
@@ -267,13 +280,22 @@
           setSidebarCollapsed(false);
         });
       }
+      applyMobileSidebarBootLayout();
     }
+
+    window.CENTRO = window.CENTRO || {};
+    window.CENTRO.ui = window.CENTRO.ui || {};
+    window.CENTRO.ui.collapseSidebarForMap = collapseSidebarForMap;
+    window.CENTRO.ui.isMobileViewport = isMobileViewport;
 
     return {
       install: install,
       wireSidebarMobileButtons: wireSidebarMobileButtons,
       setSidebarCollapsed: setSidebarCollapsed,
       toggleSidebar: toggleSidebar,
+      collapseSidebarForMap: collapseSidebarForMap,
+      isMobileViewport: isMobileViewport,
+      applyMobileSidebarBootLayout: applyMobileSidebarBootLayout,
     };
   }
 

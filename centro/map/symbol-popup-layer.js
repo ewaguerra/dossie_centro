@@ -70,6 +70,10 @@
     bindLayerEventOnce(mapInstance, "click", config.iconLayerId, function (e) {
       var properties = (e.features && e.features[0] && e.features[0].properties) || {};
       if (popupCfg.guard && !popupCfg.guard(properties)) return;
+      var ui = window.CENTRO && window.CENTRO.ui;
+      if (ui && typeof ui.collapseSidebarForMap === "function") {
+        ui.collapseSidebarForMap();
+      }
       var args = popupCfg.buildArgs(properties, e);
       var popupNode = getPopupNode(popupCfg.factoryKey, args);
       var popup = new maplibregl.Popup(

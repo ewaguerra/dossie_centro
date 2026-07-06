@@ -27,10 +27,28 @@
     return missions[id] || null;
   }
 
+  function getLoader() {
+    return window.CENTRO && window.CENTRO.missionLoader;
+  }
+
   function createSoul(id, ctx) {
     var mod = get(id);
     if (!mod || typeof mod.create !== "function") return null;
     return mod.create(ctx);
+  }
+
+  function ensureLoaded(id) {
+    var loader = getLoader();
+    if (loader && typeof loader.ensureMissionLoaded === "function") {
+      return loader.ensureMissionLoaded(id);
+    }
+    return Promise.resolve();
+  }
+
+  function createSoulAsync(id, ctx) {
+    return ensureLoaded(id).then(function () {
+      return createSoul(id, ctx);
+    });
   }
 
   function forPhase(phase) {
@@ -48,6 +66,8 @@
     ids: ALMA_IDS,
     get: get,
     createSoul: createSoul,
+    createSoulAsync: createSoulAsync,
+    ensureLoaded: ensureLoaded,
     forPhase: forPhase,
     listIds: listIds,
   };

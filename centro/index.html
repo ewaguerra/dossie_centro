@@ -5,6 +5,8 @@
   <title>PROTOCOLO 13 ALMAS — Dossiê Centro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="data:," />
+  <link rel="preload" href="/vendor/maplibre/maplibre-gl.js" as="script" />
+  <link rel="preload" href="/centro/assets/basemap/liberty.json" as="fetch" crossorigin />
   <link href="/app/styles/tokens.css" rel="stylesheet" />
   <link href="/app/styles/a11y.css" rel="stylesheet" />
   <link href="/app/styles/components.css" rel="stylesheet" />
@@ -268,7 +270,6 @@
   <script src="/pages/centro/ui/surface-links.js" defer></script>
   <script src="/vendor/maplibre/maplibre-gl.js" defer></script>
   <script src="/app/config/theme.js" defer></script>
-  <script src="/app/config/knowledge.js" defer></script>
   <script src="/app/config/map-icons.js" defer></script>
   <script src="/app/config/ui-texts.js" defer></script>
   <script src="/app/utils/formatters.js" defer></script>
@@ -291,19 +292,7 @@
   <script src="/pages/centro/features/protocolo-phase.js" defer></script>
   <script src="/pages/centro/features/demo-chapter.js" defer></script>
   <script src="/pages/centro/features/master-mode.js" defer></script>
-  <script src="/pages/centro/missions/alma-01/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-02/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-03/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-04/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-05/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-06/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-07/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-08/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-09/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-10/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-11/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-12/index.js" defer></script>
-  <script src="/pages/centro/missions/alma-13/index.js" defer></script>
+  <script src="/pages/centro/missions/mission-loader.js" defer></script>
   <script src="/pages/centro/missions/registry.js" defer></script>
   <script src="/pages/centro/missions/mission-orchestrator.js" defer></script>
   <script src="/pages/centro/features/centro-access-gate.js" defer></script>

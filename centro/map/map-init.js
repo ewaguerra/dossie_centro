@@ -163,10 +163,26 @@
 
       var debugInspector = isDebugInspectorEnabled();
 
-      mapInstance.on("load", async function () {
+      mapInstance.on("load", function () {
         clampViewToCentroBounds(mapInstance);
         ensureMapGroundReadable(mapInstance);
         console.log("[CENTRO] Mapa carregado com layout original");
+
+        if (typeof ctx.mapReadyResolve === "function") {
+          ctx.mapReadyResolve();
+        }
+
+        if (typeof ctx.wireSidebarMobileButtons === "function") {
+          ctx.wireSidebarMobileButtons();
+        }
+
+        if (typeof ctx.initBuildings3DState === "function") ctx.initBuildings3DState();
+        if (typeof ctx.initSubterraneanState === "function") ctx.initSubterraneanState();
+        if (typeof ctx.runMapBootPolicy === "function") {
+          ctx.runMapBootPolicy(mapInstance);
+        } else if (typeof ctx.applyBasemapOnlyView === "function") {
+          ctx.applyBasemapOnlyView(mapInstance);
+        }
 
         var poiHooks = {
           onPistasLoaded:
@@ -184,7 +200,9 @@
         };
 
         if (typeof ctx.bootPoiLayers === "function") {
-          await ctx.bootPoiLayers(mapInstance, poiHooks);
+          Promise.resolve(ctx.bootPoiLayers(mapInstance, poiHooks)).catch(function (e) {
+            console.warn("[CENTRO] POI boot falhou", e);
+          });
         } else if (typeof ctx.applyAllPoiThemeFilters === "function") {
           ctx.applyAllPoiThemeFilters();
         }
@@ -210,22 +228,6 @@
             showInspector(features[0]);
           });
           console.log("[CENTRO] Debug inspector ativo (?debug=1)");
-        }
-
-        if (typeof ctx.wireSidebarMobileButtons === "function") {
-          ctx.wireSidebarMobileButtons();
-        }
-
-        if (typeof ctx.initBuildings3DState === "function") ctx.initBuildings3DState();
-        if (typeof ctx.initSubterraneanState === "function") ctx.initSubterraneanState();
-        if (typeof ctx.runMapBootPolicy === "function") {
-          ctx.runMapBootPolicy(mapInstance);
-        } else if (typeof ctx.applyBasemapOnlyView === "function") {
-          ctx.applyBasemapOnlyView(mapInstance);
-        }
-
-        if (typeof ctx.mapReadyResolve === "function") {
-          ctx.mapReadyResolve();
         }
       });
 

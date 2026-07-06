@@ -29,21 +29,51 @@
       ]
     },
     {
-      "source": "/centro/(.*)",
+      "source": "/centro/index.html",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
       ]
     },
     {
-      "source": "/pages/centro/(.*)",
+      "source": "/pages/centro/index.html",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
       ]
     },
     {
-      "source": "/app/(.*)",
+      "source": "/centro/(.*)\\.js",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/centro/(.*)\\.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/pages/centro/(.*)\\.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/pages/centro/(.*)\\.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/app/(.*)\\.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/app/(.*)\\.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
       ]
     }
   ]
